@@ -12,6 +12,7 @@ import {
   type Tag,
 } from "@/data/makers";
 import Stars from "@/components/Stars";
+import UniformIcon from "@/components/UniformIcon";
 
 type SortKey = "default" | "price-asc" | "price-desc";
 
@@ -126,24 +127,30 @@ export default function ComparisonTable() {
             return (
               <article className="maker-card" key={m.id}>
                 <div>
-                  <h3
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 12,
-                    }}
-                  >
-                    <RankMedal rank={i + 1} />
-                    {m.name}
-                  </h3>
+                  <div className="maker-head">
+                    <UniformIcon id={m.id} size={72} />
+                    <div className="maker-head-main">
+                      <h3
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 12,
+                          margin: 0,
+                        }}
+                      >
+                        <RankMedal rank={i + 1} />
+                        {m.name}
+                      </h3>
 
-                  {/* 総合評価（mybest風） */}
-                  <div className="score-line">
-                    <span className="score-num">
-                      {score.toFixed(1)}
-                      <small> /5.0</small>
-                    </span>
-                    <Stars value={score} />
+                      {/* 総合評価（mybest風） */}
+                      <div className="score-line">
+                        <span className="score-num">
+                          {score.toFixed(1)}
+                          <small> /5.0</small>
+                        </span>
+                        <Stars value={score} />
+                      </div>
+                    </div>
                   </div>
 
                   {/* 項目別スコア */}

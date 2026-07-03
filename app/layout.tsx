@@ -87,7 +87,7 @@ gtag('config', '${GA4_MEASUREMENT_ID}');`}
 
         {/* ステマ規制（景表法）対応のPR表記 */}
         <div className="pr-note">
-          本サイトはプロモーションが含まれています（広告・アフィリエイトによる収益で運営しています）
+          ※当サイトは広告（アフィリエイト）を利用しています
         </div>
 
         <header className="site-header">

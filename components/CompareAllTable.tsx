@@ -1,5 +1,6 @@
 import { makers, ctaUrl, overallScore } from "@/data/makers";
 import Stars from "@/components/Stars";
+import UniformIcon from "@/components/UniformIcon";
 
 /** 全メーカーを1枚の表で見比べる一覧表（mybest風・サーバーレンダリング） */
 export default function CompareAllTable() {
@@ -25,7 +26,12 @@ export default function CompareAllTable() {
             return (
               <tr key={m.id}>
                 <td className="num">{i + 1}位</td>
-                <td className="maker-name-cell">{m.name}</td>
+                <td className="maker-name-cell">
+                  <span className="uniform-cell">
+                    <UniformIcon id={m.id} size={40} />
+                    {m.name}
+                  </span>
+                </td>
                 <td>
                   <span className="num">{score.toFixed(1)}</span>{" "}
                   <Stars value={score} />
