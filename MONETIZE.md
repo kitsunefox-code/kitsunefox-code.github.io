@@ -4,22 +4,22 @@
 
 ---
 
-## STEP 1. サイトを公開する（今日できる・無料）
+## STEP 1. サイトを公開する ✅ 完了（2026-07-03 自動実施済み）
 
-- [ ] 👤 **Vercel にサインアップ**（無料）: https://vercel.com/signup → 「Continue with GitHub」を選ぶだけ
-- [ ] 👤 Vercel の「Add New → Project」で GitHub リポジトリ `kusayakyu-uniform` を Import → そのまま Deploy
-  - ビルド設定は自動検出されます（何も変更不要）
-  - 数分で `https://xxx.vercel.app` のURLで公開されます
-- [ ] 🤖 公開URLが決まったら Claude に伝える → 動作確認します
+- [x] 🤖 GitHub Pages で公開済み: **https://kitsunefox-code.github.io/**
+- [x] 🤖 main ブランチに push すると自動で再デプロイされる仕組み（GitHub Actions）も設定済み
+- Vercel への移行も可能ですが、GitHub Pages のままで独自ドメイン・AdSense まで行けます
 
 ## STEP 2. 独自ドメインを取る（費用: 年1,000〜2,000円くらい）
 
-AdSense は独自ドメインがほぼ必須です。`.vercel.app` のままでは審査に通りません。
+AdSense は独自ドメインがほぼ必須です。`github.io` のままでは審査に通りません。
 
-- [ ] 👤 ドメインを購入（おすすめレジストラ: [Cloudflare Registrar](https://www.cloudflare.com/products/registrar/)＝原価販売で最安 / [お名前.com](https://www.onamae.com/) / Vercel上で直接購入も可）
+- [ ] 👤 ドメインを購入（おすすめレジストラ: [Cloudflare Registrar](https://www.cloudflare.com/products/registrar/)＝原価販売で最安 / [お名前.com](https://www.onamae.com/)）
   - 候補例: `kusayakyu-navi.com` `uniform-hikaku.com` など（.com か .jp 推奨）
-- [ ] 👤 Vercel のプロジェクト → Settings → Domains でドメインを追加（画面の指示どおりDNS設定）
-- [ ] 🤖 ドメイン名を Claude に伝える → `data/site.ts` の SITE_URL を差し替えて再デプロイ用にコミットします
+- [ ] 👤 レジストラのDNS設定で CNAME レコードを追加: `www` → `kitsunefox-code.github.io`
+  （APEXドメインを使う場合は A レコード 185.199.108.153 ほか3つ。手順は Claude が案内します）
+- [ ] 🤖 ドメイン名を Claude に伝える → GitHub Pages へのドメイン接続（API設定）・HTTPS有効化・
+  `data/site.ts` の SITE_URL 差し替え・再デプロイまで全部やります
 
 ## STEP 3. アクセス解析を入れる（無料・5分）
 
