@@ -14,20 +14,25 @@ export default function GoodsLinks() {
       </p>
       <div className="goods-grid">
         {GOODS_LINKS.map((g) => (
-          <a
-            key={g.label}
-            className="goods-card"
-            href={g.url}
-            target="_blank"
-            rel="noopener sponsored"
-          >
-            <span className="goods-emoji">{g.emoji}</span>
-            <span>
-              <span className="goods-label">{g.label}</span>
-              <span className="goods-desc">{g.description}</span>
-            </span>
-            <span className="goods-arrow">→</span>
-          </a>
+          <span key={g.label}>
+            <a
+              className="goods-card"
+              href={g.url}
+              target="_blank"
+              rel="noopener sponsored nofollow"
+            >
+              <span className="goods-emoji">{g.emoji}</span>
+              <span>
+                <span className="goods-label">{g.label}</span>
+                <span className="goods-desc">{g.description}</span>
+              </span>
+              <span className="goods-arrow">→</span>
+            </a>
+            {g.pixel && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={g.pixel} width={1} height={1} alt="" style={{ border: 0 }} />
+            )}
+          </span>
         ))}
       </div>
     </section>

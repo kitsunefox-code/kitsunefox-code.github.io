@@ -31,17 +31,26 @@ export type GoodsLink = {
   label: string;
   description: string;
   url: string;
+  /** A8のインプレッション計測用1x1ピクセル画像URL */
+  pixel?: string;
   emoji: string;
 };
 
 export const GOODS_LINKS: GoodsLink[] = [
-  // 例: A8の楽天リンク発行後にここへ追加
-  // {
-  //   label: "楽天市場で野球ユニフォームを探す",
-  //   description: "既製ユニフォーム・練習着が豊富。ポイントも貯まる",
-  //   url: "https://px.a8.net/svt/ejp?a8mat=XXXXX",
-  //   emoji: "🛒",
-  // },
+  {
+    label: "楽天市場で野球用品を探す",
+    description: "既製ユニフォーム・練習着・ボールが豊富。楽天ポイントも貯まる",
+    url: "https://px.a8.net/svt/ejp?a8mat=4B7SGX+2YKM2A+2HOM+6C1VM",
+    pixel: "https://www10.a8.net/0.gif?a8mat=4B7SGX+2YKM2A+2HOM+6C1VM",
+    emoji: "🛒",
+  },
+  {
+    label: "【公式】スポーツ用品総合通販ならスーパースポーツゼビオ",
+    description: "野球用品・スパイク・アンダーシャツはこちら。セールも頻繁",
+    url: "https://px.a8.net/svt/ejp?a8mat=4B7SGX+8PRGKY+4ABU+5YJRM",
+    pixel: "https://www16.a8.net/0.gif?a8mat=4B7SGX+8PRGKY+4ABU+5YJRM",
+    emoji: "⚾",
+  },
 ];
 
 /**
