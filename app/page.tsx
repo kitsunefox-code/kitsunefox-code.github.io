@@ -3,6 +3,7 @@ import CompareAllTable from "@/components/CompareAllTable";
 import AdSlot from "@/components/AdSlot";
 import GoodsLinks from "@/components/GoodsLinks";
 import { makers, LAST_UPDATED } from "@/data/makers";
+import { GUIDES } from "@/data/guides";
 
 // 構造化データ（ItemList）— Google に「比較リスト」であることを伝えSEOに寄与
 function StructuredData() {
@@ -196,6 +197,26 @@ export default function Home() {
                 。両対応やハイブリッドを選べるメーカーもあります。
               </p>
             </div>
+          </div>
+        </section>
+
+        {/* お役立ちガイド */}
+        <section id="guides">
+          <h2 className="section-title">草野球お役立ちガイド</h2>
+          <p className="section-sub">
+            チーム立ち上げ・運営に役立つ読みものを揃えました。
+          </p>
+          <div className="goods-grid">
+            {GUIDES.map((g) => (
+              <a key={g.href} className="goods-card" href={g.href}>
+                <span className="goods-emoji">{g.emoji}</span>
+                <span>
+                  <span className="goods-label">{g.title}</span>
+                  <span className="goods-desc">{g.description}</span>
+                </span>
+                <span className="goods-arrow">→</span>
+              </a>
+            ))}
           </div>
         </section>
 

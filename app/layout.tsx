@@ -99,7 +99,7 @@ gtag('config', '${GA4_MEASUREMENT_ID}');`}
             <nav>
               <a href="/#compare">メーカー比較</a>
               <a href="/shindan/">ぴったり診断</a>
-              <a href="/guide/uniform-how-to/">作り方ガイド</a>
+              <a href="/guide/">お役立ちガイド</a>
               <a href="/#faq">よくある質問</a>
             </nav>
           </div>
@@ -119,7 +119,7 @@ gtag('config', '${GA4_MEASUREMENT_ID}');`}
               {" ｜ "}
               <a href="/shindan/">ぴったり診断</a>
               {" ｜ "}
-              <a href="/guide/uniform-how-to/">ユニフォームの作り方</a>
+              <a href="/guide/">お役立ちガイド</a>
               {" ｜ "}
               <a href="/about/">運営者情報・評価基準</a>
               {" ｜ "}

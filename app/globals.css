@@ -814,7 +814,7 @@ section {
 .article .point-box strong {
   color: var(--accent);
 }
-.article .cta-inline {
+.cta-inline {
   display: block;
   text-align: center;
   background: var(--accent);
@@ -826,7 +826,7 @@ section {
   border-radius: 10px;
   margin: 20px 0;
 }
-.article .cta-inline:hover {
+.cta-inline:hover {
   background: #cf3d14;
 }
 
