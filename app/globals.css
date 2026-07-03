@@ -659,6 +659,52 @@ section {
   background: #cf3d14;
 }
 
+/* ===== 関連グッズ ===== */
+.goods-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px;
+}
+.goods-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: 16px 18px;
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color 0.15s, transform 0.15s;
+}
+.goods-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+.goods-emoji {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+.goods-label {
+  display: block;
+  font-weight: 800;
+  font-size: 14.5px;
+  color: var(--navy);
+}
+.goods-desc {
+  display: block;
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.goods-arrow {
+  margin-left: auto;
+  color: var(--accent);
+  font-weight: 900;
+  font-size: 18px;
+}
+
 /* ===== PR表記（ステマ規制対応） ===== */
 .pr-note {
   background: #0a2140;

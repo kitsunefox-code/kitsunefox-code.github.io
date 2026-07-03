@@ -1,6 +1,7 @@
 import ComparisonTable from "@/components/ComparisonTable";
 import CompareAllTable from "@/components/CompareAllTable";
 import AdSlot from "@/components/AdSlot";
+import GoodsLinks from "@/components/GoodsLinks";
 import { makers, LAST_UPDATED } from "@/data/makers";
 
 // 構造化データ（ItemList）— Google に「比較リスト」であることを伝えSEOに寄与
@@ -147,6 +148,9 @@ export default function Home() {
           </p>
           <CompareAllTable />
         </section>
+
+        {/* 関連グッズ（GOODS_LINKS設定時のみ表示） */}
+        <GoodsLinks />
 
         {/* 広告枠 */}
         <AdSlot id="under-compare" />

@@ -23,6 +23,28 @@ export const GA4_MEASUREMENT_ID = "G-SKWMPWFK49";
 export const CONTACT_URL = "mailto:konkon0621@gmail.com";
 
 /**
+ * 関連グッズ（アフィリエイトリンク集）
+ * url に A8.net で発行したリンク（https://px.a8.net/svt/ejp?a8mat=... 形式）を入れると
+ * トップページと記事下に「関連グッズ」セクションが表示されます。空配列なら非表示。
+ */
+export type GoodsLink = {
+  label: string;
+  description: string;
+  url: string;
+  emoji: string;
+};
+
+export const GOODS_LINKS: GoodsLink[] = [
+  // 例: A8の楽天リンク発行後にここへ追加
+  // {
+  //   label: "楽天市場で野球ユニフォームを探す",
+  //   description: "既製ユニフォーム・練習着が豊富。ポイントも貯まる",
+  //   url: "https://px.a8.net/svt/ejp?a8mat=XXXXX",
+  //   emoji: "🛒",
+  // },
+];
+
+/**
  * 広告枠ごとのスロットID（AdSense の管理画面で広告ユニットを作ると発行される数字）
  * 未設定の枠はレスポンシブの自動広告として出ます。
  */
