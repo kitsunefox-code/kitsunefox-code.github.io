@@ -10,16 +10,14 @@
 - [x] 🤖 main ブランチに push すると自動で再デプロイされる仕組み（GitHub Actions）も設定済み
 - Vercel への移行も可能ですが、GitHub Pages のままで独自ドメイン・AdSense まで行けます
 
-## STEP 2. 独自ドメインを取る（費用: 年1,000〜2,000円くらい）
+## STEP 2. 独自ドメインを取る ✅ 完了（2026-07-03）
 
-AdSense は独自ドメインがほぼ必須です。`github.io` のままでは審査に通りません。
-
-- [ ] 👤 ドメインを購入（おすすめレジストラ: [Cloudflare Registrar](https://www.cloudflare.com/products/registrar/)＝原価販売で最安 / [お名前.com](https://www.onamae.com/)）
-  - 候補例: `kusayakyu-navi.com` `uniform-hikaku.com` など（.com か .jp 推奨）
-- [ ] 👤 レジストラのDNS設定で CNAME レコードを追加: `www` → `kitsunefox-code.github.io`
-  （APEXドメインを使う場合は A レコード 185.199.108.153 ほか3つ。手順は Claude が案内します）
-- [ ] 🤖 ドメイン名を Claude に伝える → GitHub Pages へのドメイン接続（API設定）・HTTPS有効化・
-  `data/site.ts` の SITE_URL 差し替え・再デプロイまで全部やります
+- [x] 👤 **kusayakyu-navi.com** をお名前.comで取得（初年度0円＋セルフバック2,000円で実質プラス）
+  - お名前ID: 36074204 ／ 自動更新ON（2027/7/3に約1,600円課金。不要なら事前にOFF）
+- [x] 🤖 ドメイン情報認証（メール認証）完了
+- [x] 🤖 DNSレコード設定完了（A×4 + CNAME www、ネームサーバーdnsv.jpへ変更）→ **反映待ち最大72時間**
+- [x] 🤖 GitHub Pages カスタムドメイン設定・SITE_URL差し替えデプロイ済み
+- [ ] 🤖 DNS反映後: HTTPS強制ON → Search Console新プロパティ登録 →「反映された?」と聞いてくれれば確認します
 
 ## STEP 3. アクセス解析を入れる ✅ 完了（2026-07-03 自動実施済み）
 
