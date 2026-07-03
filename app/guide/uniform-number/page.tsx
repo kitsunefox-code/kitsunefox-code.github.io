@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import AdSlot from "@/components/AdSlot";
+import GoodsLinks from "@/components/GoodsLinks";
 import { LAST_UPDATED } from "@/data/makers";
 import { SITE_URL } from "@/data/site";
 
@@ -130,6 +131,8 @@ export default function UniformNumberPage() {
 
         <AdSlot id="article-bottom" />
       </article>
+      <GoodsLinks />
+      <div style={{ height: 30 }} />
     </main>
   );
 }
