@@ -899,8 +899,10 @@ section {
 .palette {
   display: flex;
   gap: 8px;
-  margin-top: 12px;
+  margin-top: 14px;
   justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 .swatch {
   width: 44px;
@@ -908,6 +910,45 @@ section {
   border-radius: 10px;
   border: 2px solid #fff;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  flex-shrink: 0;
+}
+.analysis-panel {
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: #f7f9fc;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.analysis-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 14px;
+}
+.a-tag {
+  font-size: 13px;
+  color: var(--muted);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 5px 13px;
+}
+.a-tag b {
+  color: var(--navy);
+}
+.analysis-summary {
+  text-align: center;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 12px 0 0;
+}
+.result-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
 }
 .option-grid {
   display: flex;
