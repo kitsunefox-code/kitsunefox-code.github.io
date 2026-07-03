@@ -1,7 +1,7 @@
 // サイト全体の設定。収益化まわりはこのファイルだけ編集すればOKです。
 
 /** 独自ドメイン取得後に差し替え（末尾スラッシュなし） */
-export const SITE_URL = "https://example.com";
+export const SITE_URL = "https://kitsunefox-code.github.io";
 
 export const SITE_NAME = "草野球ユニフォーム比較ナビ";
 
