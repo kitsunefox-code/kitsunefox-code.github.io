@@ -17,7 +17,8 @@
 - [x] 🤖 ドメイン情報認証（メール認証）完了
 - [x] 🤖 DNSレコード設定完了（A×4 + CNAME www、ネームサーバーdnsv.jpへ変更）→ **反映待ち最大72時間**
 - [x] 🤖 GitHub Pages カスタムドメイン設定・SITE_URL差し替えデプロイ済み
-- [ ] 🤖 DNS反映後: HTTPS強制ON → Search Console新プロパティ登録 →「反映された?」と聞いてくれれば確認します
+- [x] 🤖 DNS反映確認 → HTTPS証明書発行 → HTTPS強制ON（https://kusayakyu-navi.com/ で稼働中）
+- [x] 🤖 Search Console 新ドメインプロパティ登録（所有権自動確認）＋ sitemap.xml 送信済み
 
 ## STEP 3. アクセス解析を入れる ✅ 完了（2026-07-03 自動実施済み）
 
