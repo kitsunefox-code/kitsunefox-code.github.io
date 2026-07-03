@@ -17,7 +17,7 @@ export const ADSENSE_CLIENT_ID = "";
  * 設定するとアクセス解析タグが全ページに入ります。
  * アクセス数の把握は ASP・メーカー直提携の交渉材料になるので早めの設置推奨。
  */
-export const GA4_MEASUREMENT_ID = "";
+export const GA4_MEASUREMENT_ID = "G-SKWMPWFK49";
 
 /** お問い合わせ先（Googleフォーム等のURLに差し替え推奨。メールなら "mailto:xxx@example.com"） */
 export const CONTACT_URL = "mailto:konkon0621@gmail.com";
