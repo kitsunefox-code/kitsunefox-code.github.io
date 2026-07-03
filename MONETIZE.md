@@ -21,16 +21,18 @@ AdSense は独自ドメインがほぼ必須です。`github.io` のままでは
 - [ ] 🤖 ドメイン名を Claude に伝える → GitHub Pages へのドメイン接続（API設定）・HTTPS有効化・
   `data/site.ts` の SITE_URL 差し替え・再デプロイまで全部やります
 
-## STEP 3. アクセス解析を入れる（無料・5分）
+## STEP 3. アクセス解析を入れる ✅ 完了（2026-07-03 自動実施済み）
 
-- [ ] 👤 [Google Analytics](https://analytics.google.com/) で GA4 プロパティを作成 → 測定ID（`G-XXXXXXXXXX`）をコピー
-- [ ] 🤖 測定IDを Claude に伝える → `data/site.ts` に設定します
+- [x] 🤖 GA4 プロパティ「草野球ユニフォーム比較ナビ」作成済み（測定ID: `G-SKWMPWFK49`）
+- [x] 🤖 `data/site.ts` に設定し本番反映済み。https://analytics.google.com/ でアクセス数が見られます
+- データ共有オプションはプライバシー優先ですべてオフにしてあります
 
-## STEP 4. Google に見つけてもらう（無料・10分）
+## STEP 4. Google に見つけてもらう ✅ 完了（2026-07-03 自動実施済み）
 
-- [ ] 👤 [Google Search Console](https://search.google.com/search-console) にサイトを登録（ドメインプロパティ推奨）
-- [ ] 👤 「サイトマップ」メニューで `https://あなたのドメイン/sitemap.xml` を送信
-- 以降、検索順位や流入キーワードがここで見られます
+- [x] 🤖 Search Console にプロパティ登録・所有権確認済み（HTMLファイル方式）
+- [x] 🤖 sitemap.xml 送信済み（直後は「取得できませんでした」と出ることがありますが数日で解消します）
+- 以降、検索順位や流入キーワードが https://search.google.com/search-console で見られます
+- ※独自ドメイン取得後は、新ドメインで再登録が必要（Claudeがまたやります）
 
 ## STEP 5. アフィリエイト（ASP）に登録する（無料・審査あり）
 
