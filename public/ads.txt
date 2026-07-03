@@ -1,4 +1,1 @@
-# Google AdSense 承認後、下の行の pub-0000000000000000 を
-# 自分のサイト運営者ID（AdSense管理画面 > アカウント > 情報 に記載）に差し替えて、
-# 行頭の「# 」を消してください。
-# google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
+google.com, pub-6423402285554400, DIRECT, f08c47fec0942fa0

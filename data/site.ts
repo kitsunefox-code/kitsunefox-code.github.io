@@ -10,7 +10,7 @@ export const SITE_NAME = "草野球ユニフォーム比較ナビ";
  * AdSense 審査通過後にここへ設定すると、サイト全体の広告枠が
  * プレースホルダーから実際の広告に自動で切り替わります。
  */
-export const ADSENSE_CLIENT_ID = "";
+export const ADSENSE_CLIENT_ID = "ca-pub-6423402285554400";
 
 /**
  * Google Analytics 4 の測定ID（例: "G-XXXXXXXXXX"）
