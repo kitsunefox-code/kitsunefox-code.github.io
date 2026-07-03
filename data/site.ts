@@ -36,20 +36,74 @@ export type GoodsLink = {
   emoji: string;
 };
 
+// 楽天アフィリエイトの品目別リンク（A8.netで生成）。
+// 共通部分は固定で、末尾の検索キーワード（野球+◯◯）だけが品目ごとに変わる仕組み。
+const RKT_PRE =
+  "https://px.a8.net/svt/ejp?a8mat=4B7SGX+2YKM2A+2HOM+BW8O1&rakuten=y&a8ejpredirect=http%3A%2F%2Fhb.afl.rakuten.co.jp%2Fhgc%2F0ea62065.34400275.0ea62066.204f04c0%2Fa26070331511_4B7SGX_2YKM2A_2HOM_BW8O1%3Fpc%3Dhttps%253A%252F%252Fsearch.rakuten.co.jp%252Fsearch%252Fmall%252F%2525E9%252587%25258E%2525E7%252590%252583%252B";
+const RKT_MID =
+  "%252F%26m%3Dhttps%253A%252F%252Fsearch.rakuten.co.jp%252Fsearch%252Fmall%252F%2525E9%252587%25258E%2525E7%252590%252583%252B";
+// 品目名（野球+◯◯の◯◯部分）の三重エンコード文字列
+const RKT_KW: Record<string, string> = {
+  uniform:
+    "%2525E3%252583%2525A6%2525E3%252583%25258B%2525E3%252583%252595%2525E3%252582%2525A9%2525E3%252583%2525BC%2525E3%252583%2525A0",
+  spike:
+    "%2525E3%252582%2525B9%2525E3%252583%252591%2525E3%252582%2525A4%2525E3%252582%2525AF",
+  glove:
+    "%2525E3%252582%2525B0%2525E3%252583%2525AD%2525E3%252583%2525BC%2525E3%252583%252596",
+  cap: "%2525E3%252582%2525AD%2525E3%252583%2525A3%2525E3%252583%252583%2525E3%252583%252597",
+  under:
+    "%2525E3%252582%2525A2%2525E3%252583%2525B3%2525E3%252583%252580%2525E3%252583%2525BC%2525E3%252582%2525B7%2525E3%252583%2525A3%2525E3%252583%252584",
+  socks:
+    "%2525E3%252582%2525BD%2525E3%252583%252583%2525E3%252582%2525AF%2525E3%252582%2525B9",
+};
+function rkt(key: string): string {
+  const kw = RKT_KW[key];
+  return RKT_PRE + kw + RKT_MID + kw + "%252F";
+}
+
 export const GOODS_LINKS: GoodsLink[] = [
   {
-    label: "楽天市場で野球用品を探す",
-    description: "既製ユニフォーム・練習着・ボールが豊富。楽天ポイントも貯まる",
-    url: "https://px.a8.net/svt/ejp?a8mat=4B7SGX+2YKM2A+2HOM+6C1VM",
-    pixel: "https://www10.a8.net/0.gif?a8mat=4B7SGX+2YKM2A+2HOM+6C1VM",
-    emoji: "🛒",
+    label: "楽天で野球ユニフォームを探す",
+    description: "既製ユニフォーム・練習着が豊富。楽天ポイントも貯まる",
+    url: rkt("uniform"),
+    emoji: "👕",
   },
   {
-    label: "【公式】スポーツ用品総合通販ならスーパースポーツゼビオ",
-    description: "野球用品・スパイク・アンダーシャツはこちら。セールも頻繁",
+    label: "【公式】スーパースポーツゼビオ",
+    description: "野球用品・スパイク・小物の総合通販。セールも頻繁",
     url: "https://px.a8.net/svt/ejp?a8mat=4B7SGX+8PRGKY+4ABU+5YJRM",
     pixel: "https://www16.a8.net/0.gif?a8mat=4B7SGX+8PRGKY+4ABU+5YJRM",
     emoji: "⚾",
+  },
+  {
+    label: "楽天で野球スパイクを探す",
+    description: "ポイント・ローカット・アップシューズまで幅広く",
+    url: rkt("spike"),
+    emoji: "👟",
+  },
+  {
+    label: "楽天で野球グローブを探す",
+    description: "投手用・内野手用・外野手用。型付け済みも",
+    url: rkt("glove"),
+    emoji: "🧤",
+  },
+  {
+    label: "楽天で野球キャップを探す",
+    description: "無地・カラー豊富。チーム帽子の下見にも",
+    url: rkt("cap"),
+    emoji: "🧢",
+  },
+  {
+    label: "楽天で野球アンダーシャツを探す",
+    description: "色を揃えるだけでチーム感アップ。夏用・冬用あり",
+    url: rkt("under"),
+    emoji: "🎽",
+  },
+  {
+    label: "楽天で野球ソックスを探す",
+    description: "カラーソックス・ストッキングでユニフォームを統一",
+    url: rkt("socks"),
+    emoji: "🧦",
   },
 ];
 
