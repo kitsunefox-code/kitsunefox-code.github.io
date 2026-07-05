@@ -37,4 +37,10 @@ export const GUIDES: Guide[] = [
     title: "背番号の決め方【人気番号・意味・ルール】",
     description: "エースナンバーの由来から揉めない決め方まで",
   },
+  {
+    href: "/guide/gear-checklist/",
+    emoji: "🎒",
+    title: "道具・装備 一式チェックリスト【初心者向け】",
+    description: "最低限そろえるもの・予算・揃える順番",
+  },
 ];
