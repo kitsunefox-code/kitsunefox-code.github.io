@@ -8,6 +8,12 @@ export type Guide = {
 
 export const GUIDES: Guide[] = [
   {
+    href: "/guide/how-to-start/",
+    emoji: "⚾",
+    title: "草野球の始め方 完全ガイド",
+    description: "チームの探し方・作り方・初心者が最初にやること",
+  },
+  {
     href: "/guide/uniform-how-to/",
     emoji: "📖",
     title: "草野球ユニフォームの作り方【7ステップ】",

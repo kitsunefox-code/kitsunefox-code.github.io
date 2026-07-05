@@ -76,6 +76,13 @@ export const GOODS_LINKS: GoodsLink[] = [
     emoji: "⚾",
   },
   {
+    label: "【公式】スポーツデポ・アルペン",
+    description: "最短翌日配送。野球用品の品ぞろえが豊富な大型店",
+    url: "https://px.a8.net/svt/ejp?a8mat=4B7T8Y+87WGFM+3OSK+5YJRM",
+    pixel: "https://www11.a8.net/0.gif?a8mat=4B7T8Y+87WGFM+3OSK+5YJRM",
+    emoji: "🏬",
+  },
+  {
     label: "楽天で野球スパイクを探す",
     description: "ポイント・ローカット・アップシューズまで幅広く",
     url: rkt("spike"),
