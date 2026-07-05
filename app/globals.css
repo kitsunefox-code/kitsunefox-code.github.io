@@ -79,6 +79,20 @@ a {
   align-items: center;
   justify-content: center;
   font-size: 15px;
+  flex-shrink: 0;
+}
+.logo-sub {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+  margin-top: 1px;
+}
+@media (max-width: 680px) {
+  .logo-sub {
+    display: none;
+  }
 }
 .site-header nav {
   display: flex;
@@ -131,6 +145,127 @@ a {
   border-radius: 999px;
   font-size: 12.5px;
   font-weight: 700;
+}
+
+/* ===== 写真背景ヒーロー（おしゃれ版） ===== */
+.hero-photo {
+  position: relative;
+  padding: 0;
+  border-bottom: 4px solid var(--accent);
+  background:
+    #0d2b4e url("/img/hero-home-plate.jpg") center 60% / cover no-repeat;
+  overflow: hidden;
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    rgba(9, 22, 42, 0.9) 0%,
+    rgba(9, 22, 42, 0.72) 42%,
+    rgba(9, 22, 42, 0.4) 100%
+  );
+}
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  padding: 66px 16px 60px;
+}
+.hero-kicker {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: var(--accent-2);
+  margin: 0 0 12px;
+}
+.hero-photo h1 {
+  color: #fff;
+  font-size: clamp(28px, 6vw, 46px);
+  line-height: 1.3;
+  margin: 0 0 14px;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+.hero-photo h1 .hl {
+  color: var(--accent-2);
+}
+.hero-photo p {
+  color: rgba(255, 255, 255, 0.92);
+  font-size: clamp(14px, 2.4vw, 17px);
+  line-height: 1.7;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+}
+.hero-photo .badge {
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  backdrop-filter: blur(2px);
+}
+
+/* ===== 始め方CTAバンド（写真アクセント） ===== */
+.start-band {
+  display: flex;
+  align-items: stretch;
+  margin: 34px 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  text-decoration: none;
+  background: var(--navy);
+  border: 1px solid var(--line);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.start-band:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(13, 43, 78, 0.16);
+}
+.start-band-photo {
+  flex: 0 0 38%;
+  min-height: 190px;
+  background-size: cover;
+  background-position: center;
+}
+.start-band-body {
+  flex: 1;
+  padding: 24px 26px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+}
+.start-band-kicker {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: var(--accent-2);
+}
+.start-band-title {
+  font-size: clamp(18px, 3vw, 23px);
+  font-weight: 800;
+}
+.start-band-desc {
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.86);
+  margin: 4px 0 10px;
+}
+.start-band-btn {
+  align-self: flex-start;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 800;
+  font-size: 14px;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+@media (max-width: 680px) {
+  .start-band {
+    flex-direction: column;
+  }
+  .start-band-photo {
+    flex-basis: auto;
+    min-height: 150px;
+  }
 }
 
 /* ===== セクション ===== */

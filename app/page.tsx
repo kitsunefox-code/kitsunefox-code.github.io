@@ -69,30 +69,30 @@ export default function Home() {
     <main>
       <StructuredData />
 
-      {/* ヒーロー */}
-      <div className="hero">
-        <div className="container">
+      {/* ヒーロー（写真背景） */}
+      <div className="hero hero-photo">
+        <div className="hero-overlay" />
+        <div className="container hero-inner">
+          <p className="hero-kicker">⚾ 草野球ナビ</p>
           <h1>
-            草野球のユニフォーム、
-            <br />
-            <span className="hl">どこで作る？</span>を今日で解決。
+            草野球を、<span className="hl">もっと楽しく</span>。
           </h1>
           <p>
-            主要オーダーメーカーの「価格・最低ロット・納期・オーダー方式」を横並びで比較。
-            チームの予算や人数に合わせて、あなたにぴったりの1社が見つかります。
+            チームの立ち上げから、ユニフォーム選び、道具えらびまで。
+            草野球の「困った」を、まるごと解決するナビサイトです。
           </p>
           <div className="badges">
-            <span className="badge">⚾ {makers.length}社を比較</span>
-            <span className="badge">💰 1着〜対応も掲載</span>
-            <span className="badge">🧵 昇華・刺繍で絞り込み</span>
-            <span className="badge">🔄 {LAST_UPDATED}時点</span>
+            <span className="badge">⚾ メーカー{makers.length}社を比較</span>
+            <span className="badge">📷 写真でぴったり診断</span>
+            <span className="badge">📚 お役立ちガイド</span>
+            <span className="badge">🔄 {LAST_UPDATED}更新</span>
           </div>
           <div className="hero-cta">
-            <a className="primary" href="/shindan/">
-              📷 写真からぴったりのメーカーを診断する
+            <a className="primary" href="#compare">
+              ⚾ ユニフォーム比較ランキングを見る
             </a>
-            <a className="ghost" href="/guide/uniform-how-to/">
-              初めての方へ：作り方ガイド
+            <a className="ghost" href="/guide/how-to-start/">
+              草野球の始め方ガイド
             </a>
           </div>
         </div>
@@ -199,6 +199,26 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* 始め方CTAバンド（写真アクセント） */}
+        <a className="start-band" href="/guide/how-to-start/">
+          <div
+            className="start-band-photo"
+            style={{ backgroundImage: "url('/img/gloves-grass.jpg')" }}
+            aria-hidden="true"
+          />
+          <div className="start-band-body">
+            <span className="start-band-kicker">はじめての方へ</span>
+            <span className="start-band-title">
+              これから草野球を始める人へ
+            </span>
+            <span className="start-band-desc">
+              チームの探し方・作り方から、初日の立ち回りまで。
+              未経験・ブランクありでも大丈夫な「始め方 完全ガイド」を用意しました。
+            </span>
+            <span className="start-band-btn">始め方ガイドを読む →</span>
+          </div>
+        </a>
 
         {/* お役立ちガイド */}
         <section id="guides">

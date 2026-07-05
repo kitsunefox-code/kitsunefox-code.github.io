@@ -3,7 +3,7 @@
 /** 独自ドメイン（末尾スラッシュなし） */
 export const SITE_URL = "https://kusayakyu-navi.com";
 
-export const SITE_NAME = "草野球ユニフォーム比較ナビ";
+export const SITE_NAME = "草野球ナビ";
 
 /**
  * Google AdSense のクライアントID（例: "ca-pub-1234567890123456"）

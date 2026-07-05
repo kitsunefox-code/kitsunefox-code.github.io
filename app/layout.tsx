@@ -9,13 +9,14 @@ import {
 import "./globals.css";
 
 const DESCRIPTION =
-  "草野球チームのオーダーユニフォームをどこで作る？主要メーカーの価格・最低ロット・納期・オーダー方式（昇華/刺繍）を一覧で比較。予算やチーム人数に合わせて最適な1社が見つかります。";
+  "草野球のはじめの一歩をまるごとサポート。オーダーユニフォームのメーカー比較（価格・納期・昇華/刺繍）を軸に、チームの始め方・道具えらび・運営のコツまで解説する草野球の総合ナビサイトです。";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "草野球ユニフォーム比較ナビ｜オーダーメーカーを価格・納期で比較",
-    template: "%s｜草野球ユニフォーム比較ナビ",
+    default:
+      "草野球ナビ｜ユニフォームメーカー比較＆チーム運営お役立ちガイド",
+    template: "%s｜草野球ナビ",
   },
   description: DESCRIPTION,
   keywords: [
@@ -35,7 +36,7 @@ export const metadata: Metadata = {
     locale: "ja_JP",
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: "草野球ユニフォーム比較ナビ｜オーダーメーカーを価格・納期で比較",
+    title: "草野球ナビ｜ユニフォームメーカー比較＆チーム運営お役立ちガイド",
     description: DESCRIPTION,
     images: [{ url: "/og.png", width: 1200, height: 630 }],
   },
@@ -92,9 +93,12 @@ gtag('config', '${GA4_MEASUREMENT_ID}');`}
 
         <header className="site-header">
           <div className="container">
-            <a className="logo" href="/" aria-label="草野球ユニフォーム比較ナビ">
+            <a className="logo" href="/" aria-label="草野球ナビ">
               <span className="ball">⚾</span>
-              <span>草野球ユニフォーム比較ナビ</span>
+              <span>
+                草野球ナビ
+                <span className="logo-sub">ユニフォーム比較・お役立ちガイド</span>
+              </span>
             </a>
             <nav>
               <a href="/#compare">メーカー比較</a>
