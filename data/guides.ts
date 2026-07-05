@@ -49,4 +49,16 @@ export const GUIDES: Guide[] = [
     title: "道具・装備 一式チェックリスト【初心者向け】",
     description: "最低限そろえるもの・予算・揃える順番",
   },
+  {
+    href: "/guide/soft-vs-hard/",
+    emoji: "🥎",
+    title: "【硬式出身者必見】軟式と硬式の違い",
+    description: "ボール・打撃・守備はこう変わる。戸惑いポイントと対処法",
+  },
+  {
+    href: "/guide/soft-batting/",
+    emoji: "🏏",
+    title: "軟式の打ち方のコツ【動画つき】",
+    description: "ボテボテのゴロを減らして飛ばす。硬式出身者・初心者向け",
+  },
 ];
