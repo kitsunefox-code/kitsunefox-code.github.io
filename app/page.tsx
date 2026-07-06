@@ -240,6 +240,24 @@ export default function Home() {
           </div>
         </a>
 
+        {/* グローブメーカー占いCTAバンド（おまけ） */}
+        <a className="start-band" href="/glove-fortune/">
+          <div
+            className="start-band-photo"
+            style={{ backgroundImage: "url('/img/hero-home-plate.jpg')" }}
+            aria-hidden="true"
+          />
+          <div className="start-band-body">
+            <span className="start-band-kicker">🔮 おまけ占い</span>
+            <span className="start-band-title">グローブメーカー占い</span>
+            <span className="start-band-desc">
+              試合でメインに使うグローブメーカーを選ぶだけで、今日の野球運を占います。
+              王道からアイピーセレクト等のこだわり系まで対応。毎日変わります。
+            </span>
+            <span className="start-band-btn">今日の運勢を占う →</span>
+          </div>
+        </a>
+
         {/* お役立ちガイド */}
         <section id="guides">
           <h2 className="section-title">草野球お役立ちガイド</h2>
