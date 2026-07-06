@@ -1620,3 +1620,25 @@ section {
   padding: 9px 18px;
   border-radius: 10px;
 }
+
+/* ===== ガイド一覧のカテゴリ見出し ===== */
+.guide-cat {
+  margin-bottom: 30px;
+}
+.guide-cat-head {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--navy);
+  margin: 0 0 12px;
+  padding-left: 12px;
+  border-left: 5px solid var(--accent);
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.guide-cat-sub {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}

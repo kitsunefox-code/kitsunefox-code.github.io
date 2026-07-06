@@ -276,14 +276,14 @@ export default function Home() {
           </div>
         </a>
 
-        {/* お役立ちガイド */}
+        {/* お役立ちガイド（トップは抜粋。全記事はガイド一覧へ） */}
         <section id="guides">
           <h2 className="section-title">草野球お役立ちガイド</h2>
           <p className="section-sub">
-            チーム立ち上げ・運営に役立つ読みものを揃えました。
+            チーム立ち上げ・運営から、道具えらび・お手入れ・技術まで。
           </p>
           <div className="goods-grid">
-            {GUIDES.map((g) => (
+            {GUIDES.slice(0, 8).map((g) => (
               <a key={g.href} className="goods-card" href={g.href}>
                 <span className="goods-emoji">{g.emoji}</span>
                 <span>
@@ -294,6 +294,9 @@ export default function Home() {
               </a>
             ))}
           </div>
+          <a className="cta-inline" href="/guide/" style={{ marginTop: 20 }}>
+            → お役立ちガイドをすべて見る（全{GUIDES.length}記事）
+          </a>
         </section>
 
         {/* FAQ */}
