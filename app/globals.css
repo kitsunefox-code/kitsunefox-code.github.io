@@ -1309,3 +1309,57 @@ section {
   color: var(--muted);
   margin: 10px 0 0;
 }
+
+/* ===== バット相性診断の結果 ===== */
+.bat-spec {
+  display: grid;
+  gap: 8px;
+  margin: 14px 0 16px;
+}
+.bat-spec-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f7f9fc;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 11px 14px;
+}
+.bat-spec-k {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--muted);
+  min-width: 108px;
+  flex-shrink: 0;
+}
+.bat-spec-v {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--navy);
+}
+.bat-advice {
+  background: #fff7f4;
+  border-left: 4px solid var(--accent);
+  border-radius: 0 10px 10px 0;
+  padding: 12px 14px;
+  font-size: 14px;
+  line-height: 1.8;
+  margin: 4px 0 12px;
+}
+.bat-cautions {
+  margin: 0;
+  padding-left: 4px;
+  list-style: none;
+}
+.bat-cautions li {
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 4px;
+}
+.bat-links {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}

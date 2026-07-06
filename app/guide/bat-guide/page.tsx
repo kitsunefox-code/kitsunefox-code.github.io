@@ -74,6 +74,13 @@ export default function BatGuidePage() {
           この記事では、<strong>長さ・重さ・素材の3軸</strong>で、後悔しない選び方を整理します。
         </p>
 
+        <div className="point-box">
+          <strong>🏏 先に「自分のタイプ」を知りたい人へ：</strong>
+          6つの質問に答えるだけで、あなたに合う素材・長さ・重さをその場で提案する
+          <a href="/bat-shindan/">軟式バット相性診断</a>を用意しました。
+          読む前にサクッと方向性をつかめます。
+        </div>
+
         <AdSlot id="article-top" />
 
         <h2>選び方は「長さ × 重さ × 素材」の3軸で決まる</h2>

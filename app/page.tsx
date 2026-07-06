@@ -220,6 +220,26 @@ export default function Home() {
           </div>
         </a>
 
+        {/* バット診断ツールCTAバンド */}
+        <a className="start-band" href="/bat-shindan/">
+          <div
+            className="start-band-photo"
+            style={{ backgroundImage: "url('/img/gloves-grass.jpg')" }}
+            aria-hidden="true"
+          />
+          <div className="start-band-body">
+            <span className="start-band-kicker">無料診断ツール</span>
+            <span className="start-band-title">
+              軟式バット相性診断
+            </span>
+            <span className="start-band-desc">
+              6つの質問に答えるだけで、あなたにぴったりの軟式バットの
+              素材・長さ・重さ・バランスをその場で提案。「硬式出身だけど力はない」人にも対応。
+            </span>
+            <span className="start-band-btn">バットを診断する →</span>
+          </div>
+        </a>
+
         {/* お役立ちガイド */}
         <section id="guides">
           <h2 className="section-title">草野球お役立ちガイド</h2>
