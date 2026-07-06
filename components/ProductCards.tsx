@@ -68,6 +68,8 @@ export default function ProductCards({
       imageFlag: "1",
       sort: "standard",
       formatVersion: "1",
+      // 大人の草野球向けサイトなので、少年・ジュニア用モデルを除外
+      NGKeyword: "少年 ジュニア キッズ 小学生",
     });
     if (RAKUTEN_AFFILIATE_ID) params.set("affiliateId", RAKUTEN_AFFILIATE_ID);
     let alive = true;
