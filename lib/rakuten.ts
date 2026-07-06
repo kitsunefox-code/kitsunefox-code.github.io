@@ -1,3 +1,4 @@
+import https from "node:https";
 import { RAKUTEN_AFFILIATE_ID, RAKUTEN_APP_ID, SITE_URL } from "@/data/site";
 
 export type RakutenItem = {
@@ -11,13 +12,57 @@ export type RakutenItem = {
 // アクセスキーはシークレット。公開リポジトリに置かず、ビルド時の環境変数から読む。
 const ACCESS_KEY = process.env.RAKUTEN_ACCESS_KEY || "";
 
-// 新しい楽天市場 商品検索API（アクセスキー方式）
+// 新しい楽天市場 商品検索API（applicationId + accessKey 方式）
 const ENDPOINT =
   "https://openapi.rakuten.co.jp/ichibams/api/IchibaItem/Search/20260701";
 
 /**
+ * Node組み込みhttpsでGET-JSON。
+ * fetch(undici)はForbidden header nameのため Referer を落とすので、
+ * リファラ制限アプリに合わせて自前で Referer を送るためhttpsを使う。
+ */
+function getJson(url: string, referer: string): Promise<unknown> {
+  return new Promise((resolve) => {
+    const u = new URL(url);
+    const req = https.request(
+      {
+        hostname: u.hostname,
+        path: u.pathname + u.search,
+        method: "GET",
+        headers: {
+          Referer: referer,
+          "User-Agent": "kusayakyu-navi/1.0 (+https://kusayakyu-navi.com)",
+          Accept: "application/json",
+        },
+      },
+      (res) => {
+        let data = "";
+        res.on("data", (c) => (data += c));
+        res.on("end", () => {
+          const ok = (res.statusCode || 0) >= 200 && (res.statusCode || 0) < 300;
+          if (!ok) {
+            console.warn(`[rakuten] HTTP ${res.statusCode} ${data.slice(0, 200)}`);
+            return resolve(null);
+          }
+          try {
+            resolve(JSON.parse(data));
+          } catch {
+            resolve(null);
+          }
+        });
+      }
+    );
+    req.on("error", (e) => {
+      console.warn("[rakuten] request failed", (e as Error).message);
+      resolve(null);
+    });
+    req.end();
+  });
+}
+
+/**
  * 楽天市場 商品検索APIをビルド時に呼び出す。
- * アクセスキー未設定・エラー時は空配列を返し、呼び出し側は検索リンクにフォールバック。
+ * 認証情報が未設定・エラー時は空配列を返し、呼び出し側は検索リンクにフォールバック。
  * formatVersion=1 のため、レスポンスは従来どおり Items[].Item の配列形式。
  */
 export async function fetchRakutenItems(
@@ -36,41 +81,27 @@ export async function fetchRakutenItems(
   });
   if (RAKUTEN_AFFILIATE_ID) params.set("affiliateId", RAKUTEN_AFFILIATE_ID);
   const url = `${ENDPOINT}?${params.toString()}`;
-  try {
-    // アプリをリファラ制限で登録しているため、サーバー取得でも Referer を明示。
-    const res = await fetch(url, {
-      headers: { Referer: `${SITE_URL}/` },
-    });
-    if (!res.ok) {
-      // 原因調査用（アクセスキー本体は出力しない）
-      const body = await res.text().catch(() => "");
-      console.warn(
-        `[rakuten] ${keyword}: HTTP ${res.status} ${body.slice(0, 200)}`
-      );
-      return [];
-    }
-    const data = await res.json();
-    const items: RakutenItem[] = (data.Items || [])
-      .map((wrap: { Item?: Record<string, unknown> }) => {
-        const it = (wrap.Item || wrap) as Record<string, unknown>;
-        const imgs = (it.mediumImageUrls || []) as
-          | { imageUrl: string }[]
-          | string[];
-        const first = imgs[0] as { imageUrl?: string } | string | undefined;
-        const raw =
-          typeof first === "string" ? first : first?.imageUrl || "";
-        return {
-          name: String(it.itemName || ""),
-          price: Number(it.itemPrice || 0),
-          url: String(it.affiliateUrl || it.itemUrl || ""),
-          image: raw.replace(/\?_ex=\d+x\d+$/, "?_ex=300x300"),
-          shop: String(it.shopName || ""),
-        };
-      })
-      .filter((i: RakutenItem) => i.name && i.url && i.image);
-    return items.slice(0, hits);
-  } catch (e) {
-    console.warn(`[rakuten] ${keyword}: fetch failed`, (e as Error).message);
-    return [];
-  }
+
+  const data = (await getJson(url, `${SITE_URL}/`)) as {
+    Items?: { Item?: Record<string, unknown> }[];
+  } | null;
+  if (!data || !Array.isArray(data.Items)) return [];
+
+  const items: RakutenItem[] = data.Items.map((wrap) => {
+    const it = (wrap.Item || wrap) as Record<string, unknown>;
+    const imgs = (it.mediumImageUrls || []) as
+      | { imageUrl: string }[]
+      | string[];
+    const first = imgs[0] as { imageUrl?: string } | string | undefined;
+    const raw = typeof first === "string" ? first : first?.imageUrl || "";
+    return {
+      name: String(it.itemName || ""),
+      price: Number(it.itemPrice || 0),
+      url: String(it.affiliateUrl || it.itemUrl || ""),
+      image: raw.replace(/\?_ex=\d+x\d+$/, "?_ex=300x300"),
+      shop: String(it.shopName || ""),
+    };
+  }).filter((i) => i.name && i.url && i.image);
+
+  return items.slice(0, hits);
 }
