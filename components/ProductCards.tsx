@@ -18,35 +18,6 @@ type Item = {
   shop: string;
 };
 
-// リファラ制限アプリはブラウザの本物のRefererが必要なため、JSONPで取得する。
-function jsonp(url: string): Promise<unknown> {
-  return new Promise((resolve, reject) => {
-    const cb = "__rkt_" + Math.random().toString(36).slice(2);
-    const s = document.createElement("script");
-    const w = window as unknown as Record<string, unknown>;
-    const cleanup = () => {
-      delete w[cb];
-      s.remove();
-    };
-    w[cb] = (data: unknown) => {
-      resolve(data);
-      cleanup();
-    };
-    s.onerror = () => {
-      reject(new Error("jsonp error"));
-      cleanup();
-    };
-    s.src = `${url}&callback=${cb}&format=json`;
-    document.body.appendChild(s);
-    setTimeout(() => {
-      if (w[cb]) {
-        reject(new Error("timeout"));
-        cleanup();
-      }
-    }, 10000);
-  });
-}
-
 function parse(data: unknown): Item[] {
   const d = data as { Items?: { Item?: Record<string, unknown> }[] };
   if (!d || !Array.isArray(d.Items)) return [];
@@ -100,9 +71,11 @@ export default function ProductCards({
     });
     if (RAKUTEN_AFFILIATE_ID) params.set("affiliateId", RAKUTEN_AFFILIATE_ID);
     let alive = true;
-    jsonp(`${ENDPOINT}?${params.toString()}`)
+    // 新エンドポイントはCORS対応。ブラウザのリファラ(オリジン)で認可される。
+    fetch(`${ENDPOINT}?${params.toString()}`)
+      .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
-        if (!alive) return;
+        if (!alive || !data) return;
         const parsed = parse(data).slice(0, hits);
         if (parsed.length) setItems(parsed);
       })
