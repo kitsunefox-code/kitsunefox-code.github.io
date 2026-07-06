@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import AdSlot from "@/components/AdSlot";
 import AffiliateBox from "@/components/AffiliateBox";
+import ProductCards from "@/components/ProductCards";
 import GoodsLinks from "@/components/GoodsLinks";
 import { LAST_UPDATED } from "@/data/makers";
 import { SITE_URL } from "@/data/site";
@@ -136,7 +137,11 @@ export default function GloveGuidePage() {
           </tbody>
         </table>
 
-        <AffiliateBox heading="🧤 軟式グローブを探す" rakuten={["glove"]} retailers />
+        <ProductCards
+          keyword="軟式 グローブ 一般"
+          heading="🧤 楽天で人気の軟式グローブ"
+          fallbackRakuten={["glove"]}
+        />
 
         <h2>サイズ（インチ）の合わせ方</h2>
         <p>

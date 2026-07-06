@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import AdSlot from "@/components/AdSlot";
 import AffiliateBox from "@/components/AffiliateBox";
+import ProductCards from "@/components/ProductCards";
 import GoodsLinks from "@/components/GoodsLinks";
 import { LAST_UPDATED } from "@/data/makers";
 import { SITE_URL } from "@/data/site";
@@ -149,7 +150,11 @@ export default function BatGuidePage() {
           自分に合う一本が見えてきます。
         </div>
 
-        <AffiliateBox heading="🏏 軟式バットを探す" rakuten={["bat"]} retailers />
+        <ProductCards
+          keyword="軟式 バット 一般"
+          heading="🏏 楽天で人気の軟式バット"
+          fallbackRakuten={["bat"]}
+        />
 
         <AdSlot id="article-mid" />
 

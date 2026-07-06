@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import AdSlot from "@/components/AdSlot";
 import AffiliateBox from "@/components/AffiliateBox";
+import ProductCards from "@/components/ProductCards";
 import GoodsLinks from "@/components/GoodsLinks";
 import { LAST_UPDATED } from "@/data/makers";
 import { SITE_URL } from "@/data/site";
@@ -136,7 +137,11 @@ export default function SpikesGuidePage() {
           </tbody>
         </table>
 
-        <AffiliateBox heading="👟 野球スパイクを探す" rakuten={["spike"]} retailers />
+        <ProductCards
+          keyword="野球 スパイク ポイント"
+          heading="👟 楽天で人気の野球スパイク"
+          fallbackRakuten={["spike"]}
+        />
 
         <h2>サイズ合わせ：つま先5mmの余裕がちょうどいい</h2>
         <p>

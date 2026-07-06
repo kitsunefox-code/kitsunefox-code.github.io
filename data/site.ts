@@ -19,6 +19,19 @@ export const ADSENSE_CLIENT_ID = "ca-pub-6423402285554400";
  */
 export const GA4_MEASUREMENT_ID = "G-SKWMPWFK49";
 
+/**
+ * 楽天ウェブサービスの「アプリID(applicationId)」。
+ * https://webservice.rakuten.co.jp/ でアプリ登録すると発行される。
+ * ここに設定するとビルド時に商品検索APIを叩き、記事に実商品カードを自動表示。
+ * 空の間は従来どおり「楽天の検索結果へのリンク」にフォールバックする。
+ */
+export const RAKUTEN_APP_ID = "";
+/**
+ * 楽天アフィリエイトID（https://affiliate.rakuten.co.jp/ で確認）。
+ * 設定すると商品リンクがアフィリエイト経由になり、成果が計上される。
+ */
+export const RAKUTEN_AFFILIATE_ID = "";
+
 /** お問い合わせ先（Googleフォーム等のURLに差し替え推奨。メールなら "mailto:xxx@example.com"） */
 export const CONTACT_URL = "mailto:konkon0621@gmail.com";
 

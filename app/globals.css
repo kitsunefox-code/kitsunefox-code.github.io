@@ -1724,3 +1724,91 @@ section {
   text-underline-offset: 3px;
   text-decoration-color: rgba(216, 67, 27, 0.35);
 }
+
+/* ===== 楽天 実商品カード（ProductCards） ===== */
+.prod-box {
+  background: linear-gradient(180deg, #fff7f4 0%, #fff 100%);
+  border: 1px solid #f0d9cf;
+  border-radius: var(--radius);
+  padding: 16px 18px 14px;
+  margin: 26px 0;
+}
+.prod-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+@media (min-width: 720px) {
+  .prod-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.prod-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color 0.15s, transform 0.1s, box-shadow 0.15s;
+}
+.prod-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(216, 67, 27, 0.14);
+}
+.prod-thumb {
+  display: block;
+  aspect-ratio: 1 / 1;
+  background: #f6f2ec;
+  overflow: hidden;
+}
+.prod-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+.prod-name {
+  font-size: 12px;
+  line-height: 1.5;
+  font-weight: 600;
+  padding: 10px 10px 4px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.prod-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 0 10px 8px;
+  margin-top: auto;
+}
+.prod-price {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.01em;
+}
+.prod-shop {
+  font-size: 10.5px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.prod-btn {
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-align: center;
+  padding: 8px 6px;
+}
