@@ -136,6 +136,22 @@ export default function BatComparePage() {
             </tbody>
           </table>
 
+          <h2>価格帯で選ぶ早見表</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>価格帯</th>
+                <th>目安</th>
+                <th>こんな人・代表タイプ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>エントリー</td><td>5,000〜10,000円</td><td>初心者・まず一本。扱いやすい金属バット</td></tr>
+              <tr><td>ミドル</td><td>10,000〜20,000円</td><td>中級者。カーボン・複合の入門モデル</td></tr>
+              <tr><td>ハイエンド</td><td>20,000〜40,000円</td><td>飛距離重視。ビヨンド系の上位（要規定確認）</td></tr>
+            </tbody>
+          </table>
+
           <ProductCards
             keyword="軟式 バット 一般"
             heading="🏏 楽天で人気の軟式バット"

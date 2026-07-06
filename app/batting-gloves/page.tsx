@@ -156,6 +156,22 @@ export default function BattingGlovesPage() {
             天然皮革はなじむほど手に一体化するので、木製の繊細な打感を活かせます。
           </div>
 
+          <h2>価格帯で選ぶ早見表</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>価格帯</th>
+                <th>目安</th>
+                <th>こんな人・代表タイプ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>エントリー</td><td>1,500〜2,500円</td><td>消耗品として。合皮の実用モデル</td></tr>
+              <tr><td>ミドル</td><td>2,500〜4,000円</td><td>標準。国内定番（ミズノ・SSK等）</td></tr>
+              <tr><td>ハイエンド</td><td>4,000〜6,500円</td><td>グリップ・耐久重視。輸入・天然皮革</td></tr>
+            </tbody>
+          </table>
+
           <ProductCards
             keyword="野球 バッティンググローブ"
             heading="🧤 楽天で人気のバッティンググローブ"
@@ -214,6 +230,9 @@ export default function BattingGlovesPage() {
           </ul>
 
           <div className="bat-links">
+            <a className="cta-inline" href="/batting-glove-shindan/">
+              → 7問でわかる「バッティンググローブ相性診断」
+            </a>
             <a className="cta-inline" href="/guide/bat-guide/">
               → バット本体の選び方「軟式バットの選び方」
             </a>

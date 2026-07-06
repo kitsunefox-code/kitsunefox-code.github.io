@@ -34,6 +34,14 @@ export const TOOLS: Tool[] = [
     cta: "ぴったりのグローブを診断する",
   },
   {
+    href: "/batting-glove-shindan/",
+    emoji: "✊",
+    title: "バッティンググローブ相性診断",
+    desc: "使うバット・重視点・手の大きさ・素材・予算から、打撃手袋の素材・ブランド傾向・サイズ・グリップ度を提案。木製派・裏技も。実商品も表示。",
+    badge: "7問で診断",
+    cta: "ぴったりの打撃手袋を診断する",
+  },
+  {
     href: "/glove-fortune/",
     emoji: "🔮",
     title: "グローブメーカー占い",

@@ -10,6 +10,7 @@ type Hit = "distance" | "average" | "contact"; // 打撃タイプ
 type Height = "s" | "m" | "l"; // 身長
 type Composite = "yes" | "unknown" | "no"; // 複合(ビヨンド系)が使えるか
 type Budget = "low" | "mid" | "high";
+type WeightPref = "light" | "std" | "heavy" | "auto"; // 重さの好み
 
 type Answers = {
   exp: Exp | null;
@@ -18,6 +19,7 @@ type Answers = {
   height: Height | null;
   composite: Composite | null;
   budget: Budget | null;
+  weight: WeightPref | null;
 };
 
 type Material = "metal" | "carbon" | "beyond";
@@ -72,6 +74,12 @@ const BUDGET_OPTS: { v: Budget; label: string }[] = [
   { v: "mid", label: "標準（1〜2万円）" },
   { v: "high", label: "こだわりたい（2万円〜）" },
 ];
+const WEIGHT_OPTS: { v: WeightPref; label: string }[] = [
+  { v: "light", label: "軽め（振り抜き重視）" },
+  { v: "std", label: "標準" },
+  { v: "heavy", label: "重め（当たり負けしにくい）" },
+  { v: "auto", label: "おまかせ（診断で決めて）" },
+];
 
 const MATERIAL_LABEL: Record<Material, string> = {
   metal: "金属（ジュラルミン系）",
@@ -104,15 +112,26 @@ function diagnose(a: Required<Answers>): Result {
     a.height === "s" ? "82〜83cm" : a.height === "l" ? "84〜85cm" : "83〜84cm";
 
   // --- 重さ・バランス ---
+  // 明示的な好みがあれば最優先。なければ経験・力・打撃タイプから推定（より正確に）。
   let weightBalance: string;
-  const powerful = a.power === "high" || (a.exp === "hard" && a.hit === "distance");
-  const light = a.power === "low" || a.exp === "beginner" || a.hit === "contact";
-  if (powerful && !light) {
+  if (a.weight === "heavy") {
     weightBalance = "やや重め（740〜760g）・トップバランス";
-  } else if (light) {
+  } else if (a.weight === "light") {
     weightBalance = "軽め（700〜720g）・カウンター〜ミドルバランス";
-  } else {
+  } else if (a.weight === "std") {
     weightBalance = "標準（720〜740g）・ミドルバランス";
+  } else {
+    const powerful =
+      a.power === "high" || (a.exp === "hard" && a.hit === "distance");
+    const light =
+      a.power === "low" || a.exp === "beginner" || a.hit === "contact";
+    if (powerful && !light) {
+      weightBalance = "やや重め（740〜760g）・トップバランス";
+    } else if (light) {
+      weightBalance = "軽め（700〜720g）・カウンター〜ミドルバランス";
+    } else {
+      weightBalance = "標準（720〜740g）・ミドルバランス";
+    }
   }
 
   // --- 予算目安 ---
@@ -202,6 +221,7 @@ export default function BatShindan() {
     height: null,
     composite: null,
     budget: null,
+    weight: null,
   });
   const [result, setResult] = useState<Result | null>(null);
 
@@ -211,7 +231,8 @@ export default function BatShindan() {
     a.hit !== null &&
     a.height !== null &&
     a.composite !== null &&
-    a.budget !== null;
+    a.budget !== null &&
+    a.weight !== null;
 
   const run = () => {
     if (!ready) return;
@@ -294,8 +315,18 @@ export default function BatShindan() {
         {opt("budget", BUDGET_OPTS, a.budget)}
       </div>
 
+      <div className="shindan-step">
+        <h2>
+          <span className="step-num">7</span>重さの好みは？
+        </h2>
+        <p className="step-sub">
+          好みがあれば優先します。「おまかせ」なら経験・力・打撃タイプから最適な重さを提案します。
+        </p>
+        {opt("weight", WEIGHT_OPTS, a.weight)}
+      </div>
+
       <button className="shindan-submit" disabled={!ready} onClick={run}>
-        {ready ? "🏏 診断結果を見る" : "6つの質問すべてに答えると診断できます"}
+        {ready ? "🏏 診断結果を見る" : "7つの質問すべてに答えると診断できます"}
       </button>
 
       {result && (

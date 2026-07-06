@@ -119,6 +119,22 @@ export default function GloveComparePage() {
             </tbody>
           </table>
 
+          <h2>価格帯で選ぶ早見表</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>価格帯</th>
+                <th>目安</th>
+                <th>こんな人・代表タイプ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>エントリー</td><td>6,000〜12,000円</td><td>初心者の最初の一枚。合皮〜エントリー革</td></tr>
+              <tr><td>ミドル</td><td>13,000〜20,000円</td><td>長く使いたい。標準的な天然皮革</td></tr>
+              <tr><td>ハイエンド</td><td>20,000〜40,000円</td><td>革質・ブランド重視。久保田/ハタケヤマ/IP等</td></tr>
+            </tbody>
+          </table>
+
           <ProductCards
             keyword="軟式 グローブ 一般"
             heading="🧤 楽天で人気の軟式グローブ"

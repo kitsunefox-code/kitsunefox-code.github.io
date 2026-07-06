@@ -131,6 +131,22 @@ export default function SpikesComparePage() {
             </tbody>
           </table>
 
+          <h2>価格帯で選ぶ早見表</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>価格帯</th>
+                <th>目安</th>
+                <th>こんな人・代表タイプ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>エントリー</td><td>3,500〜5,500円</td><td>まず一足。人工皮革の樹脂ポイント</td></tr>
+              <tr><td>ミドル</td><td>5,500〜9,000円</td><td>フィット重視。定番ブランドの中位</td></tr>
+              <tr><td>ハイエンド</td><td>9,000〜13,000円</td><td>履き心地・軽さ。上位・天然皮革モデル</td></tr>
+            </tbody>
+          </table>
+
           <ProductCards
             keyword="野球 スパイク ポイント"
             heading="👟 楽天で人気の野球スパイク"
