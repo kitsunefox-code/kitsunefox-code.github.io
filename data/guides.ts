@@ -68,6 +68,24 @@ export const GUIDES: Guide[] = [
     description: "最低限そろえるもの・予算・揃える順番",
   },
   {
+    href: "/guide/glove-guide/",
+    emoji: "🧤",
+    title: "初めてのグローブの選び方",
+    description: "軟式・ポジション別の型・サイズ・型付けまで",
+  },
+  {
+    href: "/guide/bat-guide/",
+    emoji: "🏏",
+    title: "軟式バットの選び方",
+    description: "長さ・重さ・素材（金属/カーボン/ビヨンド系）の決め方",
+  },
+  {
+    href: "/guide/spikes-guide/",
+    emoji: "👟",
+    title: "野球スパイクの選び方",
+    description: "ポイント/金具・カットの高さ・サイズの合わせ方",
+  },
+  {
     href: "/guide/soft-vs-hard/",
     emoji: "🥎",
     title: "【硬式出身者必見】軟式と硬式の違い",

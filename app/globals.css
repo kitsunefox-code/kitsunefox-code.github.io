@@ -1232,3 +1232,80 @@ section {
     margin-left: 0;
   }
 }
+
+/* ===== 記事内アフィリエイトCTA（AffiliateBox） ===== */
+.aff-box {
+  background: linear-gradient(180deg, #fff7f4 0%, #fff 100%);
+  border: 1px solid #ffd9cc;
+  border-radius: var(--radius);
+  padding: 16px 18px 14px;
+  margin: 26px 0;
+}
+.aff-heading {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--navy);
+  margin: 0 0 12px;
+}
+.aff-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+@media (min-width: 640px) {
+  .aff-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.aff-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 14px;
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color 0.15s, transform 0.1s, box-shadow 0.15s;
+}
+.aff-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(232, 72, 28, 0.14);
+}
+.aff-emoji {
+  font-size: 26px;
+  flex-shrink: 0;
+}
+.aff-text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+.aff-label {
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 1.4;
+}
+.aff-desc {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.aff-arrow {
+  flex-shrink: 0;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 800;
+  font-size: 12.5px;
+  padding: 7px 12px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+.aff-note {
+  font-size: 11px;
+  color: var(--muted);
+  margin: 10px 0 0;
+}

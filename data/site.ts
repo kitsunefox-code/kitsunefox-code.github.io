@@ -55,11 +55,86 @@ const RKT_KW: Record<string, string> = {
     "%2525E3%252582%2525A2%2525E3%252583%2525B3%2525E3%252583%252580%2525E3%252583%2525BC%2525E3%252582%2525B7%2525E3%252583%2525A3%2525E3%252583%252584",
   socks:
     "%2525E3%252582%2525BD%2525E3%252583%252583%2525E3%252582%2525AF%2525E3%252582%2525B9",
+  bat: "%2525E3%252583%252590%2525E3%252583%252583%2525E3%252583%252588",
 };
-function rkt(key: string): string {
+export function rkt(key: string): string {
   const kw = RKT_KW[key];
   return RKT_PRE + kw + RKT_MID + kw + "%252F";
 }
+
+/**
+ * 記事内に差し込むアフィリエイトCTA用の品目マスタ。
+ * AffiliateBox コンポーネントから参照する。href は楽天のキーワード検索
+ * （アフィリエイトタグ付き）なので、特定商品の在庫切れに影響されない。
+ */
+export type ProductLink = {
+  label: string;
+  desc: string;
+  href: string;
+  emoji: string;
+};
+export const RAKUTEN: Record<string, ProductLink> = {
+  glove: {
+    label: "楽天でグローブを探す",
+    emoji: "🧤",
+    desc: "投手用・内野手用・外野手用。型付け済みモデルも",
+    href: rkt("glove"),
+  },
+  bat: {
+    label: "楽天で軟式バットを探す",
+    emoji: "🏏",
+    desc: "金属・ビヨンド系・カーボン。長さ・重さで絞り込み",
+    href: rkt("bat"),
+  },
+  spike: {
+    label: "楽天で野球スパイクを探す",
+    emoji: "👟",
+    desc: "ポイント（樹脂）底が主流。軽量ローカットも",
+    href: rkt("spike"),
+  },
+  under: {
+    label: "楽天でアンダーシャツを探す",
+    emoji: "🎽",
+    desc: "夏用（冷感）・冬用（保温）。色を揃えてチーム感UP",
+    href: rkt("under"),
+  },
+  socks: {
+    label: "楽天で野球ソックスを探す",
+    emoji: "🧦",
+    desc: "カラーソックス・ストッキングでユニフォーム統一",
+    href: rkt("socks"),
+  },
+  cap: {
+    label: "楽天で野球キャップを探す",
+    emoji: "🧢",
+    desc: "無地・カラー豊富。チーム帽子の下見にも",
+    href: rkt("cap"),
+  },
+  uniform: {
+    label: "楽天で野球ユニフォームを探す",
+    emoji: "👕",
+    desc: "既製ユニフォーム・練習着。楽天ポイントも貯まる",
+    href: rkt("uniform"),
+  },
+};
+
+/** 総合スポーツ通販（A8直リンク・インプレッション計測ピクセル付き） */
+export const RETAILERS: { label: string; desc: string; href: string; pixel?: string; emoji: string }[] = [
+  {
+    label: "【公式】スーパースポーツゼビオ",
+    desc: "野球用品・スパイク・小物の総合通販。セールも頻繁",
+    href: "https://px.a8.net/svt/ejp?a8mat=4B7SGX+8PRGKY+4ABU+5YJRM",
+    pixel: "https://www16.a8.net/0.gif?a8mat=4B7SGX+8PRGKY+4ABU+5YJRM",
+    emoji: "⚾",
+  },
+  {
+    label: "【公式】スポーツデポ・アルペン",
+    desc: "最短翌日配送。野球用品の品ぞろえが豊富な大型店",
+    href: "https://px.a8.net/svt/ejp?a8mat=4B7T8Y+87WGFM+3OSK+5YJRM",
+    pixel: "https://www11.a8.net/0.gif?a8mat=4B7T8Y+87WGFM+3OSK+5YJRM",
+    emoji: "🏬",
+  },
+];
 
 export const GOODS_LINKS: GoodsLink[] = [
   {
