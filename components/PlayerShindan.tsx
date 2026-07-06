@@ -120,14 +120,18 @@ export default function PlayerShindan() {
                 <span className="pg-k">グローブ</span>
                 <span className="pg-v">{top.glove}</span>
               </div>
-              <div className="pg-item">
-                <span className="pg-k">バット</span>
-                <span className="pg-v">{top.bat}</span>
-              </div>
-              <div className="pg-item">
-                <span className="pg-k">スパイク</span>
-                <span className="pg-v">{top.spikes}</span>
-              </div>
+              {top.bat && (
+                <div className="pg-item">
+                  <span className="pg-k">バット</span>
+                  <span className="pg-v">{top.bat}</span>
+                </div>
+              )}
+              {top.spikes && (
+                <div className="pg-item">
+                  <span className="pg-k">スパイク</span>
+                  <span className="pg-v">{top.spikes}</span>
+                </div>
+              )}
             </div>
             <p className="player-disc">
               ※ 使用ギアは公開情報に基づく参考です（時期・場面により変わることがあります）。
