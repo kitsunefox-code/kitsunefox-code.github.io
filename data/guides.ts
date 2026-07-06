@@ -20,6 +20,12 @@ export const GUIDES: Guide[] = [
     description: "費用相場と失敗しないコツ。初めての方はまずこれ",
   },
   {
+    href: "/guide/annual-cost/",
+    emoji: "🧮",
+    title: "草野球の年間費用のリアル【2026年版】",
+    description: "チーム運営費・道具代・一試合いくら？お金の全体像",
+  },
+  {
     href: "/guide/uniform-cost/",
     emoji: "💰",
     title: "ユニフォームの費用相場【2026年版】",
