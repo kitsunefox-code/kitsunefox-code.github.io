@@ -65,17 +65,17 @@ export default function BatComparePage() {
             heading="編集部の一押し 軟式バット"
             picks={[
               {
-                keyword: "軟式 バット ミズノ ビヨンドマックス",
+                keyword: "一般 軟式 バット ミズノ ビヨンドマックス",
                 label: "飛距離で選ぶなら",
                 comment: "複合の代表格。とにかく飛ばしたいパワーヒッターへ（要規定確認）。",
               },
               {
-                keyword: "軟式 バット SSK MM",
+                keyword: "一般 軟式 バット SSK MM",
                 label: "反発と扱いやすさ",
                 comment: "人気の複合系。飛びと振りやすさのバランスが良い中級者向け。",
               },
               {
-                keyword: "軟式 バット 金属 ミズノ",
+                keyword: "一般 軟式 バット 金属 ミズノ",
                 label: "最初の一本に",
                 comment: "扱いやすくコスパ良好。まず金属でスイングを固めたい人へ。",
               },

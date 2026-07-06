@@ -64,17 +64,17 @@ export default function GloveComparePage() {
             heading="編集部の一押し 軟式グローブ"
             picks={[
               {
-                keyword: "軟式 グローブ ミズノ 内野",
+                keyword: "一般 軟式 グローブ ミズノ 内野",
                 label: "王道・内野に",
                 comment: "安定の作りで、初めての内野用にも安心。迷ったらまずこの系統。",
               },
               {
-                keyword: "軟式 グローブ 久保田スラッガー",
+                keyword: "一般 軟式 グローブ 久保田スラッガー 内野",
                 label: "内野のこだわり派に",
                 comment: "捕球の一体感で内野手に絶大な人気。長く付き合える一枚。",
               },
               {
-                keyword: "軟式 グローブ ミズノ 外野",
+                keyword: "一般 軟式 グローブ ミズノ 外野",
                 label: "外野に",
                 comment: "大きめ・深めでフライを安心して掴める。守備範囲を稼ぎたい人へ。",
               },
