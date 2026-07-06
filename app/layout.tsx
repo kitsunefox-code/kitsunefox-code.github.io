@@ -67,6 +67,21 @@ export default function RootLayout({
   return (
     <html lang="ja" className={crimson.variable}>
       <body>
+        {/* デプロイ直後の古いキャッシュ対策：失効したJS/CSSチャンクの読み込み失敗を
+            検知したら、キャッシュを回避して1回だけ自動リロードする（無限ループ防止つき） */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){
+  var K="__chunk_reload_ts";
+  function ok(){try{var l=parseInt(sessionStorage.getItem(K)||"0",10);return (Date.now()-l)>15000;}catch(e){return true;}}
+  function go(){if(!ok())return;try{sessionStorage.setItem(K,String(Date.now()));}catch(e){}var u=new URL(location.href);u.searchParams.set("_r",Date.now().toString(36));location.replace(u.toString());}
+  addEventListener("error",function(e){var t=e&&e.target;if(t&&(t.tagName==="SCRIPT"||t.tagName==="LINK")){var s=t.src||t.href||"";if(s.indexOf("/_next/static/")>-1)go();}},true);
+  addEventListener("unhandledrejection",function(e){var r=e&&e.reason,n=r&&(r.name||""),m=r&&(r.message||"");if(n==="ChunkLoadError"||/Loading (chunk|CSS chunk)/i.test(m))go();});
+  addEventListener("DOMContentLoaded",function(){try{if(new URL(location.href).searchParams.has("_r")){var u=new URL(location.href);u.searchParams.delete("_r");history.replaceState(null,"",u.pathname+u.search+u.hash);}}catch(e){}});
+})();`,
+          }}
+        />
+
         {/* AdSense（data/site.ts にクライアントIDを設定すると有効化） */}
         {ADSENSE_CLIENT_ID && (
           <Script
