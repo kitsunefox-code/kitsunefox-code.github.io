@@ -3,20 +3,24 @@
   --navy-2: #143a66;
   --accent: #d8431b; /* 野球ボールの縫い目をイメージした赤（やや深め） */
   --accent-2: #ff6b3d;
-  --bg: #f4f2ec; /* 温かみのあるオフホワイト */
+  --bg: #faf7f5; /* Vermicular風の温かいクリーム */
   --card: #ffffff;
-  --line: #e7e1d6;
-  --text: #2a2620; /* 寒色グレーをやめ、温かみのある濃色に */
-  --muted: #736c62;
+  --line: #eae2d9;
+  --text: #222426; /* 上質な近黒 */
+  --muted: #7c756c;
   --good: #12805c;
-  --chip: #efeae0;
-  --radius: 14px;
-  --shadow: 0 2px 14px rgba(40, 34, 26, 0.07);
-  /* 日本語本文の推奨スタック（system-ui/Segoeを外して既定感を払拭） */
-  --jp: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic Medium",
-    YuGothic, "游ゴシック体", "Noto Sans JP", Meiryo, sans-serif;
-  /* 見出し・数字・英字ラベル：Oswald(next/font) → 日本語はJPスタックにフォールバック */
-  --font-heading: var(--font-display), var(--jp);
+  --chip: #f2ece4;
+  --radius: 12px;
+  --shadow: 0 4px 24px rgba(40, 34, 26, 0.06);
+  /* 日本語本文：游ゴシック/ヒラギノ系（軽やかで上品） */
+  --jp: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体",
+    "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans JP", Meiryo,
+    sans-serif;
+  /* 見出しの日本語：明朝体（Vermicular風のエレガントさ） */
+  --jp-mincho: "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Yu Mincho",
+    YuMincho, "游明朝", "游明朝体", "MS PMincho", serif;
+  /* 見出し：英字はCrimson Pro(セリフ) → 日本語は明朝にフォールバック */
+  --font-heading: var(--font-display), var(--jp-mincho);
 }
 
 * {
@@ -1811,4 +1815,129 @@ section {
   letter-spacing: 0.03em;
   text-align: center;
   padding: 8px 6px;
+}
+
+/* ===== Vermicular風エレガンス（明朝見出し・軽量・余白） ===== */
+body {
+  line-height: 1.9;
+  letter-spacing: 0.02em;
+}
+
+/* 見出し：明朝×軽量×広い字間で上品に */
+.article h1,
+.article h2,
+.article h3,
+.section-title,
+.hero h1,
+.hero-photo h1,
+.guide-cat-head,
+.tool-title,
+.start-band-title,
+.result-rank-badge {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  line-height: 1.7;
+}
+.article h1 {
+  font-weight: 600;
+  font-size: clamp(24px, 3.4vw, 32px);
+  letter-spacing: 0.06em;
+  line-height: 1.6;
+}
+.article h2 {
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+.hero h1 {
+  font-weight: 500;
+  letter-spacing: 0.1em;
+}
+.hero-photo h1 {
+  font-weight: 500;
+  letter-spacing: 0.12em;
+}
+
+/* セクション見出し：赤い太バーを繊細な縦線に、字間を広く */
+.section-title {
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  gap: 14px;
+}
+.section-title::before {
+  width: 2px;
+  height: 22px;
+  opacity: 0.85;
+}
+
+/* キッカー：Crimson Pro 大文字＋ワイドトラッキング（上品なラベル） */
+.hero-kicker,
+.start-band-kicker {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+/* ボタン：重すぎない上品な太さに */
+.primary,
+.ghost,
+.tool-cta,
+.start-band-btn,
+.aff-arrow,
+.prod-btn,
+.game-add,
+.shindan-submit,
+.cta-inline {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+
+/* 呼吸感のある余白 */
+section {
+  padding: 48px 0;
+}
+
+/* 写真ヒーローのオーバーレイを少し淡く（写真の質感を活かす） */
+.hero-overlay {
+  background: linear-gradient(
+    115deg,
+    rgba(9, 22, 42, 0.82) 0%,
+    rgba(9, 22, 42, 0.6) 45%,
+    rgba(9, 22, 42, 0.3) 100%
+  );
+}
+.hero-photo {
+  border-bottom-width: 3px;
+}
+
+/* 罫線・カードの境界をより繊細に */
+.maker-card,
+.goods-card,
+.tool-card,
+.info-card {
+  box-shadow: 0 4px 24px rgba(40, 34, 26, 0.05);
+}
+
+/* ヘッダーの軽やかさ（Vermicular風の細い上品なナビ） */
+.site-header nav {
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  gap: 22px;
+}
+.logo {
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+.logo-sub {
+  font-weight: 400;
+  letter-spacing: 0.08em;
+}
+/* 開始バンド見出しも明朝で上品に */
+.start-band-title {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  letter-spacing: 0.06em;
 }

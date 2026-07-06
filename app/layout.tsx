@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Oswald } from "next/font/google";
+import { Crimson_Pro } from "next/font/google";
 import {
   SITE_URL,
   SITE_NAME,
@@ -9,12 +9,13 @@ import {
 } from "@/data/site";
 import "./globals.css";
 
-// 見出し・数字・英字ラベル用のコンデンス体（スポーティな印象づけ）
-const oswald = Oswald({
+// 見出し・英字ラベル用のエレガントなセリフ体（Vermicular風の上質な印象）
+const crimson = Crimson_Pro({
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: ["300", "400", "500", "600"],
   variable: "--font-display",
   display: "swap",
+  style: ["normal", "italic"],
 });
 
 const DESCRIPTION =
@@ -64,7 +65,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ja" className={oswald.variable}>
+    <html lang="ja" className={crimson.variable}>
       <body>
         {/* AdSense（data/site.ts にクライアントIDを設定すると有効化） */}
         {ADSENSE_CLIENT_ID && (
