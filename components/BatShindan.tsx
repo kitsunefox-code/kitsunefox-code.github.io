@@ -1,159 +1,113 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ProductCards from "@/components/ProductCards";
+import {
+  BAT_MATERIAL_INFO,
+  pickBatModel,
+  type BatMaterial,
+} from "@/data/batData";
 
-// ===== 回答の型 =====
-type Exp = "hard" | "soft" | "beginner"; // 野球経験
-type Power = "high" | "mid" | "low"; // 力・スイングの自信
-type Hit = "distance" | "average" | "contact"; // 打撃タイプ
-type Height = "s" | "m" | "l"; // 身長
-type Composite = "yes" | "unknown" | "no"; // 複合(ビヨンド系)が使えるか
-type Budget = "low" | "mid" | "high";
-type WeightPref = "light" | "std" | "heavy" | "auto"; // 重さの好み
+// ===== YES/NO 質問 =====
+type QId =
+  | "distance"
+  | "composite"
+  | "power"
+  | "launch"
+  | "swingOut"
+  | "budgetHigh"
+  | "latest"
+  | "exp"
+  | "tall";
 
-type Answers = {
-  exp: Exp | null;
-  power: Power | null;
-  hit: Hit | null;
-  height: Height | null;
-  composite: Composite | null;
-  budget: Budget | null;
-  weight: WeightPref | null;
-};
+const QUESTIONS: { id: QId; text: string; sub?: string }[] = [
+  { id: "distance", text: "とにかく“飛距離”を最優先にしたい" },
+  {
+    id: "composite",
+    text: "所属リーグで複合バット（ビヨンド系）が使える",
+    sub: "わからない・規定を気にしないなら「はい」でOK。",
+  },
+  { id: "power", text: "スイングスピードや力に自信がある" },
+  { id: "launch", text: "ミート（当てる）より“振り切って飛ばす”タイプだ" },
+  { id: "swingOut", text: "軽さ・振り抜きの良さを重視したい" },
+  { id: "budgetHigh", text: "予算は2万円以上かけてもいい" },
+  { id: "latest", text: "最新・人気モデルにこだわりたい" },
+  { id: "exp", text: "硬式や本格野球の経験がある" },
+  { id: "tall", text: "身長は175cm以上だ" },
+];
 
-type Material = "metal" | "carbon" | "beyond";
+type A = Partial<Record<QId, boolean>>;
 
 type Result = {
   typeName: string;
   typeEmoji: string;
-  material: Material;
+  material: BatMaterial;
   materialLabel: string;
+  materialFeature: string;
+  modelLine: string;
+  modelNote: string;
   length: string;
   weightBalance: string;
   price: string;
   advice: string;
-  cautions: string[];
+  caution: string | null;
   productKeyword: string;
+  productHeading: string;
 };
 
-const MATERIAL_KEYWORD: Record<Material, string> = {
-  metal: "軟式 バット 金属",
-  carbon: "軟式 バット カーボン",
-  beyond: "軟式 バット 複合 ビヨンド",
-};
-
-// ===== 選択肢 =====
-const EXP_OPTS: { v: Exp; label: string }[] = [
-  { v: "hard", label: "硬式（高校・大学など）の経験あり" },
-  { v: "soft", label: "軟式・草野球の経験あり" },
-  { v: "beginner", label: "初心者・ブランクが長い" },
-];
-const POWER_OPTS: { v: Power; label: string }[] = [
-  { v: "high", label: "力・スイングスピードに自信あり" },
-  { v: "mid", label: "人並み・ふつう" },
-  { v: "low", label: "非力・当てるのを優先したい" },
-];
-const HIT_OPTS: { v: Hit; label: string }[] = [
-  { v: "distance", label: "とにかく遠くへ飛ばしたい" },
-  { v: "average", label: "ヒットを広く打ちたい（アベレージ）" },
-  { v: "contact", label: "つなぎ・バント・当てて転がす" },
-];
-const HEIGHT_OPTS: { v: Height; label: string }[] = [
-  { v: "s", label: "〜165cm" },
-  { v: "m", label: "165〜175cm" },
-  { v: "l", label: "175cm〜" },
-];
-const COMPOSITE_OPTS: { v: Composite; label: string }[] = [
-  { v: "yes", label: "使える（複合バットOKのリーグ）" },
-  { v: "unknown", label: "わからない" },
-  { v: "no", label: "使えない（金属のみ等の規定）" },
-];
-const BUDGET_OPTS: { v: Budget; label: string }[] = [
-  { v: "low", label: "なるべく安く（〜1万円）" },
-  { v: "mid", label: "標準（1〜2万円）" },
-  { v: "high", label: "こだわりたい（2万円〜）" },
-];
-const WEIGHT_OPTS: { v: WeightPref; label: string }[] = [
-  { v: "light", label: "軽め（振り抜き重視）" },
-  { v: "std", label: "標準" },
-  { v: "heavy", label: "重め（当たり負けしにくい）" },
-  { v: "auto", label: "おまかせ（診断で決めて）" },
-];
-
-const MATERIAL_LABEL: Record<Material, string> = {
-  metal: "金属（ジュラルミン系）",
-  carbon: "カーボン・複合",
-  beyond: "ウレタン複合（ビヨンド系）",
-};
-
-// ===== 診断ロジック =====
-function diagnose(a: Required<Answers>): Result {
+function diagnose(a: Required<Record<QId, boolean>>): Result {
   // --- 素材の決定 ---
-  let material: Material;
-  if (a.composite === "no") {
-    material = "metal";
-  } else if (a.hit === "distance" && a.power === "high") {
-    material = "beyond"; // 飛距離最優先＆パワーあり
-  } else if (a.hit === "distance") {
-    material = "carbon"; // 飛ばしたいが非力〜普通 → 軽くて弾く複合
-  } else if (a.hit === "contact" || a.power === "low") {
-    material = "metal"; // ミート優先・非力は扱いやすい金属
+  let material: BatMaterial;
+  if (!a.composite) {
+    material = a.swingOut && a.budgetHigh ? "carbon" : "metal";
+  } else if (a.distance && (a.budgetHigh || a.power || a.launch)) {
+    material = "beyond";
+  } else if (a.distance) {
+    material = "carbon";
+  } else if (a.budgetHigh && (a.swingOut || a.power || a.launch)) {
+    material = "carbon";
   } else {
-    material = a.budget === "high" ? "carbon" : "metal";
-  }
-  // 予算が最安なら複合は現実的でないので金属へ寄せる
-  if (a.budget === "low" && material === "beyond") material = "carbon";
-  if (a.budget === "low" && material === "carbon" && a.power !== "high")
     material = "metal";
+  }
+
+  const info = BAT_MATERIAL_INFO[material];
+  const model = pickBatModel(material, {
+    latest: a.latest,
+    power: a.power || a.launch,
+  });
 
   // --- 長さ ---
-  const length =
-    a.height === "s" ? "82〜83cm" : a.height === "l" ? "84〜85cm" : "83〜84cm";
+  const length = a.tall ? "84〜85cm" : "82〜84cm（身長で微調整）";
 
   // --- 重さ・バランス ---
-  // 明示的な好みがあれば最優先。なければ経験・力・打撃タイプから推定（より正確に）。
   let weightBalance: string;
-  if (a.weight === "heavy") {
+  if ((a.power || a.launch) && !a.swingOut) {
     weightBalance = "やや重め（740〜760g）・トップバランス";
-  } else if (a.weight === "light") {
+  } else if (a.swingOut) {
     weightBalance = "軽め（700〜720g）・カウンター〜ミドルバランス";
-  } else if (a.weight === "std") {
-    weightBalance = "標準（720〜740g）・ミドルバランス";
   } else {
-    const powerful =
-      a.power === "high" || (a.exp === "hard" && a.hit === "distance");
-    const light =
-      a.power === "low" || a.exp === "beginner" || a.hit === "contact";
-    if (powerful && !light) {
-      weightBalance = "やや重め（740〜760g）・トップバランス";
-    } else if (light) {
-      weightBalance = "軽め（700〜720g）・カウンター〜ミドルバランス";
-    } else {
-      weightBalance = "標準（720〜740g）・ミドルバランス";
-    }
+    weightBalance = "標準（720〜740g）・ミドルバランス";
   }
 
-  // --- 予算目安 ---
-  const price =
-    a.budget === "low"
-      ? "5,000〜10,000円（金属モデル中心）"
-      : a.budget === "high"
-        ? "20,000〜40,000円（複合の上位モデルも視野）"
-        : "10,000〜20,000円";
+  // --- 予算 ---
+  const price = a.budgetHigh
+    ? material === "beyond"
+      ? "20,000〜40,000円"
+      : "15,000〜25,000円"
+    : info.price;
 
   // --- タイプ名 ---
   let typeName: string, typeEmoji: string;
-  if (a.hit === "distance" && a.power === "high") {
+  if (a.distance && (a.power || a.launch)) {
     typeName = "パワーヒッター型";
     typeEmoji = "💥";
-  } else if (a.hit === "distance") {
+  } else if (a.distance) {
     typeName = "飛距離チャレンジ型";
     typeEmoji = "🚀";
-  } else if (a.hit === "contact") {
-    typeName = "巧打・つなぎ型";
+  } else if (a.swingOut) {
+    typeName = "スピード・巧打型";
     typeEmoji = "🎯";
-  } else if (a.exp === "beginner") {
+  } else if (!a.exp) {
     typeName = "これからグングン型";
     typeEmoji = "🌱";
   } else {
@@ -163,174 +117,115 @@ function diagnose(a: Required<Answers>): Result {
 
   // --- アドバイス ---
   let advice: string;
-  if (a.exp === "hard" && a.power === "low") {
+  if (a.exp && !a.power) {
     advice =
-      "硬式の感覚があるぶん、ミートは安定しているはず。ただ軟式は球が軽くしなるので、重いバットで振り負けるより、軽量＋反発の高い素材で“振り切って弾く”ほうが飛びます。長さは確保しつつ、重さは欲張らないのが正解です。";
-  } else if (a.exp === "hard") {
+      "硬式の感覚があるぶんミートは安定しているはず。軟式は球が軽くしなるので、重さで振り負けるより、軽量＋反発の高い素材で“振り切って弾く”ほうが飛びます。長さは確保しつつ、重さは欲張らないのが正解です。";
+  } else if (material === "beyond") {
     advice =
-      "硬式経験者は、軟式の“球の軽さ・打点の高さ”に慣れるとすぐ結果が出ます。振り切れるならトップバランスで長打も狙えますが、最初はミドル寄りで軟式の打感を確かめるのがおすすめです。";
-  } else if (a.exp === "beginner") {
+      "飛距離最優先ならウレタン複合（ビヨンド系）が筆頭。振り切れる重さを選ぶのがコツで、重すぎると振り遅れます。まずは今の力で“鋭く振れる”重量帯から選びましょう。";
+  } else if (material === "carbon") {
     advice =
-      "まずは「軽くて振り切れる一本」から。重さで飛ばそうとせず、鋭く振る感覚を優先しましょう。扱いやすい金属バットでスイングを固めれば、自然と打球が上がってきます。";
-  } else if (a.power === "low") {
-    advice =
-      "非力を感じているなら、重さより“振り切れること”が最優先。軽量モデル＋反発の高い素材が、パワー不足を道具で補ってくれます。当てる技術を活かせば十分に長打も出ます。";
-  } else if (a.hit === "distance") {
-    advice =
-      "飛距離を狙うなら、素材選びが最大のポイント。振り切れる範囲で先端にウェイトのあるバランスを選ぶと、打球が伸びます。ただし振り遅れない重さに抑えるのが失敗しないコツです。";
+      "カーボン系は軽くて反発も良好。スイングスピードを活かしたい人に好相性です。振り抜きの軽さを活かして、当てる精度を上げると打球が伸びます。";
   } else {
     advice =
-      "オールラウンドに打ちたいタイプ。迷ったらミドルバランスの標準的な重さが一番しっくりきます。まずは基準の一本を作り、物足りなければ次で調整していきましょう。";
+      "まずは扱いやすい金属で“振り切る感覚”を固めるのが上達の近道。軽めを鋭く振れるようになってから、複合など次の一本に進むと失敗しません。";
   }
 
-  // --- 注意点 ---
-  const cautions: string[] = [];
-  if (material === "beyond" && a.composite === "unknown") {
-    cautions.push(
-      "複合（ビヨンド系）は所属リーグ・大会で使用が制限されることがあります。購入前に必ず使用可否を確認してください。"
-    );
-  }
-  if (material !== "metal" && a.composite === "unknown") {
-    cautions.push(
-      "念のため、チームの使用球（M号など）と、複合バットの規格ルールをチェックしておくと安心です。"
-    );
-  }
-  cautions.push(
-    "大人の草野球はM号球が基本。M号対応のバットを選びましょう（J号は主に少年野球）。"
-  );
+  // --- 注意 ---
+  const caution =
+    material === "beyond" && !a.composite
+      ? "複合（ビヨンド系）は所属リーグ・大会で使用が制限される場合があります。購入前に必ず使用可否を確認してください（M号対応かも要チェック）。"
+      : material === "beyond"
+        ? "複合バットは規格の指定がある場合があります。M号対応か、リーグで使えるかを確認しておくと安心です。"
+        : null;
 
   return {
     typeName,
     typeEmoji,
     material,
-    materialLabel: MATERIAL_LABEL[material],
+    materialLabel: info.label,
+    materialFeature: info.feature,
+    modelLine: `${model.maker}「${model.name}」`,
+    modelNote: model.note,
     length,
     weightBalance,
     price,
     advice,
-    cautions,
-    productKeyword: MATERIAL_KEYWORD[material],
+    caution,
+    productKeyword: model.keyword,
+    productHeading: `🏏 診断結果に近い「${model.maker} ${model.name}」系を探す`,
   };
 }
 
 export default function BatShindan() {
-  const [a, setA] = useState<Answers>({
-    exp: null,
-    power: null,
-    hit: null,
-    height: null,
-    composite: null,
-    budget: null,
-    weight: null,
-  });
+  const [a, setA] = useState<A>({});
   const [result, setResult] = useState<Result | null>(null);
+  const resultRef = useRef<HTMLDivElement>(null);
 
-  const ready =
-    a.exp !== null &&
-    a.power !== null &&
-    a.hit !== null &&
-    a.height !== null &&
-    a.composite !== null &&
-    a.budget !== null &&
-    a.weight !== null;
+  const answeredCount = QUESTIONS.filter((q) => q.id in a).length;
+  const allAnswered = answeredCount === QUESTIONS.length;
+  // 進行式：回答済み＋次の1問だけ表示
+  const visible = QUESTIONS.slice(0, Math.min(answeredCount + 1, QUESTIONS.length));
 
-  const run = () => {
-    if (!ready) return;
-    setResult(diagnose(a as Required<Answers>));
-    setTimeout(() => {
-      document
-        .getElementById("bat-result")
-        ?.scrollIntoView({ behavior: "smooth" });
-    }, 50);
+  useEffect(() => {
+    if (allAnswered) {
+      setResult(diagnose(a as Required<Record<QId, boolean>>));
+      setTimeout(() => {
+        resultRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, 60);
+    } else {
+      setResult(null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [a]);
+
+  const answer = (id: QId, val: boolean) =>
+    setA((prev) => ({ ...prev, [id]: val }));
+
+  const reset = () => {
+    setA({});
+    setResult(null);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
-
-  const opt = <T extends string>(
-    key: keyof Answers,
-    opts: { v: T; label: string }[],
-    current: T | null
-  ) => (
-    <div className="option-grid">
-      {opts.map((o) => (
-        <button
-          key={o.v}
-          className={`option-btn ${current === o.v ? "active" : ""}`}
-          onClick={() => {
-            setA((prev) => ({ ...prev, [key]: o.v }));
-            setResult(null);
-          }}
-        >
-          {o.label}
-        </button>
-      ))}
-    </div>
-  );
 
   return (
     <>
-      <div className="shindan-step">
-        <h2>
-          <span className="step-num">1</span>野球の経験は？
-        </h2>
-        <p className="step-sub">
-          経験と「力の有無」は別ものとして質問します。硬式出身でも非力な方はご安心を。
+      <p className="yn-progress">
+        {answeredCount} / {QUESTIONS.length} 問
+      </p>
+
+      {visible.map((q, i) => (
+        <div className="shindan-step" key={q.id}>
+          <h2>
+            <span className="step-num">{i + 1}</span>
+            {q.text}
+          </h2>
+          {q.sub && <p className="step-sub">{q.sub}</p>}
+          <div className="yn-grid">
+            <button
+              className={`yn-btn yn-yes ${a[q.id] === true ? "active" : ""}`}
+              onClick={() => answer(q.id, true)}
+            >
+              はい
+            </button>
+            <button
+              className={`yn-btn yn-no ${a[q.id] === false ? "active" : ""}`}
+              onClick={() => answer(q.id, false)}
+            >
+              いいえ
+            </button>
+          </div>
+        </div>
+      ))}
+
+      {!allAnswered && (
+        <p className="yn-hint">
+          直感で「はい／いいえ」を選ぶと、次の質問が出ます（全{QUESTIONS.length}問）。
         </p>
-        {opt("exp", EXP_OPTS, a.exp)}
-      </div>
-
-      <div className="shindan-step">
-        <h2>
-          <span className="step-num">2</span>力・スイングの自信は？
-        </h2>
-        {opt("power", POWER_OPTS, a.power)}
-      </div>
-
-      <div className="shindan-step">
-        <h2>
-          <span className="step-num">3</span>どんな打撃をしたい？
-        </h2>
-        {opt("hit", HIT_OPTS, a.hit)}
-      </div>
-
-      <div className="shindan-step">
-        <h2>
-          <span className="step-num">4</span>身長は？（長さの目安に使います）
-        </h2>
-        {opt("height", HEIGHT_OPTS, a.height)}
-      </div>
-
-      <div className="shindan-step">
-        <h2>
-          <span className="step-num">5</span>複合バット（ビヨンド系）は使える環境？
-        </h2>
-        <p className="step-sub">
-          リーグや大会で使用が制限される場合があります。わからなければ「わからない」でOK。
-        </p>
-        {opt("composite", COMPOSITE_OPTS, a.composite)}
-      </div>
-
-      <div className="shindan-step">
-        <h2>
-          <span className="step-num">6</span>予算は？
-        </h2>
-        {opt("budget", BUDGET_OPTS, a.budget)}
-      </div>
-
-      <div className="shindan-step">
-        <h2>
-          <span className="step-num">7</span>重さの好みは？
-        </h2>
-        <p className="step-sub">
-          好みがあれば優先します。「おまかせ」なら経験・力・打撃タイプから最適な重さを提案します。
-        </p>
-        {opt("weight", WEIGHT_OPTS, a.weight)}
-      </div>
-
-      <button className="shindan-submit" disabled={!ready} onClick={run}>
-        {ready ? "🏏 診断結果を見る" : "7つの質問すべてに答えると診断できます"}
-      </button>
+      )}
 
       {result && (
-        <section id="bat-result" style={{ paddingTop: 30 }}>
+        <section id="bat-result" ref={resultRef} style={{ paddingTop: 20 }}>
           <h2 className="section-title">あなたにおすすめの軟式バット</h2>
           <article className="result-card first">
             <span className="result-rank-badge">
@@ -339,7 +234,15 @@ export default function BatShindan() {
             <div className="bat-spec">
               <div className="bat-spec-row">
                 <span className="bat-spec-k">おすすめ素材</span>
-                <span className="bat-spec-v">{result.materialLabel}</span>
+                <span className="bat-spec-v">
+                  <b>{result.materialLabel}</b>｜{result.materialFeature}
+                </span>
+              </div>
+              <div className="bat-spec-row">
+                <span className="bat-spec-k">近いモデル系統</span>
+                <span className="bat-spec-v">
+                  <b>{result.modelLine}</b>｜{result.modelNote}
+                </span>
               </div>
               <div className="bat-spec-row">
                 <span className="bat-spec-k">長さの目安</span>
@@ -355,27 +258,28 @@ export default function BatShindan() {
               </div>
             </div>
             <p className="bat-advice">💡 {result.advice}</p>
-            {result.cautions.length > 0 && (
+            {result.caution && (
               <ul className="bat-cautions">
-                {result.cautions.map((c, i) => (
-                  <li key={i}>⚠️ {c}</li>
-                ))}
+                <li>⚠️ {result.caution}</li>
               </ul>
             )}
+            <button className="stats-clear" onClick={reset} style={{ marginTop: 12 }}>
+              もう一度診断する
+            </button>
           </article>
 
           <ProductCards
             keyword={result.productKeyword}
-            heading={`🏏 診断結果に合う「${result.materialLabel}」系の軟式バット`}
+            heading={result.productHeading}
             fallbackRakuten={["bat"]}
           />
 
           <div className="bat-links">
-            <a className="cta-inline" href="/guide/bat-guide/">
-              → もっと詳しく：軟式バットの選び方【完全ガイド】
+            <a className="cta-inline" href="/bat/">
+              → 「軟式バット比較」で素材・ブランドを見比べる
             </a>
-            <a className="cta-inline" href="/guide/soft-batting/">
-              → 打ち方も知りたい：軟式の打ち方のコツ【動画つき】
+            <a className="cta-inline" href="/guide/bat-guide/">
+              → じっくり読む「軟式バットの選び方」
             </a>
           </div>
         </section>

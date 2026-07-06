@@ -2392,3 +2392,51 @@ section {
     background: #fbf8f5;
   }
 }
+
+/* ===== YES/NO 診断（バット診断など） ===== */
+.yn-progress {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  font-size: 13px;
+  color: var(--accent);
+  margin: 0 0 14px;
+}
+.yn-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.yn-btn {
+  border: 1.5px solid var(--line);
+  background: #fff;
+  border-radius: 12px;
+  padding: 18px 6px;
+  font-family: var(--font-heading);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.yn-btn:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+.yn-yes.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.yn-no.active {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #fff;
+}
+.yn-hint {
+  font-size: 12.5px;
+  color: var(--muted);
+  text-align: center;
+  margin: 16px 0 0;
+}
