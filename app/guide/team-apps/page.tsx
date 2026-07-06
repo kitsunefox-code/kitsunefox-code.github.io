@@ -200,7 +200,7 @@ export default function TeamAppsPage() {
           運営の仕組みが整ったら、次はチームの見た目。
           そろいのユニフォームは、寄せ集めを“ひとつのチーム”に変えてくれます。
         </p>
-        <a className="cta-inline" href="/#compare">
+        <a className="cta-inline" href="/uniform/">
           → オーダーユニフォーム13社の比較ランキングを見る
         </a>
       </article>

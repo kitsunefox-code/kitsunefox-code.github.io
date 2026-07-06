@@ -193,7 +193,7 @@ export default function GearChecklistPage() {
           道具がそろって、チームに正式加入したら、次はユニフォーム。
           そろいの一着で、あなたの草野球ライフはぐっと楽しくなります。
         </p>
-        <a className="cta-inline" href="/#compare">
+        <a className="cta-inline" href="/uniform/">
           → オーダーユニフォームメーカー13社の比較ランキングを見る
         </a>
       </article>

@@ -193,7 +193,7 @@ export default function SoftVsHardPage() {
         <a className="cta-inline" href="/guide/soft-batting/">
           → 次に読む：軟式の打ち方のコツ【動画つき】
         </a>
-        <a className="cta-inline" href="/#compare">
+        <a className="cta-inline" href="/uniform/">
           → チームのユニフォームを作るなら：メーカー比較ランキング
         </a>
       </article>

@@ -184,7 +184,7 @@ export default function TeamNameIdeasPage() {
           昇華プリントなら、複雑なロゴでも追加料金なしで再現できます。
           文字数が多い場合は、頭文字ロゴ＋袖にフルネーム、という構成もおすすめです。
         </p>
-        <a className="cta-inline" href="/#compare">
+        <a className="cta-inline" href="/uniform/">
           → チーム名を映えさせるユニフォームメーカー13社を比較
         </a>
         <p>

@@ -44,7 +44,7 @@ export default function GuideIndexPage() {
           );
         })}
 
-        <a className="cta-inline" href="/#compare" style={{ marginTop: 28 }}>
+        <a className="cta-inline" href="/uniform/" style={{ marginTop: 28 }}>
           → ユニフォームメーカー13社の比較ランキングを見る
         </a>
       </section>

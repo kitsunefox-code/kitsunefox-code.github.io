@@ -155,7 +155,7 @@ export default function SoftBattingPage() {
         <a className="cta-inline" href="/guide/soft-vs-hard/">
           → あわせて読む：硬式出身者のための「軟式と硬式の違い」ガイド
         </a>
-        <a className="cta-inline" href="/#compare">
+        <a className="cta-inline" href="/uniform/">
           → ユニフォームを作るなら：メーカー比較ランキング
         </a>
       </article>

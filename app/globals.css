@@ -2132,3 +2132,61 @@ section {
     display: none;
   }
 }
+
+/* ===== トップの3本柱（ポータル入口カード） ===== */
+.pillar-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 720px) {
+  .pillar-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.pillar-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 30px 26px 26px;
+  text-decoration: none;
+  color: var(--text);
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+}
+.pillar-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(40, 34, 26, 0.08);
+  border-color: var(--accent);
+}
+.pillar-kicker {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  font-size: 12px;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+.pillar-title {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 21px;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+.pillar-desc {
+  font-size: 13.5px;
+  line-height: 1.95;
+  color: var(--muted);
+  flex: 1;
+  margin-bottom: 18px;
+}
+.pillar-arrow {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  font-size: 13.5px;
+  color: var(--accent);
+}

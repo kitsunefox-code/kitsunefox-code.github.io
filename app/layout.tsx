@@ -126,7 +126,7 @@ gtag('config', '${GA4_MEASUREMENT_ID}');`}
               </span>
             </a>
             <nav>
-              <a href="/#compare">メーカー比較</a>
+              <a href="/uniform/">メーカー比較</a>
               <a href="/shindan/">ユニフォーム診断</a>
               <a href="/tools/">無料ツール</a>
               <a href="/guide/">お役立ちガイド</a>
@@ -144,7 +144,7 @@ gtag('config', '${GA4_MEASUREMENT_ID}');`}
               最新・正確な内容は必ず各メーカー公式サイトでご確認ください。
             </p>
             <p style={{ margin: "10px 0 0" }}>
-              <a href="/">メーカー比較</a>
+              <a href="/uniform/">メーカー比較</a>
               {" ｜ "}
               <a href="/tools/">無料ツール</a>
               {" ｜ "}

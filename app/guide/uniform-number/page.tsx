@@ -142,7 +142,7 @@ export default function UniformNumberPage() {
           <li><strong>昇華なら</strong>：番号のグラデーションや縁取りも、追加料金なしのメーカーが多い</li>
           <li><strong>胸番号・袖番号</strong>：追加すると1ヶ所500〜1,000円が相場（込み価格のメーカーもあり）</li>
         </ul>
-        <a className="cta-inline" href="/#compare">
+        <a className="cta-inline" href="/uniform/">
           → 背番号込み価格のメーカーを比較ランキングでチェック
         </a>
       </article>

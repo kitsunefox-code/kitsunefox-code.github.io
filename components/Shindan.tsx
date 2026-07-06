@@ -567,7 +567,7 @@ export default function Shindan() {
                     marginTop: 0,
                     textAlign: "center",
                   }}
-                  href={`/#compare`}
+                  href={`/uniform/`}
                 >
                   比較表で確認
                 </a>

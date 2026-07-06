@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import AffiliateBox from "@/components/AffiliateBox";
+import ProductCards from "@/components/ProductCards";
 
 // ===== 回答の型 =====
 type Pos = "pitcher" | "infield" | "outfield" | "catcher" | "first" | "allround";
@@ -39,6 +39,16 @@ type Result = {
   price: string;
   breakinTip: string;
   advice: string;
+  productKeyword: string;
+};
+
+const POS_KEYWORD: Record<Pos, string> = {
+  pitcher: "軟式 グローブ 投手用",
+  infield: "軟式 グローブ 内野手用",
+  outfield: "軟式 グローブ 外野手用",
+  catcher: "軟式 キャッチャーミット",
+  first: "軟式 ファーストミット",
+  allround: "軟式 グローブ オールラウンド",
 };
 
 const POS_OPTS: { v: Pos; label: string }[] = [
@@ -161,6 +171,7 @@ function diagnose(a: Filled): Result {
     price,
     breakinTip,
     advice,
+    productKeyword: POS_KEYWORD[a.pos],
   };
 }
 
@@ -287,10 +298,10 @@ export default function GloveShindan() {
             <p className="bat-advice">💡 {result.advice}</p>
           </article>
 
-          <AffiliateBox
-            heading={`🧤 「${result.typeName}」を探す`}
-            rakuten={["glove"]}
-            retailers
+          <ProductCards
+            keyword={result.productKeyword}
+            heading={`🧤 診断結果に合う「${result.typeName}」`}
+            fallbackRakuten={["glove"]}
           />
 
           <div className="bat-links">

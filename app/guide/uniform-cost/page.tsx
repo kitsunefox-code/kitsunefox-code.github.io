@@ -221,7 +221,7 @@ export default function UniformCostPage() {
           <li>
             <strong>マーク込み価格のメーカーを選ぶ</strong>：
             表示が安くてもマーク別料金なら逆転します（
-            <a href="/#compare">比較ランキング</a>で「オールインワン価格」の社をチェック）
+            <a href="/uniform/">比較ランキング</a>で「オールインワン価格」の社をチェック）
           </li>
           <li>
             <strong>パンツは既製品にする</strong>：
@@ -262,7 +262,7 @@ export default function UniformCostPage() {
           当サイトの<a href="/shindan/">ぴったり診断</a>で「予算重視」を選ぶと、候補がすぐ絞れます。
         </p>
 
-        <a className="cta-inline" href="/#compare">
+        <a className="cta-inline" href="/uniform/">
           → 13社の価格を比較ランキングでチェックする
         </a>
       </article>

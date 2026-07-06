@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import AffiliateBox from "@/components/AffiliateBox";
+import ProductCards from "@/components/ProductCards";
 
 // ===== 回答の型 =====
 type Exp = "hard" | "soft" | "beginner"; // 野球経験
@@ -32,6 +32,13 @@ type Result = {
   price: string;
   advice: string;
   cautions: string[];
+  productKeyword: string;
+};
+
+const MATERIAL_KEYWORD: Record<Material, string> = {
+  metal: "軟式 バット 金属",
+  carbon: "軟式 バット カーボン",
+  beyond: "軟式 バット 複合 ビヨンド",
 };
 
 // ===== 選択肢 =====
@@ -183,6 +190,7 @@ function diagnose(a: Required<Answers>): Result {
     price,
     advice,
     cautions,
+    productKeyword: MATERIAL_KEYWORD[material],
   };
 }
 
@@ -325,10 +333,10 @@ export default function BatShindan() {
             )}
           </article>
 
-          <AffiliateBox
-            heading={`🏏 「${result.materialLabel}」系の軟式バットを探す`}
-            rakuten={["bat"]}
-            retailers
+          <ProductCards
+            keyword={result.productKeyword}
+            heading={`🏏 診断結果に合う「${result.materialLabel}」系の軟式バット`}
+            fallbackRakuten={["bat"]}
           />
 
           <div className="bat-links">

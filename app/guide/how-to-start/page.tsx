@@ -271,7 +271,7 @@ export default function HowToStartPage() {
           チームが決まって、いよいよ本格的に。
           そろいのユニフォームは、あなたの草野球ライフを一段と楽しくしてくれます。
         </p>
-        <a className="cta-inline" href="/#compare">
+        <a className="cta-inline" href="/uniform/">
           → オーダーユニフォームメーカー13社の比較ランキングを見る
         </a>
       </article>

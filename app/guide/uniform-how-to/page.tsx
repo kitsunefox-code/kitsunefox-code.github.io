@@ -210,7 +210,7 @@ export default function UniformHowToPage() {
           <li>デザイン修正が<strong>何回まで無料か</strong>（無制限のメーカーもあります）</li>
           <li>サンプル貸し出しがあれば<strong>実物の生地感</strong>を触って確かめられる</li>
         </ul>
-        <a className="cta-inline" href="/#compare">
+        <a className="cta-inline" href="/uniform/">
           → 主要13社の価格・ロット・納期を比較ランキングで見る
         </a>
 
