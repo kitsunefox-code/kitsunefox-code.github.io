@@ -1,4 +1,4 @@
-import { RAKUTEN_AFFILIATE_ID, SITE_URL } from "@/data/site";
+import { RAKUTEN_AFFILIATE_ID, RAKUTEN_APP_ID, SITE_URL } from "@/data/site";
 
 export type RakutenItem = {
   name: string;
@@ -24,8 +24,9 @@ export async function fetchRakutenItems(
   keyword: string,
   hits = 4
 ): Promise<RakutenItem[]> {
-  if (!ACCESS_KEY) return [];
+  if (!ACCESS_KEY || !RAKUTEN_APP_ID) return [];
   const params = new URLSearchParams({
+    applicationId: RAKUTEN_APP_ID,
     accessKey: ACCESS_KEY,
     keyword,
     hits: String(hits),

@@ -28,6 +28,9 @@ export const GA4_MEASUREMENT_ID = "G-SKWMPWFK49";
  * 未設定なら従来どおり「楽天の検索結果へのリンク」にフォールバックする。
  */
 export const RAKUTEN_AFFILIATE_ID = "5589e5c0.194c2592.5589e5c1.835fbbcf";
+/** 楽天アプリのApplication ID（UUID）。client_id相当の公開情報でOK。
+ *  新APIは applicationId(UUID) と accessKey(シークレット) の両方が必要。 */
+export const RAKUTEN_APP_ID = "e53668c1-0017-462d-81e8-2dcf53649b5b";
 
 /** お問い合わせ先（Googleフォーム等のURLに差し替え推奨。メールなら "mailto:xxx@example.com"） */
 export const CONTACT_URL = "mailto:konkon0621@gmail.com";
