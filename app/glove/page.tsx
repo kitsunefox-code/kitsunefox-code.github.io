@@ -4,6 +4,7 @@ import ProductCards from "@/components/ProductCards";
 import EditorsPicks from "@/components/EditorsPicks";
 import { LAST_UPDATED } from "@/data/makers";
 import { SITE_URL } from "@/data/site";
+import { WEB_TYPES } from "@/data/gloveData";
 
 export const metadata: Metadata = {
   title: "野球グローブ比較【2026年版】ミズノ・SSK・久保田スラッガー等をブランド・ポジション・価格で比較",
@@ -118,6 +119,39 @@ export default function GloveComparePage() {
               <tr><td>オールラウンド用</td><td>内野〜外野を無難にカバー</td></tr>
             </tbody>
           </table>
+
+          <h2>ウェブ（網）の種類で選ぶ</h2>
+          <p>
+            親指と人差し指の間の「ウェブ」は、捕球の安定感・握り替えの速さ・
+            投手なら握りの隠しやすさまで左右する重要パーツ。ポジションに合わせて選びます。
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>ウェブ</th>
+                <th>向くポジション</th>
+                <th>特徴</th>
+              </tr>
+            </thead>
+            <tbody>
+              {WEB_TYPES.map((w) => (
+                <tr key={w.id}>
+                  <td>
+                    <strong>{w.name}</strong>
+                  </td>
+                  <td>{w.positions}</td>
+                  <td>{w.feature}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className="point-box">
+            <strong>迷ったら：</strong>
+            投手は<strong>閉じたウェブ（ワンピース/ツーピース・バスケット）</strong>、
+            内野は<strong>Hウェブ（軽快）かクロスウェブ（安定）</strong>、
+            外野は<strong>Tネット（安定）かIウェブ（軽快）</strong>が基本の考え方です。
+            <a href="/glove-shindan/">グローブ相性診断</a>なら、あなたに合うウェブまで提案します。
+          </div>
 
           <h2>価格帯で選ぶ早見表</h2>
           <table>

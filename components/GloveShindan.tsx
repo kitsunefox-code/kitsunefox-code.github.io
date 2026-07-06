@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import ProductCards from "@/components/ProductCards";
+import { recommendWeb, type WebStyle } from "@/data/gloveData";
 
 // ===== 回答の型 =====
 type Pos = "pitcher" | "infield" | "outfield" | "catcher" | "first" | "allround";
@@ -18,6 +19,7 @@ type Answers = {
   budget: Budget | null;
   breakin: Breakin | null;
   level: Level | null;
+  style: WebStyle | null;
 };
 
 // 全項目が回答済みの状態（index参照のためnullを除外した型）
@@ -28,6 +30,7 @@ type Filled = {
   budget: Budget;
   breakin: Breakin;
   level: Level;
+  style: WebStyle;
 };
 
 type Result = {
@@ -40,6 +43,10 @@ type Result = {
   breakinTip: string;
   advice: string;
   productKeyword: string;
+  webName: string;
+  webPositions: string;
+  webFeature: string;
+  webReason: string;
 };
 
 const POS_KEYWORD: Record<Pos, string> = {
@@ -83,6 +90,11 @@ const BREAKIN_OPTS: { v: Breakin; label: string }[] = [
 const LEVEL_OPTS: { v: Level; label: string }[] = [
   { v: "beginner", label: "初心者・ブランクあり" },
   { v: "experienced", label: "経験者" },
+];
+const STYLE_OPTS: { v: WebStyle; label: string }[] = [
+  { v: "quick", label: "軽快に握り替えたい（操作性重視）" },
+  { v: "solid", label: "しっかり受け止めたい（安定重視）" },
+  { v: "auto", label: "おまかせ（ポジションで最適に）" },
 ];
 
 const POS_TYPE: Record<Pos, { name: string; emoji: string; baseSize: string; pocket: string }> = {
@@ -162,6 +174,9 @@ function diagnose(a: Filled): Result {
     advice += " 初心者なら、最初から高級品より“扱いやすく手入れがラクな一枚”がおすすめです。";
   }
 
+  // --- おすすめウェブ（専門店データからポジション×捕球スタイルで決定） ---
+  const { web, reason: webReason } = recommendWeb(a.pos, a.style);
+
   return {
     typeName: base.name,
     typeEmoji: base.emoji,
@@ -172,6 +187,10 @@ function diagnose(a: Filled): Result {
     breakinTip,
     advice,
     productKeyword: POS_KEYWORD[a.pos],
+    webName: web.name,
+    webPositions: web.positions,
+    webFeature: web.feature,
+    webReason,
   };
 }
 
@@ -183,6 +202,7 @@ export default function GloveShindan() {
     budget: null,
     breakin: null,
     level: null,
+    style: null,
   });
   const [result, setResult] = useState<Result | null>(null);
 
@@ -192,7 +212,8 @@ export default function GloveShindan() {
     a.priority !== null &&
     a.budget !== null &&
     a.breakin !== null &&
-    a.level !== null;
+    a.level !== null &&
+    a.style !== null;
 
   const run = () => {
     if (!ready) return;
@@ -261,9 +282,18 @@ export default function GloveShindan() {
         </h2>
         {opt("level", LEVEL_OPTS, a.level)}
       </div>
+      <div className="shindan-step">
+        <h2>
+          <span className="step-num">7</span>捕球スタイルの好みは？
+        </h2>
+        <p className="step-sub">
+          おすすめの「ウェブ（網）の形」を決めます。軽快に握り替えるか、しっかり受け止めるか。
+        </p>
+        {opt("style", STYLE_OPTS, a.style)}
+      </div>
 
       <button className="shindan-submit" disabled={!ready} onClick={run}>
-        {ready ? "🧤 診断結果を見る" : "6つの質問すべてに答えると診断できます"}
+        {ready ? "🧤 診断結果を見る" : "7つの質問すべてに答えると診断できます"}
       </button>
 
       {result && (
@@ -287,6 +317,12 @@ export default function GloveShindan() {
                 <span className="bat-spec-v">{result.material}</span>
               </div>
               <div className="bat-spec-row">
+                <span className="bat-spec-k">おすすめウェブ</span>
+                <span className="bat-spec-v">
+                  <b>{result.webName}</b>（{result.webPositions}）｜{result.webFeature}
+                </span>
+              </div>
+              <div className="bat-spec-row">
                 <span className="bat-spec-k">予算の目安</span>
                 <span className="bat-spec-v">{result.price}</span>
               </div>
@@ -296,6 +332,9 @@ export default function GloveShindan() {
               </div>
             </div>
             <p className="bat-advice">💡 {result.advice}</p>
+            <p className="bat-advice" style={{ marginTop: 8 }}>
+              🧩 ウェブは<b>「{result.webName}」</b>がおすすめ：{result.webReason}
+            </p>
           </article>
 
           <ProductCards
