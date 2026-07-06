@@ -1551,3 +1551,72 @@ section {
   color: rgba(255, 255, 255, 0.65);
   margin: 12px 0 0;
 }
+
+/* ===== ツール一覧ページ ===== */
+.tools-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin-bottom: 30px;
+}
+@media (min-width: 640px) {
+  .tools-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.tool-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  padding: 22px 20px 20px;
+  text-decoration: none;
+  color: var(--text);
+  box-shadow: var(--shadow);
+  transition: border-color 0.15s, transform 0.12s, box-shadow 0.15s;
+}
+.tool-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(232, 72, 28, 0.16);
+}
+.tool-emoji {
+  font-size: 40px;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+.tool-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: var(--chip);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+.tool-title {
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 6px;
+}
+.tool-desc {
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: var(--muted);
+  flex: 1;
+  margin-bottom: 14px;
+}
+.tool-cta {
+  align-self: flex-start;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 800;
+  font-size: 13.5px;
+  padding: 9px 18px;
+  border-radius: 10px;
+}

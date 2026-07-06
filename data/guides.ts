@@ -26,6 +26,12 @@ export const GUIDES: Guide[] = [
     description: "募集サイト・アプリ・SNS活用と募集文テンプレ",
   },
   {
+    href: "/guide/game-flow/",
+    emoji: "📋",
+    title: "試合の進め方・基本ルール完全ガイド",
+    description: "当日の流れ・軟式の注意点・相互審判の基礎",
+  },
+  {
     href: "/guide/uniform-how-to/",
     emoji: "📖",
     title: "草野球ユニフォームの作り方【7ステップ】",

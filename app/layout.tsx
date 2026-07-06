@@ -103,10 +103,8 @@ gtag('config', '${GA4_MEASUREMENT_ID}');`}
             <nav>
               <a href="/#compare">メーカー比較</a>
               <a href="/shindan/">ユニフォーム診断</a>
-              <a href="/bat-shindan/">バット診断</a>
-              <a href="/glove-shindan/">グローブ診断</a>
-              <a href="/glove-fortune/">🔮占い</a>
-              <a href="/guide/">ガイド</a>
+              <a href="/tools/">🛠️無料ツール</a>
+              <a href="/guide/">お役立ちガイド</a>
             </nav>
           </div>
         </header>
@@ -122,6 +120,8 @@ gtag('config', '${GA4_MEASUREMENT_ID}');`}
             </p>
             <p style={{ margin: "10px 0 0" }}>
               <a href="/">メーカー比較</a>
+              {" ｜ "}
+              <a href="/tools/">無料ツール</a>
               {" ｜ "}
               <a href="/shindan/">ユニフォーム診断</a>
               {" ｜ "}
