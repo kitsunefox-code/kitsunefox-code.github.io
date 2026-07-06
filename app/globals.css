@@ -2335,3 +2335,60 @@ section {
     margin-top: 2px;
   }
 }
+
+/* ===== デザイン追い込み：クリーム地ヘッダー＋温かいトーン統一 ===== */
+/* ヘッダーを白→温かいクリーム地に。青系の影をやめて繊細に */
+.site-header {
+  background: rgba(251, 248, 245, 0.9);
+  -webkit-backdrop-filter: saturate(1.15) blur(10px);
+  backdrop-filter: saturate(1.15) blur(10px);
+  border-bottom: 1px solid var(--line);
+  box-shadow: none;
+  color: var(--text);
+}
+.site-header .container {
+  height: 62px;
+}
+.logo {
+  color: var(--text);
+}
+.logo .ball {
+  box-shadow: 0 2px 8px rgba(179, 71, 46, 0.25);
+}
+.site-header nav a {
+  color: var(--muted);
+  transition: color 0.15s;
+}
+.site-header nav a:hover {
+  color: var(--accent);
+}
+
+/* PR表記バー：クールグレー→温かい極淡クリーム */
+.pr-note {
+  background: var(--chip);
+  color: #a49a8e;
+}
+
+/* フッター：文字色を寒色→温かいトーンへ */
+.site-footer {
+  color: #d6cdc2;
+}
+.site-footer a:hover {
+  color: var(--accent-2);
+}
+
+/* 残っていた青系の影を温かいトーンに */
+.start-band:hover {
+  box-shadow: 0 10px 30px rgba(40, 34, 26, 0.16);
+}
+.toc-box {
+  box-shadow: none;
+  background: #fff;
+}
+
+/* スクロール追従ヘッダーの下に、うっすら影（コンテンツと分離） */
+@supports not (backdrop-filter: blur(1px)) {
+  .site-header {
+    background: #fbf8f5;
+  }
+}

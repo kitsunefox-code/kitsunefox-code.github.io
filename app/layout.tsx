@@ -122,7 +122,7 @@ gtag('config', '${GA4_MEASUREMENT_ID}');`}
               <span className="ball">⚾</span>
               <span>
                 草野球ナビ
-                <span className="logo-sub">ユニフォーム比較・お役立ちガイド</span>
+                <span className="logo-sub">道具・ユニフォーム比較＆お役立ちガイド</span>
               </span>
             </a>
             <nav>
@@ -137,7 +137,7 @@ gtag('config', '${GA4_MEASUREMENT_ID}');`}
         <footer className="site-footer">
           <div className="container">
             <p style={{ margin: "0 0 8px", fontWeight: 700, color: "#fff" }}>
-              ⚾ 草野球ユニフォーム比較ナビ
+              ⚾ 草野球ナビ
             </p>
             <p style={{ margin: 0 }}>
               掲載している価格・納期・仕様は各社公開情報をもとにした目安です。
@@ -165,7 +165,7 @@ gtag('config', '${GA4_MEASUREMENT_ID}');`}
               <a href="/privacy/">プライバシーポリシー</a>
             </p>
             <p style={{ margin: "10px 0 0" }}>
-              © {new Date().getFullYear()} 草野球ユニフォーム比較ナビ
+              © {new Date().getFullYear()} 草野球ナビ
             </p>
           </div>
         </footer>
