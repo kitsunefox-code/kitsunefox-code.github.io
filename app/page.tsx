@@ -240,6 +240,24 @@ export default function Home() {
           </div>
         </a>
 
+        {/* グローブ診断ツールCTAバンド */}
+        <a className="start-band" href="/glove-shindan/">
+          <div
+            className="start-band-photo"
+            style={{ backgroundImage: "url('/img/gloves-grass.jpg')" }}
+            aria-hidden="true"
+          />
+          <div className="start-band-body">
+            <span className="start-band-kicker">無料診断ツール</span>
+            <span className="start-band-title">グローブ相性診断</span>
+            <span className="start-band-desc">
+              ポジション・手の大きさ・予算に答えるだけで、あなたに合うグローブの
+              型・サイズ・素材・仕上げをその場で提案。内野・外野・投手・捕手・一塁まで対応。
+            </span>
+            <span className="start-band-btn">グローブを診断する →</span>
+          </div>
+        </a>
+
         {/* グローブメーカー占いCTAバンド（おまけ） */}
         <a className="start-band" href="/glove-fortune/">
           <div

@@ -104,8 +104,9 @@ gtag('config', '${GA4_MEASUREMENT_ID}');`}
               <a href="/#compare">メーカー比較</a>
               <a href="/shindan/">ユニフォーム診断</a>
               <a href="/bat-shindan/">バット診断</a>
+              <a href="/glove-shindan/">グローブ診断</a>
               <a href="/glove-fortune/">🔮占い</a>
-              <a href="/guide/">お役立ちガイド</a>
+              <a href="/guide/">ガイド</a>
             </nav>
           </div>
         </header>
@@ -125,6 +126,8 @@ gtag('config', '${GA4_MEASUREMENT_ID}');`}
               <a href="/shindan/">ユニフォーム診断</a>
               {" ｜ "}
               <a href="/bat-shindan/">バット診断</a>
+              {" ｜ "}
+              <a href="/glove-shindan/">グローブ診断</a>
               {" ｜ "}
               <a href="/glove-fortune/">グローブ占い</a>
               {" ｜ "}

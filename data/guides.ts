@@ -74,6 +74,18 @@ export const GUIDES: Guide[] = [
     description: "軟式・ポジション別の型・サイズ・型付けまで",
   },
   {
+    href: "/guide/glove-care/",
+    emoji: "🧴",
+    title: "グローブのお手入れ・型付け完全ガイド",
+    description: "オイルの塗り方・湯もみ・濡れた時・保管まで",
+  },
+  {
+    href: "/guide/bat-care/",
+    emoji: "🧽",
+    title: "軟式バットのお手入れ・長持ちのコツ",
+    description: "金属・複合の手入れ、グリップ巻き替え、保管の注意",
+  },
+  {
     href: "/guide/bat-guide/",
     emoji: "🏏",
     title: "軟式バットの選び方",
