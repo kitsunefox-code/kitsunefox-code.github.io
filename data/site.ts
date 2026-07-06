@@ -118,6 +118,31 @@ export const RAKUTEN: Record<string, ProductLink> = {
   },
 };
 
+/** ファイテン（Phiten）公式通販。疲労回復・体のケア文脈で使用（A8・計測ピクセル付き） */
+export const PHITEN: { label: string; desc: string; href: string; pixel?: string; emoji: string }[] = [
+  {
+    label: "【ファイテン公式】アスリート愛用のボディケア",
+    desc: "プロ野球選手から多数のトップアスリートが愛用する公式通販",
+    href: "https://px.a8.net/svt/ejp?a8mat=4B7SGX+912P2Q+2SIW+HVFKY",
+    pixel: "https://www11.a8.net/0.gif?a8mat=4B7SGX+912P2Q+2SIW+HVFKY",
+    emoji: "💠",
+  },
+  {
+    label: "【ファイテン公式】RAKUWAネックレス",
+    desc: "首・肩まわりのコンディショニングに。試合後のケアにも",
+    href: "https://px.a8.net/svt/ejp?a8mat=4B7SGX+912P2Q+2SIW+HXKQQ",
+    pixel: "https://www14.a8.net/0.gif?a8mat=4B7SGX+912P2Q+2SIW+HXKQQ",
+    emoji: "📿",
+  },
+  {
+    label: "【ファイテン公式】ボディケアシリーズ",
+    desc: "チタンテープ・ローション等。翌日に疲れを残したくない人へ",
+    href: "https://px.a8.net/svt/ejp?a8mat=4B7SGX+912P2Q+2SIW+HXSGI",
+    pixel: "https://www17.a8.net/0.gif?a8mat=4B7SGX+912P2Q+2SIW+HXSGI",
+    emoji: "🧴",
+  },
+];
+
 /** 総合スポーツ通販（A8直リンク・インプレッション計測ピクセル付き） */
 export const RETAILERS: { label: string; desc: string; href: string; pixel?: string; emoji: string }[] = [
   {

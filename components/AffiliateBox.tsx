@@ -1,4 +1,4 @@
-import { RAKUTEN, RETAILERS, type ProductLink } from "@/data/site";
+import { RAKUTEN, RETAILERS, PHITEN, type ProductLink } from "@/data/site";
 
 type RetailerItem = { label: string; desc: string; href: string; pixel?: string; emoji: string };
 type Item = ProductLink | RetailerItem;
@@ -7,19 +7,23 @@ type Item = ProductLink | RetailerItem;
  * 記事内に差し込むアフィリエイトCTA。
  * - rakuten: RAKUTEN のキー配列（例: ["glove","bat"]）を渡すと楽天検索リンクを表示
  * - retailers: true なら総合スポーツ通販（ゼビオ・アルペン）も表示
+ * - phiten: true ならファイテン公式（体のケア・疲労回復）を表示
  * すべて rel="sponsored nofollow" 付き。
  */
 export default function AffiliateBox({
   heading = "🛒 このアイテムを探す",
   rakuten = [],
   retailers = false,
+  phiten = false,
 }: {
   heading?: string;
   rakuten?: string[];
   retailers?: boolean;
+  phiten?: boolean;
 }) {
   const items: Item[] = [
     ...rakuten.map((k) => RAKUTEN[k]).filter(Boolean),
+    ...(phiten ? PHITEN : []),
     ...(retailers ? RETAILERS : []),
   ];
   if (items.length === 0) return null;

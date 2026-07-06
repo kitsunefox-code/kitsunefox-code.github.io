@@ -86,6 +86,12 @@ export const GUIDES: Guide[] = [
     description: "金属・複合の手入れ、グリップ巻き替え、保管の注意",
   },
   {
+    href: "/guide/body-care/",
+    emoji: "💠",
+    title: "草野球の疲労回復・体のケア完全ガイド",
+    description: "翌日に残さない・ケガを防ぐ。肩・肘・腰・脚のケア",
+  },
+  {
     href: "/guide/bat-guide/",
     emoji: "🏏",
     title: "軟式バットの選び方",
