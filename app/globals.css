@@ -1941,3 +1941,120 @@ section {
   font-weight: 500;
   letter-spacing: 0.06em;
 }
+
+/* ===== エディトリアル・ミニマル化（Vermicularの"余白と軽さ"を強く反映） ===== */
+/* 余白を大きく取り、呼吸感を出す */
+section {
+  padding: 72px 0;
+}
+@media (max-width: 680px) {
+  section {
+    padding: 46px 0;
+  }
+}
+
+/* セクション見出し：赤い太バーを廃止し、大きく軽い明朝＋細いヘアライン */
+.section-title {
+  display: block;
+  font-size: clamp(23px, 3vw, 31px);
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  line-height: 1.5;
+  margin: 0 0 10px;
+  padding-bottom: 18px;
+  position: relative;
+}
+.section-title::before {
+  display: none;
+}
+.section-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 46px;
+  height: 1.5px;
+  background: var(--accent);
+}
+.section-sub {
+  font-size: 14.5px;
+  line-height: 1.9;
+  letter-spacing: 0.04em;
+  margin: 0 0 32px;
+}
+
+/* 記事見出しもさらに大きく・軽く・広く */
+.article h1 {
+  font-size: clamp(25px, 3.6vw, 34px);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  line-height: 1.55;
+  margin-bottom: 14px;
+}
+.article h2 {
+  font-size: clamp(20px, 2.6vw, 25px);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  margin-top: 46px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+.article h3 {
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  margin-top: 30px;
+}
+.article p {
+  line-height: 2;
+}
+
+/* カード類：重い影を消してヘアライン基調のミニマルに */
+.goods-card,
+.tool-card,
+.maker-card,
+.info-card,
+.faq-item,
+.aff-box,
+.prod-box {
+  box-shadow: none;
+  border: 1px solid var(--line);
+}
+.goods-card:hover,
+.tool-card:hover {
+  box-shadow: 0 8px 26px rgba(40, 34, 26, 0.08);
+  transform: translateY(-2px);
+}
+.info-card {
+  background: #fff;
+  padding: 26px 24px;
+}
+
+/* ヒーロー（写真）：より大きく・広く、上品な大見出し */
+.hero-inner {
+  padding: 100px 16px 90px;
+}
+.hero-photo h1 {
+  font-size: clamp(30px, 6.5vw, 54px);
+  line-height: 1.4;
+  letter-spacing: 0.1em;
+}
+.hero-photo p {
+  font-size: clamp(14px, 2.2vw, 17px);
+  line-height: 2;
+  max-width: 640px;
+}
+
+/* 通常ヒーロー（記事扉/ツール）も余白と大きさを */
+.hero {
+  padding: 60px 0 52px;
+}
+.hero h1 {
+  font-size: clamp(24px, 4vw, 36px);
+  line-height: 1.5;
+}
+
+/* トップの目次ボックスも軽やかに */
+.toc-box {
+  border: 1px solid var(--line);
+  box-shadow: none;
+}
