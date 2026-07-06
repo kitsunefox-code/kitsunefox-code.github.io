@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import AdSlot from "@/components/AdSlot";
 import ProductCards from "@/components/ProductCards";
+import EditorsPicks from "@/components/EditorsPicks";
 import { LAST_UPDATED } from "@/data/makers";
 import { SITE_URL } from "@/data/site";
 
@@ -59,6 +60,27 @@ export default function BatComparePage() {
             「飛ぶバット」の正体はほぼ素材の違い。3タイプを比較して、
             そのうえで主要ブランドの傾向を押さえましょう。
           </p>
+
+          <EditorsPicks
+            heading="編集部の一押し 軟式バット"
+            picks={[
+              {
+                keyword: "軟式 バット ミズノ ビヨンドマックス",
+                label: "飛距離で選ぶなら",
+                comment: "複合の代表格。とにかく飛ばしたいパワーヒッターへ（要規定確認）。",
+              },
+              {
+                keyword: "軟式 バット SSK MM",
+                label: "反発と扱いやすさ",
+                comment: "人気の複合系。飛びと振りやすさのバランスが良い中級者向け。",
+              },
+              {
+                keyword: "軟式 バット 金属 ミズノ",
+                label: "最初の一本に",
+                comment: "扱いやすくコスパ良好。まず金属でスイングを固めたい人へ。",
+              },
+            ]}
+          />
 
           <h2>素材で比較：金属 / カーボン / ビヨンド系</h2>
           <table>

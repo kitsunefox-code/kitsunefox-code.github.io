@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import AdSlot from "@/components/AdSlot";
 import ProductCards from "@/components/ProductCards";
+import EditorsPicks from "@/components/EditorsPicks";
 import { LAST_UPDATED } from "@/data/makers";
 import { SITE_URL } from "@/data/site";
 
@@ -58,6 +59,27 @@ export default function GloveComparePage() {
             グローブ選びは、<strong>ブランド</strong>と<strong>ポジション（型）</strong>、
             そして<strong>価格帯</strong>の3つで絞ると迷いません。まずは主要ブランドの個性から。
           </p>
+
+          <EditorsPicks
+            heading="編集部の一押し 軟式グローブ"
+            picks={[
+              {
+                keyword: "軟式 グローブ ミズノ 内野",
+                label: "王道・内野に",
+                comment: "安定の作りで、初めての内野用にも安心。迷ったらまずこの系統。",
+              },
+              {
+                keyword: "軟式 グローブ 久保田スラッガー",
+                label: "内野のこだわり派に",
+                comment: "捕球の一体感で内野手に絶大な人気。長く付き合える一枚。",
+              },
+              {
+                keyword: "軟式 グローブ ミズノ 外野",
+                label: "外野に",
+                comment: "大きめ・深めでフライを安心して掴める。守備範囲を稼ぎたい人へ。",
+              },
+            ]}
+          />
 
           <h2>主要ブランド比較</h2>
           <table>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import AdSlot from "@/components/AdSlot";
 import ProductCards from "@/components/ProductCards";
+import EditorsPicks from "@/components/EditorsPicks";
 import { LAST_UPDATED } from "@/data/makers";
 import { SITE_URL } from "@/data/site";
 
@@ -88,6 +89,27 @@ export default function BattingGlovesPage() {
             手袋の良し悪しが打感に直結します。国内・輸入の主要ブランドを比較しつつ、
             最後に“アメフトグローブ流用”という裏技も紹介します。
           </p>
+
+          <EditorsPicks
+            heading="編集部の一押し バッティンググローブ"
+            picks={[
+              {
+                keyword: "バッティンググローブ フランクリン",
+                label: "グリップ重視・木製派に",
+                comment: "MLB定番。手なじみとグリップで根強い人気。木製バット派に◎。",
+              },
+              {
+                keyword: "バッティンググローブ ミズノ",
+                label: "国内定番",
+                comment: "フィットと品質のバランス。まず一双なら間違いない選択。",
+              },
+              {
+                keyword: "アメフト グローブ Cutters",
+                label: "裏技：グリップ最強",
+                comment: "食いつき抜群のレシーバー用。自己責任・規定確認のうえで流用を。",
+              },
+            ]}
+          />
 
           <h2>選ぶときの4つの軸</h2>
           <table>

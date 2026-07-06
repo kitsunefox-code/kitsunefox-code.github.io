@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import AdSlot from "@/components/AdSlot";
 import ProductCards from "@/components/ProductCards";
+import EditorsPicks from "@/components/EditorsPicks";
 import { LAST_UPDATED } from "@/data/makers";
 import { SITE_URL } from "@/data/site";
 
@@ -58,6 +59,27 @@ export default function SpikesComparePage() {
             草野球のスパイク選びは、まず<strong>ポイント（樹脂）か金具か</strong>から。
             そのうえで、ブランド・カット・価格で絞ります。
           </p>
+
+          <EditorsPicks
+            heading="編集部の一押し 野球スパイク"
+            picks={[
+              {
+                keyword: "野球 スパイク ミズノ ポイント",
+                label: "定番ポイント",
+                comment: "フィットと種類の豊富さ。迷ったらまずここから選べば安心。",
+              },
+              {
+                keyword: "野球 スパイク アシックス",
+                label: "履き心地重視",
+                comment: "機能性とクッションに定評。足あたりのよさで選ぶなら。",
+              },
+              {
+                keyword: "野球 スパイク ニューバランス",
+                label: "幅・快適さ",
+                comment: "幅の選択肢とクッション。人気上昇中で快適さ重視の人に。",
+              },
+            ]}
+          />
 
           <h2>ポイント（樹脂）と金具で比較</h2>
           <table>
