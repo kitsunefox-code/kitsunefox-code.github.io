@@ -1,8 +1,8 @@
 :root {
-  --navy: #0d2b4e;
-  --navy-2: #143a66;
-  --accent: #d8431b; /* 野球ボールの縫い目をイメージした赤（やや深め） */
-  --accent-2: #ff6b3d;
+  --navy: #2f2b25; /* ネイビーをやめ、温かいエスプレッソ（暗色バンド用） */
+  --navy-2: #3d382f;
+  --accent: #b3472e; /* グラブ革・ボールの縫い目を思わせる上品なテラコッタ */
+  --accent-2: #d67a52;
   --bg: #faf7f5; /* Vermicular風の温かいクリーム */
   --card: #ffffff;
   --line: #eae2d9;
@@ -2057,4 +2057,78 @@ section {
 .toc-box {
   border: 1px solid var(--line);
   box-shadow: none;
+}
+
+/* ===== 大胆リニューアル：中央寄せ編集ヒーロー＋温かい暗色オーバーレイ ===== */
+.hero-photo {
+  background-color: #2f2b25;
+  border-bottom: none;
+}
+.hero-editorial .hero-overlay {
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(26, 22, 18, 0.5) 0%,
+      rgba(26, 22, 18, 0.8) 100%
+    );
+}
+.hero-editorial .hero-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 130px 20px 118px;
+}
+.hero-editorial .hero-kicker {
+  display: inline-block;
+  color: rgba(255, 255, 255, 0.82);
+  letter-spacing: 0.42em;
+  margin: 0 0 24px;
+  padding-bottom: 16px;
+  position: relative;
+  text-indent: 0.42em; /* トラッキング分の中央ズレ補正 */
+}
+.hero-editorial .hero-kicker::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 34px;
+  height: 1px;
+  background: var(--accent-2);
+}
+.hero-editorial h1 {
+  font-size: clamp(36px, 7vw, 62px);
+  line-height: 1.5;
+  letter-spacing: 0.14em;
+  font-weight: 500;
+  margin: 0 0 24px;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+}
+.hero-editorial h1 .hl {
+  color: var(--accent-2);
+}
+.hero-editorial .hero-inner > p {
+  font-size: clamp(14px, 2.1vw, 17px);
+  line-height: 2.1;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 640px;
+  margin: 0 auto 32px;
+}
+.hero-editorial .hero-cta {
+  justify-content: center;
+}
+.hero-editorial .hero-meta {
+  margin: 34px auto 0;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.6);
+}
+@media (max-width: 680px) {
+  .hero-editorial .hero-inner {
+    padding: 84px 18px 72px;
+  }
+  .pc-br {
+    display: none;
+  }
 }

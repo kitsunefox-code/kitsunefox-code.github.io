@@ -69,32 +69,33 @@ export default function Home() {
     <main>
       <StructuredData />
 
-      {/* ヒーロー（写真背景） */}
-      <div className="hero hero-photo">
+      {/* ヒーロー（写真背景・中央寄せの編集レイアウト） */}
+      <div className="hero hero-photo hero-editorial">
         <div className="hero-overlay" />
         <div className="container hero-inner">
-          <p className="hero-kicker">KUSAYAKYU NAVI</p>
+          <p className="hero-kicker">Kusayakyu Navi</p>
           <h1>
-            草野球を、<span className="hl">もっと楽しく</span>。
+            草野球を、
+            <br />
+            <span className="hl">もっと楽しく</span>。
           </h1>
           <p>
-            チームの立ち上げから、ユニフォーム選び、道具えらびまで。
-            草野球の「困った」を、まるごと解決するナビサイトです。
+            チームづくりから、道具えらび、上達のコツまで。
+            <br className="pc-br" />
+            草野球の「知りたい」に、ていねいに答えるメディアです。
           </p>
-          <div className="badges">
-            <span className="badge">メーカー{makers.length}社を比較</span>
-            <span className="badge">写真でぴったり診断</span>
-            <span className="badge">お役立ちガイド{GUIDES.length}記事</span>
-            <span className="badge">{LAST_UPDATED}更新</span>
-          </div>
           <div className="hero-cta">
             <a className="primary" href="#compare">
-              ユニフォーム比較ランキングを見る
+              メーカー比較を見る
             </a>
-            <a className="ghost" href="/guide/how-to-start/">
-              草野球の始め方ガイド
+            <a className="ghost" href="/tools/">
+              無料ツールを試す
             </a>
           </div>
+          <p className="hero-meta">
+            メーカー{makers.length}社を比較 ・ 診断ツール4種 ・ ガイド
+            {GUIDES.length}記事 ・ {LAST_UPDATED}更新
+          </p>
         </div>
       </div>
 
