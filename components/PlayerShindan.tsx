@@ -29,11 +29,14 @@ function match(a: Record<string, boolean>): Player[] {
       }
     }
   }
+  // 同スコアはランダムに並べ替え、同じ資質を持つ多彩な選手が出るようにする
+  // （「なんでこいつ！」の意外性・リピート性のため）
   const ranked = PLAYERS.map((p) => ({
     p,
     s: p.traits.reduce((sum, t) => sum + (score[t] || 0), 0),
+    r: Math.random(),
   }))
-    .sort((x, y) => y.s - x.s)
+    .sort((x, y) => y.s - x.s || y.r - x.r)
     .map((x) => x.p);
   return ranked;
 }
