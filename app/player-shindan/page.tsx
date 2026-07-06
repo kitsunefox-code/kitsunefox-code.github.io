@@ -14,6 +14,15 @@ export const metadata: Metadata = {
     description:
       "はい／いいえで、あなたに似た選手を診断。使用グローブ・バット・スパイクのメーカーと実商品も。",
     type: "website",
+    url: `${SITE_URL}/player-shindan/`,
+    images: [{ url: "/og-player.png", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "野球選手タイプ診断｜あなたに似たNPB・MLB選手＆使用メーカー",
+    description:
+      "はい／いいえで、あなたに似た選手を診断。使用ギアのメーカー＆実モデルも。",
+    images: ["/og-player.png"],
   },
 };
 

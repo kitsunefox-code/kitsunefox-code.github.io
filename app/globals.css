@@ -2554,3 +2554,122 @@ section {
   flex: 1;
   min-width: 180px;
 }
+
+/* ── 選手診断：タイプ・ヒーロー ───────────────────── */
+.type-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  padding: 26px 20px 24px;
+  background: linear-gradient(160deg, var(--navy) 0%, #43392f 100%);
+  color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(47, 43, 37, 0.22);
+}
+.type-emoji {
+  font-size: 46px;
+  line-height: 1;
+}
+.type-kicker {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.72);
+}
+.type-name {
+  font-family: var(--jp-mincho, serif);
+  font-size: clamp(26px, 6vw, 40px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.15;
+}
+.type-desc {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 30em;
+  margin-top: 2px;
+}
+
+/* ギア行：モデル名＋実物/オーダー導線 */
+.player-gear {
+  gap: 12px;
+}
+.pg-item {
+  position: relative;
+}
+.pg-model {
+  display: block;
+  font-size: 11.5px;
+  color: var(--accent);
+  font-weight: 600;
+  margin-top: 2px;
+}
+.pg-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+.pg-links a {
+  font-size: 11px;
+  color: var(--navy);
+  background: rgba(179, 71, 46, 0.08);
+  border: 1px solid rgba(179, 71, 46, 0.25);
+  border-radius: 999px;
+  padding: 2px 9px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.pg-links a:hover {
+  background: rgba(179, 71, 46, 0.16);
+}
+
+/* SNSシェア */
+.share-box {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px dashed rgba(47, 43, 37, 0.18);
+}
+.share-label {
+  display: block;
+  font-size: 12px;
+  color: var(--text);
+  opacity: 0.7;
+  margin-bottom: 8px;
+  text-align: center;
+}
+.share-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+.share-btn {
+  flex: 1;
+  min-width: 130px;
+  text-align: center;
+  font-size: 13.5px;
+  font-weight: 700;
+  padding: 11px 12px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+.share-x {
+  background: #000;
+  color: #fff;
+}
+.share-line {
+  background: #06c755;
+  color: #fff;
+}
+.share-copy {
+  background: #fff;
+  color: var(--navy);
+  border: 1.5px solid var(--navy);
+}
+.share-btn:hover {
+  opacity: 0.9;
+}
