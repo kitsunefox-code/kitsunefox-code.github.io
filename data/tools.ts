@@ -10,6 +10,14 @@ export type Tool = {
 
 export const TOOLS: Tool[] = [
   {
+    href: "/player-shindan/",
+    emoji: "⭐",
+    title: "野球選手タイプ診断",
+    desc: "はい／いいえで、あなたに似たNPB・MLB選手をズバリ診断。その選手の使用グローブ・バット・スパイクのメーカーと実商品まで表示。道具を買わなくても楽しめる！",
+    badge: "NPB・MLB選手マッチ",
+    cta: "似ている選手を診断する",
+  },
+  {
     href: "/shindan/",
     emoji: "📷",
     title: "ユニフォーム診断",

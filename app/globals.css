@@ -2440,3 +2440,117 @@ section {
   text-align: center;
   margin: 16px 0 0;
 }
+
+/* ===== 野球選手タイプ診断の結果 ===== */
+.player-card {
+  background: linear-gradient(180deg, #0d2b4e 0%, #163a5f 100%);
+  color: #fff;
+  border-radius: var(--radius);
+  padding: 24px 22px 20px;
+  box-shadow: var(--shadow);
+}
+.player-head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.player-league {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+}
+.player-league.mlb {
+  background: #1d4ed8;
+}
+.player-league.sm {
+  font-size: 10.5px;
+  padding: 2px 8px;
+}
+.player-name {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 26px;
+  letter-spacing: 0.04em;
+}
+.player-pos {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.75);
+}
+.player-note {
+  font-size: 14px;
+  line-height: 1.9;
+  color: rgba(255, 255, 255, 0.92);
+  margin: 12px 0 16px;
+}
+.player-gear {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.pg-item {
+  background: rgba(255, 255, 255, 0.09);
+  border-radius: 10px;
+  padding: 10px 8px;
+  text-align: center;
+}
+.pg-k {
+  display: block;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 3px;
+}
+.pg-v {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffd23f;
+  line-height: 1.4;
+}
+.player-disc {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 12px 0 14px;
+}
+.player-card .stats-clear {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
+}
+.player-alts {
+  margin-top: 22px;
+}
+.player-alts-title {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  color: var(--navy);
+  margin: 0 0 10px;
+}
+.player-alt {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+}
+.player-alt-name {
+  font-weight: 700;
+  font-size: 14px;
+}
+.player-alt-note {
+  font-size: 12px;
+  color: var(--muted);
+  flex: 1;
+  min-width: 180px;
+}

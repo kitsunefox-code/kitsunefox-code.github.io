@@ -51,7 +51,7 @@ export default function Home() {
             </a>
           </div>
           <p className="hero-meta">
-            メーカー{makers.length}社を比較 ・ 診断ツール6種 ・ ガイド
+            メーカー{makers.length}社を比較 ・ 診断ツール7種 ・ ガイド
             {GUIDES.length}記事 ・ {LAST_UPDATED}更新
           </p>
         </div>
@@ -96,6 +96,24 @@ export default function Home() {
             ))}
           </div>
         </section>
+
+        {/* 野球選手タイプ診断（目玉） */}
+        <a className="start-band" href="/player-shindan/">
+          <div
+            className="start-band-photo"
+            style={{ backgroundImage: "url('/img/hero-home-plate.jpg')" }}
+            aria-hidden="true"
+          />
+          <div className="start-band-body">
+            <span className="start-band-kicker">Player Match</span>
+            <span className="start-band-title">野球選手タイプ診断</span>
+            <span className="start-band-desc">
+              はい／いいえに答えるだけで、あなたに似たNPB・MLB選手をズバリ診断。
+              その選手が使うグローブ・バット・スパイクのメーカーと実商品まで表示します。道具を買わなくても楽しめる！
+            </span>
+            <span className="start-band-btn">似ている選手を診断する →</span>
+          </div>
+        </a>
 
         {/* はじめての方へ */}
         <a className="start-band" href="/guide/how-to-start/">
