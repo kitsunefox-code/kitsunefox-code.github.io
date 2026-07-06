@@ -22,7 +22,7 @@ export default function GloveFortunePage() {
       <div className="hero" style={{ padding: "34px 0 28px" }}>
         <div className="container">
           <p className="hero-kicker" style={{ color: "var(--accent)" }}>
-            🔮 草野球おまけ占い
+            FORTUNE / おまけ占い
           </p>
           <h1 style={{ fontSize: "clamp(22px, 4vw, 32px)", margin: "0 0 10px" }}>
             グローブメーカー<span className="hl">占い</span>

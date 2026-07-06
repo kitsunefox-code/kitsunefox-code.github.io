@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { Oswald } from "next/font/google";
 import {
   SITE_URL,
   SITE_NAME,
@@ -7,6 +8,14 @@ import {
   GA4_MEASUREMENT_ID,
 } from "@/data/site";
 import "./globals.css";
+
+// 見出し・数字・英字ラベル用のコンデンス体（スポーティな印象づけ）
+const oswald = Oswald({
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  variable: "--font-display",
+  display: "swap",
+});
 
 const DESCRIPTION =
   "草野球のはじめの一歩をまるごとサポート。オーダーユニフォームのメーカー比較（価格・納期・昇華/刺繍）を軸に、チームの始め方・道具えらび・運営のコツまで解説する草野球の総合ナビサイトです。";
@@ -55,7 +64,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ja">
+    <html lang="ja" className={oswald.variable}>
       <body>
         {/* AdSense（data/site.ts にクライアントIDを設定すると有効化） */}
         {ADSENSE_CLIENT_ID && (
@@ -103,7 +112,7 @@ gtag('config', '${GA4_MEASUREMENT_ID}');`}
             <nav>
               <a href="/#compare">メーカー比較</a>
               <a href="/shindan/">ユニフォーム診断</a>
-              <a href="/tools/">🛠️無料ツール</a>
+              <a href="/tools/">無料ツール</a>
               <a href="/guide/">お役立ちガイド</a>
             </nav>
           </div>

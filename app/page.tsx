@@ -73,7 +73,7 @@ export default function Home() {
       <div className="hero hero-photo">
         <div className="hero-overlay" />
         <div className="container hero-inner">
-          <p className="hero-kicker">⚾ 草野球ナビ</p>
+          <p className="hero-kicker">KUSAYAKYU NAVI</p>
           <h1>
             草野球を、<span className="hl">もっと楽しく</span>。
           </h1>
@@ -82,14 +82,14 @@ export default function Home() {
             草野球の「困った」を、まるごと解決するナビサイトです。
           </p>
           <div className="badges">
-            <span className="badge">⚾ メーカー{makers.length}社を比較</span>
-            <span className="badge">📷 写真でぴったり診断</span>
-            <span className="badge">📚 お役立ちガイド</span>
-            <span className="badge">🔄 {LAST_UPDATED}更新</span>
+            <span className="badge">メーカー{makers.length}社を比較</span>
+            <span className="badge">写真でぴったり診断</span>
+            <span className="badge">お役立ちガイド{GUIDES.length}記事</span>
+            <span className="badge">{LAST_UPDATED}更新</span>
           </div>
           <div className="hero-cta">
             <a className="primary" href="#compare">
-              ⚾ ユニフォーム比較ランキングを見る
+              ユニフォーム比較ランキングを見る
             </a>
             <a className="ghost" href="/guide/how-to-start/">
               草野球の始め方ガイド
@@ -266,7 +266,7 @@ export default function Home() {
             aria-hidden="true"
           />
           <div className="start-band-body">
-            <span className="start-band-kicker">🔮 おまけ占い</span>
+            <span className="start-band-kicker">FUN / おまけ占い</span>
             <span className="start-band-title">グローブメーカー占い</span>
             <span className="start-band-desc">
               試合でメインに使うグローブメーカーを選ぶだけで、今日の野球運を占います。

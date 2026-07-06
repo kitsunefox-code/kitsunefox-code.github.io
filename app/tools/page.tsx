@@ -65,7 +65,7 @@ export default function ToolsPage() {
       <div className="hero" style={{ padding: "34px 0 26px" }}>
         <div className="container">
           <p className="hero-kicker" style={{ color: "var(--accent)" }}>
-            🛠️ 無料ツール
+            FREE TOOLS
           </p>
           <h1 style={{ fontSize: "clamp(22px, 4vw, 32px)", margin: "0 0 10px" }}>
             草野球の<span className="hl">無料ツール</span>一覧

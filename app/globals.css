@@ -1,17 +1,22 @@
 :root {
   --navy: #0d2b4e;
   --navy-2: #143a66;
-  --accent: #e8481c; /* 野球ボールの縫い目をイメージした赤 */
+  --accent: #d8431b; /* 野球ボールの縫い目をイメージした赤（やや深め） */
   --accent-2: #ff6b3d;
-  --bg: #f5f7fa;
+  --bg: #f4f2ec; /* 温かみのあるオフホワイト */
   --card: #ffffff;
-  --line: #e2e8f0;
-  --text: #1a2433;
-  --muted: #64748b;
+  --line: #e7e1d6;
+  --text: #2a2620; /* 寒色グレーをやめ、温かみのある濃色に */
+  --muted: #736c62;
   --good: #12805c;
-  --chip: #eef2f7;
+  --chip: #efeae0;
   --radius: 14px;
-  --shadow: 0 2px 10px rgba(13, 43, 78, 0.08);
+  --shadow: 0 2px 14px rgba(40, 34, 26, 0.07);
+  /* 日本語本文の推奨スタック（system-ui/Segoeを外して既定感を払拭） */
+  --jp: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic Medium",
+    YuGothic, "游ゴシック体", "Noto Sans JP", Meiryo, sans-serif;
+  /* 見出し・数字・英字ラベル：Oswald(next/font) → 日本語はJPスタックにフォールバック */
+  --font-heading: var(--font-display), var(--jp);
 }
 
 * {
@@ -25,12 +30,13 @@ body {
 }
 
 body {
-  font-family: system-ui, -apple-system, "Segoe UI", "Hiragino Kaku Gothic ProN",
-    "Noto Sans JP", Meiryo, sans-serif;
+  font-family: var(--jp);
   color: var(--text);
   background: var(--bg);
-  line-height: 1.7;
+  line-height: 1.8;
+  letter-spacing: 0.01em;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 a {
@@ -1641,4 +1647,80 @@ section {
   font-size: 12px;
   font-weight: 600;
   color: var(--muted);
+}
+
+/* ===== タイポグラフィ洗練（AI/テンプレ感の低減） ===== */
+/* 見出し・英字・数字にコンデンス体を効かせ、字間で編集的な印象に */
+.article h1,
+.article h2,
+.section-title,
+.guide-cat-head,
+.hero h1,
+.hero-photo h1,
+.tool-title,
+.result-rank-badge {
+  font-family: var(--font-heading);
+  letter-spacing: 0.02em;
+}
+.article h1 { font-weight: 700; line-height: 1.5; }
+.article h2 { font-weight: 600; letter-spacing: 0.03em; }
+
+/* ロゴ・キッカー・目次見出し：英字コンデンス＋トラッキングで“作り込み感” */
+.logo,
+.hero-kicker,
+.start-band-kicker,
+.toc-title,
+.tool-badge,
+.section-sub-kicker {
+  font-family: var(--font-heading);
+}
+.hero-kicker,
+.start-band-kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-weight: 600;
+}
+
+/* 数字・スコア系はコンデンス体で“データっぽさ”を演出 */
+.step-num,
+.fortune-mark,
+.fortune-tier-label,
+.fortune-cell-v,
+.stat-cell b,
+.meta,
+.badge,
+.result-count {
+  font-family: var(--font-heading);
+  letter-spacing: 0.02em;
+}
+
+/* ナビ：字間を締めて洗練 */
+.site-header nav {
+  letter-spacing: 0.03em;
+}
+
+/* ボタン系：英字・数字が締まって見えるように */
+.primary,
+.ghost,
+.tool-cta,
+.start-band-btn,
+.aff-arrow,
+.game-add,
+.shindan-submit,
+.cta-inline {
+  font-family: var(--font-heading);
+  letter-spacing: 0.04em;
+}
+
+/* セクションタイトルの装飾バーを細く上品に */
+.section-title::before {
+  width: 4px;
+  height: 20px;
+  border-radius: 2px;
+}
+
+/* リンクの下線をやわらかく（本文中の内部リンク） */
+.article a {
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(216, 67, 27, 0.35);
 }
