@@ -1,4 +1,4 @@
-import { RAKUTEN_APP_ID, RAKUTEN_AFFILIATE_ID } from "@/data/site";
+import { RAKUTEN_AFFILIATE_ID, SITE_URL } from "@/data/site";
 
 export type RakutenItem = {
   name: string;
@@ -8,48 +8,68 @@ export type RakutenItem = {
   shop: string;
 };
 
+// アクセスキーはシークレット。公開リポジトリに置かず、ビルド時の環境変数から読む。
+const ACCESS_KEY = process.env.RAKUTEN_ACCESS_KEY || "";
+
+// 新しい楽天市場 商品検索API（アクセスキー方式）
+const ENDPOINT =
+  "https://openapi.rakuten.co.jp/ichibams/api/IchibaItem/Search/20260701";
+
 /**
- * 楽天市場 商品検索API（IchibaItem/Search）をビルド時に呼び出す。
- * アプリIDが未設定なら空配列を返し、呼び出し側は検索リンクにフォールバックする。
- * 静的書き出し(output: export)のビルド中に実行され、結果はHTMLに焼き込まれる。
+ * 楽天市場 商品検索APIをビルド時に呼び出す。
+ * アクセスキー未設定・エラー時は空配列を返し、呼び出し側は検索リンクにフォールバック。
+ * formatVersion=1 のため、レスポンスは従来どおり Items[].Item の配列形式。
  */
 export async function fetchRakutenItems(
   keyword: string,
   hits = 4
 ): Promise<RakutenItem[]> {
-  if (!RAKUTEN_APP_ID) return [];
+  if (!ACCESS_KEY) return [];
   const params = new URLSearchParams({
-    applicationId: RAKUTEN_APP_ID,
+    accessKey: ACCESS_KEY,
     keyword,
     hits: String(hits),
     imageFlag: "1",
     sort: "standard",
-    // レビュー件数の多い定番を優先しやすくする
-    minReviewNum: "5",
+    formatVersion: "1",
   });
   if (RAKUTEN_AFFILIATE_ID) params.set("affiliateId", RAKUTEN_AFFILIATE_ID);
-  const url = `https://app.rakuten.co.jp/services/api/IchibaItem/Search/20220601?${params.toString()}`;
+  const url = `${ENDPOINT}?${params.toString()}`;
   try {
-    const res = await fetch(url);
-    if (!res.ok) return [];
+    // アプリをリファラ制限で登録しているため、サーバー取得でも Referer を明示。
+    const res = await fetch(url, {
+      headers: { Referer: `${SITE_URL}/` },
+    });
+    if (!res.ok) {
+      // 原因調査用（アクセスキー本体は出力しない）
+      const body = await res.text().catch(() => "");
+      console.warn(
+        `[rakuten] ${keyword}: HTTP ${res.status} ${body.slice(0, 200)}`
+      );
+      return [];
+    }
     const data = await res.json();
     const items: RakutenItem[] = (data.Items || [])
       .map((wrap: { Item?: Record<string, unknown> }) => {
         const it = (wrap.Item || wrap) as Record<string, unknown>;
-        const imgs = (it.mediumImageUrls || []) as { imageUrl: string }[];
-        const raw = imgs[0]?.imageUrl || "";
+        const imgs = (it.mediumImageUrls || []) as
+          | { imageUrl: string }[]
+          | string[];
+        const first = imgs[0] as { imageUrl?: string } | string | undefined;
+        const raw =
+          typeof first === "string" ? first : first?.imageUrl || "";
         return {
           name: String(it.itemName || ""),
           price: Number(it.itemPrice || 0),
           url: String(it.affiliateUrl || it.itemUrl || ""),
-          // サムネイルの縮小パラメータを外して少し大きめの画像に
           image: raw.replace(/\?_ex=\d+x\d+$/, "?_ex=300x300"),
           shop: String(it.shopName || ""),
         };
       })
       .filter((i: RakutenItem) => i.name && i.url && i.image);
     return items.slice(0, hits);
-  } catch {
+  } catch (e) {
+    console.warn(`[rakuten] ${keyword}: fetch failed`, (e as Error).message);
     return [];
   }
 }

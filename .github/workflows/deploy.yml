@@ -26,6 +26,10 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+        env:
+          # 楽天商品検索APIのアクセスキー（GitHubのリポジトリSecretに登録）。
+          # 公開リポジトリに直接書かず、ビルド時だけ環境変数として注入する。
+          RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
