@@ -14,6 +14,18 @@ export const GUIDES: Guide[] = [
     description: "チームの探し方・作り方・初心者が最初にやること",
   },
   {
+    href: "/guide/build-a-team/",
+    emoji: "🏗️",
+    title: "草野球チームの作り方【立ち上げ完全マニュアル】",
+    description: "メンバー集め・球場・連盟・保険まで7ステップ",
+  },
+  {
+    href: "/guide/helper-recruit/",
+    emoji: "🙋",
+    title: "助っ人・メンバーの集め方 完全ガイド",
+    description: "募集サイト・アプリ・SNS活用と募集文テンプレ",
+  },
+  {
     href: "/guide/uniform-how-to/",
     emoji: "📖",
     title: "草野球ユニフォームの作り方【7ステップ】",
