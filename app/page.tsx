@@ -220,26 +220,6 @@ export default function Home() {
           </div>
         </a>
 
-        {/* 成績管理ツールCTAバンド */}
-        <a className="start-band" href="/score/">
-          <div
-            className="start-band-photo"
-            style={{ backgroundImage: "url('/img/hero-home-plate.jpg')" }}
-            aria-hidden="true"
-          />
-          <div className="start-band-body">
-            <span className="start-band-kicker">無料ツール</span>
-            <span className="start-band-title">
-              自分の打席だけ入力する「かんたん成績管理」
-            </span>
-            <span className="start-band-desc">
-              スコア係がいなくても大丈夫。自分の打席をタップするだけで、
-              打率・打点・本塁打・OPSまで自動計算。アプリ不要・登録不要、この端末に自動保存。
-            </span>
-            <span className="start-band-btn">成績を記録してみる →</span>
-          </div>
-        </a>
-
         {/* お役立ちガイド */}
         <section id="guides">
           <h2 className="section-title">草野球お役立ちガイド</h2>
