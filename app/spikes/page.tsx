@@ -156,6 +156,9 @@ export default function SpikesComparePage() {
 
           <h2>くわしい選び方</h2>
           <div className="bat-links">
+            <a className="cta-inline" href="/spikes-shindan/">
+              → はい/いいえでわかる「スパイク相性診断」
+            </a>
             <a className="cta-inline" href="/guide/spikes-guide/">
               → じっくり読む「野球スパイクの選び方」
             </a>

@@ -28,7 +28,7 @@ export default function BattingGloveShindanPage() {
             バッティンググローブ<span className="hl">相性診断</span>
           </h1>
           <p>
-            <strong>7つの質問に答えるだけ</strong>で、あなたに合うバッティンググローブの
+            <strong>「はい／いいえ」に答えるだけ</strong>で、あなたに合うバッティンググローブの
             素材・ブランド傾向・サイズ・グリップ度をその場で提案。
             「木製バット派」や「グリップ最強の裏技（アメフトG流用）」にも対応します。
           </p>

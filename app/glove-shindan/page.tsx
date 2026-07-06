@@ -25,8 +25,8 @@ export default function GloveShindanPage() {
             グローブ<span className="hl">相性診断</span>
           </h1>
           <p>
-            <strong>6つの質問に答えるだけ</strong>で、あなたに合うグローブの
-            型・サイズ・素材・仕上げをその場で提案します。
+            <strong>「はい／いいえ」に答えるだけ</strong>で、あなたに合うグローブの
+            型・サイズ・素材に加え、<strong>専門店データに基づく“おすすめウェブ（網）”</strong>まで提案。
             内野・外野・投手・捕手・一塁まで対応。初めての一枚も、買い替えも。
           </p>
         </div>
