@@ -126,10 +126,10 @@ gtag('config', '${GA4_MEASUREMENT_ID}');`}
               </span>
             </a>
             <nav>
-              <a href="/uniform/">メーカー比較</a>
-              <a href="/shindan/">ユニフォーム診断</a>
-              <a href="/tools/">無料ツール</a>
-              <a href="/guide/">お役立ちガイド</a>
+              <a href="/hikaku/">比較</a>
+              <a href="/tools/">診断・ツール</a>
+              <a href="/guide/">ガイド</a>
+              <a href="/uniform/">ユニフォーム</a>
             </nav>
           </div>
         </header>
@@ -144,7 +144,9 @@ gtag('config', '${GA4_MEASUREMENT_ID}');`}
               最新・正確な内容は必ず各メーカー公式サイトでご確認ください。
             </p>
             <p style={{ margin: "10px 0 0" }}>
-              <a href="/uniform/">メーカー比較</a>
+              <a href="/hikaku/">比較まとめ</a>
+              {" ｜ "}
+              <a href="/uniform/">ユニフォーム比較</a>
               {" ｜ "}
               <a href="/tools/">無料ツール</a>
               {" ｜ "}

@@ -5,10 +5,10 @@ import { TOOLS } from "@/data/tools";
 
 const PILLARS = [
   {
-    href: "/uniform/",
-    kicker: "Uniform",
-    title: "ユニフォームメーカー比較",
-    desc: `オーダーメーカー${makers.length}社を価格・納期・少人数対応などで採点。1着から作れる店や昇華/刺繍の違いも。`,
+    href: "/hikaku/",
+    kicker: "Compare",
+    title: "道具・ユニフォーム比較",
+    desc: `ユニフォームメーカー${makers.length}社に加え、バット・グローブ・スパイク・打撃手袋まで。ブランド・価格・特徴で見比べ。`,
   },
   {
     href: "/tools/",
