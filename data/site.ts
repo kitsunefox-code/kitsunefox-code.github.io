@@ -75,6 +75,18 @@ export function rkt(key: string): string {
   return RKT_PRE + kw + RKT_MID + kw + "%252F";
 }
 
+// 任意キーワードの楽天アフィリンク（A8経由）。最終検索は「野球+{words}」になる。
+// 単語は三重エンコード・区切りの"+"は二重エンコード(%252B)がリンク構造上の正解。
+export function rktSearch(...words: string[]): string {
+  const kw = words
+    .filter(Boolean)
+    .map((w) =>
+      encodeURIComponent(encodeURIComponent(encodeURIComponent(w)))
+    )
+    .join("%252B");
+  return RKT_PRE + kw + RKT_MID + kw + "%252F";
+}
+
 /**
  * 記事内に差し込むアフィリエイトCTA用の品目マスタ。
  * AffiliateBox コンポーネントから参照する。href は楽天のキーワード検索

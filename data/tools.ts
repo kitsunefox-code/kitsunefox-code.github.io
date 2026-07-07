@@ -21,8 +21,8 @@ export const TOOLS: Tool[] = [
     href: "/baseball-mbti/",
     emoji: "🧠",
     title: "野球選手MBTI診断",
-    desc: "MBTIの4指標を野球に置き換えた16タイプ診断。12の二択で、あなたの“野球選手MBTI”と似たプレースタイルのNPB・MLB選手がわかる。話のタネにも。",
-    badge: "16タイプ診断",
+    desc: "MBTIの4指標を野球に置き換えた本格16タイプ診断。全36問・7段階回答で、軸ごとの%と“野球選手MBTI”、似たプレースタイルのNPB・MLB選手がわかる。",
+    badge: "本格36問・16タイプ",
     cta: "自分のタイプを診断する",
   },
   {

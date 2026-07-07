@@ -15,7 +15,7 @@ import {
   PLAYER_TYPES,
   type PlayerType,
 } from "@/data/playerTypes";
-import { SITE_URL } from "@/data/site";
+import { SITE_URL, rktSearch } from "@/data/site";
 
 type QId = string;
 const QUESTIONS: { id: QId; text: string; w: Partial<Record<Trait, number>> }[] = [
@@ -59,8 +59,8 @@ function match(a: Record<string, boolean>): MatchResult {
   return { ranked, type };
 }
 
-const rakutenSearch = (kw: string) =>
-  `https://search.rakuten.co.jp/search/mall/${encodeURIComponent(kw)}/`;
+// 楽天のおすすめ一覧へ（A8経由のアフィリエイトリンク＝広告）
+const rakutenSearch = (kw: string) => rktSearch(...kw.split(/\s+/));
 
 function GearRow({
   label,

@@ -5,22 +5,22 @@ import { MBTI_TYPES } from "@/data/baseballMbti";
 import { SITE_URL } from "@/data/site";
 
 export const metadata: Metadata = {
-  title: "野球選手MBTI診断｜あなたは16タイプのどれ？似ているNPB・MLB選手もわかる",
+  title: "野球選手MBTI診断｜本格36問・あなたは16タイプのどれ？似ているNPB・MLB選手もわかる",
   description:
-    "MBTIの4指標（E/I・S/N・T/F・J/P）を野球にあてはめた16タイプ診断。12の二択に答えるだけで、あなたの“野球選手MBTI”と、近いプレースタイルのNPB・MLB選手がわかります。登録不要・無料のエンタメ診断。",
+    "MBTIの4指標（E/I・S/N・T/F・J/P）を野球にあてはめた本格16タイプ診断。全36問に7段階で答えると、あなたの“野球選手MBTI”を軸ごとのパーセンテージ付きで判定。近いプレースタイルのNPB・MLB選手と使用メーカーもわかります。登録不要・無料。",
   alternates: { canonical: `${SITE_URL}/baseball-mbti/` },
   openGraph: {
-    title: "野球選手MBTI診断｜あなたは16タイプのどれ？",
+    title: "野球選手MBTI診断｜本格36問・あなたは16タイプのどれ？",
     description:
-      "12の二択で、あなたの“野球選手MBTI”を診断。似ているNPB・MLB選手も。",
+      "全36問・7段階回答で、あなたの“野球選手MBTI”を%付きで診断。似ているNPB・MLB選手も。",
     type: "website",
     url: `${SITE_URL}/baseball-mbti/`,
     images: [{ url: "/og-mbti.png", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "野球選手MBTI診断｜あなたは16タイプのどれ？",
-    description: "12の二択で、あなたの“野球選手MBTI”を診断。似ている選手も。",
+    title: "野球選手MBTI診断｜本格36問・あなたは16タイプのどれ？",
+    description: "全36問・7段階で、あなたの“野球選手MBTI”を診断。似ている選手も。",
     images: ["/og-mbti.png"],
   },
 };
@@ -52,8 +52,10 @@ export default function BaseballMbtiPage() {
           </h1>
           <p>
             MBTIの4指標（<strong>E/I・S/N・T/F・J/P</strong>）を野球の性格に置き換えた
-            <strong>16タイプ診断</strong>。12の二択に答えるだけで、あなたの“野球選手MBTI”と、
-            似たプレースタイルの<strong>NPB・MLB選手</strong>がわかります。
+            <strong>本格16タイプ診断</strong>。全<strong>36問</strong>に
+            <strong>7段階</strong>（そう思う〜そう思わない）で答えると、あなたの“野球選手MBTI”を
+            軸ごとの<strong>パーセンテージ付き</strong>で判定。似たプレースタイルの
+            <strong>NPB・MLB選手</strong>と使用メーカーもわかります（約3分）。
           </p>
         </div>
       </div>
@@ -67,8 +69,9 @@ export default function BaseballMbtiPage() {
         <div className="score-howto">
           <h2 className="section-title">この診断について</h2>
           <p className="section-sub" style={{ marginTop: 8 }}>
-            外向／内向、堅実／ひらめき、論理／情熱、計画／自由——4つの軸から、あなたの野球での
-            “性格タイプ”を全<strong>{MBTI_TYPES.length}種</strong>で判定します。近い選手の分類は
+            外向／内向、堅実／ひらめき、論理／情熱、計画／自由——4つの軸それぞれに9問ずつ、
+            計36問を7段階で回答すると、軸ごとの傾向をパーセンテージで算出し、あなたの野球での
+            “性格タイプ”を全<strong>{MBTI_TYPES.length}種</strong>から判定します。近い選手の分類は
             プレースタイルをもとにした遊びのもので、公式のMBTIとは無関係です。
             気軽な話のタネに、道具選びのヒントにどうぞ。
           </p>

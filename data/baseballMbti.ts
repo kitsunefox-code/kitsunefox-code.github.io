@@ -4,42 +4,60 @@
 import { PLAYERS, type Player } from "./players";
 
 export type Axis = "EI" | "SN" | "TF" | "JP";
-export type Pole = "E" | "I" | "S" | "N" | "T" | "F" | "J" | "P";
 
-export type MbtiQuestion = {
-  id: string;
-  axis: Axis;
-  q: string;
-  a: { label: string; pole: Pole };
-  b: { label: string; pole: Pole };
+// 7段階同意スケールの設問。dir=「そう思う」がどちらの極に効くか（L=E/S/T/J、R=I/N/F/P）。
+// 逆転項目（dir:"R"）を混ぜるのは実際の心理検査と同じ作法。設問はすべて野球向けオリジナル。
+export type Statement = { id: string; axis: Axis; dir: "L" | "R"; text: string };
+
+export const AXIS_META: Record<
+  Axis,
+  { left: string; right: string; leftJp: string; rightJp: string; label: string }
+> = {
+  EI: { left: "E", right: "I", leftJp: "外向", rightJp: "内向", label: "エネルギー" },
+  SN: { left: "S", right: "N", leftJp: "堅実", rightJp: "ひらめき", label: "プレーの発想" },
+  TF: { left: "T", right: "F", leftJp: "論理", rightJp: "情熱", label: "判断のしかた" },
+  JP: { left: "J", right: "P", leftJp: "計画", rightJp: "自由", label: "野球への向き合い方" },
 };
 
-// 各軸3問ずつ・全12問（A/Bの二択）
-export const MBTI_QUESTIONS: MbtiQuestion[] = [
-  // E / I（エネルギーの向き）
-  { id: "e1", axis: "EI", q: "試合前のベンチでは？", a: { label: "声を出してチームを盛り上げる", pole: "E" }, b: { label: "自分のルーティンに集中する", pole: "I" } },
-  { id: "e2", axis: "EI", q: "打席の緊張のほぐし方は？", a: { label: "仲間と話して気を紛らわす", pole: "E" }, b: { label: "ひとりで静かに集中する", pole: "I" } },
-  { id: "e3", axis: "EI", q: "練習するなら？", a: { label: "みんなでワイワイやりたい", pole: "E" }, b: { label: "黙々と個人練を積みたい", pole: "I" } },
-  // S / N（物事の捉え方）
-  { id: "s1", axis: "SN", q: "打撃で大事にするのは？", a: { label: "基本に忠実な再現性", pole: "S" }, b: { label: "その日のひらめき・感覚", pole: "N" } },
-  { id: "s2", axis: "SN", q: "好きな作戦は？", a: { label: "セオリー通りの手堅い攻め", pole: "S" }, b: { label: "意表を突く奇策・ギャンブル", pole: "N" } },
-  { id: "s3", axis: "SN", q: "上達の仕方は？", a: { label: "今の課題を一つずつ潰す", pole: "S" }, b: { label: "理想の完成形から逆算する", pole: "N" } },
-  // T / F（判断の基準）
-  { id: "t1", axis: "TF", q: "チームで重視するのは？", a: { label: "勝つための合理性・数字", pole: "T" }, b: { label: "みんなの気持ち・チームの和", pole: "F" } },
-  { id: "t2", axis: "TF", q: "ミスした仲間に、まず？", a: { label: "原因を具体的に指摘する", pole: "T" }, b: { label: "とにかく励ます・声をかける", pole: "F" } },
-  { id: "t3", axis: "TF", q: "スタメンを決めるなら？", a: { label: "実力・数字でドライに選ぶ", pole: "T" }, b: { label: "調子や気持ちも汲んで選ぶ", pole: "F" } },
-  // J / P（外界への接し方）
-  { id: "j1", axis: "JP", q: "試合当日は？", a: { label: "段取り・準備をきっちり", pole: "J" }, b: { label: "その場のノリで動く", pole: "P" } },
-  { id: "j2", axis: "JP", q: "道具の扱いは？", a: { label: "手入れして定位置にきっちり", pole: "J" }, b: { label: "使えればOK、気分次第", pole: "P" } },
-  { id: "j3", axis: "JP", q: "急な予定変更が起きたら？", a: { label: "段取りが崩れて少し苦手", pole: "J" }, b: { label: "むしろ臨機応変に楽しむ", pole: "P" } },
+// 各軸9問×4軸＝全36問。軸が交互に来るよう配列（6問×6画面）。
+export const MBTI_STATEMENTS: Statement[] = [
+  { id: "q01", axis: "EI", dir: "L", text: "試合中は、ベンチにいても自然と声が出ている" },
+  { id: "q02", axis: "SN", dir: "L", text: "練習でいちばん大事なのは、基本の反復だと思う" },
+  { id: "q03", axis: "TF", dir: "L", text: "采配や起用は、情より数字や相性で決めるべきだ" },
+  { id: "q04", axis: "JP", dir: "L", text: "試合当日の持ち物は、前日の夜までに準備しておく" },
+  { id: "q05", axis: "EI", dir: "R", text: "試合前は、仲間と話すより一人で静かに集中したい" },
+  { id: "q06", axis: "SN", dir: "R", text: "奇策やトリックプレーを考えるとワクワクする" },
+  { id: "q07", axis: "TF", dir: "R", text: "エラーした仲間には、原因の指摘より先に「ドンマイ」と声をかける" },
+  { id: "q08", axis: "JP", dir: "R", text: "急な予定変更やダブルヘッダーも、その場のノリで楽しめる" },
+  { id: "q09", axis: "EI", dir: "L", text: "初めて組むチームとの試合でも、すぐに打ち解けられる" },
+  { id: "q10", axis: "SN", dir: "L", text: "作戦は、データや過去の実績をもとに立てたい" },
+  { id: "q11", axis: "TF", dir: "L", text: "負けた原因は、感情を抜きにして冷静に分析したい" },
+  { id: "q12", axis: "JP", dir: "L", text: "道具は使ったら必ず手入れをして、決まった場所に戻す" },
+  { id: "q13", axis: "EI", dir: "L", text: "野球のあとの打ち上げも、試合と同じくらい楽しみだ" },
+  { id: "q14", axis: "SN", dir: "R", text: "「次はこの球が来る」という直感を信じて構えることがある" },
+  { id: "q15", axis: "TF", dir: "R", text: "勝ち負けよりも、全員が楽しめたかどうかが大事だ" },
+  { id: "q16", axis: "JP", dir: "R", text: "本番が近づいてから、一気に集中力を発揮するタイプだ" },
+  { id: "q17", axis: "EI", dir: "R", text: "素振りや壁当てなど、一人でやる練習の時間が好きだ" },
+  { id: "q18", axis: "SN", dir: "L", text: "一発逆転を狙うより、確実に一点を取りにいく野球が好きだ" },
+  { id: "q19", axis: "TF", dir: "L", text: "正しい指摘なら、相手に耳が痛いことでも伝えるべきだ" },
+  { id: "q20", axis: "JP", dir: "L", text: "練習メニューや打順は、事前にきっちり決めておきたい" },
+  { id: "q21", axis: "EI", dir: "L", text: "チームの輪の中心で、ムードを作るのは自分の役割だと思う" },
+  { id: "q22", axis: "SN", dir: "R", text: "新しい打撃理論や練習法を見つけると、すぐ試したくなる" },
+  { id: "q23", axis: "TF", dir: "R", text: "メンバーを選ぶなら、実力だけでなく頑張ってきた過程も評価したい" },
+  { id: "q24", axis: "JP", dir: "R", text: "かっちりした型にはめられるより、自由にやらせてほしい" },
+  { id: "q25", axis: "EI", dir: "R", text: "大事な試合のあとは、一人になってゆっくり振り返りたい" },
+  { id: "q26", axis: "SN", dir: "L", text: "上達のコツは、今の課題をひとつずつ着実に潰していくことだ" },
+  { id: "q27", axis: "TF", dir: "L", text: "話し合いでは、筋が通っているかどうかをいちばん重視する" },
+  { id: "q28", axis: "JP", dir: "L", text: "集合時間より、かなり早めに球場へ着いていないと落ち着かない" },
+  { id: "q29", axis: "EI", dir: "L", text: "見ている人が多いほど、プレーに気合が入る" },
+  { id: "q30", axis: "SN", dir: "R", text: "自分の理想のプレースタイルを、頭の中でよく思い描く" },
+  { id: "q31", axis: "TF", dir: "R", text: "チームメイトの気持ちの変化には、わりとすぐ気づく方だ" },
+  { id: "q32", axis: "JP", dir: "R", text: "思い立ったら、計画を立てる前にまず動いてしまう" },
+  { id: "q33", axis: "EI", dir: "R", text: "にぎやかな練習より、黙々と集中できる練習のほうが伸びる気がする" },
+  { id: "q34", axis: "SN", dir: "L", text: "その日のひらめきよりも、再現性のあるフォームを信じている" },
+  { id: "q35", axis: "TF", dir: "L", text: "自分がスタメンを外れても、チームが勝つための采配なら納得できる" },
+  { id: "q36", axis: "JP", dir: "L", text: "シーズンや月ごとの目標を立てて、達成度を確かめるのが好きだ" },
 ];
-
-export const AXIS_LABELS: Record<Axis, { left: Pole; right: Pole; leftJp: string; rightJp: string }> = {
-  EI: { left: "E", right: "I", leftJp: "外向", rightJp: "内向" },
-  SN: { left: "S", right: "N", leftJp: "堅実", rightJp: "ひらめき" },
-  TF: { left: "T", right: "F", leftJp: "論理", rightJp: "情熱" },
-  JP: { left: "J", right: "P", leftJp: "計画", rightJp: "自由" },
-};
 
 export type MbtiType = {
   code: string; // 例: ENFP
@@ -198,19 +216,30 @@ export function resolvePlayers(names: string[]): Player[] {
   return names.map((n) => BY_NAME.get(n) || BY_NAME.get(norm(n))).filter(Boolean) as Player[];
 }
 
-// 回答（pole配列）から4文字コードを算出
-export function computeCode(answers: Record<string, Pole>): string {
-  const axes: Axis[] = ["EI", "SN", "TF", "JP"];
-  let code = "";
-  for (const ax of axes) {
-    const qs = MBTI_QUESTIONS.filter((q) => q.axis === ax);
-    const counts: Record<string, number> = {};
-    for (const q of qs) {
-      const p = answers[q.id];
-      if (p) counts[p] = (counts[p] || 0) + 1;
+// 回答（-3〜+3の7段階）から4文字コード＋軸別の強さ(%)を算出
+export type AxisScore = {
+  axis: Axis;
+  letter: string; // 勝った側の文字
+  pct: number; // 勝った側の強さ（50〜100）
+  leftPct: number; // 左極（E/S/T/J）側の割合
+  rightPct: number;
+};
+export type MbtiResult = { code: string; axes: AxisScore[] };
+
+export function computeResult(ans: Record<string, number>): MbtiResult {
+  const axes = (Object.keys(AXIS_META) as Axis[]).map((axis) => {
+    const qs = MBTI_STATEMENTS.filter((s) => s.axis === axis);
+    let sum = 0; // 正の値＝左極（E/S/T/J）寄り
+    for (const s of qs) {
+      const v = ans[s.id] ?? 0;
+      sum += s.dir === "L" ? v : -v;
     }
-    const { left, right } = AXIS_LABELS[ax];
-    code += (counts[left] || 0) >= (counts[right] || 0) ? left : right;
-  }
-  return code;
+    const max = qs.length * 3;
+    const leftPct = Math.round(((sum + max) / (2 * max)) * 100);
+    const m = AXIS_META[axis];
+    const letter = sum >= 0 ? m.left : m.right;
+    const pct = sum >= 0 ? leftPct : 100 - leftPct;
+    return { axis, letter, pct, leftPct, rightPct: 100 - leftPct };
+  });
+  return { code: axes.map((a) => a.letter).join(""), axes };
 }
