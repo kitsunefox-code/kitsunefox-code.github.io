@@ -115,6 +115,24 @@ export default function Home() {
           </div>
         </a>
 
+        {/* 野球選手MBTI診断（目玉） */}
+        <a className="start-band" href="/baseball-mbti/">
+          <div
+            className="start-band-photo"
+            style={{ backgroundImage: "url('/img/gloves-grass.jpg')" }}
+            aria-hidden="true"
+          />
+          <div className="start-band-body">
+            <span className="start-band-kicker">Baseball MBTI</span>
+            <span className="start-band-title">野球選手MBTI診断</span>
+            <span className="start-band-desc">
+              全36問・7段階の本格診断で、あなたの“野球選手MBTI”を16タイプから判定。
+              軸ごとの傾向を％で表示し、相性の良いタイプ・似ているNPB/MLB選手までわかります。
+            </span>
+            <span className="start-band-btn">自分のタイプを診断する →</span>
+          </div>
+        </a>
+
         {/* はじめての方へ */}
         <a className="start-band" href="/guide/how-to-start/">
           <div

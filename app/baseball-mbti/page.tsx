@@ -75,7 +75,11 @@ export default function BaseballMbtiPage() {
             プレースタイルをもとにした遊びのもので、公式のMBTIとは無関係です。
             気軽な話のタネに、道具選びのヒントにどうぞ。
           </p>
-          <a className="cta-inline" href="/player-shindan/" style={{ marginTop: 14 }}>
+          <a className="cta-inline" href="/baseball-mbti/type/" style={{ marginTop: 14 }}>
+            → 野球選手MBTI全16タイプの解説を見る（あなたはどのタイプ？）
+          </a>
+          <br />
+          <a className="cta-inline" href="/player-shindan/" style={{ marginTop: 8 }}>
             → 「あなたに似ている選手」をズバリ診断する（選手タイプ診断）
           </a>
         </div>

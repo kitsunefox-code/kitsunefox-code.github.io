@@ -3070,3 +3070,59 @@ section {
   text-underline-offset: 2px;
 }
 .maker-link:hover { opacity: 0.8; }
+
+/* ── MBTI 相性カード ───────────────────── */
+.compat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+.compat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  text-decoration: none;
+  border: 1.5px solid;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.compat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(47, 43, 37, 0.1);
+}
+.compat-card.good {
+  background: rgba(51, 164, 116, 0.07);
+  border-color: rgba(51, 164, 116, 0.3);
+}
+.compat-card.tough {
+  background: rgba(136, 97, 154, 0.07);
+  border-color: rgba(136, 97, 154, 0.3);
+}
+.compat-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.compat-card.good .compat-label { color: #2b8f61; }
+.compat-card.tough .compat-label { color: #7a5589; }
+.compat-code {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--navy);
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.compat-nick {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  opacity: 0.8;
+}
+.compat-note {
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--text);
+  opacity: 0.82;
+}

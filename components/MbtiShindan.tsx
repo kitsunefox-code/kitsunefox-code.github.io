@@ -7,6 +7,7 @@ import {
   computeResult,
   mbtiByCode,
   resolvePlayers,
+  getCompat,
   MBTI_TYPES,
   type MbtiResult,
   type MbtiType,
@@ -90,8 +91,11 @@ export default function MbtiShindan() {
     ? mbtiByCode(result.code) || FALLBACK
     : null;
   const players = type ? resolvePlayers(type.players) : [];
+  const compat = type ? getCompat(type.code) : { best: null, tough: null };
 
-  const shareUrl = `${SITE_URL}/baseball-mbti/`;
+  const shareUrl = type
+    ? `${SITE_URL}/baseball-mbti/type/${type.code.toLowerCase()}/`
+    : `${SITE_URL}/baseball-mbti/`;
   const shareText =
     result && type
       ? `私の野球選手MBTIは【${result.code}｜${type.nickname}】${type.emoji}\n${type.catch}\nあなたのタイプは？⚾`
@@ -186,6 +190,12 @@ export default function MbtiShindan() {
             <span className="mbti-code">{result.code}</span>
             <span className="type-name">{type.nickname}</span>
             <span className="type-desc">{type.catch}</span>
+            <a
+              className="type-more"
+              href={`/baseball-mbti/type/${type.code.toLowerCase()}/`}
+            >
+              「{type.code}｜{type.nickname}」ってどんなタイプ？→ 解説を見る
+            </a>
           </div>
 
           {/* 4軸の内訳（%） */}
@@ -214,6 +224,42 @@ export default function MbtiShindan() {
               );
             })}
           </div>
+
+          {(compat.best || compat.tough) && (
+            <div className="compat-grid" style={{ marginTop: 16 }}>
+              {compat.best && (
+                <a
+                  className="compat-card good"
+                  href={`/baseball-mbti/type/${compat.best.type.code.toLowerCase()}/`}
+                >
+                  <span className="compat-label">◎ 相性の良いタイプ</span>
+                  <span className="compat-code">
+                    {compat.best.type.emoji} {compat.best.type.code}
+                    <span className="compat-nick">{compat.best.type.nickname}</span>
+                  </span>
+                  <span className="compat-note">{compat.best.note}</span>
+                </a>
+              )}
+              {compat.tough && (
+                <a
+                  className="compat-card tough"
+                  href={`/baseball-mbti/type/${compat.tough.type.code.toLowerCase()}/`}
+                >
+                  <span className="compat-label">△ 衝突しやすいタイプ</span>
+                  <span className="compat-code">
+                    {compat.tough.type.emoji} {compat.tough.type.code}
+                    <span className="compat-nick">{compat.tough.type.nickname}</span>
+                  </span>
+                  <span className="compat-note">{compat.tough.note}</span>
+                </a>
+              )}
+            </div>
+          )}
+          {(compat.best || compat.tough) && (
+            <p className="player-disc" style={{ marginTop: 8, textAlign: "center" }}>
+              ※ 相性はエンタメとしての組み合わせ診断です。
+            </p>
+          )}
 
           <article className="player-card" style={{ marginTop: 18 }}>
             <p className="type-long" style={{ margin: 0 }}>

@@ -205,6 +205,51 @@ export const MBTI_TYPES: MbtiType[] = [
 const BY_CODE = new Map(MBTI_TYPES.map((t) => [t.code, t]));
 export const mbtiByCode = (code: string): MbtiType | undefined => BY_CODE.get(code);
 
+// ── 相性（エンタメ）: 全4軸が逆＝ベストの相棒／T・F と J・P だけ逆＝衝突しがちな相手 ──
+// どちらも「実在選手ペア」ではなく16タイプ同士の組み合わせで、双方向に成立する。
+const BEST_PAIRS: [string, string, string][] = [
+  ["INTJ", "ENFP", "戦略と閃きが噛み合う名コンビ。緻密な作戦と自由な発想が、想定外の勝ち筋を生み出す。"],
+  ["INTP", "ENFJ", "理屈と情熱の好バランス。技術を突き詰める探究心と、チームを鼓舞する熱さで、個の力とチーム力が両立する。"],
+  ["ENTJ", "INFP", "統率力と理想が補い合う。決断力が夢を形にし、想いが采配に深みを与える名コンビ。"],
+  ["ENTP", "INFJ", "発想とビジョンが響き合う。斬新なアイデアを、深い洞察が正しい方向へ導く名参謀コンビ。"],
+  ["ISTJ", "ESFP", "堅実さと華やかさの黄金比。安定感が自由な魅力を支え、明るさが緊張をほぐす好相性。"],
+  ["ISFJ", "ESTP", "献身と度胸のいいコンビ。支える力が大胆な勝負を後押しし、勢いが勇気を分けてくれる。"],
+  ["ESTJ", "ISFP", "統率と感性の好相性。規律が才能を活かす舞台を作り、繊細さがチームに彩りを添える。"],
+  ["ESFJ", "ISTP", "気配りと職人技の名コンビ。気遣いが支え、確かな技術が安心につながる。"],
+];
+// 全4軸フリップ済み集合から「T/F・J/Pだけ逆」の相手を導出
+const TOUGH_PAIRS: [string, string, string][] = [
+  ["INTJ", "INFP", "理屈と気持ちで判断基準がずれやすい。でも歩み寄れば、冷静さと熱意を兼ね備えた最強コンビになれる。"],
+  ["INTP", "INFJ", "淡々とした分析派と繊細な理想派。ペースの違いに戸惑うことも、理解し合えば深い信頼関係に。"],
+  ["ENTJ", "ENFP", "どちらも周囲を引っ張るタイプ同士。方向性がぶつかることもあるが、噛み合えば最強のコンビになれる。"],
+  ["ENTP", "ENFJ", "自由に動きたい方と、まとめたい方。ペースにズレを感じやすいが、噛み合えばチームに新しい風を吹き込める。"],
+  ["ISTJ", "ISFP", "型を大事にする方と、感覚で動く方。最初は噛み合わなくても、互いのペースを認め合えば良いコンビに。"],
+  ["ISFJ", "ISTP", "気配り型と一人黙々型。距離感の取り方に工夫がいるが、無理せず付き合えば頼れる相棒になる。"],
+  ["ESTJ", "ESFP", "規律派と自由派。ルールへの温度差はあるが、明るさが緊張をほぐす良い刺激にもなる。"],
+  ["ESFJ", "ESTP", "慎重派と勢い派。ペースの違いに驚くこともあるが、噛み合えば行動力と気配りが揃う頼れるコンビに。"],
+];
+
+function buildPairMap(pairs: [string, string, string][]): Map<string, { code: string; note: string }> {
+  const m = new Map<string, { code: string; note: string }>();
+  for (const [a, b, note] of pairs) {
+    m.set(a, { code: b, note });
+    m.set(b, { code: a, note });
+  }
+  return m;
+}
+const BEST_MAP = buildPairMap(BEST_PAIRS);
+const TOUGH_MAP = buildPairMap(TOUGH_PAIRS);
+
+export type MatchInfo = { type: MbtiType; note: string };
+export function getCompat(code: string): { best: MatchInfo | null; tough: MatchInfo | null } {
+  const b = BEST_MAP.get(code);
+  const t = TOUGH_MAP.get(code);
+  return {
+    best: b ? { type: mbtiByCode(b.code)!, note: b.note } : null,
+    tough: t ? { type: mbtiByCode(t.code)!, note: t.note } : null,
+  };
+}
+
 // 名前 → Player の解決（Jr./中黒/空白ゆらぎを吸収）
 const norm = (s: string) => s.replace(/Jr\.?/g, "").replace(/[・.\s]/g, "");
 const BY_NAME = new Map<string, Player>();
