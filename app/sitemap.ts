@@ -1,11 +1,27 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/data/site";
+import { PLAYER_TYPES } from "@/data/playerTypes";
 
 // output: export（静的書き出し）で生成するために必要
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const typePages: MetadataRoute.Sitemap = [
+    {
+      url: `${SITE_URL}/player-shindan/type/`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    ...PLAYER_TYPES.map((t) => ({
+      url: `${SITE_URL}/player-shindan/type/${t.slug}/`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
+  ];
   return [
+    ...typePages,
     {
       url: SITE_URL,
       lastModified: new Date(),

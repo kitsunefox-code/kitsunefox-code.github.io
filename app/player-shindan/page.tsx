@@ -59,6 +59,9 @@ export default function PlayerShindanPage() {
             使用メーカーは公開情報にもとづく参考で、時期や場面により変わることがあります。
             道具選びのヒントにも、ただのお楽しみ診断としてもどうぞ。
           </p>
+          <a className="cta-inline" href="/player-shindan/type/" style={{ marginTop: 14 }}>
+            → 野球選手タイプ全16種の解説を見る（あなたはどのタイプ？）
+          </a>
         </div>
       </div>
     </main>

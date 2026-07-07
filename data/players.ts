@@ -396,7 +396,74 @@ const NPB_LEGENDS_RAW: MRec[] = [
   { name: "アレックス・ラミレス", pos: "外野手", glove: "ミズノ", bat: "ミズノ", spikes: "ミズノ", traits: ["power", "contact", "flashy", "star"], note: "陽気なパフォーマンスと強打で人気を博した助っ人。" },
 ];
 
-const MLB_CURATED: Player[] = [...MLB_RAW, ...MLB_RAW2].map((m) => ({
+// MLB さらに追加（150名超え・中堅/若手/救援）
+const MLB_RAW3: MRec[] = [
+  { name: "ウィリー・アダメス", pos: "遊撃手", glove: "ローリングス", bat: "マルーチ", spikes: "ナイキ", traits: ["power", "defense"], note: "長打力と守備を兼ね備えた遊撃手。" },
+  { name: "ブライソン・ストット", pos: "二塁手", glove: "ローリングス", bat: "マルーチ", spikes: "ナイキ", traits: ["contact", "speed"], note: "俊足と確実性が持ち味の若手二塁手。" },
+  { name: "アレック・ボーム", pos: "三塁手", glove: "ローリングス", bat: "マルーチ", spikes: "ナイキ", traits: ["contact"], note: "勝負強い打撃が魅力の三塁手。" },
+  { name: "ジャレン・デュラン", pos: "外野手", glove: "ローリングス", bat: "マルーチ", spikes: "ナイキ", traits: ["speed", "power"], note: "俊足とパワーを兼ね備えた外野手。" },
+  { name: "ライリー・グリーン", pos: "外野手", glove: "ローリングス", bat: "マルーチ", spikes: "ナイキ", traits: ["contact", "power"], note: "打撃センス抜群の若手外野手。" },
+  { name: "エバン・カーター", pos: "外野手", glove: "ローリングス", bat: "マルーチ", spikes: "ナイキ", traits: ["contact"], note: "選球眼に優れる有望な外野手。" },
+  { name: "コルト・キース", pos: "二塁手", glove: "ローリングス", bat: "マルーチ", spikes: "ナイキ", traits: ["contact", "power"], note: "打撃を売りにする若手内野手。" },
+  { name: "ジョナサン・インディア", pos: "二塁手", glove: "ローリングス", bat: "マルーチ", spikes: "ナイキ", traits: ["contact", "speed"], note: "出塁能力の高いリードオフ二塁手。" },
+  { name: "マイク・ヤストレムスキー", pos: "外野手", glove: "ローリングス", bat: "マルーチ", spikes: "ナイキ", traits: ["contact"], note: "巧打と選球眼が持ち味の外野手。" },
+  { name: "ハンター・レンフロー", pos: "外野手", glove: "ローリングス", bat: "マルーチ", spikes: "ナイキ", traits: ["power"], note: "強肩とパワーが魅力の右翼手。" },
+  { name: "コール・レイガンス", pos: "投手", glove: "ローリングス", spikes: "ナイキ", traits: ["pitcher", "power"], note: "急成長した左のパワーピッチャー。" },
+  { name: "ギャレット・クロシェ", pos: "投手", glove: "ローリングス", spikes: "ナイキ", traits: ["pitcher", "power"], note: "剛速球が武器の左腕エース。" },
+  { name: "ブライアン・ウー", pos: "投手", glove: "ローリングス", spikes: "ナイキ", traits: ["pitcher", "power"], note: "威力ある速球を投げ込む若手右腕。" },
+  { name: "クリスチャン・ハビエル", pos: "投手", glove: "ローリングス", spikes: "ナイキ", traits: ["pitcher", "technician"], note: "浮き上がる速球と制球が武器の右腕。" },
+  { name: "タナー・バイビー", pos: "投手", glove: "ローリングス", spikes: "ナイキ", traits: ["pitcher", "technician"], note: "多彩な変化球を操る先発右腕。" },
+  { name: "セス・ルーゴ", pos: "投手", glove: "ローリングス", spikes: "ナイキ", traits: ["pitcher", "technician"], note: "球種の多さで勝負するベテラン右腕。" },
+  { name: "マイケル・キング", pos: "投手", glove: "ローリングス", spikes: "ナイキ", traits: ["pitcher", "power"], note: "先発転向で開花した力のある右腕。" },
+];
+
+// MLB さらに追加（150名超え・現役中堅/クローザー/先発）
+const MLB_RAW4: MRec[] = [
+  { name: "ブランドン・ニモ", pos: "外野手", glove: "ローリングス", bat: "マルーチ", spikes: "ナイキ", traits: ["contact", "speed"], note: "出塁率の高いリードオフ型の外野手。" },
+  { name: "イアン・ハップ", pos: "外野手", glove: "ローリングス", bat: "マルーチ", spikes: "ナイキ", traits: ["contact", "power"], note: "スイッチの中距離打者。守備も堅実。" },
+  { name: "マイケル・コンフォート", pos: "外野手", glove: "ローリングス", bat: "マルーチ", spikes: "ナイキ", traits: ["power"], note: "長打力が魅力の左の外野手。" },
+  { name: "アンドリュー・ヴォーン", pos: "一塁手", glove: "ローリングス", bat: "マルーチ", spikes: "ナイキ", traits: ["power"], note: "パワーが持ち味の右の一塁手。" },
+  { name: "ジョシュ・ネイラー", pos: "一塁手", glove: "ローリングス", bat: "マルーチ", spikes: "ナイキ", traits: ["power", "clutch"], note: "勝負強い打撃と闘志が魅力の一塁手。" },
+  { name: "ボー・ビシェット", pos: "遊撃手", glove: "ローリングス", bat: "マルーチ", spikes: "ナイキ", traits: ["contact", "power"], note: "積極的な打撃が持ち味の遊撃手。" },
+  { name: "ハビアー・バエズ", pos: "遊撃手", glove: "ローリングス", bat: "マルーチ", spikes: "ナイキ", traits: ["defense", "power", "flashy"], note: "魔術的な守備とタッチプレーで魅せる遊撃手。" },
+  { name: "ギャビン・ラックス", pos: "二塁手", glove: "ローリングス", bat: "マルーチ", spikes: "ナイキ", traits: ["contact"], note: "巧打と柔らかい守備が持ち味の内野手。" },
+  { name: "ブレンダン・ドノバン", pos: "二塁手", glove: "ローリングス", bat: "マルーチ", spikes: "ナイキ", traits: ["contact", "defense"], note: "複数ポジションを守れる巧打のユーティリティ。" },
+  { name: "マット・ヴィアーリング", pos: "三塁手", glove: "ローリングス", bat: "マルーチ", spikes: "ナイキ", traits: ["contact", "defense"], note: "堅守と勝負強さを備えたユーティリティ。" },
+  { name: "クリスチャン・バスケス", pos: "捕手", glove: "ローリングス", bat: "マルーチ", spikes: "ナイキ", traits: ["catcher", "defense"], note: "守備とリードに定評のある捕手。" },
+  { name: "ネイサン・イオバルディ", pos: "投手", glove: "ローリングス", spikes: "ナイキ", traits: ["pitcher", "power"], note: "威力ある速球を投げ込むベテラン右腕。" },
+  { name: "マイルズ・マイコラス", pos: "投手", glove: "ローリングス", spikes: "ナイキ", traits: ["pitcher", "technician"], note: "制球と球種で勝負する技巧派。日本球界でも活躍。" },
+  { name: "ロビー・レイ", pos: "投手", glove: "ローリングス", spikes: "ナイキ", traits: ["pitcher", "power"], note: "奪三振能力の高いサイ・ヤング左腕。" },
+  { name: "ショーン・マナイア", pos: "投手", glove: "ローリングス", spikes: "ナイキ", traits: ["pitcher", "technician"], note: "変則的な角度から投げ込む左腕。" },
+  { name: "カイル・ハリソン", pos: "投手", glove: "ローリングス", spikes: "ナイキ", traits: ["pitcher", "power"], note: "奪三振が魅力の若手左腕。" },
+];
+
+// NPB レジェンド 追加バッチ（往年の名選手）
+const NPB_LEGENDS2_RAW: MRec[] = [
+  { name: "稲葉篤紀", pos: "外野手", glove: "ミズノ", bat: "ミズノ", spikes: "ミズノ", traits: ["power", "contact", "leader"], note: "日本ハムの主軸として活躍。のちに侍ジャパン監督。" },
+  { name: "高橋由伸", pos: "外野手", glove: "ミズノ", bat: "ミズノ", spikes: "ミズノ", traits: ["power", "contact", "star"], note: "美しいスイングの巨人の主砲。" },
+  { name: "岩村明憲", pos: "三塁手", glove: "ミズノ", bat: "ミズノ", spikes: "ミズノ", traits: ["power", "contact"], note: "日米で活躍した勝負強い内野手。" },
+  { name: "二岡智宏", pos: "遊撃手", glove: "ミズノ", bat: "ミズノ", spikes: "ミズノ", traits: ["power", "clutch"], note: "打てる遊撃手として巨人で活躍。" },
+  { name: "今岡誠", pos: "三塁手", glove: "ミズノ", bat: "ミズノ", spikes: "ミズノ", traits: ["contact", "clutch"], note: "打点王を獲得した阪神の巧打者。" },
+  { name: "矢野燿大", pos: "捕手", glove: "ゼット", bat: "ゼット", spikes: "ゼット", traits: ["catcher", "leader", "clutch"], note: "阪神の正捕手として活躍。のちに監督も。" },
+  { name: "野村克也", pos: "捕手", glove: "ミズノ", bat: "ミズノ", spikes: "ミズノ", traits: ["catcher", "leader", "technician", "star"], note: "ID野球の祖。戦後屈指の打てる捕手。" },
+  { name: "田淵幸一", pos: "捕手", glove: "ミズノ", bat: "ミズノ", spikes: "ミズノ", traits: ["catcher", "power", "star"], note: "豪快な本塁打が魅力の強打の捕手。" },
+  { name: "山本浩二", pos: "外野手", glove: "ミズノ", bat: "ミズノ", spikes: "ミズノ", traits: ["power", "leader", "star"], note: "ミスター赤ヘル。広島黄金期の主砲。" },
+  { name: "衣笠祥雄", pos: "三塁手", glove: "ミズノ", bat: "ミズノ", spikes: "ミズノ", traits: ["power", "stoic", "star"], note: "鉄人の異名を持つ連続試合出場記録の主。" },
+  { name: "張本勲", pos: "外野手", glove: "ミズノ", bat: "ミズノ", spikes: "ミズノ", traits: ["contact", "power", "star"], note: "通算3085安打の安打製造機。" },
+  { name: "福本豊", pos: "外野手", glove: "ミズノ", bat: "ミズノ", spikes: "ミズノ", traits: ["speed", "star"], note: "世界の盗塁王。俊足で一時代を築いた。" },
+  { name: "若松勉", pos: "外野手", glove: "ミズノ", bat: "ミズノ", spikes: "ミズノ", traits: ["contact", "technician"], note: "小さな大打者と呼ばれた首位打者。" },
+  { name: "有藤通世", pos: "三塁手", glove: "ミズノ", bat: "ミズノ", spikes: "ミズノ", traits: ["power", "leader"], note: "ミスターロッテと称された三塁手。" },
+  { name: "大杉勝男", pos: "一塁手", glove: "ミズノ", bat: "ミズノ", spikes: "ミズノ", traits: ["power", "clutch"], note: "東映・ヤクルトで活躍した長距離砲。" },
+  { name: "江夏豊", pos: "投手", glove: "ミズノ", spikes: "ミズノ", traits: ["pitcher", "power", "clutch", "star"], note: "江夏の21球で知られる伝説の左腕。" },
+  { name: "金田正一", pos: "投手", glove: "ミズノ", spikes: "ミズノ", traits: ["pitcher", "power", "star"], note: "通算400勝の大投手。金田の異名は永遠。" },
+  { name: "稲尾和久", pos: "投手", glove: "ミズノ", spikes: "ミズノ", traits: ["pitcher", "stoic", "star"], note: "神様仏様稲尾様。西鉄黄金期の鉄腕。" },
+  { name: "山田久志", pos: "投手", glove: "ミズノ", spikes: "ミズノ", traits: ["pitcher", "technician", "star"], note: "アンダースローの名投手。阪急のエース。" },
+  { name: "東尾修", pos: "投手", glove: "ミズノ", spikes: "ミズノ", traits: ["pitcher", "technician", "leader"], note: "喧嘩投法で知られた西武のエース。" },
+  { name: "北別府学", pos: "投手", glove: "ミズノ", spikes: "ミズノ", traits: ["pitcher", "technician"], note: "精密な制球で200勝を挙げた広島のエース。" },
+  { name: "大野豊", pos: "投手", glove: "ミズノ", spikes: "ミズノ", traits: ["pitcher", "technician", "stoic"], note: "先発・救援で長く活躍した広島の技巧派左腕。" },
+];
+
+const MLB_CURATED: Player[] = [...MLB_RAW, ...MLB_RAW2, ...MLB_RAW3, ...MLB_RAW4].map((m) => ({
   name: m.name,
   league: "MLB" as const,
   position: m.pos,
@@ -413,7 +480,7 @@ const MLB_CURATED: Player[] = [...MLB_RAW, ...MLB_RAW2].map((m) => ({
 }));
 
 // ── NPB レジェンド・名選手（ロースター外を手動補完） ─────────────
-const NPB_LEGENDS: Player[] = NPB_LEGENDS_RAW.map((m) => ({
+const NPB_LEGENDS: Player[] = [...NPB_LEGENDS_RAW, ...NPB_LEGENDS2_RAW].map((m) => ({
   name: m.name,
   league: "NPB" as const,
   position: m.pos,

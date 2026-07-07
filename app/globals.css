@@ -2673,3 +2673,113 @@ section {
 .share-btn:hover {
   opacity: 0.9;
 }
+
+/* ── タイプ解説ページ ───────────────────── */
+.crumbs {
+  font-size: 12px;
+  color: var(--text);
+  opacity: 0.6;
+  margin-bottom: 6px;
+}
+.crumbs a {
+  color: var(--accent);
+  text-decoration: none;
+}
+.type-long {
+  font-size: 15px;
+  line-height: 1.95;
+  color: var(--text);
+  margin: 6px 0 12px;
+}
+.type-more {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  padding: 7px 15px;
+  text-decoration: none;
+}
+.type-more:hover {
+  background: rgba(255, 255, 255, 0.26);
+}
+
+.type-players {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+.type-player {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 8px;
+  padding: 12px 14px;
+  background: #fff;
+  border: 1px solid rgba(47, 43, 37, 0.1);
+  border-radius: 12px;
+}
+.type-player-name {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--navy);
+}
+.type-player-pos {
+  font-size: 11px;
+  color: var(--accent);
+  background: rgba(179, 71, 46, 0.09);
+  border-radius: 6px;
+  padding: 1px 7px;
+}
+.type-player-gear {
+  flex-basis: 100%;
+  font-size: 11.5px;
+  color: var(--text);
+  opacity: 0.72;
+}
+
+.type-hub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+.type-hub-card {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 18px 16px;
+  background: #fff;
+  border: 1px solid rgba(47, 43, 37, 0.1);
+  border-radius: 14px;
+  text-decoration: none;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.type-hub-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(47, 43, 37, 0.12);
+}
+.type-hub-emoji {
+  font-size: 30px;
+  line-height: 1;
+}
+.type-hub-name {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--navy);
+}
+.type-hub-desc {
+  font-size: 12.5px;
+  color: var(--text);
+  opacity: 0.78;
+  line-height: 1.6;
+}
+.type-hub-cta {
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent);
+}

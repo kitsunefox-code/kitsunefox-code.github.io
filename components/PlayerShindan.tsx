@@ -9,6 +9,12 @@ import {
   type Player,
   type Trait,
 } from "@/data/players";
+import {
+  pickTypeSlug,
+  typeBySlug,
+  PLAYER_TYPES,
+  type PlayerType,
+} from "@/data/playerTypes";
 import { SITE_URL } from "@/data/site";
 
 type QId = string;
@@ -27,54 +33,9 @@ const QUESTIONS: { id: QId; text: string; w: Partial<Record<Trait, number>> }[] 
   { id: "q12", text: "投打の“二刀流”に憧れる", w: { twoway: 4, power: 1, pitcher: 1 } },
 ];
 
-type ResultType = { name: string; emoji: string; desc: string };
+const FALLBACK_TYPE = PLAYER_TYPES[PLAYER_TYPES.length - 1];
 
-function deriveType(score: Partial<Record<Trait, number>>): ResultType {
-  const g = (t: Trait) => score[t] || 0;
-  const maxV = Math.max(0, ...Object.values(score).map((v) => v || 0));
-
-  if (g("twoway") > 0)
-    return { name: "二刀流ドリーマー", emoji: "⚾", desc: "投げても打っても主役になりたい、夢を追う欲張りタイプ。" };
-
-  if (g("pitcher") > 0 && g("pitcher") >= maxV) {
-    if (g("technician") > 0)
-      return { name: "頭脳派クラフト", emoji: "🧠", desc: "配球と制球で打者を打ち取る、考えるマウンドの主。" };
-    if (g("power") > 0)
-      return { name: "剛腕パワーピッチャー", emoji: "🔥", desc: "力でねじ伏せる、球威で勝負するエースタイプ。" };
-    return { name: "闘志のマウンド", emoji: "🎯", desc: "ピンチでこそ燃える、投げ合いが大好きな投手タイプ。" };
-  }
-
-  if (g("catcher") > 0)
-    return { name: "扇の要・女房役", emoji: "🧤", desc: "試合を組み立て、チームを後ろから支える司令塔。" };
-
-  if (g("power") > 0 && g("speed") > 0 && g("contact") > 0)
-    return { name: "5ツール万能", emoji: "🌟", desc: "打・走・守すべてを高いレベルでこなす二枚看板。" };
-
-  const order: [Trait, ResultType][] = [
-    ["power", { name: "豪快アーチスト", emoji: "💣", desc: "一発で試合を決める、ロマン砲タイプ。" }],
-    ["speed", { name: "韋駄天リードオフ", emoji: "💨", desc: "足でかき回し、チャンスを作る切り込み隊長。" }],
-    ["defense", { name: "鉄壁の守備職人", emoji: "🛡️", desc: "華麗な守備でチームを救う、玄人好みのタイプ。" }],
-    ["clutch", { name: "勝負師クラッチ", emoji: "⚡", desc: "痺れる場面ほど強い、頼れる勝負強さ。" }],
-    ["leader", { name: "熱血キャプテン", emoji: "🔥", desc: "背中と声でチームを引っ張る精神的支柱。" }],
-    ["flashy", { name: "スター街道", emoji: "✨", desc: "華とスター性でスタンドを沸かせる主役タイプ。" }],
-    ["technician", { name: "研究派クラフトマン", emoji: "📐", desc: "データと技術で積み上げる、努力の理論派。" }],
-    ["stoic", { name: "求道ストイック", emoji: "🧘", desc: "黙々と鍛え続ける、努力の求道者。" }],
-    ["contact", { name: "安打製造ヒットマン", emoji: "🎯", desc: "広角に打ち分ける、確実性重視の巧打者。" }],
-  ];
-  let best: ResultType | null = null;
-  let bestV = 0;
-  for (const [t, rt] of order) {
-    if (g(t) > bestV) {
-      bestV = g(t);
-      best = rt;
-    }
-  }
-  return (
-    best || { name: "オールラウンダー", emoji: "⚾", desc: "バランス型。どんなチームでも輝ける万能タイプ。" }
-  );
-}
-
-type MatchResult = { ranked: Player[]; type: ResultType };
+type MatchResult = { ranked: Player[]; type: PlayerType };
 
 function match(a: Record<string, boolean>): MatchResult {
   const score: Partial<Record<Trait, number>> = {};
@@ -94,7 +55,8 @@ function match(a: Record<string, boolean>): MatchResult {
   }))
     .sort((x, y) => y.s - x.s || y.r - x.r)
     .map((x) => x.p);
-  return { ranked, type: deriveType(score) };
+  const type = typeBySlug(pickTypeSlug(score)) || FALLBACK_TYPE;
+  return { ranked, type };
 }
 
 const rakutenSearch = (kw: string) =>
@@ -173,7 +135,9 @@ export default function PlayerShindan() {
   const type = result?.type;
   const alts = result?.ranked?.slice(1, 4) || [];
 
-  const shareUrl = `${SITE_URL}/player-shindan/`;
+  const shareUrl = type
+    ? `${SITE_URL}/player-shindan/type/${type.slug}/`
+    : `${SITE_URL}/player-shindan/`;
   const shareText =
     top && type
       ? `私の野球タイプは【${type.name}】${type.emoji}\n似ているのは${top.name}（${top.league}）！\nあなたは何タイプ？⚾`
@@ -245,6 +209,9 @@ export default function PlayerShindan() {
             <span className="type-kicker">あなたの野球タイプは</span>
             <span className="type-name">{type.name}型</span>
             <span className="type-desc">{type.desc}</span>
+            <a className="type-more" href={`/player-shindan/type/${type.slug}/`}>
+              「{type.name}型」ってどんなタイプ？→ 解説を見る
+            </a>
           </div>
 
           <h2 className="section-title" style={{ marginTop: 26 }}>
