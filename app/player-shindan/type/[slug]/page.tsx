@@ -22,7 +22,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const t = typeBySlug(slug);
   if (!t) return {};
-  const title = `【${t.name}型】ってどんな野球選手タイプ？特徴・似ている選手｜草野球ナビ`;
+  const title = `【${t.name}型】ってどんな野球選手タイプ？特徴・似ている選手`;
   const desc = `${t.desc} ${t.name}型の特徴・向いている道具えらび・似ているNPB/MLB選手を紹介。あなたのタイプは無料の野球選手タイプ診断でチェックできます。`;
   const url = `${SITE_URL}/player-shindan/type/${t.slug}/`;
   const og = `/og-type/${t.slug}.png`;

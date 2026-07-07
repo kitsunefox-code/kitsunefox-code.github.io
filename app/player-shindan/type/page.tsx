@@ -5,7 +5,7 @@ import { PLAYER_COUNT } from "@/data/players";
 import { SITE_URL } from "@/data/site";
 
 export const metadata: Metadata = {
-  title: "野球選手タイプ全16種｜あなたはどのタイプ？特徴と似ている選手一覧｜草野球ナビ",
+  title: "野球選手タイプ全16種｜あなたはどのタイプ？特徴と似ている選手一覧",
   description:
     "豪快アーチスト型・鉄壁の守備職人型・頭脳派クラフト型…など、野球選手タイプ全16種を一覧で解説。それぞれの特徴・向いている道具・似ているNPB/MLB選手がわかります。あなたのタイプは無料診断でチェック。",
   alternates: { canonical: `${SITE_URL}/player-shindan/type/` },
