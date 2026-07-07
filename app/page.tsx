@@ -51,7 +51,7 @@ export default function Home() {
             </a>
           </div>
           <p className="hero-meta">
-            メーカー{makers.length}社を比較 ・ 診断ツール7種 ・ ガイド
+            メーカー{makers.length}社を比較 ・ 診断ツール{TOOLS.length}種 ・ ガイド
             {GUIDES.length}記事 ・ {LAST_UPDATED}更新
           </p>
         </div>

@@ -18,6 +18,14 @@ export const TOOLS: Tool[] = [
     cta: "似ている選手を診断する",
   },
   {
+    href: "/baseball-mbti/",
+    emoji: "🧠",
+    title: "野球選手MBTI診断",
+    desc: "MBTIの4指標を野球に置き換えた16タイプ診断。12の二択で、あなたの“野球選手MBTI”と似たプレースタイルのNPB・MLB選手がわかる。話のタネにも。",
+    badge: "16タイプ診断",
+    cta: "自分のタイプを診断する",
+  },
+  {
     href: "/shindan/",
     emoji: "📷",
     title: "ユニフォーム診断",
