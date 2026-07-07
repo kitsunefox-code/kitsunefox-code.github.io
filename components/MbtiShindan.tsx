@@ -13,6 +13,7 @@ import {
   type MbtiType,
 } from "@/data/baseballMbti";
 import { SITE_URL, rktSearch } from "@/data/site";
+import { saveMbtiCode, getSavedTypeSlug } from "@/data/comboLink";
 
 const BATCH = 6;
 const TOTAL = MBTI_STATEMENTS.length;
@@ -65,7 +66,9 @@ export default function MbtiShindan() {
   const goNext = () => {
     if (!batchDone) return;
     if (isLast) {
-      setResult(computeResult(ans));
+      const r = computeResult(ans);
+      setResult(r);
+      saveMbtiCode(r.code);
       setCopied(false);
       setTimeout(
         () => resultRef.current?.scrollIntoView({ behavior: "smooth" }),
@@ -92,6 +95,7 @@ export default function MbtiShindan() {
     : null;
   const players = type ? resolvePlayers(type.players) : [];
   const compat = type ? getCompat(type.code) : { best: null, tough: null };
+  const savedTypeSlug = type ? getSavedTypeSlug() : null;
 
   const shareUrl = type
     ? `${SITE_URL}/baseball-mbti/type/${type.code.toLowerCase()}/`
@@ -259,6 +263,25 @@ export default function MbtiShindan() {
             <p className="player-disc" style={{ marginTop: 8, textAlign: "center" }}>
               ※ 相性はエンタメとしての組み合わせ診断です。
             </p>
+          )}
+
+          {savedTypeSlug ? (
+            <a
+              className="combo-cta"
+              href={`/combo/${type.code.toLowerCase()}/${savedTypeSlug}/`}
+            >
+              <span className="combo-cta-kicker">選手タイプ診断の結果とマージ</span>
+              <span className="combo-cta-title">
+                「{type.code}×選手タイプ」の複合診断結果を見る →
+              </span>
+            </a>
+          ) : (
+            <a className="combo-cta ghost" href="/player-shindan/">
+              <span className="combo-cta-kicker">まだの人はこちらも</span>
+              <span className="combo-cta-title">
+                「野球選手タイプ診断」もやると、複合診断が見られます →
+              </span>
+            </a>
           )}
 
           <article className="player-card" style={{ marginTop: 18 }}>

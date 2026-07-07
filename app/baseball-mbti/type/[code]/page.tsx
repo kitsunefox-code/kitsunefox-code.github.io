@@ -6,6 +6,7 @@ import {
   mbtiByCode,
   resolvePlayers,
   getCompat,
+  popularGear,
 } from "@/data/baseballMbti";
 import { SITE_URL, rktSearch } from "@/data/site";
 
@@ -58,6 +59,7 @@ export default async function MbtiTypePage({
 
   const players = resolvePlayers(t.players);
   const compat = getCompat(t.code);
+  const gear = popularGear(t);
   const others = MBTI_TYPES.filter((x) => x.code !== t.code);
   const makerLink = (maker: string, kind: string) =>
     rktSearch(maker === "各社" ? "" : maker, kind);
@@ -145,6 +147,60 @@ export default async function MbtiTypePage({
             → {t.adviceCta}
           </a>
         </section>
+
+        {(gear.gloves.length > 0 || gear.bats.length > 0) && (
+          <section>
+            <h2 className="section-title">{t.code}型に多い使用メーカー</h2>
+            <p className="section-sub" style={{ marginTop: 6 }}>
+              草野球ナビ収録選手{gear.sampleSize}名のうち、{t.code}型の資質に近い選手データを集計した傾向です
+              （実際の市場人気調査ではありません）。
+            </p>
+            <div className="gear-rank-grid">
+              {gear.gloves.length > 0 && (
+                <div className="gear-rank-col">
+                  <span className="gear-rank-head">🧤 グローブ</span>
+                  <ol className="gear-rank-list">
+                    {gear.gloves.map((g, i) => (
+                      <li key={g.maker}>
+                        <span className="gear-rank-no">{i + 1}</span>
+                        <a
+                          className="maker-link"
+                          href={makerLink(g.maker, "グローブ")}
+                          target="_blank"
+                          rel="nofollow sponsored noopener"
+                        >
+                          {g.maker}
+                        </a>
+                        <span className="gear-rank-count">{g.count}名</span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              )}
+              {gear.bats.length > 0 && (
+                <div className="gear-rank-col">
+                  <span className="gear-rank-head">🏏 バット</span>
+                  <ol className="gear-rank-list">
+                    {gear.bats.map((g, i) => (
+                      <li key={g.maker}>
+                        <span className="gear-rank-no">{i + 1}</span>
+                        <a
+                          className="maker-link"
+                          href={makerLink(g.maker, "バット")}
+                          target="_blank"
+                          rel="nofollow sponsored noopener"
+                        >
+                          {g.maker}
+                        </a>
+                        <span className="gear-rank-count">{g.count}名</span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              )}
+            </div>
+          </section>
+        )}
 
         {players.length > 0 && (
           <section>

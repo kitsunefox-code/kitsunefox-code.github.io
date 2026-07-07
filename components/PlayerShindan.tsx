@@ -16,6 +16,7 @@ import {
   type PlayerType,
 } from "@/data/playerTypes";
 import { SITE_URL, rktSearch } from "@/data/site";
+import { saveTypeSlug, getSavedMbtiCode } from "@/data/comboLink";
 
 type QId = string;
 const QUESTIONS: { id: QId; text: string; w: Partial<Record<Trait, number>> }[] = [
@@ -114,7 +115,9 @@ export default function PlayerShindan() {
 
   useEffect(() => {
     if (allAnswered) {
-      setResult(match(a));
+      const r = match(a);
+      setResult(r);
+      saveTypeSlug(r.type.slug);
       setCopied(false);
       setTimeout(() => ref.current?.scrollIntoView({ behavior: "smooth" }), 60);
     } else {
@@ -134,6 +137,7 @@ export default function PlayerShindan() {
   const top = result?.ranked?.[0];
   const type = result?.type;
   const alts = result?.ranked?.slice(1, 4) || [];
+  const savedMbtiCode = type ? getSavedMbtiCode() : null;
 
   const shareUrl = type
     ? `${SITE_URL}/player-shindan/type/${type.slug}/`
@@ -213,6 +217,25 @@ export default function PlayerShindan() {
               「{type.name}型」ってどんなタイプ？→ 解説を見る
             </a>
           </div>
+
+          {savedMbtiCode ? (
+            <a
+              className="combo-cta"
+              href={`/combo/${savedMbtiCode.toLowerCase()}/${type.slug}/`}
+            >
+              <span className="combo-cta-kicker">MBTI診断の結果とマージ</span>
+              <span className="combo-cta-title">
+                「{savedMbtiCode}×{type.name}」の複合診断結果を見る →
+              </span>
+            </a>
+          ) : (
+            <a className="combo-cta ghost" href="/baseball-mbti/">
+              <span className="combo-cta-kicker">まだの人はこちらも</span>
+              <span className="combo-cta-title">
+                「野球選手MBTI診断」もやると、複合診断が見られます →
+              </span>
+            </a>
+          )}
 
           <h2 className="section-title" style={{ marginTop: 26 }}>
             似ているのはこの選手！

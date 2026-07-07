@@ -1,7 +1,7 @@
 // 野球選手MBTI診断（エンタメ）。
 // MBTIの4指標（E/I・S/N・T/F・J/P）を野球の性格に置き換えた16タイプ。
 // 各タイプに近い実在NPB/MLB選手をマッピング（あくまで遊びの分類）。
-import { PLAYERS, type Player } from "./players";
+import { PLAYERS, type Player, type Trait } from "./players";
 
 export type Axis = "EI" | "SN" | "TF" | "JP";
 
@@ -69,9 +69,31 @@ export type MbtiType = {
   advice: string;
   adviceHref: string;
   adviceCta: string;
+  traits: Trait[]; // 人気ギア集計用（大サンプルから傾向を出すための資質タグ）
 };
 
-export const MBTI_TYPES: MbtiType[] = [
+// タイプごとのtraitsマッピング（コード→traits）。MBTI_TYPES本体を汚さず後付け。
+const TRAITS_BY_CODE: Record<string, Trait[]> = {
+  INTJ: ["technician", "pitcher", "leader"],
+  INTP: ["technician"],
+  ENTJ: ["leader", "power"],
+  ENTP: ["flashy", "technician"],
+  INFJ: ["stoic", "technician"],
+  INFP: ["twoway", "contact"],
+  ENFJ: ["leader", "clutch"],
+  ENFP: ["flashy", "contact"],
+  ISTJ: ["defense", "stoic"],
+  ISFJ: ["catcher", "defense"],
+  ESTJ: ["leader", "pitcher"],
+  ESFJ: ["catcher", "leader"],
+  ISTP: ["defense", "technician"],
+  ISFP: ["contact", "technician"],
+  ESTP: ["clutch", "power"],
+  ESFP: ["flashy", "star"],
+};
+
+type MbtiTypeRaw = Omit<MbtiType, "traits">;
+const MBTI_TYPES_RAW: MbtiTypeRaw[] = [
   {
     code: "INTJ", nickname: "知将エース", emoji: "♟️",
     catch: "頭脳で試合を支配する、冷静沈着な戦略家。",
@@ -202,6 +224,11 @@ export const MBTI_TYPES: MbtiType[] = [
   },
 ];
 
+export const MBTI_TYPES: MbtiType[] = MBTI_TYPES_RAW.map((t) => ({
+  ...t,
+  traits: TRAITS_BY_CODE[t.code] || [],
+}));
+
 const BY_CODE = new Map(MBTI_TYPES.map((t) => [t.code, t]));
 export const mbtiByCode = (code: string): MbtiType | undefined => BY_CODE.get(code);
 
@@ -259,6 +286,33 @@ PLAYERS.forEach((p) => {
 });
 export function resolvePlayers(names: string[]): Player[] {
   return names.map((n) => BY_NAME.get(n) || BY_NAME.get(norm(n))).filter(Boolean) as Player[];
+}
+
+// タイプのtraitsに近い選手群から、使用グローブ・バットのメーカー傾向を集計する
+// （実際の市場人気ではなく「収録選手データ内での傾向」＝正直に明記して使うこと）
+export type GearRankItem = { maker: string; count: number };
+export type GearRanking = { sampleSize: number; gloves: GearRankItem[]; bats: GearRankItem[] };
+
+export function popularGear(t: MbtiType, topN = 5): GearRanking {
+  let pool = PLAYERS.filter((p) => p.traits.some((tr) => t.traits.includes(tr)));
+  if (pool.length < 15) pool = PLAYERS; // サンプルが少なすぎる場合は全収録選手から集計
+  const tally = (pick: (p: Player) => string | undefined) => {
+    const m = new Map<string, number>();
+    for (const p of pool) {
+      const v = pick(p);
+      if (!v || v === "各社") continue;
+      m.set(v, (m.get(v) || 0) + 1);
+    }
+    return [...m.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, topN)
+      .map(([maker, count]) => ({ maker, count }));
+  };
+  return {
+    sampleSize: pool.length,
+    gloves: tally((p) => p.glove),
+    bats: tally((p) => p.bat),
+  };
 }
 
 // 回答（-3〜+3の7段階）から4文字コード＋軸別の強さ(%)を算出
