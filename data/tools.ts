@@ -10,6 +10,14 @@ export type Tool = {
 
 export const TOOLS: Tool[] = [
   {
+    href: "/baseball-dock/",
+    emoji: "🏥",
+    title: "野球人間ドック",
+    desc: "こころ(MBTI式)・プレースタイル・バット・グローブを全30問でまとめてフル検査。結果は「検査結果報告書」形式で、似ているプロ選手・相性・道具の処方まで一枚に。",
+    badge: "フル診断・約4分",
+    cta: "まとめて受診する",
+  },
+  {
     href: "/player-shindan/",
     emoji: "⭐",
     title: "野球選手タイプ診断",

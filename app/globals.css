@@ -3933,3 +3933,331 @@ h1 .hl {
   text-align: right;
   margin-top: 22px;
 }
+
+/* ── ヒーロー：野球写真の自動スライドショー背景（表紙化） ── */
+.ed-hero.has-slides {
+  position: relative;
+  overflow: hidden;
+  background: var(--ink);
+  padding-top: 84px;
+  padding-bottom: 0;
+}
+.ed-slides {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.ed-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center 38%;
+  opacity: 0;
+  transform: scale(1.02);
+  animation: edSlideFade 28s infinite;
+  filter: saturate(0.85) contrast(1.03);
+  will-change: opacity, transform;
+}
+.ed-slide:nth-child(1) { animation-delay: 0s; }
+.ed-slide:nth-child(2) { animation-delay: 7s; }
+.ed-slide:nth-child(3) { animation-delay: 14s; }
+.ed-slide:nth-child(4) { animation-delay: 21s; }
+@keyframes edSlideFade {
+  0% { opacity: 0; transform: scale(1.02); }
+  4% { opacity: 1; }
+  27% { opacity: 1; }
+  33% { opacity: 0; transform: scale(1.09); }
+  100% { opacity: 0; transform: scale(1.02); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ed-slide { animation: none; }
+  .ed-slide:nth-child(1) { opacity: 1; }
+}
+.ed-slides-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(100deg, rgba(23, 22, 19, 0.86) 0%, rgba(23, 22, 19, 0.62) 52%, rgba(23, 22, 19, 0.38) 100%),
+    linear-gradient(180deg, rgba(23, 22, 19, 0.25) 0%, rgba(23, 22, 19, 0.55) 100%);
+}
+.ed-hero.has-slides .container { position: relative; z-index: 1; }
+.ed-hero.has-slides .ed-hero-inner { padding-bottom: 64px; }
+
+/* 写真上の白抜きタイポグラフィ */
+.ed-hero.has-slides .ed-hero-label { color: rgba(250, 249, 246, 0.8); }
+.ed-hero.has-slides .ed-hero-label::before { background: rgba(250, 249, 246, 0.8); }
+.ed-hero.has-slides .ed-hero-title { color: #fff; text-shadow: 0 1px 24px rgba(23, 22, 19, 0.35); }
+.ed-hero.has-slides .ed-hero-title .hl { color: var(--accent-2); }
+.ed-hero.has-slides .ed-hero-lead { color: rgba(250, 249, 246, 0.88); }
+.ed-hero.has-slides .btn-ink {
+  background: var(--paper);
+  color: var(--ink);
+}
+.ed-hero.has-slides .btn-ink:hover { background: var(--accent); color: #fff; }
+.ed-hero.has-slides .link-arrow {
+  color: #fff;
+  border-bottom-color: rgba(250, 249, 246, 0.7);
+}
+.ed-hero.has-slides .link-arrow:hover { color: var(--accent-2); border-bottom-color: var(--accent-2); }
+.ed-hero.has-slides .ed-hero-meta {
+  border-top-color: rgba(250, 249, 246, 0.55);
+  border-bottom-color: rgba(250, 249, 246, 0.25);
+}
+.ed-hero.has-slides .ed-hero-meta > div { border-left-color: rgba(250, 249, 246, 0.25); }
+.ed-hero.has-slides .ed-meta-num { color: #fff; }
+.ed-hero.has-slides .ed-meta-label { color: rgba(250, 249, 246, 0.7); }
+.ed-hero.has-slides .ed-hero-vertical {
+  color: rgba(250, 249, 246, 0.85);
+  border-left-color: rgba(250, 249, 246, 0.35);
+}
+.ed-hero-cap {
+  position: absolute;
+  right: 18px;
+  bottom: 12px;
+  z-index: 1;
+  font-family: var(--font-display), serif;
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* ── 野球人間ドック ───────────────────── */
+.dock-intro {
+  border: 1px solid var(--line-strong);
+  background: #fff;
+  padding: 34px 30px 30px;
+  margin-top: 8px;
+}
+.dock-intro-lead {
+  font-size: 14.5px;
+  line-height: 2.1;
+  color: var(--ink-2);
+  margin: 0 0 22px;
+}
+.dock-menu {
+  border-top: 1px solid var(--line-strong);
+  margin-bottom: 28px;
+}
+.dock-menu-row {
+  display: grid;
+  grid-template-columns: 84px 150px 1fr;
+  gap: 14px;
+  align-items: baseline;
+  padding: 14px 2px;
+  border-bottom: 1px solid var(--line);
+}
+@media (max-width: 620px) {
+  .dock-menu-row { grid-template-columns: 74px 1fr; }
+  .dock-menu-desc { grid-column: 1 / -1; margin-top: -6px; }
+}
+.dock-menu-no {
+  font-family: var(--jp-mincho);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+}
+.dock-menu-ttl {
+  font-family: var(--jp-mincho);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+}
+.dock-menu-desc {
+  font-size: 12px;
+  color: var(--ink-2);
+}
+.dock-start {
+  display: block;
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  font-family: var(--jp);
+  margin-bottom: 14px;
+}
+
+.dock-ch-head {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  border-bottom: 2px solid var(--line-strong);
+  padding: 26px 0 12px;
+  margin-bottom: 4px;
+}
+.dock-ch-no {
+  font-family: var(--jp-mincho);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+}
+.dock-ch-ttl {
+  font-family: var(--jp-mincho);
+  font-size: clamp(22px, 3.4vw, 28px);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  margin: 0;
+}
+.dock-ch-step {
+  margin-left: auto;
+  font-family: var(--font-display), serif;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  color: var(--ink-2);
+}
+.dock-q {
+  font-size: 15.5px;
+  font-weight: 600;
+  font-family: var(--jp);
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 12px;
+}
+.dock-choice {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+}
+.dock-choice.two { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+
+/* 検査結果報告書（カルテ） */
+.dock-report { padding-top: 10px; }
+.dock-report-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  background: var(--ink);
+  color: #fff;
+  padding: 30px 28px 26px;
+}
+.dock-report-en {
+  font-family: var(--font-display), serif;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: rgba(250, 249, 246, 0.55);
+  margin: 0 0 8px;
+}
+.dock-report-ttl {
+  font-family: var(--jp-mincho);
+  font-size: clamp(26px, 5vw, 40px);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #fff;
+  margin: 0;
+}
+.dock-report-sub {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: rgba(250, 249, 246, 0.7);
+  margin: 8px 0 0;
+}
+.dock-stamp {
+  flex-shrink: 0;
+  width: 88px;
+  height: 88px;
+  border: 3px solid var(--accent-2);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  transform: rotate(-11deg);
+  color: var(--accent-2);
+  font-family: var(--jp-mincho);
+  font-weight: 700;
+  font-size: 12.5px;
+  letter-spacing: 0.14em;
+  line-height: 1.5;
+  opacity: 0.92;
+}
+.dock-verdict {
+  border: 1px solid var(--line-strong);
+  border-top: none;
+  background: #fff;
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.dock-verdict-label {
+  font-family: var(--jp-mincho);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  color: var(--accent);
+}
+.dock-verdict-value {
+  font-family: var(--jp-mincho);
+  font-size: clamp(22px, 4.4vw, 34px);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--ink);
+}
+.dock-row {
+  border: 1px solid var(--line);
+  border-top: none;
+  background: #fff;
+}
+.dock-row-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 14px 28px 0;
+}
+.dock-row-no {
+  font-family: var(--font-display), serif;
+  font-size: 20px;
+  color: var(--accent);
+}
+.dock-row-ttl {
+  font-family: var(--jp-mincho);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--ink-2);
+}
+.dock-row-body { padding: 8px 28px 20px; }
+@media (max-width: 560px) {
+  .dock-row-head { padding: 12px 16px 0; }
+  .dock-row-body { padding: 6px 16px 16px; }
+  .dock-report-head, .dock-verdict { padding-left: 16px; padding-right: 16px; }
+}
+.dock-row-main {
+  font-size: 19px;
+  margin: 6px 0 2px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-family: var(--jp-mincho);
+}
+.dock-row-sub {
+  font-size: 13px;
+  font-family: var(--jp);
+  color: var(--ink-2);
+}
+.dock-row-note {
+  font-size: 13.5px;
+  line-height: 2;
+  color: var(--ink-2);
+  margin: 4px 0;
+}
+.dock-icon {
+  width: 26px;
+  height: 26px;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+/* 墨バンドのリード特集（全幅） */
+.ink-lead {
+  border-top: 1px solid rgba(250, 249, 246, 0.25);
+  padding: 32px 0 !important;
+}
+.ink-lead .ink-ttl { font-size: clamp(26px, 4.4vw, 40px); }
+.ink-lead + .ink-band-grid { border-top: none; }

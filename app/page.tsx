@@ -37,8 +37,16 @@ const COMPARES = [
 export default function Home() {
   return (
     <main>
-      {/* ── 表紙（編集ヒーロー） ── */}
-      <div className="ed-hero">
+      {/* ── 表紙（編集ヒーロー・写真スライドショー背景） ── */}
+      <div className="ed-hero has-slides">
+        {/* 自動クロスフェードする野球写真（CSSのみ・JS不要） */}
+        <div className="ed-slides" aria-hidden="true">
+          <div className="ed-slide" style={{ backgroundImage: "url('/img/hero-swing.jpg')" }} />
+          <div className="ed-slide" style={{ backgroundImage: "url('/img/hero-home-plate.jpg')" }} />
+          <div className="ed-slide" style={{ backgroundImage: "url('/img/hero-sandlot.jpg')" }} />
+          <div className="ed-slide" style={{ backgroundImage: "url('/img/hero-balls.jpg')" }} />
+          <div className="ed-slides-overlay" />
+        </div>
         <div className="container">
           <div className="ed-hero-inner">
             <div>
@@ -82,14 +90,7 @@ export default function Home() {
             <p className="ed-hero-vertical">くらべて、たしかめて、うまくなる。</p>
           </div>
         </div>
-        <div
-          className="photo-strip"
-          style={{ backgroundImage: "url('/img/hero-home-plate.jpg')" }}
-          role="img"
-          aria-label="ホームプレートのある土のグラウンド"
-        >
-          <span className="photo-strip-cap">KUSAYAKYU NAVI — {LAST_UPDATED}</span>
-        </div>
+        <span className="ed-hero-cap">KUSAYAKYU NAVI — {LAST_UPDATED}</span>
       </div>
 
       <div className="container">
@@ -127,6 +128,17 @@ export default function Home() {
       <section className="ink-band">
         <div className="container">
           <p className="ink-band-head">Featured</p>
+          <a className="ink-item ink-lead" href="/baseball-dock/">
+            <span className="ink-en">Full Checkup</span>
+            <span className="ink-ttl">
+              まとめて診てもらうなら、野球人間ドック。
+            </span>
+            <span className="ink-desc">
+              こころ・プレースタイル・バット・グローブの4検査を全30問で。
+              結果は「検査結果報告書」を一枚にしてお渡しします。
+            </span>
+            <span className="ink-link">受診する（約4分・無料）</span>
+          </a>
           <div className="ink-band-grid">
             <a className="ink-item" href="/player-shindan/">
               <span className="ink-en">Player Match</span>
