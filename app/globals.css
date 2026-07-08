@@ -1,24 +1,34 @@
 :root {
-  --navy: #2f2b25; /* ネイビーをやめ、温かいエスプレッソ（暗色バンド用） */
-  --navy-2: #3d382f;
-  --accent: #b3472e; /* グラブ革・ボールの縫い目を思わせる上品なテラコッタ */
+  /* ── INK & PAPER（雑誌編集デザイン）──
+     角丸ゼロ・影ゼロ・罫線・余白。色は「紙と墨」＋朱ひとつ。 */
+  --ink: #1c1b18; /* 墨 */
+  --ink-2: #55524b; /* 薄墨（補足テキスト） */
+  --paper: #faf9f6; /* わずかに温かい紙白 */
+  --accent: #b3472e; /* 朱（判子のように、要所だけに使う） */
   --accent-2: #d67a52;
-  --bg: #faf7f5; /* Vermicular風の温かいクリーム */
-  --card: #ffffff;
-  --line: #eae2d9;
-  --text: #222426; /* 上質な近黒 */
-  --muted: #7c756c;
+  --line: #ddd9d1; /* 細罫 */
+  --line-strong: #1c1b18; /* 太罫（見出し・ヘッダー） */
   --good: #12805c;
-  --chip: #f2ece4;
-  --radius: 12px;
-  --shadow: 0 4px 24px rgba(40, 34, 26, 0.06);
-  /* 日本語本文：游ゴシック/ヒラギノ系（軽やかで上品） */
+  --chip: #f1efe9;
+  --radius: 0px; /* 角丸は使わない */
+  --shadow: none; /* 影も使わない */
+
+  /* 旧トークン名の互換（既存3000行のCSSが参照）*/
+  --navy: #1c1b18;
+  --navy-2: #2a2823;
+  --bg: #faf9f6;
+  --card: #ffffff;
+  --text: #1c1b18;
+  --muted: #55524b;
+
+  /* 日本語本文：游ゴシック/ヒラギノ系 */
   --jp: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体",
     "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans JP", Meiryo,
     sans-serif;
-  /* 見出しの日本語：明朝体（Vermicular風のエレガントさ） */
-  --jp-mincho: "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Yu Mincho",
-    YuMincho, "游明朝", "游明朝体", "MS PMincho", serif;
+  /* 見出しの日本語：しっぽり明朝B1（webfont）→ 各OSの明朝 */
+  --jp-mincho: var(--font-mincho), "Hiragino Mincho ProN",
+    "Hiragino Mincho Pro", "Yu Mincho", YuMincho, "游明朝", "游明朝体",
+    "MS PMincho", serif;
   /* 見出し：英字はCrimson Pro(セリフ) → 日本語は明朝にフォールバック */
   --font-heading: var(--font-display), var(--jp-mincho);
 }
@@ -3298,4 +3308,628 @@ section {
   display: inline-block;
   vertical-align: -2px;
   color: var(--accent);
+}
+
+/* ════════════════════════════════════════════════════════════
+   INK & PAPER — 編集デザイン刷新レイヤー（2026-07）
+   角丸ゼロ・影ゼロ・罫線・余白。後勝ちの上書きで全ページに適用。
+   ════════════════════════════════════════════════════════════ */
+
+body {
+  line-height: 1.95;
+  letter-spacing: 0.02em;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+h1, h2, h3 {
+  font-family: var(--jp-mincho);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+/* ── PR表記：小さく静かに ── */
+.pr-note {
+  background: var(--paper);
+  color: var(--ink-2);
+  font-size: 10px;
+  text-align: right;
+  padding: 4px 16px 0;
+  letter-spacing: 0.06em;
+}
+
+/* ── ヘッダー：紙白＋太罫 ── */
+.site-header {
+  background: var(--paper);
+  border-bottom: 2px solid var(--line-strong);
+  box-shadow: none;
+}
+.site-header .container {
+  height: 66px;
+}
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  line-height: 1.2;
+}
+.logo-mark {
+  font-family: var(--jp-mincho);
+  font-weight: 700;
+  font-size: 21px;
+  letter-spacing: 0.12em;
+  color: var(--ink);
+}
+.logo-sub {
+  display: block;
+  font-family: var(--font-display), serif;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.34em;
+  color: var(--ink-2);
+  margin-top: 2px;
+}
+@media (max-width: 680px) {
+  .logo-sub { display: block; }
+  .logo-mark { font-size: 18px; }
+}
+.site-header nav {
+  gap: 26px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+.site-header nav a {
+  padding: 4px 0;
+  border-bottom: 2px solid transparent;
+}
+.site-header nav a:hover {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+}
+@media (max-width: 560px) {
+  .site-header nav { gap: 14px; font-size: 12px; }
+}
+
+/* ── フッター：墨ベタ・雑誌の奥付 ── */
+.site-footer {
+  background: var(--ink);
+  color: rgba(250, 249, 246, 0.78);
+  margin-top: 96px;
+  padding: 64px 0 40px;
+  font-size: 13px;
+}
+.site-footer a {
+  color: rgba(250, 249, 246, 0.78);
+  text-decoration: none;
+}
+.site-footer a:hover {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.ft-top {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 48px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(250, 249, 246, 0.18);
+}
+@media (max-width: 860px) {
+  .ft-top { grid-template-columns: 1fr; gap: 32px; }
+}
+.ft-wordmark {
+  font-family: var(--jp-mincho);
+  font-weight: 700;
+  font-size: 30px;
+  letter-spacing: 0.14em;
+  color: #fff;
+  margin: 0;
+}
+.ft-en {
+  font-family: var(--font-display), serif;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: rgba(250, 249, 246, 0.5);
+  margin: 8px 0 0;
+}
+.ft-cols {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+@media (max-width: 680px) {
+  .ft-cols { grid-template-columns: repeat(2, 1fr); gap: 24px 16px; }
+}
+.ft-col { display: flex; flex-direction: column; gap: 7px; }
+.ft-col a { font-size: 12.5px; }
+.ft-head {
+  font-family: var(--jp-mincho);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  color: #fff;
+  margin: 0 0 4px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(250, 249, 246, 0.25);
+}
+.ft-note {
+  padding: 22px 0 0;
+  font-size: 11px;
+  line-height: 1.9;
+  color: rgba(250, 249, 246, 0.5);
+}
+.ft-note p { margin: 0 0 4px; }
+.ft-note a { color: rgba(250, 249, 246, 0.65); text-decoration: underline; }
+.ft-copy {
+  margin: 20px 0 0;
+  font-family: var(--font-display), serif;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: rgba(250, 249, 246, 0.45);
+}
+
+/* ── 内側ページのヒーロー帯：紙白＋下罫 ── */
+.hero {
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+}
+.hero-kicker {
+  font-family: var(--font-display), serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+.hero h1 .hl,
+h1 .hl {
+  color: var(--accent);
+}
+
+/* ── 見出し：明朝＋短い朱罫 ── */
+.section-title {
+  font-family: var(--jp-mincho);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  position: relative;
+  padding-bottom: 12px;
+  margin-bottom: 14px;
+}
+.section-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 34px;
+  height: 2px;
+  background: var(--accent);
+}
+.section-sub {
+  color: var(--ink-2);
+}
+
+/* ── カード族の全面フラット化（角丸ゼロ・影ゼロ・罫線） ── */
+.tool-card, .pillar-card, .goods-card, .type-hub-card, .compat-card,
+.type-player, .player-card, .player-alt, .aff-card, .gear-rank-col,
+.mbti-axes, .type-advice-box, .combo-quote, .score-howto, .shindan-step,
+.lk-progress, .start-band, .pick-card, .maker-card, .rank-card,
+.uniform-card, .stat-card, .fortune-card, .prod-card {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+.tool-card, .pillar-card, .goods-card, .type-hub-card,
+.type-player, .player-card, .player-alt, .aff-card, .gear-rank-col,
+.mbti-axes, .score-howto {
+  background: #fff;
+  border: 1px solid var(--line);
+}
+.tool-card:hover, .pillar-card:hover, .goods-card:hover, .type-hub-card:hover {
+  transform: none;
+  box-shadow: none !important;
+  border-color: var(--ink);
+}
+.type-hub-card { gap: 6px; padding: 22px 20px; }
+.type-hub-name { font-family: var(--jp-mincho); letter-spacing: 0.04em; }
+.type-hub-cta { color: var(--accent); }
+
+/* 結果ヒーロー：墨ベタの活版ブロック */
+.type-hero {
+  background: var(--ink);
+  border-radius: 0;
+  box-shadow: none;
+  padding: 40px 24px 36px;
+}
+.type-hero .type-name { font-family: var(--jp-mincho); letter-spacing: 0.08em; }
+.type-more {
+  border-radius: 0;
+  border: 1px solid rgba(250, 249, 246, 0.4);
+  background: transparent;
+}
+.type-more:hover { background: rgba(250, 249, 246, 0.12); }
+
+/* ボタン・リンク：シャープに */
+.hero-cta .primary, .lk-next, .share-btn, .stats-clear, .start-band-btn {
+  border-radius: 0 !important;
+}
+.hero-cta .primary {
+  background: var(--ink);
+  box-shadow: none;
+}
+.hero-cta .primary:hover { background: var(--accent); transform: none; }
+.hero-cta .ghost { border-radius: 0 !important; border-color: var(--ink); color: var(--ink); }
+.lk-next { box-shadow: none; }
+.lk-next:hover { transform: none; background: var(--accent); }
+.cta-inline { color: var(--accent); text-underline-offset: 3px; }
+.share-copy { border-radius: 0; }
+
+/* 診断UI（YES/NO・A/B・7段階） */
+.yn-btn, .ab-btn { border-radius: 0; }
+.yn-btn.active, .ab-btn.active { background: var(--ink); border-color: var(--ink); }
+.yn-btn.yn-yes.active { background: var(--accent); border-color: var(--accent); }
+.step-num { border-radius: 0; background: var(--ink); }
+.shindan-step { border: none; border-top: 1px solid var(--line); background: transparent; padding-left: 0; padding-right: 0; }
+.lk-progress { background: rgba(250, 249, 246, 0.95); border: 1px solid var(--line); border-radius: 0; }
+.lk-progress-fill { background: var(--accent); }
+.lk-item { border-bottom: 1px solid var(--line); }
+
+/* 相性カード：色地をやめ、罫線＋ラベル色だけに */
+.compat-card { background: #fff; border: 1px solid var(--line); border-left: 3px solid; }
+.compat-card.good { border-left-color: var(--good); }
+.compat-card.tough { border-left-color: #8a6a97; }
+.compat-card:hover { transform: none; box-shadow: none; border-color: var(--ink); }
+.compat-card.good:hover { border-left-color: var(--good); }
+.compat-card.tough:hover { border-left-color: #8a6a97; }
+
+/* 写真バンド：角丸だけ落とす */
+.start-band { border: 1px solid var(--line-strong); }
+.start-band-photo { border-radius: 0; }
+.start-band-kicker { font-family: var(--font-display), serif; letter-spacing: 0.3em; text-transform: uppercase; }
+.start-band-title { font-family: var(--jp-mincho); letter-spacing: 0.06em; }
+
+/* チップ・バッジ類 */
+.player-league, .type-player-pos, .tool-badge, .pg-links a, .pg-item, .gear-rank-no {
+  border-radius: 0 !important;
+}
+.type-advice-box { border-radius: 0; background: var(--chip); border: none; border-left: 3px solid var(--accent); }
+.combo-quote { border-radius: 0; }
+.mbti-axis-bar, .mbti-axis-fill, .lk-progress-bar { border-radius: 0; }
+
+/* ════════════════════════════════════════
+   トップページ専用：雑誌の表紙＋目次
+   ════════════════════════════════════════ */
+.ed-hero {
+  padding: 68px 0 0;
+  position: relative;
+}
+.ed-hero-inner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 32px;
+  align-items: stretch;
+  padding-bottom: 56px;
+}
+.ed-hero-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  color: var(--ink-2);
+  margin: 0 0 22px;
+}
+.ed-hero-label::before {
+  content: "";
+  width: 40px;
+  height: 1px;
+  background: var(--ink);
+}
+.ed-hero-title {
+  font-family: var(--jp-mincho);
+  font-weight: 700;
+  font-size: clamp(44px, 8.6vw, 92px);
+  line-height: 1.28;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  margin: 0 0 26px;
+}
+.ed-hero-title .hl {
+  color: var(--accent);
+}
+.ed-hero-lead {
+  max-width: 34em;
+  font-size: 15px;
+  line-height: 2.15;
+  color: var(--ink-2);
+  margin: 0 0 30px;
+}
+.ed-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  flex-wrap: wrap;
+}
+.btn-ink {
+  display: inline-block;
+  background: var(--ink);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  padding: 15px 34px;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+.btn-ink:hover { background: var(--accent); }
+.link-arrow {
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 3px;
+}
+.link-arrow::after { content: "　→"; }
+.link-arrow:hover { color: var(--accent); border-color: var(--accent); }
+.ed-hero-meta {
+  display: flex;
+  gap: 0;
+  margin-top: 44px;
+  border-top: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line);
+}
+.ed-hero-meta > div {
+  flex: 1;
+  padding: 16px 18px 14px;
+  border-left: 1px solid var(--line);
+}
+.ed-hero-meta > div:first-child { border-left: none; padding-left: 0; }
+.ed-meta-num {
+  font-family: var(--font-display), serif;
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--ink);
+  display: block;
+}
+.ed-meta-label {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--ink-2);
+  display: block;
+  margin-top: 6px;
+}
+.ed-hero-vertical {
+  writing-mode: vertical-rl;
+  font-family: var(--jp-mincho);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.42em;
+  color: var(--ink-2);
+  border-left: 1px solid var(--line);
+  padding-left: 22px;
+  margin-left: 6px;
+}
+@media (max-width: 860px) {
+  .ed-hero { padding-top: 44px; }
+  .ed-hero-vertical { display: none; }
+  .ed-hero-inner { grid-template-columns: 1fr; padding-bottom: 40px; }
+  .ed-hero-meta { flex-wrap: wrap; }
+  .ed-hero-meta > div { min-width: 45%; }
+}
+
+/* 全幅フォトストリップ */
+.photo-strip {
+  position: relative;
+  height: clamp(220px, 38vw, 380px);
+  background-size: cover;
+  background-position: center 62%;
+  filter: saturate(0.82) contrast(1.02);
+}
+.photo-strip::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(28, 27, 24, 0.08), rgba(28, 27, 24, 0.24));
+}
+.photo-strip-cap {
+  position: absolute;
+  right: 18px;
+  bottom: 12px;
+  z-index: 1;
+  font-family: var(--font-display), serif;
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* 編集セクション見出し：番号＋英字＋明朝＋罫 */
+.ed-sec { margin-top: 84px; }
+.ed-sec-head {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  border-bottom: 2px solid var(--line-strong);
+  padding-bottom: 14px;
+  margin-bottom: 0;
+}
+.ed-no {
+  font-family: var(--font-display), serif;
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--accent);
+}
+.ed-ttl {
+  font-family: var(--jp-mincho);
+  font-size: clamp(22px, 3.4vw, 30px);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  margin: 0;
+}
+.ed-en {
+  font-family: var(--font-display), serif;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  color: var(--ink-2);
+  margin-left: auto;
+  text-transform: uppercase;
+}
+@media (max-width: 560px) {
+  .ed-en { display: none; }
+}
+.ed-sec-lead {
+  font-size: 13.5px;
+  color: var(--ink-2);
+  margin: 14px 0 0;
+}
+
+/* 目次型インデックス（罫線リスト） */
+.index-list { display: block; }
+.index-row {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  align-items: center;
+  gap: 20px;
+  padding: 24px 4px;
+  border-bottom: 1px solid var(--line);
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+.index-row:hover { background: #fff; }
+.ix-no {
+  font-family: var(--font-display), serif;
+  font-size: 26px;
+  color: var(--ink-2);
+  line-height: 1;
+}
+.index-row:hover .ix-no { color: var(--accent); }
+.ix-ttl {
+  font-family: var(--jp-mincho);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  display: block;
+}
+.ix-badge {
+  display: inline-block;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  border: 1px solid currentColor;
+  padding: 1px 8px;
+  margin-left: 10px;
+  vertical-align: 2px;
+}
+.ix-desc {
+  display: block;
+  font-size: 13px;
+  color: var(--ink-2);
+  margin-top: 5px;
+  line-height: 1.9;
+}
+.ix-arrow {
+  font-size: 20px;
+  color: var(--ink);
+  transition: transform 0.18s ease, color 0.18s ease;
+}
+.index-row:hover .ix-arrow { transform: translateX(8px); color: var(--accent); }
+@media (max-width: 640px) {
+  .index-row { grid-template-columns: 44px 1fr auto; gap: 12px; padding: 20px 2px; }
+  .ix-no { font-size: 20px; }
+  .ix-ttl { font-size: 16.5px; }
+}
+
+/* 墨ベタの特集バンド（2診断） */
+.ink-band {
+  background: var(--ink);
+  color: rgba(250, 249, 246, 0.85);
+  margin-top: 84px;
+  padding: 60px 0;
+}
+.ink-band-head {
+  font-family: var(--font-display), serif;
+  font-size: 12px;
+  letter-spacing: 0.34em;
+  color: rgba(250, 249, 246, 0.55);
+  margin: 0 0 8px;
+  text-transform: uppercase;
+}
+.ink-band-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-top: 1px solid rgba(250, 249, 246, 0.25);
+}
+@media (max-width: 760px) {
+  .ink-band-grid { grid-template-columns: 1fr; }
+}
+.ink-item {
+  display: block;
+  padding: 30px 28px 30px 0;
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 1px solid rgba(250, 249, 246, 0.25);
+}
+.ink-band-grid .ink-item:nth-child(odd) { border-right: 1px solid rgba(250, 249, 246, 0.25); padding-right: 36px; }
+.ink-band-grid .ink-item:nth-child(even) { padding-left: 36px; padding-right: 0; }
+@media (max-width: 760px) {
+  .ink-band-grid .ink-item { border-right: none !important; padding: 26px 0 !important; }
+}
+.ink-en {
+  font-family: var(--font-display), serif;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  color: var(--accent-2);
+  display: block;
+  text-transform: uppercase;
+}
+.ink-ttl {
+  font-family: var(--jp-mincho);
+  font-size: clamp(24px, 3.6vw, 34px);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #fff;
+  display: block;
+  margin: 10px 0 12px;
+  line-height: 1.4;
+}
+.ink-desc {
+  font-size: 13px;
+  line-height: 2.05;
+  color: rgba(250, 249, 246, 0.72);
+  display: block;
+  margin-bottom: 18px;
+}
+.ink-link {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: #fff;
+  border-bottom: 1px solid rgba(250, 249, 246, 0.6);
+  padding-bottom: 3px;
+}
+.ink-item:hover .ink-link { color: var(--accent-2); border-color: var(--accent-2); }
+.ink-item:hover .ink-ttl { color: var(--accent-2); }
+
+/* ガイド2段組（罫線リスト） */
+.guide-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 48px;
+}
+@media (max-width: 720px) {
+  .guide-cols { grid-template-columns: 1fr; }
+}
+.ed-more {
+  display: block;
+  text-align: right;
+  margin-top: 22px;
 }

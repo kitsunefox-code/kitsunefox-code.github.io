@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Crimson_Pro } from "next/font/google";
+import { Crimson_Pro, Shippori_Mincho_B1 } from "next/font/google";
 import {
   SITE_URL,
   SITE_NAME,
@@ -9,13 +9,21 @@ import {
 } from "@/data/site";
 import "./globals.css";
 
-// 見出し・英字ラベル用のエレガントなセリフ体（Vermicular風の上質な印象）
+// 英字ラベル用のセリフ体（雑誌のスモールキャップス的な使い方）
 const crimson = Crimson_Pro({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600"],
   variable: "--font-display",
   display: "swap",
   style: ["normal", "italic"],
+});
+
+// 日本語見出し用の太い明朝（雑誌の大見出し。unicode-range分割で必要な文字だけ配信される）
+const shippori = Shippori_Mincho_B1({
+  weight: ["600", "700"],
+  preload: false,
+  variable: "--font-mincho",
+  display: "swap",
 });
 
 const DESCRIPTION =
@@ -65,7 +73,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ja" className={crimson.variable}>
+    <html lang="ja" className={`${crimson.variable} ${shippori.variable}`}>
       <body>
         {/* デプロイ直後の古いキャッシュ対策：失効したJS/CSSチャンクの読み込み失敗を
             検知したら、キャッシュを回避して1回だけ自動リロードする（無限ループ防止つき） */}
@@ -119,11 +127,8 @@ gtag('config', '${GA4_MEASUREMENT_ID}');`}
         <header className="site-header">
           <div className="container">
             <a className="logo" href="/" aria-label="草野球ナビ">
-              <span className="ball">⚾</span>
-              <span>
-                草野球ナビ
-                <span className="logo-sub">道具・ユニフォーム比較＆お役立ちガイド</span>
-              </span>
+              <span className="logo-mark">草野球ナビ</span>
+              <span className="logo-sub">KUSAYAKYU NAVI</span>
             </a>
             <nav>
               <a href="/hikaku/">比較</a>
@@ -136,52 +141,64 @@ gtag('config', '${GA4_MEASUREMENT_ID}');`}
         {children}
         <footer className="site-footer">
           <div className="container">
-            <p style={{ margin: "0 0 8px", fontWeight: 700, color: "#fff" }}>
-              ⚾ 草野球ナビ
-            </p>
-            <p style={{ margin: 0 }}>
-              掲載している価格・納期・仕様は各社公開情報をもとにした目安です。
-              最新・正確な内容は必ず各メーカー公式サイトでご確認ください。
-            </p>
-            <p style={{ margin: "6px 0 0", fontSize: 12, opacity: 0.75 }}>
-              診断タイプのアイコンは
-              <a href="https://game-icons.net/" target="_blank" rel="noopener noreferrer">
-                game-icons.net
-              </a>
-              （Lorc, Delapouite, Skoll, Lord Berandas, Caro Asercion 作）を
-              <a
-                href="https://creativecommons.org/licenses/by/3.0/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                CC BY 3.0
-              </a>
-              のもとで使用しています。
-            </p>
-            <p style={{ margin: "10px 0 0" }}>
-              <a href="/hikaku/">比較まとめ</a>
-              {" ｜ "}
-              <a href="/uniform/">ユニフォーム比較</a>
-              {" ｜ "}
-              <a href="/tools/">無料ツール</a>
-              {" ｜ "}
-              <a href="/shindan/">ユニフォーム診断</a>
-              {" ｜ "}
-              <a href="/bat-shindan/">バット診断</a>
-              {" ｜ "}
-              <a href="/glove-shindan/">グローブ診断</a>
-              {" ｜ "}
-              <a href="/glove-fortune/">グローブ占い</a>
-              {" ｜ "}
-              <a href="/guide/">お役立ちガイド</a>
-              {" ｜ "}
-              <a href="/about/">運営者情報・評価基準</a>
-              {" ｜ "}
-              <a href="/privacy/">プライバシーポリシー</a>
-            </p>
-            <p style={{ margin: "10px 0 0" }}>
-              © {new Date().getFullYear()} 草野球ナビ
-            </p>
+            <div className="ft-top">
+              <div className="ft-brand">
+                <p className="ft-wordmark">草野球ナビ</p>
+                <p className="ft-en">KUSAYAKYU NAVI — 草野球の総合ナビ</p>
+              </div>
+              <div className="ft-cols">
+                <div className="ft-col">
+                  <p className="ft-head">くらべる</p>
+                  <a href="/hikaku/">比較まとめ</a>
+                  <a href="/uniform/">ユニフォーム</a>
+                  <a href="/bat/">バット</a>
+                  <a href="/glove/">グローブ</a>
+                  <a href="/spikes/">スパイク</a>
+                </div>
+                <div className="ft-col">
+                  <p className="ft-head">たしかめる</p>
+                  <a href="/player-shindan/">選手タイプ診断</a>
+                  <a href="/baseball-mbti/">野球選手MBTI</a>
+                  <a href="/combo/">複合診断</a>
+                  <a href="/tools/">診断ツール一覧</a>
+                  <a href="/glove-fortune/">グローブ占い</a>
+                </div>
+                <div className="ft-col">
+                  <p className="ft-head">よみもの</p>
+                  <a href="/guide/how-to-start/">草野球の始め方</a>
+                  <a href="/guide/build-a-team/">チームの作り方</a>
+                  <a href="/guide/uniform-how-to/">ユニフォームの作り方</a>
+                  <a href="/guide/">ガイド一覧</a>
+                </div>
+                <div className="ft-col">
+                  <p className="ft-head">サイト情報</p>
+                  <a href="/about/">運営者情報・評価基準</a>
+                  <a href="/privacy/">プライバシーポリシー</a>
+                </div>
+              </div>
+            </div>
+            <div className="ft-note">
+              <p>
+                掲載している価格・納期・仕様は各社公開情報をもとにした目安です。
+                最新・正確な内容は必ず各メーカー公式サイトでご確認ください。
+              </p>
+              <p>
+                診断タイプのアイコンは
+                <a href="https://game-icons.net/" target="_blank" rel="noopener noreferrer">
+                  game-icons.net
+                </a>
+                （Lorc, Delapouite, Skoll, Lord Berandas, Caro Asercion 作）を
+                <a
+                  href="https://creativecommons.org/licenses/by/3.0/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  CC BY 3.0
+                </a>
+                のもとで使用しています。
+              </p>
+            </div>
+            <p className="ft-copy">© {new Date().getFullYear()} 草野球ナビ</p>
           </div>
         </footer>
       </body>
