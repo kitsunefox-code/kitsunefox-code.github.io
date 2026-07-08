@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import AdSlot from "@/components/AdSlot";
+import TypeIcon from "@/components/TypeIcon";
 import {
   MBTI_TYPES,
   mbtiByCode,
@@ -89,7 +90,7 @@ export default async function MbtiTypePage({
             Baseball MBTI
           </p>
           <h1 style={{ fontSize: "clamp(24px, 5vw, 36px)", margin: "6px 0 10px" }}>
-            <span style={{ fontSize: "1.1em", marginRight: 8 }}>{t.emoji}</span>
+            <TypeIcon icon={t.icon} className="type-h1-icon" title={t.nickname} />
             <span className="hl">{t.code}</span>「{t.nickname}」ってどんなタイプ？
           </h1>
           <p style={{ fontSize: 15 }}>{t.catch}</p>
@@ -115,7 +116,8 @@ export default async function MbtiTypePage({
               >
                 <span className="compat-label">◎ 相性の良いタイプ</span>
                 <span className="compat-code">
-                  {compat.best.type.emoji} {compat.best.type.code}
+                  <TypeIcon icon={compat.best.type.icon} className="compat-icon" />
+                  {compat.best.type.code}
                   <span className="compat-nick">{compat.best.type.nickname}</span>
                 </span>
                 <span className="compat-note">{compat.best.note}</span>
@@ -128,7 +130,8 @@ export default async function MbtiTypePage({
               >
                 <span className="compat-label">△ 衝突しやすいタイプ</span>
                 <span className="compat-code">
-                  {compat.tough.type.emoji} {compat.tough.type.code}
+                  <TypeIcon icon={compat.tough.type.icon} className="compat-icon" />
+                  {compat.tough.type.code}
                   <span className="compat-nick">{compat.tough.type.nickname}</span>
                 </span>
                 <span className="compat-note">{compat.tough.note}</span>
@@ -279,7 +282,7 @@ export default async function MbtiTypePage({
                 className="type-hub-card"
                 href={`/baseball-mbti/type/${x.code.toLowerCase()}/`}
               >
-                <span className="type-hub-emoji">{x.emoji}</span>
+                <TypeIcon icon={x.icon} className="type-hub-emoji" title={x.nickname} />
                 <span className="type-hub-name">
                   {x.code}
                   <br />

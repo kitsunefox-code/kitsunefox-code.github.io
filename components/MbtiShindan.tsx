@@ -14,6 +14,7 @@ import {
 } from "@/data/baseballMbti";
 import { SITE_URL, rktSearch } from "@/data/site";
 import { saveMbtiCode, getSavedTypeSlug } from "@/data/comboLink";
+import TypeIcon from "@/components/TypeIcon";
 
 const BATCH = 6;
 const TOTAL = MBTI_STATEMENTS.length;
@@ -189,7 +190,7 @@ export default function MbtiShindan() {
       {result && type && (
         <section id="mbti-result" ref={resultRef} style={{ paddingTop: 8 }}>
           <div className="type-hero">
-            <span className="type-emoji">{type.emoji}</span>
+            <TypeIcon icon={type.icon} className="type-emoji" title={type.nickname} />
             <span className="type-kicker">あなたの野球選手MBTIは</span>
             <span className="mbti-code">{result.code}</span>
             <span className="type-name">{type.nickname}</span>
@@ -238,7 +239,8 @@ export default function MbtiShindan() {
                 >
                   <span className="compat-label">◎ 相性の良いタイプ</span>
                   <span className="compat-code">
-                    {compat.best.type.emoji} {compat.best.type.code}
+                    <TypeIcon icon={compat.best.type.icon} className="compat-icon" />
+                    {compat.best.type.code}
                     <span className="compat-nick">{compat.best.type.nickname}</span>
                   </span>
                   <span className="compat-note">{compat.best.note}</span>
@@ -251,7 +253,8 @@ export default function MbtiShindan() {
                 >
                   <span className="compat-label">△ 衝突しやすいタイプ</span>
                   <span className="compat-code">
-                    {compat.tough.type.emoji} {compat.tough.type.code}
+                    <TypeIcon icon={compat.tough.type.icon} className="compat-icon" />
+                    {compat.tough.type.code}
                     <span className="compat-nick">{compat.tough.type.nickname}</span>
                   </span>
                   <span className="compat-note">{compat.tough.note}</span>

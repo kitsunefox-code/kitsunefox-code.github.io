@@ -17,6 +17,7 @@ import {
 } from "@/data/playerTypes";
 import { SITE_URL, rktSearch } from "@/data/site";
 import { saveTypeSlug, getSavedMbtiCode } from "@/data/comboLink";
+import TypeIcon from "@/components/TypeIcon";
 
 type QId = string;
 const QUESTIONS: { id: QId; text: string; w: Partial<Record<Trait, number>> }[] = [
@@ -209,7 +210,7 @@ export default function PlayerShindan() {
       {top && type && (
         <section id="player-result" ref={ref} style={{ paddingTop: 20 }}>
           <div className="type-hero">
-            <span className="type-emoji">{type.emoji}</span>
+            <TypeIcon icon={type.icon} className="type-emoji" title={type.name} />
             <span className="type-kicker">あなたの野球タイプは</span>
             <span className="type-name">{type.name}型</span>
             <span className="type-desc">{type.desc}</span>

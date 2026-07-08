@@ -62,7 +62,8 @@ export const MBTI_STATEMENTS: Statement[] = [
 export type MbtiType = {
   code: string; // 例: ENFP
   nickname: string;
-  emoji: string;
+  emoji: string; // シェア文言（プレーンテキスト）専用。UI表示にはiconを使う
+  icon: string; // 表示用アイコン（= codeの小文字でdata/icons.tsを参照）
   catch: string; // 一言
   long: string; // 解説
   players: string[]; // 近い実在選手（名前）
@@ -92,7 +93,7 @@ const TRAITS_BY_CODE: Record<string, Trait[]> = {
   ESFP: ["flashy", "star"],
 };
 
-type MbtiTypeRaw = Omit<MbtiType, "traits">;
+type MbtiTypeRaw = Omit<MbtiType, "traits" | "icon">;
 const MBTI_TYPES_RAW: MbtiTypeRaw[] = [
   {
     code: "INTJ", nickname: "知将エース", emoji: "♟️",
@@ -227,6 +228,7 @@ const MBTI_TYPES_RAW: MbtiTypeRaw[] = [
 export const MBTI_TYPES: MbtiType[] = MBTI_TYPES_RAW.map((t) => ({
   ...t,
   traits: TRAITS_BY_CODE[t.code] || [],
+  icon: t.code.toLowerCase(),
 }));
 
 const BY_CODE = new Map(MBTI_TYPES.map((t) => [t.code, t]));

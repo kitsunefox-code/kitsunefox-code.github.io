@@ -5,7 +5,8 @@ import { PLAYERS, type Player, type Trait } from "./players";
 export type PlayerType = {
   slug: string;
   name: string; // 「型」は付けない（表示側で付与）
-  emoji: string;
+  emoji: string; // シェア文言（プレーンテキスト）専用。UI表示にはiconを使う
+  icon: string; // 表示用アイコン（= slugと同じキーでdata/icons.tsを参照）
   desc: string; // 一言サマリー
   long: string; // 解説（SEO本文）
   advice: string; // 道具えらびの傾向
@@ -14,7 +15,9 @@ export type PlayerType = {
   match: Trait[]; // 代表選手を拾うための資質
 };
 
-export const PLAYER_TYPES: PlayerType[] = [
+type PlayerTypeRaw = Omit<PlayerType, "icon">;
+
+const PLAYER_TYPES_RAW: PlayerTypeRaw[] = [
   {
     slug: "two-way",
     name: "二刀流ドリーマー",
@@ -224,6 +227,11 @@ export const PLAYER_TYPES: PlayerType[] = [
     match: ["contact", "defense"],
   },
 ];
+
+export const PLAYER_TYPES: PlayerType[] = PLAYER_TYPES_RAW.map((t) => ({
+  ...t,
+  icon: t.slug,
+}));
 
 const BY_SLUG = new Map(PLAYER_TYPES.map((t) => [t.slug, t]));
 export const typeBySlug = (slug: string): PlayerType | undefined => BY_SLUG.get(slug);

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import AdSlot from "@/components/AdSlot";
+import TypeIcon from "@/components/TypeIcon";
 import { MBTI_TYPES } from "@/data/baseballMbti";
 import { SITE_URL } from "@/data/site";
 
@@ -48,7 +49,7 @@ export default function MbtiTypeHubPage() {
               className="type-hub-card"
               href={`/baseball-mbti/type/${t.code.toLowerCase()}/`}
             >
-              <span className="type-hub-emoji">{t.emoji}</span>
+              <TypeIcon icon={t.icon} className="type-hub-emoji" title={t.nickname} />
               <span className="type-hub-name">
                 {t.code}
                 <br />

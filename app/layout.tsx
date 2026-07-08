@@ -143,6 +143,21 @@ gtag('config', '${GA4_MEASUREMENT_ID}');`}
               掲載している価格・納期・仕様は各社公開情報をもとにした目安です。
               最新・正確な内容は必ず各メーカー公式サイトでご確認ください。
             </p>
+            <p style={{ margin: "6px 0 0", fontSize: 12, opacity: 0.75 }}>
+              診断タイプのアイコンは
+              <a href="https://game-icons.net/" target="_blank" rel="noopener noreferrer">
+                game-icons.net
+              </a>
+              （Lorc, Delapouite, Skoll, Lord Berandas, Caro Asercion 作）を
+              <a
+                href="https://creativecommons.org/licenses/by/3.0/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                CC BY 3.0
+              </a>
+              のもとで使用しています。
+            </p>
             <p style={{ margin: "10px 0 0" }}>
               <a href="/hikaku/">比較まとめ</a>
               {" ｜ "}

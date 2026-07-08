@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import AdSlot from "@/components/AdSlot";
+import TypeIcon from "@/components/TypeIcon";
 import {
   PLAYER_TYPES,
   typeBySlug,
@@ -83,7 +84,7 @@ export default async function TypePage({
             Player Type
           </p>
           <h1 style={{ fontSize: "clamp(24px, 5vw, 36px)", margin: "6px 0 10px" }}>
-            <span style={{ fontSize: "1.1em", marginRight: 8 }}>{t.emoji}</span>
+            <TypeIcon icon={t.icon} className="type-h1-icon" title={t.name} />
             「<span className="hl">{t.name}</span>型」ってどんなタイプ？
           </h1>
           <p style={{ fontSize: 15 }}>{t.desc}</p>
@@ -162,7 +163,7 @@ export default async function TypePage({
                 className="type-hub-card"
                 href={`/player-shindan/type/${x.slug}/`}
               >
-                <span className="type-hub-emoji">{x.emoji}</span>
+                <TypeIcon icon={x.icon} className="type-hub-emoji" title={x.name} />
                 <span className="type-hub-name">{x.name}型</span>
                 <span className="type-hub-desc">{x.desc}</span>
               </a>

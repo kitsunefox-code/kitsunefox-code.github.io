@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import AdSlot from "@/components/AdSlot";
+import TypeIcon from "@/components/TypeIcon";
 import { PLAYER_TYPES } from "@/data/playerTypes";
 import { PLAYER_COUNT } from "@/data/players";
 import { SITE_URL } from "@/data/site";
@@ -49,7 +50,7 @@ export default function TypeHubPage() {
               className="type-hub-card"
               href={`/player-shindan/type/${t.slug}/`}
             >
-              <span className="type-hub-emoji">{t.emoji}</span>
+              <TypeIcon icon={t.icon} className="type-hub-emoji" title={t.name} />
               <span className="type-hub-name">{t.name}型</span>
               <span className="type-hub-desc">{t.desc}</span>
               <span className="type-hub-cta">解説を見る →</span>

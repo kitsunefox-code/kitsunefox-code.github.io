@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import AdSlot from "@/components/AdSlot";
+import TypeIcon from "@/components/TypeIcon";
 import { MBTI_TYPES, mbtiByCode } from "@/data/baseballMbti";
 import { PLAYER_TYPES } from "@/data/playerTypes";
 import { SITE_URL } from "@/data/site";
@@ -56,7 +57,7 @@ export default async function ComboMbtiHubPage({
             Combo Diagnosis
           </p>
           <h1 style={{ fontSize: "clamp(23px, 4.6vw, 34px)", margin: "6px 0 10px" }}>
-            <span style={{ fontSize: "1.1em", marginRight: 8 }}>{t.emoji}</span>
+            <TypeIcon icon={t.icon} className="type-h1-icon" title={t.nickname} />
             <span className="hl">{t.code}</span>×選手タイプ16通り
           </h1>
           <p style={{ fontSize: 15 }}>
@@ -76,9 +77,9 @@ export default async function ComboMbtiHubPage({
               className="type-hub-card"
               href={`/combo/${t.code.toLowerCase()}/${p.slug}/`}
             >
-              <span className="type-hub-emoji">
-                {t.emoji}
-                {p.emoji}
+              <span className="type-hub-emoji dual">
+                <TypeIcon icon={t.icon} title={t.nickname} />
+                <TypeIcon icon={p.icon} title={p.name} />
               </span>
               <span className="type-hub-name">
                 {t.code}×{p.name}

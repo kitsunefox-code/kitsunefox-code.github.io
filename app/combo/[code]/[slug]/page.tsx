@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import AdSlot from "@/components/AdSlot";
+import TypeIcon from "@/components/TypeIcon";
+import ComboShare from "@/components/ComboShare";
 import { ALL_COMBOS, getCombo, comboPlayers } from "@/data/combo";
 import { SITE_URL, rktSearch } from "@/data/site";
 
@@ -31,15 +33,19 @@ export async function generateMetadata({
       description: `${mbti.catch} ${playerType.desc}`,
       type: "article",
       url,
-      images: [{ url: "/og-combo.png", width: 1200, height: 630 }],
+      images: [{ url: comboOgPath(combo.mbti.code, combo.playerType.slug), width: 1200, height: 630 }],
     },
     twitter: {
       card: "summary_large_image",
       title: `【${title}】｜MBTI×選手タイプ複合診断`,
       description: `${mbti.catch} ${playerType.desc}`,
-      images: ["/og-combo.png"],
+      images: [comboOgPath(combo.mbti.code, combo.playerType.slug)],
     },
   };
+}
+
+function comboOgPath(code: string, slug: string): string {
+  return `/og-combo/${code.toLowerCase()}-${slug}.png`;
 }
 
 export default async function ComboPage({
@@ -81,15 +87,20 @@ export default async function ComboPage({
             Combo Diagnosis
           </p>
           <h1 style={{ fontSize: "clamp(22px, 4.6vw, 33px)", margin: "6px 0 10px" }}>
-            <span style={{ fontSize: "1.1em", marginRight: 8 }}>
-              {mbti.emoji}
-              {playerType.emoji}
+            <span className="type-h1-icon dual">
+              <TypeIcon icon={mbti.icon} title={mbti.nickname} />
+              <TypeIcon icon={playerType.icon} title={playerType.name} />
             </span>
             「<span className="hl">{title}</span>」型
           </h1>
           <blockquote className="combo-quote">
-            <p>🧠 MBTI的には：{mbti.catch}</p>
-            <p>⭐ プレースタイル的には：{playerType.desc}</p>
+            <p>
+              <TypeIcon icon={mbti.icon} className="combo-quote-icon" /> MBTI的には：{mbti.catch}
+            </p>
+            <p>
+              <TypeIcon icon={playerType.icon} className="combo-quote-icon" /> プレースタイル的には：
+              {playerType.desc}
+            </p>
           </blockquote>
         </div>
       </div>
@@ -121,14 +132,18 @@ export default async function ComboPage({
           <h2 className="section-title">道具えらびのヒント</h2>
           <div className="combo-advice-grid">
             <div className="type-advice-box">
-              <span className="type-advice-head">🧠 MBTI視点</span>
+              <span className="type-advice-head">
+                <TypeIcon icon={mbti.icon} className="advice-head-icon" /> MBTI視点
+              </span>
               <p>{mbti.advice}</p>
               <a className="cta-inline" href={mbti.adviceHref}>
                 → {mbti.adviceCta}
               </a>
             </div>
             <div className="type-advice-box">
-              <span className="type-advice-head">⭐ プレースタイル視点</span>
+              <span className="type-advice-head">
+                <TypeIcon icon={playerType.icon} className="advice-head-icon" /> プレースタイル視点
+              </span>
               <p>{playerType.advice}</p>
               <a className="cta-inline" href={playerType.adviceHref}>
                 → {playerType.adviceCta}
@@ -200,6 +215,16 @@ export default async function ComboPage({
             </p>
           </section>
         )}
+
+        <ComboShare
+          code={mbti.code}
+          slug={playerType.slug}
+          title={title}
+          mbtiNickname={mbti.nickname}
+          mbtiCatch={mbti.catch}
+          playerTypeName={playerType.name}
+          playerTypeDesc={playerType.desc}
+        />
 
         <a className="start-band" href="/combo/">
           <div
