@@ -158,7 +158,8 @@ gtag('config', '${GA4_MEASUREMENT_ID}');`}
                 <div className="ft-col">
                   <p className="ft-head">たしかめる</p>
                   <a href="/baseball-dock/">野球人間ドック</a>
-                  <a href="/baseball-dock/type/">全16タイプ解説</a>
+                  <a href="/uranai/">ギアメーカー占い</a>
+                  <a href="/players/">プロ選手の使用ギア一覧</a>
                   <a href="/shindan/">ユニフォーム診断</a>
                   <a href="/tools/">診断ツール一覧</a>
                 </div>

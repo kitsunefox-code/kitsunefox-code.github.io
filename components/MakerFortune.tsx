@@ -5,7 +5,7 @@
 // 運勢はブラウザの日付（new Date）× メーカーで毎日変わる（＝また来たくなる）。
 // 結果はメーカーの楽天アフィリンク＋本格版=野球人間ドックへの導線つき。
 import { useState } from "react";
-import { rktSearch } from "@/data/site";
+import { rktSearch, SITE_URL } from "@/data/site";
 
 type Maker = {
   name: string;
@@ -33,6 +33,14 @@ const MAKERS: Maker[] = [
   { name: "ワールドペガサス", kind: "グローブ", tagline: "独自性のグランドデビル", desc: "「グランドデビル」など独自の設計思想が光るブランド。他と違う視点で道具を選びたい人に。", persona: "既成概念にとらわれない独創派。人と違う道を面白がって進める人。" },
   { name: "マルーチ", kind: "バット", tagline: "MLBバットの名門", desc: "メジャーの打者に愛用者が多いバットの名門。打撃にこだわる人、パワーで魅せたい人に響くブランド。", persona: "一発の魅力に惹かれるスラッガー気質。豪快さと勝負強さを併せ持つ人。" },
   { name: "ルイスビルスラッガー", kind: "バット", tagline: "歴史あるカタリスト", desc: "軟式では「カタリスト」が人気の老舗バットブランド。軽く振り抜けて飛びも良く、スイングスピード派に好相性。", persona: "スピードとテクニックで勝負するタイプ。しなやかに、鋭く振り抜く人。" },
+  { name: "アンダーアーマー", kind: "グローブ", tagline: "パワーとトレーニング志向", desc: "野球以外のトレーニングウェアでも有名。力強いデザインと機能性で、体づくりから本気の人に人気。柳田モデルなども話題。", persona: "鍛えることを厭わないアスリート気質。パワーで押し切る力強いプレーヤー。" },
+  { name: "ナイキ", kind: "グローブ", tagline: "スタイリッシュ", desc: "洗練されたデザインが魅力。スパイクやアパレルで人気が高く、見た目からモチベーションを上げたい人に。", persona: "見た目・気分も大事にするおしゃれ派。かっこよさでテンションを上げる人。" },
+  { name: "玉澤（タマザワ）", kind: "グローブ", tagline: "老舗の職人", desc: "創業100年超の老舗。捕手用品を中心に、質実剛健で長く使える作りに定評がある通好みのブランド。", persona: "本物志向で流行に流されない人。歴史や質を重んじる、落ち着いた大人。" },
+  { name: "和牛JB", kind: "グローブ", tagline: "高級レザーの本格派", desc: "宮崎製作所の人気ブランド。上質なレザーとこだわりの仕立てで、質にこだわる草野球プレーヤーの支持を集める。", persona: "上質なものを長く使いたい人。細部までこだわる、審美眼のあるプレーヤー。" },
+  { name: "ベルガード", kind: "グローブ", tagline: "守りのスペシャリスト", desc: "キャッチャー防具・用品で知られるブランド。守りの要を支える堅実な作りで、専門性を重んじる人に。", persona: "体を張ってチームを守る献身派。縁の下で全体を支える頼れる存在。" },
+  { name: "レワード", kind: "グローブ", tagline: "クラシックの味わい", desc: "ユニフォームでも人気。クラシックで味のあるデザインが持ち味で、昔ながらの野球の雰囲気を好む人に。", persona: "王道・伝統を愛するロマンチスト。野球そのものを心から楽しむ人。" },
+  { name: "シュアプレイ", kind: "グローブ", tagline: "コスパの実力派", desc: "手頃な価格で本格的な作り。実用性を重視し、賢く良いものを揃えたい草野球プレーヤーに支持される。", persona: "堅実に実を取る現実派。無駄なく賢く、着実に成果を出すタイプ。" },
+  { name: "ディマリニ", kind: "バット", tagline: "複合バットの雄", desc: "海外発の人気バットブランド。反発性能の高い複合モデルで、飛距離を求める打者に選ばれている。", persona: "飛距離ロマンを追うパワーヒッター。豪快な一撃で流れを変える人。" },
 ];
 
 // “今日の運勢”テンプレ（メーカー×日付で選ばれる）
@@ -93,6 +101,41 @@ const POOL: { catch: string; sougou: string; batting: string; fielding: string; 
     fielding: "最後まで諦めない姿勢が好プレーに直結。全力で追いかけよう。",
     advice: "苦しい時こそ笑顔で。あなたの粘りがチームに勇気を与える。",
   },
+  {
+    catch: "華のあるプレーが飛び出す日",
+    sougou: "注目を集める運気。思い切ったプレーが決まり、周りを沸かせられそう。",
+    batting: "長打の予感。振り切る勇気が大きな一打を呼ぶ。狙っていこう。",
+    fielding: "ファインプレーのチャンス。難しい打球に思い切って飛び込もう。",
+    advice: "遠慮は禁物。あなたの魅せるプレーが試合の空気を変える。",
+  },
+  {
+    catch: "頭脳派の作戦が冴える日",
+    sougou: "読みと段取りが光る一日。先を見た判断が good な結果につながる。",
+    batting: "配球を読んで一球で仕留める意識を。ヤマを張るなら今日。",
+    fielding: "打者・カウントから守備位置を調整すると吉。準備が実を結ぶ。",
+    advice: "一歩先を読んで動こう。あなたの野球脳がチームの武器になる。",
+  },
+  {
+    catch: "初心に返ると良い日",
+    sougou: "基本を見直すと調子が整う日。当たり前を丁寧にやるほど運が上向く。",
+    batting: "力まず、centerへ返す意識で。シンプルなスイングが好結果を生む。",
+    fielding: "捕って投げるの基本を確実に。丁寧なプレーがミスを防ぐ。",
+    advice: "気負わず、いつも通りを大切に。基本の徹底が最大の武器。",
+  },
+  {
+    catch: "救世主になれる日",
+    sougou: "ピンチにこそ強い救援運。困っている場面であなたの出番が来そう。",
+    batting: "代打・勝負どころで一発の予感。任された時こそ集中を。",
+    fielding: "ここ一番の守備で試合を救えそう。最後まで気を抜かないで。",
+    advice: "誰かの穴を埋める働きが吉。あなたの一肌脱ぐ姿勢が報われる。",
+  },
+  {
+    catch: "リーダーシップが輝く日",
+    sougou: "まとめ役として力を発揮する日。あなたの一声でチームが動く統率運。",
+    batting: "自分が繋ぐ意識で。先頭を切って塁に出ると流れを作れる。",
+    fielding: "内野・外野に声をかけて陣形を整えると good。中心になって守ろう。",
+    advice: "背中で引っ張るのもよし、声で盛り上げるのもよし。今日は主役。",
+  },
 ];
 
 const LUCKY_POS = ["投手", "捕手", "一塁手", "二塁手", "三塁手", "遊撃手", "左翼手", "中堅手", "右翼手"];
@@ -110,6 +153,7 @@ function stars(n: number): string {
 
 export default function MakerFortune() {
   const [idx, setIdx] = useState<number | null>(null);
+  const [copied, setCopied] = useState(false);
 
   const m = idx !== null ? MAKERS[idx] : null;
 
@@ -201,6 +245,39 @@ export default function MakerFortune() {
               </span>
             </div>
           </div>
+
+          {/* SNSシェア（拡散） */}
+          {(() => {
+            const shareUrl = `${SITE_URL}/uranai/`;
+            const shareText = `⚾今日のギアメーカー占い⚾\n私は【${m.name}】タイプ（${m.tagline}）！\n今日の運勢は「${fortune.p.catch}」${stars(fortune.rank)}\nラッキーポジションは${fortune.luckyPos}／背番号${fortune.luckyNo}✨\nあなたのメーカーは？↓`;
+            const xUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}&hashtags=${encodeURIComponent("草野球ナビ,ギアメーカー占い")}`;
+            const lineUrl = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
+            const copyShare = async () => {
+              try {
+                await navigator.clipboard.writeText(`${shareText}\n${shareUrl}`);
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+              } catch {
+                /* noop */
+              }
+            };
+            return (
+              <div className="mf-share">
+                <span className="mf-share-label">結果をシェアする</span>
+                <div className="mf-share-btns">
+                  <a className="share-btn share-x" href={xUrl} target="_blank" rel="noopener noreferrer">
+                    𝕏 でシェア
+                  </a>
+                  <a className="share-btn share-line" href={lineUrl} target="_blank" rel="noopener noreferrer">
+                    LINEで送る
+                  </a>
+                  <button className="share-btn share-copy" onClick={copyShare}>
+                    {copied ? "コピーしました！" : "結果をコピー"}
+                  </button>
+                </div>
+              </div>
+            );
+          })()}
 
           <div className="mf-actions">
             <a
