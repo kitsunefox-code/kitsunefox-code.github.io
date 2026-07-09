@@ -5,22 +5,22 @@ import { PLAYER_COUNT } from "@/data/players";
 import { SITE_URL } from "@/data/site";
 
 export const metadata: Metadata = {
-  title: "野球人間ドック｜性格×プレースタイル×バット×グローブを一度にフル診断",
+  title: "野球人間ドック｜MBTI式・全33問であなたのタイプ＆最も近いプロ選手を1人ズバリ",
   description:
-    "MBTI式の性格検査・プレースタイル適性・バット処方・グローブ処方を、全30問でまとめて受診できる草野球のフル診断。結果は「検査結果報告書」形式で、似ているプロ選手・相性の良いタイプ・あなたに合う道具まで一枚に。登録不要・無料・約4分。",
+    "全33問すべてMBTI式の7段階で答えるだけ。あなたのMBTIタイプと、最も近いプロ選手（NPB・MLB620名超から1人・AIイラスト付き）、バット・グローブの処方までを「検査結果報告書」一枚にまとめてお渡し。画像で保存してSNSにも。登録不要・無料・約4分。",
   alternates: { canonical: `${SITE_URL}/baseball-dock/` },
   openGraph: {
-    title: "野球人間ドック｜全30問のフル診断",
+    title: "野球人間ドック｜MBTI式・全33問のフル診断",
     description:
-      "性格×プレースタイル×バット×グローブをまとめて検査。結果は報告書形式で。",
+      "MBTIタイプ×最も近いプロ選手を1人ズバリ。バット・グローブの処方まで報告書一枚に。",
     type: "website",
     url: `${SITE_URL}/baseball-dock/`,
     images: [{ url: "/og-dock.png", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "野球人間ドック｜全30問のフル診断",
-    description: "性格×プレースタイル×バット×グローブをまとめて検査。",
+    title: "野球人間ドック｜MBTI式・全33問のフル診断",
+    description: "MBTIタイプ×最も近いプロ選手を1人ズバリ。処方まで報告書一枚に。",
     images: ["/og-dock.png"],
   },
 };
@@ -51,10 +51,11 @@ export default function BaseballDockPage() {
             野球<span className="hl">人間ドック</span>
           </h1>
           <p>
-            こころ（MBTI式）・プレースタイル・バット・グローブ。4つの検査を
-            <strong>全30問・約4分</strong>でまとめて受診し、
-            <strong>「検査結果報告書」</strong>を一枚にしてお渡しします。
-            似ているプロ選手（{PLAYER_COUNT}名から）や、チーム内の相性までわかる草野球のフル診断です。
+            こころ・プレースタイル・バット・グローブ。4つの検査を
+            <strong>全33問・すべてMBTI式の7段階</strong>（そう思う〜そう思わない）で受診し、
+            あなたの<strong>MBTIタイプ×最も近いプロ選手1人</strong>
+            （NPB・MLB {PLAYER_COUNT}名から・AIイラスト付き）を
+            <strong>「検査結果報告書」</strong>一枚にしてお渡しします。約4分・無料。
           </p>
         </div>
       </div>
@@ -68,10 +69,12 @@ export default function BaseballDockPage() {
         <div className="score-howto">
           <h2 className="section-title">この検査について</h2>
           <p className="section-sub" style={{ marginTop: 8 }}>
-            当サイトの4つの診断（野球選手MBTI・選手タイプ・バット相性・グローブ相性）の
-            エッセンスを1本にまとめた総合版です。じっくり派には、それぞれの本格版
-            （MBTIは36問・バットは9問など）も用意しています。判定・処方はエンタメと
-            道具えらびの参考としてお楽しみください。
+            性格（MBTI式12問）・プレースタイル（12問）・バット適性（4問）・グローブ適性（5問）の
+            計33問を、すべて7段階の同意スケールで回答すると、軸ごとの傾向を％で算出し、
+            あなたのMBTIタイプと収録{PLAYER_COUNT}名の中で最も近いプロ選手をマッチングします。
+            イラストはAI生成のイメージで、ご本人の肖像ではありません。判定・処方はエンタメと
+            道具えらびの参考としてお楽しみください。全16タイプの解説は
+            <a href="/baseball-dock/type/">タイプ一覧</a>からどうぞ。
           </p>
         </div>
       </div>

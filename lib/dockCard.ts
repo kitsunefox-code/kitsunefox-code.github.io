@@ -5,6 +5,7 @@ import { ICON_PATHS } from "@/data/icons";
 
 export type DockCardData = {
   code: string; // MBTIコード
+  verdict?: string; // 総合判定の表示文字列（省略時は code×playName）
   mbtiNickname: string;
   mbtiIcon: string;
   mbtiCatch: string;
@@ -185,7 +186,7 @@ export async function renderDockCard(data: DockCardData): Promise<HTMLCanvasElem
   y += 62;
   ctx.fillStyle = INK;
   ctx.font = `700 62px ${MINCHO}`;
-  const verdict = `${data.code}×${data.playName}`;
+  const verdict = data.verdict || `${data.code}×${data.playName}`;
   // 幅に応じて自動縮小
   let vfs = 62;
   while (ctx.measureText(verdict).width > W - 128 && vfs > 34) {

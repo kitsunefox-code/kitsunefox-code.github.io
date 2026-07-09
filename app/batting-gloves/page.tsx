@@ -230,9 +230,7 @@ export default function BattingGlovesPage() {
           </ul>
 
           <div className="bat-links">
-            <a className="cta-inline" href="/batting-glove-shindan/">
-              → 7問でわかる「バッティンググローブ相性診断」
-            </a>
+            <a className="cta-inline" href="/baseball-dock/">→ 道具の適性をまとめて「野球人間ドック」で調べる</a>
             <a className="cta-inline" href="/guide/bat-guide/">
               → バット本体の選び方「軟式バットの選び方」
             </a>

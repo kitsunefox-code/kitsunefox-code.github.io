@@ -59,12 +59,7 @@ export default function HikakuHubPage() {
             数問答えるだけで、あなたに合う道具がその場でわかります。
           </p>
           <div className="bat-links">
-            <a className="cta-inline" href="/bat-shindan/">
-              → 軟式バット相性診断
-            </a>
-            <a className="cta-inline" href="/glove-shindan/">
-              → グローブ相性診断
-            </a>
+            <a className="cta-inline" href="/baseball-dock/">→ 性格から道具まで「野球人間ドック」でフル診断する</a>
             <a className="cta-inline" href="/shindan/">
               → 写真でわかるユニフォーム診断
             </a>

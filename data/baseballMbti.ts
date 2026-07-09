@@ -125,7 +125,7 @@ const MBTI_TYPES_RAW: MbtiTypeRaw[] = [
     long: "ENTP・型破りの革命児型は、誰も思いつかないアイデアで試合を動かすアイデアマン。セオリーにとらわれず、新しい球種・戦術・魅せ方をどんどん試します。飽きっぽい一面もあるけれど、ハマったときの爆発力は随一。チームに新しい風を吹き込む変革者です。",
     players: ["ブライス・ハーパー", "千賀滉大", "フェルナンド・タティスJr."],
     advice: "新しもの好きのあなたには、最新モデルや個性的なオーダーが好相性。",
-    adviceHref: "/bat-shindan/", adviceCta: "最新バットを診断で探す",
+    adviceHref: "/bat/", adviceCta: "最新バットを比較で探す",
   },
   {
     code: "INFJ", nickname: "静かなる理想家", emoji: "🌙",
@@ -141,7 +141,7 @@ const MBTI_TYPES_RAW: MbtiTypeRaw[] = [
     long: "INFP・夢追いロマンチスト型は、勝ち負け以上に「好き」を大事にする純粋なプレーヤー。人と比べず、自分の理想の野球を追い求めます。穏やかでマイペースに見えて、譲れない信念は誰より強い。その一途さが人を惹きつけ、時に常識を超えたスケールの夢を実現します。",
     players: ["大谷翔平", "ロナルド・アクーニャJr.", "松井秀喜"],
     advice: "投打どちらも楽しむあなたには、オールラウンドに使える道具選びを。",
-    adviceHref: "/tools/", adviceCta: "あなた向けの道具を診断",
+    adviceHref: "/baseball-dock/", adviceCta: "野球人間ドックで処方してもらう",
   },
   {
     code: "ENFJ", nickname: "熱血の兄貴分", emoji: "🔥",
@@ -165,7 +165,7 @@ const MBTI_TYPES_RAW: MbtiTypeRaw[] = [
     long: "ISTJ・堅実な鉄壁職人型は、基本に忠実で決してサボらない責任感の塊タイプ。派手さより「当たり前のことを確実に」を徹底し、守備でも生活態度でもチームの土台になります。地道な反復を苦にせず、積み上げた実力は本物。監督が最も信頼して送り出せる選手です。",
     players: ["源田壮亮", "宮本慎也", "ノーラン・アレナード"],
     advice: "守備の要は操作性の高いグローブ。ポジションに合った型えらびを。",
-    adviceHref: "/glove-shindan/", adviceCta: "グローブ診断をやってみる",
+    adviceHref: "/glove/", adviceCta: "グローブ比較・一押しを見る",
   },
   {
     code: "ISFJ", nickname: "縁の下の女房役", emoji: "🤝",
@@ -189,7 +189,7 @@ const MBTI_TYPES_RAW: MbtiTypeRaw[] = [
     long: "ESFJ・みんなの兄貴型は、気配り上手でチームの輪を大切にする社交派。後輩の面倒をよく見て、場の空気を和ませる潤滑油のような存在です。人に喜んでもらうことが原動力で、チームの結束を自然に高めます。あなたのおかげで、チームはいつも居心地のよい雰囲気に包まれます。",
     players: ["里崎智也", "サルバドール・ペレス", "中村悠平"],
     advice: "みんなを支えるあなたは、まず自分の道具をきちんと整えるのが吉。",
-    adviceHref: "/tools/", adviceCta: "あなた向けの道具を診断",
+    adviceHref: "/baseball-dock/", adviceCta: "野球人間ドックで処方してもらう",
   },
   {
     code: "ISTP", nickname: "クールな技巧派", emoji: "🧊",
@@ -197,7 +197,7 @@ const MBTI_TYPES_RAW: MbtiTypeRaw[] = [
     long: "ISTP・クールな技巧派型は、多くを語らずプレーで示す寡黙な達人タイプ。無駄のない合理的な動きと高い技術で、難しいプレーもさらりとこなします。感情を表に出さず淡々としていますが、勝負勘は鋭い。“職人”と呼ぶのがふさわしい、玄人が唸るタイプです。",
     players: ["菊池涼介", "前田健太", "マット・チャップマン"],
     advice: "技術で勝負するあなたには、操作性重視の軽量ギアが好相性。",
-    adviceHref: "/glove-shindan/", adviceCta: "グローブ診断をやってみる",
+    adviceHref: "/glove/", adviceCta: "グローブ比較・一押しを見る",
   },
   {
     code: "ISFP", nickname: "感性の巧打者", emoji: "🎨",
@@ -205,7 +205,7 @@ const MBTI_TYPES_RAW: MbtiTypeRaw[] = [
     long: "ISFP・感性の巧打者型は、理屈より感覚で打つ天才肌のタイプ。言葉で説明しづらい“間”やタイミングを体で掴み、美しいスイングで魅せます。控えめで穏やかな性格ながら、プレーには確かな個性が光る。感性を信じて振り抜くとき、誰にも真似できない打撃を見せます。",
     players: ["吉田正尚", "前田智徳", "ルイス・ロバートJr."],
     advice: "感覚で振るあなたには、芯でとらえやすい扱いやすいバットを。",
-    adviceHref: "/bat-shindan/", adviceCta: "バット相性診断をやってみる",
+    adviceHref: "/bat/", adviceCta: "バット比較・一押しを見る",
   },
   {
     code: "ESTP", nickname: "勝負師ギャンブラー", emoji: "🎲",
@@ -213,7 +213,7 @@ const MBTI_TYPES_RAW: MbtiTypeRaw[] = [
     long: "ESTP・勝負師ギャンブラー型は、大きな場面ほどワクワクする度胸抜群のタイプ。細かい理屈より本能と勢いで勝負し、ここぞでリスクを取れる強心臓です。行動力があり注目を浴びるのも大好き。ピンチもチャンスに変える勝負度胸で、試合の流れを一気に引き寄せます。",
     players: ["藤川球児", "ハビアー・バエズ", "山川穂高"],
     advice: "勝負を仕掛けるあなたには、思い切り振れる相棒バットを一本。",
-    adviceHref: "/bat-shindan/", adviceCta: "バット相性診断をやってみる",
+    adviceHref: "/bat/", adviceCta: "バット比較・一押しを見る",
   },
   {
     code: "ESFP", nickname: "魅せるエンターテイナー", emoji: "✨",

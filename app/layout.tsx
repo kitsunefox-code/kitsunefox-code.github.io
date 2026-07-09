@@ -157,11 +157,10 @@ gtag('config', '${GA4_MEASUREMENT_ID}');`}
                 </div>
                 <div className="ft-col">
                   <p className="ft-head">たしかめる</p>
-                  <a href="/player-shindan/">選手タイプ診断</a>
-                  <a href="/baseball-mbti/">野球選手MBTI</a>
-                  <a href="/combo/">複合診断</a>
+                  <a href="/baseball-dock/">野球人間ドック</a>
+                  <a href="/baseball-dock/type/">全16タイプ解説</a>
+                  <a href="/shindan/">ユニフォーム診断</a>
                   <a href="/tools/">診断ツール一覧</a>
-                  <a href="/glove-fortune/">グローブ占い</a>
                 </div>
                 <div className="ft-col">
                   <p className="ft-head">よみもの</p>

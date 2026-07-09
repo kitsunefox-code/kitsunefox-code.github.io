@@ -1,11 +1,15 @@
 "use client";
 
-// 野球人間ドック：こころ(MBTI)・プレースタイル・バット・グローブを
-// 一度に受診するフル診断。結果は「検査結果報告書（カルテ）」形式で出す。
+// 野球人間ドック：サイト唯一の総合診断。
+// 全33問すべてMBTI式の7段階（そう思う〜そう思わない）で、
+// こころ(MBTI)・プレースタイル・バット・グローブをまとめて検査し、
+// 「MBTIタイプ × 最も近いプロ選手1人」をどんと判定する。
 import { useRef, useState } from "react";
 import ProductCards from "@/components/ProductCards";
-import { renderDockCard, canvasToBlob, type DockCardData } from "@/lib/dockCard";
+import GoodsLinks from "@/components/GoodsLinks";
 import TypeIcon from "@/components/TypeIcon";
+import PlayerArt from "@/components/PlayerArt";
+import { renderDockCard, canvasToBlob, type DockCardData } from "@/lib/dockCard";
 import {
   MBTI_STATEMENTS,
   AXIS_META,
@@ -14,19 +18,19 @@ import {
   type Axis,
   type MbtiType,
 } from "@/data/baseballMbti";
-import {
-  pickTypeSlug,
-  typeBySlug,
-  type PlayerType,
-} from "@/data/playerTypes";
+import { pickTypeSlug, typeBySlug, type PlayerType } from "@/data/playerTypes";
 import { PLAYERS, type Player, type Trait } from "@/data/players";
-import { pickBatModel, BAT_MATERIAL_INFO, type BatMaterial, type BatModel } from "@/data/batData";
-import { recommendWeb, type WebType } from "@/data/gloveData";
+import {
+  pickBatModel,
+  BAT_MATERIAL_INFO,
+  type BatMaterial,
+  type BatModel,
+} from "@/data/batData";
+import { recommendWeb, type WebType, type WebStyle } from "@/data/gloveData";
 import { SITE_URL, rktSearch } from "@/data/site";
 import { saveMbtiCode, saveTypeSlug } from "@/data/comboLink";
 
-/* ── 検査1: こころ（MBTI・12問7段階） ─────────────── */
-const MBTI_Q = MBTI_STATEMENTS.slice(0, 12); // 各軸3問（逆転項目入り）
+/* ── 7段階スケール（全章共通・MBTI式） ─────────────── */
 const SCALE: { v: number; size: string; tone: "agree" | "neutral" | "disagree" }[] = [
   { v: 3, size: "s3", tone: "agree" },
   { v: 2, size: "s2", tone: "agree" },
@@ -36,6 +40,9 @@ const SCALE: { v: number; size: string; tone: "agree" | "neutral" | "disagree" }
   { v: -2, size: "s2", tone: "disagree" },
   { v: -3, size: "s3", tone: "disagree" },
 ];
+
+/* ── 検査1: こころ（MBTI 12問） ─────────────── */
+const MBTI_Q = MBTI_STATEMENTS.slice(0, 12); // 各軸3問（逆転項目入り）
 
 type DockAxis = { axis: Axis; letter: string; leftPct: number; rightPct: number };
 function computeDockMbti(ans: Record<string, number>): { code: string; axes: DockAxis[] } {
@@ -54,7 +61,7 @@ function computeDockMbti(ans: Record<string, number>): { code: string; axes: Doc
   return { code: axes.map((a) => a.letter).join(""), axes };
 }
 
-/* ── 検査2: プレースタイル（12問YES/NO） ─────────────── */
+/* ── 検査2: プレースタイル（12問・7段階） ─────────────── */
 const PLAY_Q: { id: string; text: string; w: Partial<Record<Trait, number>> }[] = [
   { id: "p1", text: "一発の長打で試合を決めるのが快感だ", w: { power: 2, clutch: 1 } },
   { id: "p2", text: "守備でチームを救うのが好きだ", w: { defense: 3 } },
@@ -70,51 +77,66 @@ const PLAY_Q: { id: string; text: string; w: Partial<Record<Trait, number>> }[] 
   { id: "p12", text: "投打の“二刀流”に憧れる", w: { twoway: 4, power: 1, pitcher: 1 } },
 ];
 
-function computePlay(a: Record<string, boolean>): { type: PlayerType; top: Player } {
+function computePlay(a: Record<string, number>): { type: PlayerType; top: Player } {
   const score: Partial<Record<Trait, number>> = {};
   for (const q of PLAY_Q) {
-    if (a[q.id]) {
-      for (const [t, v] of Object.entries(q.w)) {
-        score[t as Trait] = (score[t as Trait] || 0) + (v as number);
-      }
+    const v = a[q.id] ?? 0;
+    if (v <= 0) continue; // 「そう思う」側だけ資質に加点（強さで傾斜）
+    for (const [t, w] of Object.entries(q.w)) {
+      score[t as Trait] = (score[t as Trait] || 0) + (v / 3) * (w as number);
     }
   }
   const ranked = PLAYERS.map((p) => ({
     p,
     s: p.traits.reduce((sum, t) => sum + (score[t] || 0), 0),
     r: Math.random(),
-  }))
-    .sort((x, y) => y.s - x.s || y.r - x.r)
-    .map((x) => x.p);
+  })).sort((x, y) => y.s - x.s || y.r - x.r);
   const type = typeBySlug(pickTypeSlug(score))!;
-  return { type, top: ranked[0] };
+  return { type, top: ranked[0].p };
 }
 
-/* ── 検査3: バット適性（4問YES/NO） ─────────────── */
+/* ── 検査3: バット適性（4問・7段階） ─────────────── */
 const BAT_Q: { id: string; text: string }[] = [
   { id: "b1", text: "何より「飛距離」を最優先したい" },
   { id: "b2", text: "バットに2万円以上かけてもいい" },
   { id: "b3", text: "パワー・力には自信がある方だ" },
   { id: "b4", text: "どうせなら最新モデルを使いたい" },
 ];
-function computeBat(a: Record<string, boolean>): { material: BatMaterial; model: BatModel } {
+function computeBat(a: Record<string, number>): { material: BatMaterial; model: BatModel } {
+  const yes = (id: string) => (a[id] ?? 0) > 0;
   const material: BatMaterial =
-    a.b1 && a.b2 ? "beyond" : a.b2 || a.b3 ? "carbon" : "metal";
-  return { material, model: pickBatModel(material, { latest: !!a.b4, power: !!a.b3 }) };
+    yes("b1") && yes("b2") ? "beyond" : yes("b2") || yes("b3") ? "carbon" : "metal";
+  return { material, model: pickBatModel(material, { latest: yes("b4"), power: yes("b3") }) };
 }
 
-/* ── 検査4: グローブ適性（2問choice） ─────────────── */
-const POS_OPTS = [
-  { v: "pitcher", label: "投手" },
-  { v: "infield", label: "内野" },
-  { v: "outfield", label: "外野" },
-  { v: "catcher", label: "捕手" },
-  { v: "allround", label: "未定・どこでも" },
-] as const;
-const STYLE_OPTS = [
-  { v: "quick", label: "軽快に速くさばきたい" },
-  { v: "solid", label: "しっかり受け止めたい" },
-] as const;
+/* ── 検査4: グローブ適性（5問・7段階） ─────────────── */
+const GLOVE_Q: { id: string; text: string; pos?: "pitcher" | "infield" | "outfield" | "catcher" }[] = [
+  { id: "g1", text: "マウンドから投げ込む姿に、いちばん憧れる", pos: "pitcher" },
+  { id: "g2", text: "内野で軽快にゴロをさばくのが好きだ", pos: "infield" },
+  { id: "g3", text: "外野で打球を追って広く走り回りたい", pos: "outfield" },
+  { id: "g4", text: "キャッチャーとして女房役に徹したい", pos: "catcher" },
+  { id: "g5", text: "軽快にさばくより、強い打球をしっかり受け止めたい" },
+];
+function computeGlove(a: Record<string, number>): {
+  pos: string;
+  web: WebType;
+  reason: string;
+} {
+  let best: { pos: "pitcher" | "infield" | "outfield" | "catcher" | "allround"; v: number } = {
+    pos: "allround",
+    v: 0,
+  };
+  for (const q of GLOVE_Q) {
+    if (!q.pos) continue;
+    const v = a[q.id] ?? 0;
+    if (v > best.v) best = { pos: q.pos, v };
+  }
+  const sv = a.g5 ?? 0;
+  const style: WebStyle = sv > 0 ? "solid" : sv < 0 ? "quick" : "auto";
+  const g = recommendWeb(best.pos, style);
+  return { pos: best.pos, web: g.web, reason: g.reason };
+}
+
 const POS_JP: Record<string, string> = {
   pitcher: "投手",
   infield: "内野",
@@ -123,6 +145,7 @@ const POS_JP: Record<string, string> = {
   allround: "オールラウンド",
 };
 
+/* ── ステージ管理 ─────────────── */
 type Stage = "intro" | "mbti" | "play" | "bat" | "glove" | "result";
 type DockResult = {
   mbti: { code: string; axes: DockAxis[]; type: MbtiType };
@@ -132,20 +155,55 @@ type DockResult = {
 };
 
 const CHAPTERS: { key: Stage; no: string; title: string; desc: string; count: number }[] = [
-  { key: "mbti", no: "第一検査", title: "こころ", desc: "7段階で答える性格検査（12問）", count: 12 },
-  { key: "play", no: "第二検査", title: "プレースタイル", desc: "はい／いいえの適性検査（12問）", count: 12 },
+  { key: "mbti", no: "第一検査", title: "こころ", desc: "性格のMBTI検査（12問）", count: 12 },
+  { key: "play", no: "第二検査", title: "プレースタイル", desc: "プレーの気質検査（12問）", count: 12 },
   { key: "bat", no: "第三検査", title: "バット適性", desc: "相棒バットの処方（4問）", count: 4 },
-  { key: "glove", no: "第四検査", title: "グローブ適性", desc: "相棒グローブの処方（2問）", count: 2 },
+  { key: "glove", no: "第四検査", title: "グローブ適性", desc: "相棒グローブの処方（5問）", count: 5 },
 ];
-const TOTAL_Q = 30;
+const TOTAL_Q = 33;
+
+/* 7段階の設問行（全章共通） */
+function LikertItem({
+  no,
+  text,
+  value,
+  onPick,
+}: {
+  no: number;
+  text: string;
+  value: number | undefined;
+  onPick: (v: number) => void;
+}) {
+  return (
+    <div className="lk-item">
+      <p className="lk-num">Q{no}</p>
+      <p className="lk-q">{text}</p>
+      <div className="lk-row">
+        <span className="lk-side agree">そう思う</span>
+        <div className="lk-scale">
+          {SCALE.map((o) => (
+            <button
+              key={o.v}
+              aria-label={`${o.v > 0 ? "そう思う" : o.v < 0 ? "そう思わない" : "どちらでもない"}(${o.v})`}
+              className={`lk-dot ${o.size} ${o.tone} ${value === o.v ? "active" : ""}`}
+              onClick={() => onPick(o.v)}
+            >
+              {value === o.v ? "✓" : ""}
+            </button>
+          ))}
+        </div>
+        <span className="lk-side disagree">そう思わない</span>
+      </div>
+    </div>
+  );
+}
 
 export default function DockShindan() {
   const [stage, setStage] = useState<Stage>("intro");
   const [mbtiAns, setMbtiAns] = useState<Record<string, number>>({});
-  const [playAns, setPlayAns] = useState<Record<string, boolean>>({});
-  const [batAns, setBatAns] = useState<Record<string, boolean>>({});
-  const [pos, setPos] = useState<string | null>(null);
-  const [style, setStyle] = useState<string | null>(null);
+  const [playAns, setPlayAns] = useState<Record<string, number>>({});
+  const [batAns, setBatAns] = useState<Record<string, number>>({});
+  const [gloveAns, setGloveAns] = useState<Record<string, number>>({});
   const [result, setResult] = useState<DockResult | null>(null);
   const [copied, setCopied] = useState(false);
   const [cardState, setCardState] = useState<"idle" | "busy" | "done">("idle");
@@ -156,14 +214,13 @@ export default function DockShindan() {
     Object.keys(mbtiAns).length +
     Object.keys(playAns).length +
     Object.keys(batAns).length +
-    (pos ? 1 : 0) +
-    (style ? 1 : 0);
+    Object.keys(gloveAns).length;
   const progress = Math.round((answered / TOTAL_Q) * 100);
 
   const mbtiDone = MBTI_Q.every((q) => q.id in mbtiAns);
   const playDone = PLAY_Q.every((q) => q.id in playAns);
   const batDone = BAT_Q.every((q) => q.id in batAns);
-  const gloveDone = !!pos && !!style;
+  const gloveDone = GLOVE_Q.every((q) => q.id in gloveAns);
 
   const scrollTop = () =>
     setTimeout(() => topRef.current?.scrollIntoView({ behavior: "smooth" }), 60);
@@ -178,15 +235,10 @@ export default function DockShindan() {
     const mbtiType = mbtiByCode(m.code)!;
     const play = computePlay(playAns);
     const bat = computeBat(batAns);
-    const g = recommendWeb(pos as never, style as never);
+    const glove = computeGlove(gloveAns);
     saveMbtiCode(m.code);
     saveTypeSlug(play.type.slug);
-    setResult({
-      mbti: { ...m, type: mbtiType },
-      play,
-      bat,
-      glove: { pos: pos!, web: g.web, reason: g.reason },
-    });
+    setResult({ mbti: { ...m, type: mbtiType }, play, bat, glove });
     setStage("result");
     scrollTop();
   };
@@ -195,8 +247,7 @@ export default function DockShindan() {
     setMbtiAns({});
     setPlayAns({});
     setBatAns({});
-    setPos(null);
-    setStyle(null);
+    setGloveAns({});
     setResult(null);
     setCardUrl(null);
     setCardState("idle");
@@ -208,7 +259,7 @@ export default function DockShindan() {
 
   const shareUrl = `${SITE_URL}/baseball-dock/`;
   const shareText = result
-    ? `野球人間ドック、受けてきた。\n判定は【${result.mbti.code}×${result.play.type.name}】タイプ。\n処方は バット＝${result.bat.model.name}／グローブ＝${result.glove.web.name}。\nあなたも受診してみる？⚾`
+    ? `野球人間ドック、受けてきた。\n判定は【${result.mbti.code}｜${result.mbti.type.nickname}】×【${result.play.top.name}】タイプ。\n処方は バット＝${result.bat.model.name}／グローブ＝${result.glove.web.name}。\nあなたも受診してみる？⚾`
     : "";
   const xUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}&hashtags=${encodeURIComponent("草野球ナビ,野球人間ドック")}`;
   const lineUrl = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
@@ -232,6 +283,7 @@ export default function DockShindan() {
     try {
       const cardData: DockCardData = {
         code: result.mbti.code,
+        verdict: `${result.mbti.code}×${result.play.top.name}`,
         mbtiNickname: result.mbti.type.nickname,
         mbtiIcon: result.mbti.type.icon,
         mbtiCatch: result.mbti.type.catch,
@@ -252,23 +304,15 @@ export default function DockShindan() {
         glovePos: `${POS_JP[result.glove.pos]}向け`,
       };
       const canvas = await renderDockCard(cardData);
-      setCardUrl(canvas.toDataURL("image/png")); // プレビュー表示
+      setCardUrl(canvas.toDataURL("image/png"));
       const blob = await canvasToBlob(canvas);
       if (!blob) throw new Error("blob failed");
-      const fileName = `野球人間ドック_${result.mbti.code}×${result.play.type.name}.png`;
+      const fileName = `野球人間ドック_${result.mbti.code}×${result.play.top.name}.png`;
       const file = new File([blob], fileName, { type: "image/png" });
-
-      // Web Share API（対応端末＝スマホ中心）で画像ごとシェア
-      const nav = navigator as Navigator & {
-        canShare?: (d: { files: File[] }) => boolean;
-      };
+      const nav = navigator as Navigator & { canShare?: (d: { files: File[] }) => boolean };
       if (nav.canShare && nav.canShare({ files: [file] }) && navigator.share) {
-        await navigator.share({
-          files: [file],
-          text: shareText,
-        });
+        await navigator.share({ files: [file], text: shareText });
       } else {
-        // 非対応＝PC等：ダウンロード
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
@@ -299,6 +343,33 @@ export default function DockShindan() {
     );
   };
 
+  const likertChapter = (
+    qs: { id: string; text: string }[],
+    ans: Record<string, number>,
+    setAns: (fn: (p: Record<string, number>) => Record<string, number>) => void,
+    done: boolean,
+    nextLabel: string,
+    onNext: () => void
+  ) => (
+    <>
+      {qs.map((q, i) => (
+        <LikertItem
+          key={q.id}
+          no={i + 1}
+          text={q.text}
+          value={ans[q.id]}
+          onPick={(v) => setAns((p) => ({ ...p, [q.id]: v }))}
+        />
+      ))}
+      <div className="lk-nav">
+        <button className={`lk-next ${done ? "" : "disabled"}`} disabled={!done} onClick={onNext}>
+          {nextLabel}
+        </button>
+        {!done && <p className="yn-hint">{qs.length}問すべてに答えると進めます。</p>}
+      </div>
+    </>
+  );
+
   return (
     <div ref={topRef}>
       {stage !== "intro" && stage !== "result" && (
@@ -316,8 +387,10 @@ export default function DockShindan() {
       {stage === "intro" && (
         <div className="dock-intro">
           <p className="dock-intro-lead">
-            性格・プレースタイル・道具の適性を、一度にまとめてフル検査。
-            所要時間はおよそ4分。検査後に「検査結果報告書」をお渡しします。
+            性格（MBTI）・プレースタイル・道具の適性を、一度にまとめてフル検査。
+            すべて「そう思う〜そう思わない」の7段階で答えるだけ。所要時間はおよそ4分。
+            検査後に、あなたの<strong>MBTIタイプ×最も近いプロ選手</strong>の
+            「検査結果報告書」をお渡しします。
           </p>
           <div className="dock-menu">
             {CHAPTERS.map((c) => (
@@ -337,155 +410,29 @@ export default function DockShindan() {
         </div>
       )}
 
-      {/* ── 第一検査: こころ（7段階×12） ── */}
+      {/* ── 各検査（全問7段階） ── */}
       {stage === "mbti" && (
         <>
           {chapterHead("mbti")}
-          {MBTI_Q.map((s, i) => (
-            <div className="lk-item" key={s.id}>
-              <p className="lk-num">Q{i + 1}</p>
-              <p className="lk-q">{s.text}</p>
-              <div className="lk-row">
-                <span className="lk-side agree">そう思う</span>
-                <div className="lk-scale">
-                  {SCALE.map((o) => (
-                    <button
-                      key={o.v}
-                      aria-label={`${o.v > 0 ? "そう思う" : o.v < 0 ? "そう思わない" : "どちらでもない"}(${o.v})`}
-                      className={`lk-dot ${o.size} ${o.tone} ${mbtiAns[s.id] === o.v ? "active" : ""}`}
-                      onClick={() => setMbtiAns((p) => ({ ...p, [s.id]: o.v }))}
-                    >
-                      {mbtiAns[s.id] === o.v ? "✓" : ""}
-                    </button>
-                  ))}
-                </div>
-                <span className="lk-side disagree">そう思わない</span>
-              </div>
-            </div>
-          ))}
-          <div className="lk-nav">
-            <button className={`lk-next ${mbtiDone ? "" : "disabled"}`} disabled={!mbtiDone} onClick={() => go("play")}>
-              第二検査へすすむ →
-            </button>
-            {!mbtiDone && <p className="yn-hint">12問すべてに答えると進めます。</p>}
-          </div>
+          {likertChapter(MBTI_Q, mbtiAns, setMbtiAns, mbtiDone, "第二検査へすすむ →", () => go("play"))}
         </>
       )}
-
-      {/* ── 第二検査: プレースタイル（YES/NO×12） ── */}
       {stage === "play" && (
         <>
           {chapterHead("play")}
-          {PLAY_Q.map((q, i) => (
-            <div className="shindan-step" key={q.id}>
-              <h3 className="dock-q">
-                <span className="step-num">{i + 1}</span>
-                {q.text}
-              </h3>
-              <div className="yn-grid">
-                <button
-                  className={`yn-btn yn-yes ${playAns[q.id] === true ? "active" : ""}`}
-                  onClick={() => setPlayAns((p) => ({ ...p, [q.id]: true }))}
-                >
-                  はい
-                </button>
-                <button
-                  className={`yn-btn yn-no ${playAns[q.id] === false ? "active" : ""}`}
-                  onClick={() => setPlayAns((p) => ({ ...p, [q.id]: false }))}
-                >
-                  いいえ
-                </button>
-              </div>
-            </div>
-          ))}
-          <div className="lk-nav">
-            <button className={`lk-next ${playDone ? "" : "disabled"}`} disabled={!playDone} onClick={() => go("bat")}>
-              第三検査へすすむ →
-            </button>
-            {!playDone && <p className="yn-hint">12問すべてに答えると進めます。</p>}
-          </div>
+          {likertChapter(PLAY_Q, playAns, setPlayAns, playDone, "第三検査へすすむ →", () => go("bat"))}
         </>
       )}
-
-      {/* ── 第三検査: バット適性（YES/NO×4） ── */}
       {stage === "bat" && (
         <>
           {chapterHead("bat")}
-          {BAT_Q.map((q, i) => (
-            <div className="shindan-step" key={q.id}>
-              <h3 className="dock-q">
-                <span className="step-num">{i + 1}</span>
-                {q.text}
-              </h3>
-              <div className="yn-grid">
-                <button
-                  className={`yn-btn yn-yes ${batAns[q.id] === true ? "active" : ""}`}
-                  onClick={() => setBatAns((p) => ({ ...p, [q.id]: true }))}
-                >
-                  はい
-                </button>
-                <button
-                  className={`yn-btn yn-no ${batAns[q.id] === false ? "active" : ""}`}
-                  onClick={() => setBatAns((p) => ({ ...p, [q.id]: false }))}
-                >
-                  いいえ
-                </button>
-              </div>
-            </div>
-          ))}
-          <div className="lk-nav">
-            <button className={`lk-next ${batDone ? "" : "disabled"}`} disabled={!batDone} onClick={() => go("glove")}>
-              最終検査へすすむ →
-            </button>
-            {!batDone && <p className="yn-hint">4問すべてに答えると進めます。</p>}
-          </div>
+          {likertChapter(BAT_Q, batAns, setBatAns, batDone, "最終検査へすすむ →", () => go("glove"))}
         </>
       )}
-
-      {/* ── 第四検査: グローブ適性（選択×2） ── */}
       {stage === "glove" && (
         <>
           {chapterHead("glove")}
-          <div className="shindan-step">
-            <h3 className="dock-q">
-              <span className="step-num">1</span>
-              守りたいポジションは？
-            </h3>
-            <div className="dock-choice">
-              {POS_OPTS.map((o) => (
-                <button
-                  key={o.v}
-                  className={`ab-btn ${pos === o.v ? "active" : ""}`}
-                  onClick={() => setPos(o.v)}
-                >
-                  {o.label}
-                </button>
-              ))}
-            </div>
-          </div>
-          <div className="shindan-step">
-            <h3 className="dock-q">
-              <span className="step-num">2</span>
-              守備のスタイルは？
-            </h3>
-            <div className="dock-choice two">
-              {STYLE_OPTS.map((o) => (
-                <button
-                  key={o.v}
-                  className={`ab-btn ${style === o.v ? "active" : ""}`}
-                  onClick={() => setStyle(o.v)}
-                >
-                  {o.label}
-                </button>
-              ))}
-            </div>
-          </div>
-          <div className="lk-nav">
-            <button className={`lk-next ${gloveDone ? "" : "disabled"}`} disabled={!gloveDone} onClick={finish}>
-              検査を終えて結果を見る →
-            </button>
-            {!gloveDone && <p className="yn-hint">2問に答えると結果が出ます。</p>}
-          </div>
+          {likertChapter(GLOVE_Q, gloveAns, setGloveAns, gloveDone, "検査を終えて結果を見る →", finish)}
         </>
       )}
 
@@ -504,14 +451,33 @@ export default function DockShindan() {
             </div>
           </div>
 
-          {/* 総合判定 */}
-          <div className="dock-verdict">
+          {/* 総合判定：MBTI × 選手 を「どんと」＋イラスト */}
+          <div className="dock-verdict dock-verdict-big">
             <span className="dock-verdict-label">総合判定</span>
-            <span className="dock-verdict-value">
-              {result.mbti.code}×{result.play.type.name}
-            </span>
-            <a className="cta-inline" href={`/combo/${result.mbti.code.toLowerCase()}/${result.play.type.slug}/`}>
-              → この複合タイプの詳しい解説を読む
+            <div className="dv-grid">
+              <div className="dv-mbti">
+                <TypeIcon icon={result.mbti.type.icon} className="dv-icon" title={result.mbti.type.nickname} />
+                <span className="dv-code">{result.mbti.code}</span>
+                <span className="dv-nick">{result.mbti.type.nickname}</span>
+              </div>
+              <span className="dv-x">×</span>
+              <div className="dv-player">
+                <PlayerArt player={result.play.top} className="dv-art" />
+                <span className={`mbig-league ${result.play.top.league === "MLB" ? "mlb" : "npb"}`}>
+                  {result.play.top.league}
+                </span>
+                <span className="dv-pname">{result.play.top.name}</span>
+                <span className="dv-ppos">{result.play.top.position}</span>
+              </div>
+            </div>
+            <p className="dock-row-note" style={{ textAlign: "center" }}>
+              {result.mbti.type.catch}／{result.play.top.note}
+            </p>
+            <p className="player-disc" style={{ textAlign: "center", marginTop: 4 }}>
+              ※ イラストはAI生成のイメージです（ご本人の肖像ではありません）。
+            </p>
+            <a className="cta-inline" href={`/baseball-dock/type/${result.mbti.code.toLowerCase()}/`}>
+              → 「{result.mbti.code}｜{result.mbti.type.nickname}」の詳しい解説を読む
             </a>
           </div>
 
@@ -548,30 +514,26 @@ export default function DockShindan() {
                   );
                 })}
               </div>
-              <a className="cta-inline" href={`/baseball-mbti/type/${result.mbti.code.toLowerCase()}/`}>
-                → {result.mbti.code}型の解説（相性・あるある）を見る
-              </a>
             </div>
           </div>
 
-          {/* 2. プレースタイル */}
+          {/* 2. あなたに最も近い選手 */}
           <div className="dock-row">
             <div className="dock-row-head">
               <span className="dock-row-no">02</span>
-              <span className="dock-row-ttl">プレースタイル</span>
+              <span className="dock-row-ttl">最も近いプロ選手</span>
             </div>
             <div className="dock-row-body">
               <p className="dock-row-main">
-                <TypeIcon icon={result.play.type.icon} className="dock-icon" />
-                <strong>{result.play.type.name}型</strong>
+                <strong>{result.play.top.name}</strong>
+                <span className="dock-row-sub">
+                  （{result.play.top.league}・{result.play.top.position}）
+                </span>
               </p>
-              <p className="dock-row-note">{result.play.type.desc}</p>
+              <p className="dock-row-note">{result.play.top.note}</p>
               <p className="dock-row-note">
-                似ているプロ選手：
-                <strong>
-                  {result.play.top.name}（{result.play.top.league}・{result.play.top.position}）
-                </strong>
-                ／グローブ：
+                プレースタイルは<strong>{result.play.type.name}型</strong>（{result.play.type.desc}）／
+                使用ギア：グローブ＝
                 <a
                   className="maker-link"
                   href={makerLink(result.play.top.glove, "グローブ")}
@@ -582,7 +544,7 @@ export default function DockShindan() {
                 </a>
                 {result.play.top.bat && (
                   <>
-                    、バット：
+                    、バット＝
                     <a
                       className="maker-link"
                       href={makerLink(result.play.top.bat, "バット")}
@@ -594,9 +556,6 @@ export default function DockShindan() {
                   </>
                 )}
               </p>
-              <a className="cta-inline" href={`/player-shindan/type/${result.play.type.slug}/`}>
-                → {result.play.type.name}型の解説を見る
-              </a>
             </div>
           </div>
 
@@ -646,7 +605,7 @@ export default function DockShindan() {
               <div className="dock-row-body">
                 <div className="compat-grid">
                   {compat.best && (
-                    <a className="compat-card good" href={`/baseball-mbti/type/${compat.best.type.code.toLowerCase()}/`}>
+                    <a className="compat-card good" href={`/baseball-dock/type/${compat.best.type.code.toLowerCase()}/`}>
                       <span className="compat-label">◎ 相性の良いタイプ</span>
                       <span className="compat-code">
                         <TypeIcon icon={compat.best.type.icon} className="compat-icon" />
@@ -657,7 +616,7 @@ export default function DockShindan() {
                     </a>
                   )}
                   {compat.tough && (
-                    <a className="compat-card tough" href={`/baseball-mbti/type/${compat.tough.type.code.toLowerCase()}/`}>
+                    <a className="compat-card tough" href={`/baseball-dock/type/${compat.tough.type.code.toLowerCase()}/`}>
                       <span className="compat-label">△ 衝突しやすいタイプ</span>
                       <span className="compat-code">
                         <TypeIcon icon={compat.tough.type.icon} className="compat-icon" />
@@ -677,7 +636,17 @@ export default function DockShindan() {
             メーカー名のリンクは楽天市場のおすすめ一覧（広告）が開きます。
           </p>
 
-          {/* 処方箋どおりの実物（楽天・広告） */}
+          {/* 実物（楽天・広告）：選手のギア＋処方どおりの道具 */}
+          <ProductCards
+            keyword={result.play.top.productKeyword}
+            heading={`🛒 ${result.play.top.name}が使う「${result.play.top.glove}」のグローブを見る`}
+          />
+          {result.play.top.bat && result.play.top.bat !== "各社" && (
+            <ProductCards
+              keyword={`軟式 バット ${result.play.top.bat}`}
+              heading={`🛒 ${result.play.top.name}が使う「${result.play.top.bat}」のバットを見る`}
+            />
+          )}
           <ProductCards
             keyword={result.bat.model.keyword}
             heading={`🛒 処方どおりのバットを探す（${result.bat.model.name}）`}
@@ -721,13 +690,15 @@ export default function DockShindan() {
           </button>
 
           <div className="bat-links">
-            <a className="cta-inline" href="/baseball-mbti/">
-              → じっくり派は本格36問のMBTI診断へ
+            <a className="cta-inline" href="/baseball-dock/type/">
+              → 全16タイプの解説を読む
             </a>
-            <a className="cta-inline" href="/tools/">
-              → ほかの診断ツールを見る
+            <a className="cta-inline" href="/hikaku/">
+              → 道具・ユニフォーム比較を見る
             </a>
           </div>
+
+          <GoodsLinks />
         </section>
       )}
     </div>

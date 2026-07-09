@@ -150,7 +150,7 @@ export default function GloveComparePage() {
             投手は<strong>閉じたウェブ（ワンピース/ツーピース・バスケット）</strong>、
             内野は<strong>Hウェブ（軽快）かクロスウェブ（安定）</strong>、
             外野は<strong>Tネット（安定）かIウェブ（軽快）</strong>が基本の考え方です。
-            <a href="/glove-shindan/">グローブ相性診断</a>なら、あなたに合うウェブまで提案します。
+            <a href="/baseball-dock/">野球人間ドック</a>なら、あなたに合うウェブまで提案します。
           </div>
 
           <h2>価格帯で選ぶ早見表</h2>
@@ -178,9 +178,7 @@ export default function GloveComparePage() {
 
           <h2>迷ったら：診断とガイド</h2>
           <div className="bat-links">
-            <a className="cta-inline" href="/glove-shindan/">
-              → 6問でわかる「グローブ相性診断」
-            </a>
+            <a className="cta-inline" href="/baseball-dock/">→ あなたに合うグローブを「野球人間ドック」で処方してもらう</a>
             <a className="cta-inline" href="/guide/glove-guide/">
               → じっくり読む「初めてのグローブの選び方」
             </a>

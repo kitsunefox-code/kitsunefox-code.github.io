@@ -64,8 +64,8 @@ export default function Home() {
                 週末のグラウンドに立つすべての人へ、「知りたい」にていねいに答える編集ナビです。
               </p>
               <div className="ed-hero-actions">
-                <a className="btn-ink" href="/tools/">
-                  無料の診断をためす
+                <a className="btn-ink" href="/baseball-dock/">
+                  野球人間ドックを受診する
                 </a>
                 <a className="link-arrow" href="/uniform/">
                   ユニフォーム比較を見る
@@ -130,34 +130,21 @@ export default function Home() {
       {/* ── 特集：看板は野球選手MBTI診断（墨バンド） ── */}
       <section className="ink-band">
         <div className="container">
-          <p className="ink-band-head">The Main Diagnosis</p>
-          <a className="ink-item ink-lead" href="/baseball-mbti/">
-            <span className="ink-en">Baseball MBTI</span>
+          <p className="ink-band-head">The Diagnosis</p>
+          <a className="ink-item ink-lead" href="/baseball-dock/">
+            <span className="ink-en">Baseball Dock</span>
             <span className="ink-ttl">
-              性格も、似ている選手も、これ一本。
+              性格も、似ている選手も、道具も。野球人間ドック。
             </span>
             <span className="ink-desc">
-              本格36問・7段階に答えるだけで、あなたの<strong>MBTIタイプ</strong>と、
-              最も似ている<strong>プロ選手を1人</strong>（NPB・MLB {PLAYER_COUNT}名から）どんと判定。
-              軸ごとの％・相性・使用メーカーまで、これ一本でまるごとわかります。
+              全33問・MBTI式の7段階に答えるだけで、あなたの<strong>MBTIタイプ</strong>と
+              最も近い<strong>プロ選手1人</strong>（NPB・MLB {PLAYER_COUNT}名から・AIイラスト付き）、
+              さらにバット・グローブの処方まで「検査結果報告書」一枚に。画像で保存してSNSにも。
             </span>
-            <span className="ink-link">野球選手MBTI診断へ（約3分・無料）</span>
+            <span className="ink-link">受診する（約4分・無料）</span>
           </a>
           <div className="ink-band-grid">
-            <a className="ink-item" href="/baseball-dock/">
-              <span className="ink-en">Full Checkup</span>
-              <span className="ink-ttl">
-                もっと詳しく、
-                <br />
-                野球人間ドック。
-              </span>
-              <span className="ink-desc">
-                こころ・プレースタイル・バット・グローブの4検査を全30問で。
-                結果は「検査結果報告書」を一枚の画像にしてお渡しします。
-              </span>
-              <span className="ink-link">受診する（約4分・無料）</span>
-            </a>
-            <a className="ink-item" href="/baseball-mbti/type/">
+            <a className="ink-item" href="/baseball-dock/type/">
               <span className="ink-en">16 Types</span>
               <span className="ink-ttl">
                 全16タイプ、
@@ -169,6 +156,19 @@ export default function Home() {
                 似ているプロ選手を、じっくり解説しています。
               </span>
               <span className="ink-link">タイプ一覧を見る</span>
+            </a>
+            <a className="ink-item" href="/shindan/">
+              <span className="ink-en">Uniform Match</span>
+              <span className="ink-ttl">
+                似合う一着も、
+                <br />
+                写真で診断。
+              </span>
+              <span className="ink-desc">
+                作りたいイメージ写真をアップすると、配色を解析して
+                相性のいいオーダーユニフォームメーカーを提案します。
+              </span>
+              <span className="ink-link">ユニフォーム診断へ</span>
             </a>
           </div>
         </div>

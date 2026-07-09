@@ -1,8 +1,6 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/data/site";
-import { PLAYER_TYPES } from "@/data/playerTypes";
 import { MBTI_TYPES } from "@/data/baseballMbti";
-import { ALL_COMBOS } from "@/data/combo";
 
 // output: export（静的書き出し）で生成するために必要
 export const dynamic = "force-static";
@@ -10,46 +8,16 @@ export const dynamic = "force-static";
 export default function sitemap(): MetadataRoute.Sitemap {
   const typePages: MetadataRoute.Sitemap = [
     {
-      url: `${SITE_URL}/player-shindan/type/`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    ...PLAYER_TYPES.map((t) => ({
-      url: `${SITE_URL}/player-shindan/type/${t.slug}/`,
-      lastModified: new Date(),
-      changeFrequency: "monthly" as const,
-      priority: 0.6,
-    })),
-    {
-      url: `${SITE_URL}/baseball-mbti/type/`,
+      url: `${SITE_URL}/baseball-dock/type/`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.7,
     },
     ...MBTI_TYPES.map((t) => ({
-      url: `${SITE_URL}/baseball-mbti/type/${t.code.toLowerCase()}/`,
+      url: `${SITE_URL}/baseball-dock/type/${t.code.toLowerCase()}/`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.6,
-    })),
-    {
-      url: `${SITE_URL}/combo/`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.6,
-    },
-    ...MBTI_TYPES.map((t) => ({
-      url: `${SITE_URL}/combo/${t.code.toLowerCase()}/`,
-      lastModified: new Date(),
-      changeFrequency: "monthly" as const,
-      priority: 0.5,
-    })),
-    ...ALL_COMBOS.map((c) => ({
-      url: `${SITE_URL}/combo/${c.code.toLowerCase()}/${c.slug}/`,
-      lastModified: new Date(),
-      changeFrequency: "monthly" as const,
-      priority: 0.4,
     })),
   ];
   return [
@@ -103,58 +71,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: `${SITE_URL}/player-shindan/`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${SITE_URL}/baseball-mbti/`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
       url: `${SITE_URL}/baseball-dock/`,
       lastModified: new Date(),
       changeFrequency: "monthly",
-      priority: 0.9,
+      priority: 0.95,
     },
     {
       url: `${SITE_URL}/shindan/`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.9,
-    },
-    {
-      url: `${SITE_URL}/bat-shindan/`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${SITE_URL}/glove-shindan/`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${SITE_URL}/batting-glove-shindan/`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${SITE_URL}/spikes-shindan/`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${SITE_URL}/glove-fortune/`,
-      lastModified: new Date(),
-      changeFrequency: "daily",
-      priority: 0.6,
     },
     {
       url: `${SITE_URL}/guide/`,
