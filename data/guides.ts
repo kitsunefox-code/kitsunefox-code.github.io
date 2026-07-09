@@ -122,6 +122,27 @@ export const GUIDES: Guide[] = [
     description: "ポイント/金具・カットの高さ・サイズの合わせ方",
     category: "gear",
   },
+  {
+    href: "/guide/wood-bat/",
+    emoji: "🪵",
+    title: "木製バットの選び方と“相棒”ガイド",
+    description: "樹種・重心の選び方、折れにくい使い方、手袋・グリップの相棒選び",
+    category: "gear",
+  },
+  {
+    href: "/guide/grip-tape/",
+    emoji: "🎗️",
+    title: "バットのグリップテープの種類と巻き方",
+    description: "厚さ・素材の違い、下から上へ均等に巻くコツと替えどき",
+    category: "care",
+  },
+  {
+    href: "/guide/scorebook/",
+    emoji: "📝",
+    title: "スコアブックの書き方【記号一覧・つけ方の基本】",
+    description: "ポジション番号・打撃記号・進塁の書き方をゼロから",
+    category: "skill",
+  },
 
   // === お手入れ・体のケア ===
   {

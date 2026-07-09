@@ -1,9 +1,9 @@
 "use client";
 
 // 野球人間ドック：サイト唯一の総合診断。
-// 全33問すべてMBTI式の7段階（そう思う〜そう思わない）で、
-// こころ(MBTI)・プレースタイル・バット・グローブをまとめて検査し、
-// 「MBTIタイプ × 最も近いプロ選手1人」をどんと判定する。
+// 全41問すべてMBTI式の7段階（そう思う〜そう思わない）で、
+// こころ(MBTI)・プレースタイル・バット・グローブ・スパイク・打撃手袋を
+// まとめて検査し、「MBTIタイプ × 最も近いプロ選手1人」をどんと判定する。
 import { useRef, useState } from "react";
 import ProductCards from "@/components/ProductCards";
 import GoodsLinks from "@/components/GoodsLinks";
@@ -27,6 +27,8 @@ import {
   type BatModel,
 } from "@/data/batData";
 import { recommendWeb, type WebType, type WebStyle } from "@/data/gloveData";
+import { recommendSpike, type SpikeRec } from "@/data/spikeData";
+import { recommendBglove, type BgloveRec } from "@/data/bgloveData";
 import { SITE_URL, rktSearch } from "@/data/site";
 import { saveMbtiCode, saveTypeSlug } from "@/data/comboLink";
 
@@ -145,13 +147,49 @@ const POS_JP: Record<string, string> = {
   allround: "オールラウンド",
 };
 
+/* ── 検査5: スパイク適性（4問・7段階） ─────────────── */
+const SPIKE_Q: { id: string; text: string }[] = [
+  { id: "s1", text: "守備範囲の広さ・一歩目の速さを何より大事にしたい" },
+  { id: "s2", text: "足首はしっかり守りたい（捻挫やケガが不安）" },
+  { id: "s3", text: "土のグラウンドでガッチリ止まる“食いつき”が欲しい" },
+  { id: "s4", text: "いろんな球場を1足で済ませたい（土も人工芝も）" },
+];
+function computeSpike(a: Record<string, number>): SpikeRec {
+  const yes = (id: string) => (a[id] ?? 0) > 0;
+  return recommendSpike({
+    speed: yes("s1"),
+    ankle: yes("s2"),
+    grip: yes("s3"),
+    versatile: yes("s4"),
+  });
+}
+
+/* ── 検査6: バッティンググローブ適性（4問・7段階） ─────────────── */
+const BGLOVE_Q: { id: string; text: string }[] = [
+  { id: "bg1", text: "木製バットを使っている（または使ってみたい）" },
+  { id: "bg2", text: "とにかく滑らない“最強グリップ”が欲しい" },
+  { id: "bg3", text: "コスパ重視で、消耗品として気軽に使い替えたい" },
+  { id: "bg4", text: "手にぴったり吸いつくフィット感・質感にこだわる" },
+];
+function computeBglove(a: Record<string, number>): BgloveRec {
+  const yes = (id: string) => (a[id] ?? 0) > 0;
+  return recommendBglove({
+    wood: yes("bg1"),
+    grip: yes("bg2"),
+    value: yes("bg3"),
+    fit: yes("bg4"),
+  });
+}
+
 /* ── ステージ管理 ─────────────── */
-type Stage = "intro" | "mbti" | "play" | "bat" | "glove" | "result";
+type Stage = "intro" | "mbti" | "play" | "bat" | "glove" | "spike" | "bglove" | "result";
 type DockResult = {
   mbti: { code: string; axes: DockAxis[]; type: MbtiType };
   play: { type: PlayerType; top: Player };
   bat: { material: BatMaterial; model: BatModel };
   glove: { pos: string; web: WebType; reason: string };
+  spike: SpikeRec;
+  bglove: BgloveRec;
 };
 
 const CHAPTERS: { key: Stage; no: string; title: string; desc: string; count: number }[] = [
@@ -159,8 +197,10 @@ const CHAPTERS: { key: Stage; no: string; title: string; desc: string; count: nu
   { key: "play", no: "第二検査", title: "プレースタイル", desc: "プレーの気質検査（12問）", count: 12 },
   { key: "bat", no: "第三検査", title: "バット適性", desc: "相棒バットの処方（4問）", count: 4 },
   { key: "glove", no: "第四検査", title: "グローブ適性", desc: "相棒グローブの処方（5問）", count: 5 },
+  { key: "spike", no: "第五検査", title: "スパイク適性", desc: "相棒スパイクの処方（4問）", count: 4 },
+  { key: "bglove", no: "第六検査", title: "打撃手袋適性", desc: "バッティンググローブの処方（4問）", count: 4 },
 ];
-const TOTAL_Q = 33;
+const TOTAL_Q = 41;
 
 /* 7段階の設問行（全章共通） */
 function LikertItem({
@@ -204,6 +244,8 @@ export default function DockShindan() {
   const [playAns, setPlayAns] = useState<Record<string, number>>({});
   const [batAns, setBatAns] = useState<Record<string, number>>({});
   const [gloveAns, setGloveAns] = useState<Record<string, number>>({});
+  const [spikeAns, setSpikeAns] = useState<Record<string, number>>({});
+  const [bgloveAns, setBgloveAns] = useState<Record<string, number>>({});
   const [result, setResult] = useState<DockResult | null>(null);
   const [copied, setCopied] = useState(false);
   const [cardState, setCardState] = useState<"idle" | "busy" | "done">("idle");
@@ -214,13 +256,17 @@ export default function DockShindan() {
     Object.keys(mbtiAns).length +
     Object.keys(playAns).length +
     Object.keys(batAns).length +
-    Object.keys(gloveAns).length;
+    Object.keys(gloveAns).length +
+    Object.keys(spikeAns).length +
+    Object.keys(bgloveAns).length;
   const progress = Math.round((answered / TOTAL_Q) * 100);
 
   const mbtiDone = MBTI_Q.every((q) => q.id in mbtiAns);
   const playDone = PLAY_Q.every((q) => q.id in playAns);
   const batDone = BAT_Q.every((q) => q.id in batAns);
   const gloveDone = GLOVE_Q.every((q) => q.id in gloveAns);
+  const spikeDone = SPIKE_Q.every((q) => q.id in spikeAns);
+  const bgloveDone = BGLOVE_Q.every((q) => q.id in bgloveAns);
 
   const scrollTop = () =>
     setTimeout(() => topRef.current?.scrollIntoView({ behavior: "smooth" }), 60);
@@ -236,9 +282,11 @@ export default function DockShindan() {
     const play = computePlay(playAns);
     const bat = computeBat(batAns);
     const glove = computeGlove(gloveAns);
+    const spike = computeSpike(spikeAns);
+    const bglove = computeBglove(bgloveAns);
     saveMbtiCode(m.code);
     saveTypeSlug(play.type.slug);
-    setResult({ mbti: { ...m, type: mbtiType }, play, bat, glove });
+    setResult({ mbti: { ...m, type: mbtiType }, play, bat, glove, spike, bglove });
     setStage("result");
     scrollTop();
   };
@@ -248,6 +296,8 @@ export default function DockShindan() {
     setPlayAns({});
     setBatAns({});
     setGloveAns({});
+    setSpikeAns({});
+    setBgloveAns({});
     setResult(null);
     setCardUrl(null);
     setCardState("idle");
@@ -259,7 +309,7 @@ export default function DockShindan() {
 
   const shareUrl = `${SITE_URL}/baseball-dock/`;
   const shareText = result
-    ? `野球人間ドック、受けてきた。\n判定は【${result.mbti.code}｜${result.mbti.type.nickname}】×【${result.play.top.name}】タイプ。\n処方は バット＝${result.bat.model.name}／グローブ＝${result.glove.web.name}。\nあなたも受診してみる？⚾`
+    ? `野球人間ドック、受けてきた。\n判定は【${result.mbti.code}｜${result.mbti.type.nickname}】×【${result.play.top.name}】タイプ。\n処方は バット＝${result.bat.model.name}／グローブ＝${result.glove.web.name}／スパイク＝${result.spike.name}。\nあなたも受診してみる？⚾`
     : "";
   const xUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}&hashtags=${encodeURIComponent("草野球ナビ,野球人間ドック")}`;
   const lineUrl = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
@@ -388,7 +438,7 @@ export default function DockShindan() {
         <div className="dock-intro">
           <p className="dock-intro-lead">
             性格（MBTI）・プレースタイル・道具の適性を、一度にまとめてフル検査。
-            すべて「そう思う〜そう思わない」の7段階で答えるだけ。所要時間はおよそ4分。
+            すべて「そう思う〜そう思わない」の7段階で答えるだけ。所要時間はおよそ5分。
             検査後に、あなたの<strong>MBTIタイプ×最も近いプロ選手</strong>の
             「検査結果報告書」をお渡しします。
           </p>
@@ -432,7 +482,19 @@ export default function DockShindan() {
       {stage === "glove" && (
         <>
           {chapterHead("glove")}
-          {likertChapter(GLOVE_Q, gloveAns, setGloveAns, gloveDone, "検査を終えて結果を見る →", finish)}
+          {likertChapter(GLOVE_Q, gloveAns, setGloveAns, gloveDone, "第五検査へすすむ →", () => go("spike"))}
+        </>
+      )}
+      {stage === "spike" && (
+        <>
+          {chapterHead("spike")}
+          {likertChapter(SPIKE_Q, spikeAns, setSpikeAns, spikeDone, "最終検査へすすむ →", () => go("bglove"))}
+        </>
+      )}
+      {stage === "bglove" && (
+        <>
+          {chapterHead("bglove")}
+          {likertChapter(BGLOVE_Q, bgloveAns, setBgloveAns, bgloveDone, "検査を終えて結果を見る →", finish)}
         </>
       )}
 
@@ -595,11 +657,55 @@ export default function DockShindan() {
             </div>
           </div>
 
-          {/* 5. 相性所見 */}
+          {/* 5. スパイク処方 */}
+          <div className="dock-row">
+            <div className="dock-row-head">
+              <span className="dock-row-no">05</span>
+              <span className="dock-row-ttl">処方：スパイク</span>
+            </div>
+            <div className="dock-row-body">
+              <p className="dock-row-main">
+                <strong>{result.spike.name}</strong>
+              </p>
+              <p className="dock-row-note">{result.spike.reason}</p>
+              <p className="dock-row-note">{result.spike.feature}</p>
+              {result.spike.caution && (
+                <p className="dock-row-note" style={{ color: "var(--accent)" }}>
+                  {result.spike.caution}
+                </p>
+              )}
+            </div>
+          </div>
+
+          {/* 6. バッティンググローブ処方 */}
+          <div className="dock-row">
+            <div className="dock-row-head">
+              <span className="dock-row-no">06</span>
+              <span className="dock-row-ttl">処方：バッティンググローブ</span>
+            </div>
+            <div className="dock-row-body">
+              <p className="dock-row-main">
+                <strong>{result.bglove.name}</strong>
+                <span className="dock-row-sub">
+                  （{result.bglove.makerHint}
+                  {result.bglove.foreign ? "・海外ブランド" : ""}）
+                </span>
+              </p>
+              <p className="dock-row-note">{result.bglove.reason}</p>
+              <p className="dock-row-note">{result.bglove.feature}</p>
+              {result.bglove.hack && (
+                <p className="dock-row-note" style={{ color: "var(--accent)" }}>
+                  💡 {result.bglove.hack}
+                </p>
+              )}
+            </div>
+          </div>
+
+          {/* 7. 相性所見 */}
           {(compat.best || compat.tough) && (
             <div className="dock-row">
               <div className="dock-row-head">
-                <span className="dock-row-no">05</span>
+                <span className="dock-row-no">07</span>
                 <span className="dock-row-ttl">所見：チーム内の相性</span>
               </div>
               <div className="dock-row-body">
@@ -655,6 +761,20 @@ export default function DockShindan() {
             keyword={`軟式 グローブ ${POS_JP[result.glove.pos]} 一般`}
             heading={`🛒 処方どおりのグローブを探す（${POS_JP[result.glove.pos]}向け）`}
           />
+          <ProductCards
+            keyword={result.spike.keyword}
+            heading={`🛒 処方どおりのスパイクを探す（${result.spike.name}）`}
+          />
+          <ProductCards
+            keyword={result.bglove.keyword}
+            heading={`🛒 処方どおりのバッティンググローブを探す（${result.bglove.makerHint}）`}
+          />
+          {result.bglove.hackKeyword && (
+            <ProductCards
+              keyword={result.bglove.hackKeyword}
+              heading="🏈 【裏技】グリップ最強のアメフト用グローブを流用する"
+            />
+          )}
 
           <div className="share-box">
             <span className="share-label">検査結果をシェア</span>
