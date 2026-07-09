@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import AdSlot from "@/components/AdSlot";
 import GoodsLinks from "@/components/GoodsLinks";
+import ProductCards from "@/components/ProductCards";
 import { LAST_UPDATED } from "@/data/makers";
 import { SITE_URL } from "@/data/site";
 
@@ -176,6 +177,9 @@ export default function GearChecklistPage() {
           <li>チームに正式加入したら<strong>ユニフォーム</strong>を作る（下記リンクで比較）</li>
           <li>余裕が出たら、バッティンググローブなどの快適グッズ</li>
         </ol>
+
+        <ProductCards keyword="軟式 グローブ 一般 オールラウンド" heading="🛒 まず1つ｜軟式グローブ（一般用）を見る" />
+        <ProductCards keyword="野球 スパイク 一般 樹脂" heading="🛒 次に｜草野球向けスパイクを見る" />
 
         <h2>よくある質問</h2>
         <h3>Q. 道具はどこで買うのが安い？</h3>

@@ -268,11 +268,17 @@ export default function MbtiShindan() {
             </div>
           )}
 
-          {/* 似ている選手の使うメーカーの実商品（楽天・広告） */}
+          {/* 似ている選手の使うメーカーの実商品（楽天・広告）＝グローブ＋バットの二枚看板 */}
           {topPlayer && (
             <ProductCards
               keyword={topPlayer.productKeyword}
               heading={`🛒 ${topPlayer.name}が使う「${topPlayer.glove}」のグローブを見る`}
+            />
+          )}
+          {topPlayer?.bat && topPlayer.bat !== "各社" && (
+            <ProductCards
+              keyword={`軟式 バット ${topPlayer.bat}`}
+              heading={`🛒 ${topPlayer.name}が使う「${topPlayer.bat}」のバットを見る`}
             />
           )}
 

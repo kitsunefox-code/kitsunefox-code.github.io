@@ -1,4 +1,5 @@
 import AdSlot from "@/components/AdSlot";
+import EditorsPicks from "@/components/EditorsPicks";
 import { makers, LAST_UPDATED } from "@/data/makers";
 import { GUIDES } from "@/data/guides";
 import { TOOLS } from "@/data/tools";
@@ -174,6 +175,38 @@ export default function Home() {
       </section>
 
       <div className="container">
+        {/* ── 編集部の一押し（実商品・アフィリエイト） ── */}
+        <section className="ed-sec">
+          <div className="ed-sec-head">
+            <span className="ed-no">◎</span>
+            <h2 className="ed-ttl">編集部の一押し</h2>
+            <span className="ed-en">Picks</span>
+          </div>
+          <p className="ed-sec-lead">
+            まず1つ揃えるなら。定番から間違いのないものを、実売価格つきでピックしました。
+          </p>
+          <EditorsPicks
+            heading=""
+            picks={[
+              {
+                keyword: "一般 軟式 グローブ ミズノ オールラウンド",
+                label: "はじめの1つ",
+                comment: "オールラウンドに使える定番。まずこれで練習に参加してみて。",
+              },
+              {
+                keyword: "一般 軟式 バット ミズノ ビヨンドマックス",
+                label: "飛距離で選ぶ",
+                comment: "複合の代表格。とにかく飛ばしたいパワーヒッターへ（要規定確認）。",
+              },
+              {
+                keyword: "野球 スパイク 一般 樹脂 ポイント",
+                label: "足元を固める",
+                comment: "多くの草野球場で使える樹脂ポイント。1足あると安心。",
+              },
+            ]}
+          />
+        </section>
+
         {/* ── 02 くらべる ── */}
         <section className="ed-sec">
           <div className="ed-sec-head">

@@ -258,6 +258,12 @@ export default async function MbtiTypePage({
                 heading={`🛒 ${players[0].name}の使う「${players[0].glove}」のグローブを見る`}
               />
             )}
+            {players[0]?.bat && players[0].bat !== "各社" && (
+              <ProductCards
+                keyword={`軟式 バット ${players[0].bat}`}
+                heading={`🛒 ${players[0].name}の使う「${players[0].bat}」のバットを見る`}
+              />
+            )}
           </section>
         )}
 
