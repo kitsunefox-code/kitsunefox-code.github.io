@@ -71,7 +71,7 @@ export default function MbtiTypeHubPage() {
             <span className="start-band-kicker">Baseball MBTI</span>
             <span className="start-band-title">野球人間ドックを受診する</span>
             <span className="start-band-desc">
-              全41問・7段階で答えるだけ。あなたのタイプと、
+              全45問・7段階で答えるだけ。あなたのタイプと、
               最も近いプロ選手＆使用メーカーがその場でわかります。
             </span>
             <span className="start-band-btn">無料で診断する →</span>

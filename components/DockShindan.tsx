@@ -1,9 +1,10 @@
 "use client";
 
 // 野球人間ドック：サイト唯一の総合診断。
-// 全41問すべてMBTI式の7段階（そう思う〜そう思わない）で、
-// こころ(MBTI)・プレースタイル・バット・グローブ・スパイク・打撃手袋を
+// 全45問すべてMBTI式の7段階（そう思う〜そう思わない・性格/価値観の設問）で、
+// こころ(MBTI)・プレースタイル・バット・グローブ・スパイク・打撃手袋・まわりの装備を
 // まとめて検査し、「MBTIタイプ × 最も近いプロ選手1人」をどんと判定する。
+// 道具はポジション選びではなく気質から型を導く（recommendGloveByStyle 等）。
 import { useRef, useState } from "react";
 import ProductCards from "@/components/ProductCards";
 import GoodsLinks from "@/components/GoodsLinks";
@@ -26,21 +27,22 @@ import {
   type BatMaterial,
   type BatModel,
 } from "@/data/batData";
-import { recommendWeb, type WebType, type WebStyle } from "@/data/gloveData";
+import { recommendGloveByStyle, type GloveByStyle } from "@/data/gloveData";
 import { recommendSpike, type SpikeRec } from "@/data/spikeData";
 import { recommendBglove, type BgloveRec } from "@/data/bgloveData";
+import { recommendAccessories, type AccessoryItem } from "@/data/accessoryData";
 import { SITE_URL, rktSearch } from "@/data/site";
 import { saveMbtiCode, saveTypeSlug } from "@/data/comboLink";
 
 /* ── 7段階スケール（全章共通・MBTI式） ─────────────── */
-const SCALE: { v: number; size: string; tone: "agree" | "neutral" | "disagree" }[] = [
-  { v: 3, size: "s3", tone: "agree" },
-  { v: 2, size: "s2", tone: "agree" },
-  { v: 1, size: "s1", tone: "agree" },
-  { v: 0, size: "s0", tone: "neutral" },
-  { v: -1, size: "s1", tone: "disagree" },
-  { v: -2, size: "s2", tone: "disagree" },
-  { v: -3, size: "s3", tone: "disagree" },
+const SCALE: { v: number; size: string; tone: "agree" | "neutral" | "disagree"; label: string }[] = [
+  { v: 3, size: "s3", tone: "agree", label: "強くそう思う" },
+  { v: 2, size: "s2", tone: "agree", label: "そう思う" },
+  { v: 1, size: "s1", tone: "agree", label: "ややそう思う" },
+  { v: 0, size: "s0", tone: "neutral", label: "どちらでもない" },
+  { v: -1, size: "s1", tone: "disagree", label: "ややそう思わない" },
+  { v: -2, size: "s2", tone: "disagree", label: "そう思わない" },
+  { v: -3, size: "s3", tone: "disagree", label: "強くそう思わない" },
 ];
 
 /* ── 検査1: こころ（MBTI 12問） ─────────────── */
@@ -97,12 +99,12 @@ function computePlay(a: Record<string, number>): { type: PlayerType; top: Player
   return { type, top: ranked[0].p };
 }
 
-/* ── 検査3: バット適性（4問・7段階） ─────────────── */
+/* ── 検査3: バット適性（4問・7段階・性格型） ─────────────── */
 const BAT_Q: { id: string; text: string }[] = [
-  { id: "b1", text: "何より「飛距離」を最優先したい" },
-  { id: "b2", text: "バットに2万円以上かけてもいい" },
-  { id: "b3", text: "パワー・力には自信がある方だ" },
-  { id: "b4", text: "どうせなら最新モデルを使いたい" },
+  { id: "b1", text: "一発の魅力には抗えない。どうせ振るなら遠くへ飛ばしたい" },
+  { id: "b2", text: "良い道具にはしっかりお金をかける主義だ" },
+  { id: "b3", text: "自分のパワー・力には自信がある方だ" },
+  { id: "b4", text: "新しいもの・最新技術にはワクワクする方だ" },
 ];
 function computeBat(a: Record<string, number>): { material: BatMaterial; model: BatModel } {
   const yes = (id: string) => (a[id] ?? 0) > 0;
@@ -111,48 +113,32 @@ function computeBat(a: Record<string, number>): { material: BatMaterial; model: 
   return { material, model: pickBatModel(material, { latest: yes("b4"), power: yes("b3") }) };
 }
 
-/* ── 検査4: グローブ適性（5問・7段階） ─────────────── */
-const GLOVE_Q: { id: string; text: string; pos?: "pitcher" | "infield" | "outfield" | "catcher" }[] = [
-  { id: "g1", text: "マウンドから投げ込む姿に、いちばん憧れる", pos: "pitcher" },
-  { id: "g2", text: "内野で軽快にゴロをさばくのが好きだ", pos: "infield" },
-  { id: "g3", text: "外野で打球を追って広く走り回りたい", pos: "outfield" },
-  { id: "g4", text: "キャッチャーとして女房役に徹したい", pos: "catcher" },
-  { id: "g5", text: "軽快にさばくより、強い打球をしっかり受け止めたい" },
+/* ── 検査4: グローブ適性（5問・7段階・性格型） ───────────────
+   「どのポジションか」ではなく、道具への気質からグラブの“性格”を導く。 */
+const GLOVE_Q: { id: string; text: string }[] = [
+  { id: "g1", text: "道具は軽さと操作性が命。もたつくのは何より嫌だ" },
+  { id: "g2", text: "多少重くても、がっちり受け止める“安心感”がほしい" },
+  { id: "g3", text: "自分の狙いや手の内は、相手に悟られたくない" },
+  { id: "g4", text: "広い範囲をカバーして、ここぞの場面で魅せたい" },
+  { id: "g5", text: "細かい技術やこだわりで、まわりと差をつけたいタイプだ" },
 ];
-function computeGlove(a: Record<string, number>): {
-  pos: string;
-  web: WebType;
-  reason: string;
-} {
-  let best: { pos: "pitcher" | "infield" | "outfield" | "catcher" | "allround"; v: number } = {
-    pos: "allround",
-    v: 0,
-  };
-  for (const q of GLOVE_Q) {
-    if (!q.pos) continue;
-    const v = a[q.id] ?? 0;
-    if (v > best.v) best = { pos: q.pos, v };
-  }
-  const sv = a.g5 ?? 0;
-  const style: WebStyle = sv > 0 ? "solid" : sv < 0 ? "quick" : "auto";
-  const g = recommendWeb(best.pos, style);
-  return { pos: best.pos, web: g.web, reason: g.reason };
+function computeGlove(a: Record<string, number>): GloveByStyle {
+  const pos = (id: string) => Math.max(0, a[id] ?? 0); // 0〜3（そう思う側のみ）
+  const spec = pos("g5"); // こだわり・技巧派 → 隠す/軽快を後押し
+  return recommendGloveByStyle({
+    light: pos("g1") + spec * 0.5,
+    solid: pos("g2"),
+    hide: pos("g3") + spec * 0.5,
+    range: pos("g4"),
+  });
 }
 
-const POS_JP: Record<string, string> = {
-  pitcher: "投手",
-  infield: "内野",
-  outfield: "外野",
-  catcher: "捕手",
-  allround: "オールラウンド",
-};
-
-/* ── 検査5: スパイク適性（4問・7段階） ─────────────── */
+/* ── 検査5: スパイク適性（4問・7段階・性格型） ─────────────── */
 const SPIKE_Q: { id: string; text: string }[] = [
-  { id: "s1", text: "守備範囲の広さ・一歩目の速さを何より大事にしたい" },
-  { id: "s2", text: "足首はしっかり守りたい（捻挫やケガが不安）" },
-  { id: "s3", text: "土のグラウンドでガッチリ止まる“食いつき”が欲しい" },
-  { id: "s4", text: "いろんな球場を1足で済ませたい（土も人工芝も）" },
+  { id: "s1", text: "スピードと軽さで勝負したい。1歩目で相手を出し抜くのが好きだ" },
+  { id: "s2", text: "ケガは絶対に避けたい。守り重視の慎重派だ" },
+  { id: "s3", text: "地面をガッチリ噛む“食いつく”感覚がたまらない" },
+  { id: "s4", text: "あれこれ持ちたくない。1足で何でもこなす合理派だ" },
 ];
 function computeSpike(a: Record<string, number>): SpikeRec {
   const yes = (id: string) => (a[id] ?? 0) > 0;
@@ -164,12 +150,12 @@ function computeSpike(a: Record<string, number>): SpikeRec {
   });
 }
 
-/* ── 検査6: バッティンググローブ適性（4問・7段階） ─────────────── */
+/* ── 検査6: バッティンググローブ適性（4問・7段階・性格型） ─────────────── */
 const BGLOVE_Q: { id: string; text: string }[] = [
-  { id: "bg1", text: "木製バットを使っている（または使ってみたい）" },
-  { id: "bg2", text: "とにかく滑らない“最強グリップ”が欲しい" },
-  { id: "bg3", text: "コスパ重視で、消耗品として気軽に使い替えたい" },
-  { id: "bg4", text: "手にぴったり吸いつくフィット感・質感にこだわる" },
+  { id: "bg1", text: "打感や“本物”の質感にこだわる。木のバットにも惹かれる" },
+  { id: "bg2", text: "とにかく実利。滑らなければそれでいい、が信条だ" },
+  { id: "bg3", text: "消耗品にお金はかけない。コスパ最優先の現実派だ" },
+  { id: "bg4", text: "手に吸いつくフィット感・肌ざわりにこだわる方だ" },
 ];
 function computeBglove(a: Record<string, number>): BgloveRec {
   const yes = (id: string) => (a[id] ?? 0) > 0;
@@ -181,15 +167,33 @@ function computeBglove(a: Record<string, number>): BgloveRec {
   });
 }
 
+/* ── 検査7: まわりの装備（4問・7段階・性格型） ─────────────── */
+const ACC_Q: { id: string; text: string }[] = [
+  { id: "a1", text: "ケガ・故障だけは絶対に避けたい。関節はしっかり守る主義だ" },
+  { id: "a2", text: "暑さ・寒さのコンディション管理は抜かりなくやる方だ" },
+  { id: "a3", text: "試合後の疲れを翌日に残したくない。ケアにこだわる" },
+  { id: "a4", text: "見た目・気分も大事。小物でテンションを上げたい" },
+];
+function computeAcc(a: Record<string, number>): { top: AccessoryItem; list: AccessoryItem[] } {
+  const pos = (id: string) => Math.max(0, a[id] ?? 0);
+  return recommendAccessories({
+    support: pos("a1"),
+    under: pos("a2"),
+    care: pos("a3"),
+    style: pos("a4"),
+  });
+}
+
 /* ── ステージ管理 ─────────────── */
-type Stage = "intro" | "mbti" | "play" | "bat" | "glove" | "spike" | "bglove" | "result";
+type Stage = "intro" | "mbti" | "play" | "bat" | "glove" | "spike" | "bglove" | "acc" | "result";
 type DockResult = {
   mbti: { code: string; axes: DockAxis[]; type: MbtiType };
   play: { type: PlayerType; top: Player };
   bat: { material: BatMaterial; model: BatModel };
-  glove: { pos: string; web: WebType; reason: string };
+  glove: GloveByStyle;
   spike: SpikeRec;
   bglove: BgloveRec;
+  acc: { top: AccessoryItem; list: AccessoryItem[] };
 };
 
 const CHAPTERS: { key: Stage; no: string; title: string; desc: string; count: number }[] = [
@@ -199,8 +203,9 @@ const CHAPTERS: { key: Stage; no: string; title: string; desc: string; count: nu
   { key: "glove", no: "第四検査", title: "グローブ適性", desc: "相棒グローブの処方（5問）", count: 5 },
   { key: "spike", no: "第五検査", title: "スパイク適性", desc: "相棒スパイクの処方（4問）", count: 4 },
   { key: "bglove", no: "第六検査", title: "打撃手袋適性", desc: "バッティンググローブの処方（4問）", count: 4 },
+  { key: "acc", no: "第七検査", title: "まわりの装備", desc: "サポーター・小物の処方（4問）", count: 4 },
 ];
-const TOTAL_Q = 41;
+const TOTAL_Q = 45;
 
 /* 7段階の設問行（全章共通） */
 function LikertItem({
@@ -214,6 +219,7 @@ function LikertItem({
   value: number | undefined;
   onPick: (v: number) => void;
 }) {
+  const picked = SCALE.find((o) => o.v === value);
   return (
     <div className="lk-item">
       <p className="lk-num">Q{no}</p>
@@ -224,16 +230,29 @@ function LikertItem({
           {SCALE.map((o) => (
             <button
               key={o.v}
-              aria-label={`${o.v > 0 ? "そう思う" : o.v < 0 ? "そう思わない" : "どちらでもない"}(${o.v})`}
+              aria-label={o.label}
+              title={o.label}
               className={`lk-dot ${o.size} ${o.tone} ${value === o.v ? "active" : ""}`}
               onClick={() => onPick(o.v)}
             >
-              {value === o.v ? "✓" : ""}
+              <span className="lk-check" aria-hidden="true">
+                {value === o.v ? "✓" : ""}
+              </span>
             </button>
           ))}
         </div>
         <span className="lk-side disagree">そう思わない</span>
       </div>
+      {/* 目盛りの意味（常時表示・3アンカー） */}
+      <div className="lk-legend" aria-hidden="true">
+        <span>そう思う</span>
+        <span>どちらでもない</span>
+        <span>そう思わない</span>
+      </div>
+      {/* 選んだ答えを言葉で明示（押したことが一目で分かる） */}
+      <p className={`lk-answer ${picked ? `on ${picked.tone}` : ""}`}>
+        {picked ? `あなたの回答：${picked.label}` : "上のボタンから選んでください"}
+      </p>
     </div>
   );
 }
@@ -246,6 +265,7 @@ export default function DockShindan() {
   const [gloveAns, setGloveAns] = useState<Record<string, number>>({});
   const [spikeAns, setSpikeAns] = useState<Record<string, number>>({});
   const [bgloveAns, setBgloveAns] = useState<Record<string, number>>({});
+  const [accAns, setAccAns] = useState<Record<string, number>>({});
   const [result, setResult] = useState<DockResult | null>(null);
   const [copied, setCopied] = useState(false);
   const [cardState, setCardState] = useState<"idle" | "busy" | "done">("idle");
@@ -258,7 +278,8 @@ export default function DockShindan() {
     Object.keys(batAns).length +
     Object.keys(gloveAns).length +
     Object.keys(spikeAns).length +
-    Object.keys(bgloveAns).length;
+    Object.keys(bgloveAns).length +
+    Object.keys(accAns).length;
   const progress = Math.round((answered / TOTAL_Q) * 100);
 
   const mbtiDone = MBTI_Q.every((q) => q.id in mbtiAns);
@@ -267,6 +288,7 @@ export default function DockShindan() {
   const gloveDone = GLOVE_Q.every((q) => q.id in gloveAns);
   const spikeDone = SPIKE_Q.every((q) => q.id in spikeAns);
   const bgloveDone = BGLOVE_Q.every((q) => q.id in bgloveAns);
+  const accDone = ACC_Q.every((q) => q.id in accAns);
 
   const scrollTop = () =>
     setTimeout(() => topRef.current?.scrollIntoView({ behavior: "smooth" }), 60);
@@ -284,9 +306,10 @@ export default function DockShindan() {
     const glove = computeGlove(gloveAns);
     const spike = computeSpike(spikeAns);
     const bglove = computeBglove(bgloveAns);
+    const acc = computeAcc(accAns);
     saveMbtiCode(m.code);
     saveTypeSlug(play.type.slug);
-    setResult({ mbti: { ...m, type: mbtiType }, play, bat, glove, spike, bglove });
+    setResult({ mbti: { ...m, type: mbtiType }, play, bat, glove, spike, bglove, acc });
     setStage("result");
     scrollTop();
   };
@@ -298,6 +321,7 @@ export default function DockShindan() {
     setGloveAns({});
     setSpikeAns({});
     setBgloveAns({});
+    setAccAns({});
     setResult(null);
     setCardUrl(null);
     setCardState("idle");
@@ -351,7 +375,7 @@ export default function DockShindan() {
         batModel: result.bat.model.name,
         batMeta: `${result.bat.model.maker}／${BAT_MATERIAL_INFO[result.bat.material].label}`,
         gloveWeb: result.glove.web.name,
-        glovePos: `${POS_JP[result.glove.pos]}向け`,
+        glovePos: result.glove.charLabel,
       };
       const canvas = await renderDockCard(cardData);
       setCardUrl(canvas.toDataURL("image/png"));
@@ -494,7 +518,13 @@ export default function DockShindan() {
       {stage === "bglove" && (
         <>
           {chapterHead("bglove")}
-          {likertChapter(BGLOVE_Q, bgloveAns, setBgloveAns, bgloveDone, "検査を終えて結果を見る →", finish)}
+          {likertChapter(BGLOVE_Q, bgloveAns, setBgloveAns, bgloveDone, "第七検査へすすむ →", () => go("acc"))}
+        </>
+      )}
+      {stage === "acc" && (
+        <>
+          {chapterHead("acc")}
+          {likertChapter(ACC_Q, accAns, setAccAns, accDone, "検査を終えて結果を見る →", finish)}
         </>
       )}
 
@@ -649,11 +679,13 @@ export default function DockShindan() {
             </div>
             <div className="dock-row-body">
               <p className="dock-row-main">
-                <strong>{result.glove.web.name}</strong>
-                <span className="dock-row-sub">（{POS_JP[result.glove.pos]}向け）</span>
+                <strong>{result.glove.charLabel}</strong>
+                <span className="dock-row-sub">（{result.glove.web.name}）</span>
               </p>
               <p className="dock-row-note">{result.glove.reason}</p>
-              <p className="dock-row-note">{result.glove.web.feature}</p>
+              <p className="dock-row-note">
+                {result.glove.web.feature}（向いているポジション：{result.glove.web.positions}）
+              </p>
             </div>
           </div>
 
@@ -701,11 +733,40 @@ export default function DockShindan() {
             </div>
           </div>
 
-          {/* 7. 相性所見 */}
+          {/* 7. まわりの装備 */}
+          <div className="dock-row">
+            <div className="dock-row-head">
+              <span className="dock-row-no">07</span>
+              <span className="dock-row-ttl">処方：まわりの装備</span>
+            </div>
+            <div className="dock-row-body">
+              <p className="dock-row-main">
+                <strong>{result.acc.top.name}</strong>
+                <span className="dock-row-sub">
+                  （{result.acc.top.makerHint}
+                  {result.acc.top.foreign ? "・海外ブランド" : ""}）
+                </span>
+              </p>
+              <p className="dock-row-note">{result.acc.top.feature}</p>
+              {result.acc.list.length > 1 && (
+                <p className="dock-row-note">
+                  あわせて揃えたい：
+                  {result.acc.list.slice(1).map((it, i) => (
+                    <span key={it.kind}>
+                      {i > 0 ? "／" : ""}
+                      {it.name}
+                    </span>
+                  ))}
+                </p>
+              )}
+            </div>
+          </div>
+
+          {/* 8. 相性所見 */}
           {(compat.best || compat.tough) && (
             <div className="dock-row">
               <div className="dock-row-head">
-                <span className="dock-row-no">07</span>
+                <span className="dock-row-no">08</span>
                 <span className="dock-row-ttl">所見：チーム内の相性</span>
               </div>
               <div className="dock-row-body">
@@ -758,8 +819,8 @@ export default function DockShindan() {
             heading={`🛒 処方どおりのバットを探す（${result.bat.model.name}）`}
           />
           <ProductCards
-            keyword={`軟式 グローブ ${POS_JP[result.glove.pos]} 一般`}
-            heading={`🛒 処方どおりのグローブを探す（${POS_JP[result.glove.pos]}向け）`}
+            keyword={`軟式 グローブ ${result.glove.posHint} 一般`}
+            heading={`🛒 処方どおりのグローブを探す（${result.glove.web.name}）`}
           />
           <ProductCards
             keyword={result.spike.keyword}
@@ -773,6 +834,16 @@ export default function DockShindan() {
             <ProductCards
               keyword={result.bglove.hackKeyword}
               heading="🏈 【裏技】グリップ最強のアメフト用グローブを流用する"
+            />
+          )}
+          <ProductCards
+            keyword={result.acc.top.keyword}
+            heading={`🛒 処方どおりのまわりの装備を探す（${result.acc.top.name}）`}
+          />
+          {result.acc.list.length > 1 && (
+            <ProductCards
+              keyword={result.acc.list[1].keyword}
+              heading={`🛒 あわせて：${result.acc.list[1].name}を探す`}
             />
           )}
 

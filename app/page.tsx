@@ -137,9 +137,9 @@ export default function Home() {
               性格も、似ている選手も、道具も。野球人間ドック。
             </span>
             <span className="ink-desc">
-              全41問・MBTI式の7段階に答えるだけで、あなたの<strong>MBTIタイプ</strong>と
+              全45問・MBTI式の7段階に答えるだけで、あなたの<strong>MBTIタイプ</strong>と
               最も近い<strong>プロ選手1人</strong>（NPB・MLB {PLAYER_COUNT}名から・AIイラスト付き）、
-              さらにバット・グローブ・スパイク・バッティンググローブの処方まで「検査結果報告書」一枚に。画像で保存してSNSにも。
+              さらにバット・グローブ・スパイク・打撃手袋・サポーターまで道具の処方を「検査結果報告書」一枚に。画像で保存してSNSにも。
             </span>
             <span className="ink-link">受診する（約5分・無料）</span>
           </a>

@@ -3015,6 +3015,43 @@ section {
 .lk-dot.s2 { width: 38px; height: 38px; }
 .lk-dot.s1 { width: 30px; height: 30px; }
 .lk-dot.s0 { width: 24px; height: 24px; }
+/* 選択時のチェック（白抜き・確実に見える）＋選択リング */
+.lk-check {
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1;
+  color: #fff;
+}
+.lk-dot.s1 .lk-check, .lk-dot.s0 .lk-check { font-size: 12px; }
+.lk-dot.active {
+  box-shadow: 0 0 0 3px rgba(28, 27, 24, 0.14);
+}
+/* 目盛りキャプション（3アンカー・常時表示） */
+.lk-legend {
+  display: flex;
+  justify-content: space-between;
+  max-width: 560px;
+  margin: 8px auto 0;
+  padding: 0 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--text);
+  opacity: 0.5;
+}
+.lk-legend span:nth-child(1) { color: #33a474; opacity: 0.9; }
+.lk-legend span:nth-child(3) { color: #88619a; opacity: 0.9; }
+/* 選んだ答えを言葉で明示 */
+.lk-answer {
+  margin: 8px 0 0;
+  text-align: center;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: rgba(28, 27, 24, 0.4);
+}
+.lk-answer.on { color: var(--ink); }
+.lk-answer.on.agree { color: #2b8c63; }
+.lk-answer.on.disagree { color: #785295; }
 @media (max-width: 520px) {
   .lk-side { display: none; }
   .lk-scale { gap: 8px; }
@@ -3022,14 +3059,7 @@ section {
   .lk-dot.s2 { width: 34px; height: 34px; }
   .lk-dot.s1 { width: 27px; height: 27px; }
   .lk-dot.s0 { width: 22px; height: 22px; }
-  .lk-item::after {
-    content: "← そう思う ・ そう思わない →";
-    display: block;
-    margin-top: 10px;
-    font-size: 10.5px;
-    color: var(--text);
-    opacity: 0.55;
-  }
+  .lk-legend { font-size: 10.5px; max-width: 100%; }
 }
 
 .lk-nav {

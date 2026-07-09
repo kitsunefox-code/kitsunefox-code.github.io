@@ -277,7 +277,7 @@ export default async function MbtiTypePage({
             <span className="start-band-kicker">Baseball MBTI</span>
             <span className="start-band-title">野球人間ドックを受診する</span>
             <span className="start-band-desc">
-              全41問・7段階で答えるだけ。あなたが{t.code}型か、
+              全45問・7段階で答えるだけ。あなたが{t.code}型か、
               最も近いプロ選手は誰か、その場でわかります。
             </span>
             <span className="start-band-btn">無料で診断する →</span>

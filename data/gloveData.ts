@@ -101,3 +101,73 @@ export function recommendWeb(
       };
   }
 }
+
+// ── 性格・価値観ベースのグローブ診断 ──────────────
+// 「どのポジションをやりたいか」ではなく、道具に対する気質から
+// あなたに合うグローブの“性格（型）”を導く。
+export type GloveCharacter = "quick" | "solid" | "hide" | "range" | "allround";
+export type GloveByStyle = {
+  character: GloveCharacter;
+  charLabel: string; // グローブの性格ラベル
+  web: WebType;
+  posHint: string; // 商品検索・傾向用のゆるいポジション
+  reason: string;
+};
+
+export function recommendGloveByStyle(scores: {
+  light: number; // 軽快・操作性を重視
+  solid: number; // しっかり受け止める安心感を重視
+  hide: number; // 狙い・手の内を隠したい
+  range: number; // 広く守って魅せたい
+}): GloveByStyle {
+  const byId = (id: string) => WEB_TYPES.find((w) => w.id === id)!;
+  const entries: { k: GloveCharacter; v: number }[] = [
+    { k: "hide", v: scores.hide },
+    { k: "range", v: scores.range },
+    { k: "solid", v: scores.solid },
+    { k: "quick", v: scores.light },
+  ];
+  const top = entries.reduce((a, b) => (b.v > a.v ? b : a), { k: "allround" as GloveCharacter, v: 0 });
+  switch (top.k) {
+    case "hide":
+      return {
+        character: "hide",
+        charLabel: "隠して操る・技巧派グラブ",
+        web: byId("basket"),
+        posHint: "投手",
+        reason: "狙いや手の内を悟らせたくないあなたには、握りを隠せる“閉じたウェブ”が武器になります。",
+      };
+    case "range":
+      return {
+        character: "range",
+        charLabel: "広く守って魅せる・大型グラブ",
+        web: byId("tnet"),
+        posHint: "外野",
+        reason: "広くカバーして魅せたいあなたには、先端が強く打球を受け止める大きめのグラブを。",
+      };
+    case "solid":
+      return {
+        character: "solid",
+        charLabel: "がっちり受け止める・安心グラブ",
+        web: byId("cross"),
+        posHint: "内野",
+        reason: "安心感を大事にするあなたには、壁感が出て強い打球にも動じないクロスウェブを。",
+      };
+    case "quick":
+      return {
+        character: "quick",
+        charLabel: "軽快にさばく・スピードグラブ",
+        web: byId("h"),
+        posHint: "内野",
+        reason: "軽さと素早さが命のあなたには、しなって握り替えが速いHウェブを。",
+      };
+    default:
+      return {
+        character: "allround",
+        charLabel: "何でもこなす・オールラウンドグラブ",
+        web: byId("cross"),
+        posHint: "オールラウンド",
+        reason: "こだわりすぎないあなたには、内野〜外野を無難にこなす“中間解”のクロスウェブを。",
+      };
+  }
+}
