@@ -5,6 +5,47 @@ import { GUIDES } from "@/data/guides";
 import { TOOLS } from "@/data/tools";
 import { PLAYER_COUNT } from "@/data/players";
 
+// トップの「よくある質問」。ロングテール検索（草野球 費用/始め方/人数/道具…）を
+// 拾いつつ、各回答から該当ガイドへ内部リンクを張る。FAQPage 構造化データにも使う。
+const HOME_FAQ: { q: string; a: string; href: string; hrefLabel: string }[] = [
+  {
+    q: "草野球のユニフォームはいくらで作れる？",
+    a: "デザインや枚数によりますが、1人あたりおおよそ7,000〜15,000円が目安です。昇華プリントか刺繍か、注文枚数でも変わります。メーカーごとの価格・納期は比較ページで、内訳と節約のコツは費用ガイドでまとめています。",
+    href: "/uniform/",
+    hrefLabel: "ユニフォームメーカー比較を見る",
+  },
+  {
+    q: "草野球は何人いれば始められる？",
+    a: "試合は9人からですが、まずは有志数人で立ち上げ、助っ人アプリやSNSで人を集めるのが現実的です。チームの作り方・連盟登録・保険まで立ち上げガイドで手順化しています。",
+    href: "/guide/build-a-team/",
+    hrefLabel: "草野球チームの作り方を見る",
+  },
+  {
+    q: "草野球の道具は最低限なにを揃えればいい？",
+    a: "まずはグローブ・バット（チーム共用でも可）・スパイク・帽子があれば参加できます。予算・揃える順番は初心者向けチェックリストにまとめました。",
+    href: "/guide/gear-checklist/",
+    hrefLabel: "道具チェックリストを見る",
+  },
+  {
+    q: "自分に似ているプロ野球選手を知りたい",
+    a: "MBTI式・全45問の「野球人間ドック」で、あなたのタイプと最も近いプロ選手（NPB・MLB650名超から1人）を診断できます。バット・グローブなど道具の処方付き・無料です。",
+    href: "/baseball-dock/",
+    hrefLabel: "野球人間ドックを受診する",
+  },
+  {
+    q: "草野球のメンバー・助っ人はどう集める？",
+    a: "募集アプリ・SNS・掲示板の使い分けと、そのまま使える募集文テンプレートを助っ人ガイドで紹介しています。",
+    href: "/guide/helper-recruit/",
+    hrefLabel: "助っ人の集め方を見る",
+  },
+  {
+    q: "草野球の年間費用はどれくらいかかる？",
+    a: "チーム運営費（球場・連盟・ボール）と個人の道具代を合わせた全体像を、2026年版の費用ガイドで具体的な金額つきに整理しています。",
+    href: "/guide/annual-cost/",
+    hrefLabel: "年間費用のリアルを見る",
+  },
+];
+
 // 目次「くらべる」の項目
 const COMPARES = [
   {
@@ -36,8 +77,21 @@ const COMPARES = [
 ];
 
 export default function Home() {
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: HOME_FAQ.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       {/* ── 表紙（編集ヒーロー・写真スライドショー背景） ── */}
       <div className="ed-hero has-slides">
         {/* 自動クロスフェードする野球写真（CSSのみ・JS不要） */}
@@ -265,6 +319,29 @@ export default function Home() {
           <a className="link-arrow ed-more" href="/guide/">
             ガイドをすべて見る（全{GUIDES.length}記事）
           </a>
+        </section>
+
+        {/* ── 04 よくある質問（草野球FAQ・SEO/内部リンク） ── */}
+        <section className="ed-sec" id="faq">
+          <div className="ed-sec-head">
+            <span className="ed-no">04</span>
+            <h2 className="ed-ttl">よくある質問</h2>
+            <span className="ed-en">FAQ</span>
+          </div>
+          <p className="ed-sec-lead">
+            草野球をこれから始める人・チームを運営する人から、よく聞かれる質問をまとめました。
+          </p>
+          <div className="home-faq">
+            {HOME_FAQ.map((f) => (
+              <div className="home-faq-item" key={f.q}>
+                <h3 className="home-faq-q">{f.q}</h3>
+                <p className="home-faq-a">{f.a}</p>
+                <a className="link-arrow" href={f.href}>
+                  {f.hrefLabel}
+                </a>
+              </div>
+            ))}
+          </div>
         </section>
       </div>
     </main>

@@ -3580,6 +3580,34 @@ h1 .hl {
 }
 .type-more:hover { background: rgba(250, 249, 246, 0.12); }
 
+/* トップの草野球FAQ（罫線区切りのエディトリアル体裁） */
+.home-faq {
+  border-top: 1px solid var(--line);
+}
+.home-faq-item {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--line);
+}
+.home-faq-q {
+  margin: 0 0 8px;
+  font-family: var(--font-mincho), serif;
+  font-size: clamp(16px, 2.6vw, 19px);
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.home-faq-q::before {
+  content: "Q. ";
+  color: var(--accent);
+  font-weight: 800;
+}
+.home-faq-a {
+  margin: 0 0 10px;
+  font-size: 14.5px;
+  line-height: 1.85;
+  color: var(--text);
+}
+
 /* ボタン・リンク：シャープに */
 .hero-cta .primary, .lk-next, .share-btn, .stats-clear, .start-band-btn {
   border-radius: 0 !important;
