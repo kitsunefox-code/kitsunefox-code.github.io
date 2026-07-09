@@ -3608,6 +3608,58 @@ h1 .hl {
   color: var(--text);
 }
 
+/* プロ選手ギア一覧（/players/） */
+.pl-controls { display: flex; flex-direction: column; gap: 12px; margin-bottom: 14px; }
+.pl-search {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 15px;
+  border: 1px solid var(--line-strong);
+  border-radius: 0;
+  background: #fff;
+  color: var(--ink);
+}
+.pl-search:focus { outline: 2px solid var(--accent); outline-offset: -2px; }
+.pl-tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+.pl-tab {
+  padding: 7px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--text);
+  border-radius: 0;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+.pl-tab:hover { border-color: var(--ink); }
+.pl-tab.on { background: var(--ink); border-color: var(--ink); color: #fff; }
+.pl-count { font-size: 12.5px; font-weight: 700; color: var(--muted); margin: 4px 0 10px; }
+.pl-list { border-top: 1px solid var(--line); }
+.pl-row { padding: 12px 0; border-bottom: 1px solid var(--line); }
+.pl-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.pl-name { font-family: var(--font-mincho), serif; font-weight: 700; font-size: 16px; color: var(--ink); }
+.pl-league {
+  font-size: 10.5px; font-weight: 800; letter-spacing: 0.04em;
+  padding: 1px 7px; color: #fff; border-radius: 0;
+}
+.pl-league.npb { background: #1c4f8a; }
+.pl-league.mlb { background: #b3472e; }
+.pl-pos { font-size: 12px; color: var(--muted); font-weight: 700; }
+.pl-gears { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 6px; }
+.pl-gear-item { display: inline-flex; align-items: baseline; gap: 6px; font-size: 13.5px; }
+.pl-gear-label { font-size: 11px; font-weight: 700; color: var(--muted); }
+.pl-gear-link {
+  color: var(--accent); font-weight: 700; text-decoration: none;
+  border-bottom: 1px solid rgba(179, 71, 46, 0.35);
+}
+.pl-gear-link:hover { border-bottom-color: var(--accent); }
+.pl-model-badge {
+  margin-left: 6px; font-size: 10px; font-weight: 800; color: #fff;
+  background: var(--good); padding: 1px 6px; vertical-align: middle;
+}
+.pl-empty { padding: 30px 0; text-align: center; color: var(--muted); font-size: 14px; }
+
 /* ボタン・リンク：シャープに */
 .hero-cta .primary, .lk-next, .share-btn, .stats-clear, .start-band-btn {
   border-radius: 0 !important;

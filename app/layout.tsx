@@ -153,7 +153,7 @@ gtag('config', '${GA4_MEASUREMENT_ID}');`}
                   <a href="/uniform/">ユニフォーム</a>
                   <a href="/bat/">バット</a>
                   <a href="/glove/">グローブ</a>
-                  <a href="/spikes/">スパイク</a>
+                  <a href="/players/">プロ選手の使用ギア一覧</a>
                 </div>
                 <div className="ft-col">
                   <p className="ft-head">たしかめる</p>

@@ -265,6 +265,7 @@ export const ADSENSE_SLOTS: Record<string, string> = {
   "shindan-result": "",
   "dock-top": "",
   "dock-result": "",
+  "players-top": "",
   "mbti-top": "",
   "mbti-result": "",
 };

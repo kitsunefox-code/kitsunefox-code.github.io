@@ -74,6 +74,12 @@ const COMPARES = [
     title: "バッティンググローブ",
     desc: "素材とグリップ感で選ぶ。消耗品だからこそ、賢く。",
   },
+  {
+    href: "/players/",
+    title: "プロ選手の使用ギア一覧",
+    badge: `${PLAYER_COUNT}名`,
+    desc: `NPB・MLB${PLAYER_COUNT}名の使用グローブ・バットのメーカーを一覧に。「あの選手と同じ」で探せる。`,
+  },
 ];
 
 export default function Home() {
