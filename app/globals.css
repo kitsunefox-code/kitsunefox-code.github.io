@@ -3592,7 +3592,9 @@ h1 .hl {
 .hero-cta .ghost { border-radius: 0 !important; border-color: var(--ink); color: var(--ink); }
 .lk-next { box-shadow: none; }
 .lk-next:hover { transform: none; background: var(--accent); }
-.cta-inline { color: var(--accent); text-underline-offset: 3px; }
+/* .cta-inline は朱色ベタのボタン。文字は白で可読性を確保（朱地に朱文字で不可視だった不具合の修正） */
+.cta-inline { color: #fff; text-underline-offset: 3px; }
+.cta-inline:hover { color: #fff; }
 .share-copy { border-radius: 0; }
 
 /* 診断UI（YES/NO・A/B・7段階） */
