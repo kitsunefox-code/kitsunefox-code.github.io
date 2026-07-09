@@ -42,6 +42,8 @@ export default function Home() {
         {/* 自動クロスフェードする野球写真（CSSのみ・JS不要） */}
         <div className="ed-slides" aria-hidden="true">
           <div className="ed-slide" style={{ backgroundImage: "url('/img/hero-swing.jpg')" }} />
+          <div className="ed-slide" style={{ backgroundImage: "url('/img/hero-pitch.jpg')" }} />
+          <div className="ed-slide" style={{ backgroundImage: "url('/img/hero-sunset.jpg')" }} />
           <div className="ed-slide" style={{ backgroundImage: "url('/img/hero-home-plate.jpg')" }} />
           <div className="ed-slide" style={{ backgroundImage: "url('/img/hero-sandlot.jpg')" }} />
           <div className="ed-slide" style={{ backgroundImage: "url('/img/hero-balls.jpg')" }} />

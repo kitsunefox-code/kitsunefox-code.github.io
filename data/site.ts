@@ -240,8 +240,17 @@ export const GOODS_LINKS: GoodsLink[] = [
 ];
 
 /**
- * 広告枠ごとのスロットID（AdSense の管理画面で広告ユニットを作ると発行される数字）
- * 未設定の枠はレスポンシブの自動広告として出ます。
+ * 広告枠ごとのスロットID。
+ *
+ * ▼ 収益化の2ルート（どちらか、または両方）
+ *  A) 自動広告(Auto ads)：AdSense管理画面 →「広告」→「サイトごと」→ 自動広告をON。
+ *     コード変更は不要（全ページに読み込み済みの adsbygoogle.js が効く）。
+ *     いちばん手軽で、承認後すぐ配信が始まる。まずはこれ推奨。
+ *  B) 手動ユニット：AdSense管理画面で「ディスプレイ広告」ユニットを作成すると
+ *     10桁前後のスロットID(data-ad-slot)が発行される。それを下の各キーに貼ると
+ *     その位置に狙った広告が出る（Aと併用可）。
+ *
+ * ※ 空文字のままだと、その枠は手動広告を出さず自動広告に委ねる（unfilledの空枠は作らない）。
  */
 export const ADSENSE_SLOTS: Record<string, string> = {
   "top-under-hero": "",
@@ -249,4 +258,6 @@ export const ADSENSE_SLOTS: Record<string, string> = {
   "article-top": "",
   "article-bottom": "",
   "shindan-result": "",
+  "dock-top": "",
+  "dock-result": "",
 };

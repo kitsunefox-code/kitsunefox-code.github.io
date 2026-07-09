@@ -3954,19 +3954,21 @@ h1 .hl {
   background-position: center 38%;
   opacity: 0;
   transform: scale(1.02);
-  animation: edSlideFade 28s infinite;
+  animation: edSlideFade 36s infinite;
   filter: saturate(0.85) contrast(1.03);
   will-change: opacity, transform;
 }
 .ed-slide:nth-child(1) { animation-delay: 0s; }
-.ed-slide:nth-child(2) { animation-delay: 7s; }
-.ed-slide:nth-child(3) { animation-delay: 14s; }
-.ed-slide:nth-child(4) { animation-delay: 21s; }
+.ed-slide:nth-child(2) { animation-delay: 6s; }
+.ed-slide:nth-child(3) { animation-delay: 12s; }
+.ed-slide:nth-child(4) { animation-delay: 18s; }
+.ed-slide:nth-child(5) { animation-delay: 24s; }
+.ed-slide:nth-child(6) { animation-delay: 30s; }
 @keyframes edSlideFade {
   0% { opacity: 0; transform: scale(1.02); }
-  4% { opacity: 1; }
-  27% { opacity: 1; }
-  33% { opacity: 0; transform: scale(1.09); }
+  2.5% { opacity: 1; }
+  14% { opacity: 1; }
+  17% { opacity: 0; transform: scale(1.08); }
   100% { opacity: 0; transform: scale(1.02); }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -4261,3 +4263,36 @@ h1 .hl {
 }
 .ink-lead .ink-ttl { font-size: clamp(26px, 4.4vw, 40px); }
 .ink-lead + .ink-band-grid { border-top: none; }
+
+/* 検査結果報告書：画像で保存／シェア */
+.dock-save-btn {
+  display: block;
+  width: 100%;
+  padding: 15px 20px;
+  font-family: var(--jp);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #fff;
+  background: var(--ink);
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.dock-save-btn:hover { background: var(--accent); }
+.dock-save-btn:disabled { opacity: 0.6; cursor: default; }
+.dock-save-note {
+  font-size: 11.5px;
+  color: var(--ink-2);
+  text-align: center;
+  margin: 8px 0 14px;
+  letter-spacing: 0.02em;
+}
+
+.dock-card-preview {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  margin: 4px auto 16px;
+  border: 1px solid var(--line-strong);
+}

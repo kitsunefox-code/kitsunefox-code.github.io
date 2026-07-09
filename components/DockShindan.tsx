@@ -2,8 +2,9 @@
 
 // 野球人間ドック：こころ(MBTI)・プレースタイル・バット・グローブを
 // 一度に受診するフル診断。結果は「検査結果報告書（カルテ）」形式で出す。
-import { useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import ProductCards from "@/components/ProductCards";
+import { renderDockCard, canvasToBlob, type DockCardData } from "@/lib/dockCard";
 import TypeIcon from "@/components/TypeIcon";
 import {
   MBTI_STATEMENTS,
@@ -147,6 +148,8 @@ export default function DockShindan() {
   const [style, setStyle] = useState<string | null>(null);
   const [result, setResult] = useState<DockResult | null>(null);
   const [copied, setCopied] = useState(false);
+  const [cardState, setCardState] = useState<"idle" | "busy" | "done">("idle");
+  const [cardUrl, setCardUrl] = useState<string | null>(null);
   const topRef = useRef<HTMLDivElement>(null);
 
   const answered =
@@ -195,6 +198,8 @@ export default function DockShindan() {
     setPos(null);
     setStyle(null);
     setResult(null);
+    setCardUrl(null);
+    setCardState("idle");
     setStage("intro");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -219,6 +224,66 @@ export default function DockShindan() {
 
   const makerLink = (maker: string, kind: string) =>
     rktSearch(maker === "各社" ? "" : maker, kind);
+
+  // 検査結果報告書を1枚のカード画像にして保存／シェア
+  const saveCard = async () => {
+    if (!result || cardState === "busy") return;
+    setCardState("busy");
+    try {
+      const cardData: DockCardData = {
+        code: result.mbti.code,
+        mbtiNickname: result.mbti.type.nickname,
+        mbtiIcon: result.mbti.type.icon,
+        mbtiCatch: result.mbti.type.catch,
+        axes: result.mbti.axes.map((a) => ({
+          leftJp: AXIS_META[a.axis].leftJp,
+          rightJp: AXIS_META[a.axis].rightJp,
+          leftPct: a.leftPct,
+          letterLeft: a.letter === AXIS_META[a.axis].left,
+        })),
+        playName: result.play.type.name,
+        playIcon: result.play.type.icon,
+        playDesc: result.play.type.desc,
+        similarPlayer: result.play.top.name,
+        similarMeta: `${result.play.top.league}・${result.play.top.position}`,
+        batModel: result.bat.model.name,
+        batMeta: `${result.bat.model.maker}／${BAT_MATERIAL_INFO[result.bat.material].label}`,
+        gloveWeb: result.glove.web.name,
+        glovePos: `${POS_JP[result.glove.pos]}向け`,
+      };
+      const canvas = await renderDockCard(cardData);
+      setCardUrl(canvas.toDataURL("image/png")); // プレビュー表示
+      const blob = await canvasToBlob(canvas);
+      if (!blob) throw new Error("blob failed");
+      const fileName = `野球人間ドック_${result.mbti.code}×${result.play.type.name}.png`;
+      const file = new File([blob], fileName, { type: "image/png" });
+
+      // Web Share API（対応端末＝スマホ中心）で画像ごとシェア
+      const nav = navigator as Navigator & {
+        canShare?: (d: { files: File[] }) => boolean;
+      };
+      if (nav.canShare && nav.canShare({ files: [file] }) && navigator.share) {
+        await navigator.share({
+          files: [file],
+          text: shareText,
+        });
+      } else {
+        // 非対応＝PC等：ダウンロード
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 4000);
+      }
+      setCardState("done");
+      setTimeout(() => setCardState("idle"), 2500);
+    } catch {
+      setCardState("idle");
+    }
+  };
 
   const chapterHead = (key: Stage) => {
     const c = CHAPTERS.find((x) => x.key === key)!;
@@ -624,6 +689,20 @@ export default function DockShindan() {
 
           <div className="share-box">
             <span className="share-label">検査結果をシェア</span>
+            <button className="dock-save-btn" onClick={saveCard} disabled={cardState === "busy"}>
+              {cardState === "busy"
+                ? "画像を作成中…"
+                : cardState === "done"
+                  ? "画像を保存しました！"
+                  : "🖼 報告書を画像で保存／シェアする"}
+            </button>
+            <p className="dock-save-note">
+              1枚の「検査結果報告書」画像になります。SNSにそのまま貼れます。
+            </p>
+            {cardUrl && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img className="dock-card-preview" src={cardUrl} alt="野球人間ドック 検査結果報告書" />
+            )}
             <div className="share-btns">
               <a className="share-btn share-x" href={xUrl} target="_blank" rel="noopener noreferrer">
                 𝕏 でシェア
