@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import AdSlot from "@/components/AdSlot";
 import TypeIcon from "@/components/TypeIcon";
 import ComboShare from "@/components/ComboShare";
+import ProductCards from "@/components/ProductCards";
 import { ALL_COMBOS, getCombo, comboPlayers } from "@/data/combo";
 import { SITE_URL, rktSearch } from "@/data/site";
 
@@ -213,6 +214,12 @@ export default async function ComboPage({
               ※ メーカー名をクリックすると、楽天市場のおすすめ一覧（広告）が開きます。
               分類はどちらもエンタメ診断であり、公式のものではありません。
             </p>
+            {mbtiPlayers[0] && (
+              <ProductCards
+                keyword={mbtiPlayers[0].productKeyword}
+                heading={`🛒 ${mbtiPlayers[0].name}の使う「${mbtiPlayers[0].glove}」のグローブを見る`}
+              />
+            )}
           </section>
         )}
 

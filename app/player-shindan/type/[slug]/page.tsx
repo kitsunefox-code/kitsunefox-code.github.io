@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import AdSlot from "@/components/AdSlot";
 import TypeIcon from "@/components/TypeIcon";
+import ProductCards from "@/components/ProductCards";
 import {
   PLAYER_TYPES,
   typeBySlug,
@@ -130,6 +131,12 @@ export default async function TypePage({
                 </div>
               ))}
             </div>
+            {examples[0] && (
+              <ProductCards
+                keyword={examples[0].productKeyword}
+                heading={`🛒 ${examples[0].name}の使う「${examples[0].glove}」のグローブを見る`}
+              />
+            )}
           </section>
         )}
 

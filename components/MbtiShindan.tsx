@@ -14,6 +14,7 @@ import {
   type MbtiType,
 } from "@/data/baseballMbti";
 import { type Player } from "@/data/players";
+import ProductCards from "@/components/ProductCards";
 import { SITE_URL, rktSearch } from "@/data/site";
 import { saveMbtiCode, getSavedTypeSlug } from "@/data/comboLink";
 import TypeIcon from "@/components/TypeIcon";
@@ -265,6 +266,14 @@ export default function MbtiShindan() {
                 → 似ている選手をもっと詳しく（選手タイプ診断）
               </a>
             </div>
+          )}
+
+          {/* 似ている選手の使うメーカーの実商品（楽天・広告） */}
+          {topPlayer && (
+            <ProductCards
+              keyword={topPlayer.productKeyword}
+              heading={`🛒 ${topPlayer.name}が使う「${topPlayer.glove}」のグローブを見る`}
+            />
           )}
 
           {/* 4軸の内訳（%） */}

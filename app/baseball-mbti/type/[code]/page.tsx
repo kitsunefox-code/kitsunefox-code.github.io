@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import AdSlot from "@/components/AdSlot";
 import TypeIcon from "@/components/TypeIcon";
+import ProductCards from "@/components/ProductCards";
 import {
   MBTI_TYPES,
   mbtiByCode,
@@ -251,6 +252,12 @@ export default async function MbtiTypePage({
             <p className="player-disc" style={{ marginTop: 10 }}>
               ※ メーカー名をクリックすると、楽天市場のおすすめ一覧（広告）が開きます。
             </p>
+            {players[0] && (
+              <ProductCards
+                keyword={players[0].productKeyword}
+                heading={`🛒 ${players[0].name}の使う「${players[0].glove}」のグローブを見る`}
+              />
+            )}
           </section>
         )}
 

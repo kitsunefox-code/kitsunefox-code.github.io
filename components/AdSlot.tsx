@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { ADSENSE_CLIENT_ID, ADSENSE_SLOTS } from "@/data/site";
+import { ADSENSE_CLIENT_ID, ADSENSE_SLOTS, ADSENSE_DEFAULT_SLOT } from "@/data/site";
 
 declare global {
   interface Window {
@@ -30,7 +30,8 @@ export default function AdSlot({
   label?: string;
 }) {
   const enabled = ADSENSE_CLIENT_ID.length > 0;
-  const slot = ADSENSE_SLOTS[id] ?? "";
+  // 個別スロット未設定なら共通のデフォルトスロットにフォールバック（1個作れば全枠点灯）
+  const slot = ADSENSE_SLOTS[id] || ADSENSE_DEFAULT_SLOT;
   const pushed = useRef(false);
 
   useEffect(() => {

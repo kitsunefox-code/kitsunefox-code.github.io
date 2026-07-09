@@ -240,24 +240,31 @@ export const GOODS_LINKS: GoodsLink[] = [
 ];
 
 /**
- * 広告枠ごとのスロットID。
+ * ★ いちばん簡単に全ページの広告を点灯する方法 ★
  *
- * ▼ 収益化の2ルート（どちらか、または両方）
- *  A) 自動広告(Auto ads)：AdSense管理画面 →「広告」→「サイトごと」→ 自動広告をON。
- *     コード変更は不要（全ページに読み込み済みの adsbygoogle.js が効く）。
- *     いちばん手軽で、承認後すぐ配信が始まる。まずはこれ推奨。
- *  B) 手動ユニット：AdSense管理画面で「ディスプレイ広告」ユニットを作成すると
- *     10桁前後のスロットID(data-ad-slot)が発行される。それを下の各キーに貼ると
- *     その位置に狙った広告が出る（Aと併用可）。
+ * AdSense管理画面で「広告」→「広告ユニットごと」→「ディスプレイ広告」を1個だけ作成
+ * （名前は何でもOK・レスポンシブ推奨）。発行される data-ad-slot（10桁前後の数字）を
+ * 下の ADSENSE_DEFAULT_SLOT に貼るだけで、**サイト全ページの広告枠が一斉に点灯**します。
+ * （同じ広告ユニットIDを複数箇所に使うのはAdSenseで許可されています）
  *
- * ※ 空文字のままだと、その枠は手動広告を出さず自動広告に委ねる（unfilledの空枠は作らない）。
+ * さらに管理画面で「自動広告(Auto ads)」もONにすると、Googleが追加の最適位置にも配信。
+ * ＝「手動枠(下記)」＋「自動広告」の二段構えで露出を最大化できます。
+ */
+export const ADSENSE_DEFAULT_SLOT = "";
+
+/**
+ * 位置ごとに別の広告ユニットを使い分けたい場合だけ、個別にスロットIDを設定。
+ * 空文字の枠は ADSENSE_DEFAULT_SLOT にフォールバックする（両方空なら自動広告に委ねる）。
  */
 export const ADSENSE_SLOTS: Record<string, string> = {
   "top-under-hero": "",
   "under-compare": "",
   "article-top": "",
+  "article-mid": "",
   "article-bottom": "",
   "shindan-result": "",
   "dock-top": "",
   "dock-result": "",
+  "mbti-top": "",
+  "mbti-result": "",
 };
