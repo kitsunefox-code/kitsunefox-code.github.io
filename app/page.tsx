@@ -1,5 +1,6 @@
 import AdSlot from "@/components/AdSlot";
 import EditorsPicks from "@/components/EditorsPicks";
+import MakerFortune from "@/components/MakerFortune";
 import { makers, LAST_UPDATED } from "@/data/makers";
 import { GUIDES } from "@/data/guides";
 import { TOOLS } from "@/data/tools";
@@ -159,6 +160,9 @@ export default function Home() {
       <div className="container">
         <AdSlot id="top-under-hero" />
 
+        {/* ── 入口：軽量メーカー占い（低ハードルの参加導線） ── */}
+        <MakerFortune />
+
         {/* ── 01 たしかめる（診断ツールの目次） ── */}
         <section className="ed-sec" id="tools">
           <div className="ed-sec-head">
@@ -299,7 +303,7 @@ export default function Home() {
 
         <AdSlot id="top-mid" />
 
-        {/* ── 03 よみもの ── */}
+        {/* ── 03 よみもの（新着を先頭に・NEWバッジ） ── */}
         <section className="ed-sec" id="guides">
           <div className="ed-sec-head">
             <span className="ed-no">03</span>
@@ -308,19 +312,25 @@ export default function Home() {
           </div>
           <p className="ed-sec-lead">
             始め方、チーム運営、道具の手入れ、技術のコツ。現場目線の{GUIDES.length}
-            記事から、人気のものを。
+            記事。<strong>新着</strong>から順にどうぞ。
           </p>
           <div className="guide-cols">
-            {GUIDES.slice(0, 8).map((g, i) => (
-              <a key={g.href} className="index-row" href={g.href}>
-                <span className="ix-no">{String(i + 1).padStart(2, "0")}</span>
-                <span>
-                  <span className="ix-ttl">{g.title}</span>
-                  <span className="ix-desc">{g.description}</span>
-                </span>
-                <span className="ix-arrow">→</span>
-              </a>
-            ))}
+            {[...GUIDES]
+              .sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0))
+              .slice(0, 10)
+              .map((g, i) => (
+                <a key={g.href} className="index-row" href={g.href}>
+                  <span className="ix-no">{String(i + 1).padStart(2, "0")}</span>
+                  <span>
+                    <span className="ix-ttl">
+                      {g.title}
+                      {g.isNew && <span className="ix-badge ix-new">NEW</span>}
+                    </span>
+                    <span className="ix-desc">{g.description}</span>
+                  </span>
+                  <span className="ix-arrow">→</span>
+                </a>
+              ))}
           </div>
           <a className="link-arrow ed-more" href="/guide/">
             ガイドをすべて見る（全{GUIDES.length}記事）

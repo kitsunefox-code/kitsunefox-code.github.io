@@ -29,16 +29,21 @@ export default function GuideIndexPage() {
                 <span className="guide-cat-sub">{cat.sub}</span>
               </h3>
               <div className="goods-grid">
-                {items.map((g) => (
-                  <a key={g.href} className="goods-card" href={g.href}>
-                    <span className="goods-emoji">{g.emoji}</span>
-                    <span>
-                      <span className="goods-label">{g.title}</span>
-                      <span className="goods-desc">{g.description}</span>
-                    </span>
-                    <span className="goods-arrow">→</span>
-                  </a>
-                ))}
+                {[...items]
+                  .sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0))
+                  .map((g) => (
+                    <a key={g.href} className="goods-card" href={g.href}>
+                      <span className="goods-emoji">{g.emoji}</span>
+                      <span>
+                        <span className="goods-label">
+                          {g.title}
+                          {g.isNew && <span className="guide-new">NEW</span>}
+                        </span>
+                        <span className="goods-desc">{g.description}</span>
+                      </span>
+                      <span className="goods-arrow">→</span>
+                    </a>
+                  ))}
               </div>
             </div>
           );

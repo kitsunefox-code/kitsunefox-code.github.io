@@ -3660,6 +3660,90 @@ h1 .hl {
 }
 .pl-empty { padding: 30px 0; text-align: center; color: var(--muted); font-size: 14px; }
 
+/* 軽量メーカー占い（トップ入口） */
+.mf-band {
+  border: 2px solid var(--ink);
+  background: #fff;
+  padding: 22px 20px 20px;
+  margin: 22px 0 8px;
+}
+.mf-head { text-align: center; }
+.mf-en {
+  font-family: var(--font-display), serif;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: var(--accent);
+}
+.mf-title {
+  font-family: var(--font-mincho), serif;
+  font-size: clamp(20px, 4vw, 28px);
+  font-weight: 700;
+  margin: 4px 0 6px;
+  color: var(--ink);
+}
+.mf-sub { font-size: 13.5px; color: var(--muted); margin: 0 auto; max-width: 620px; line-height: 1.7; }
+.mf-months {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+  margin-top: 16px;
+}
+.mf-month {
+  padding: 12px 0;
+  font-size: 15px;
+  font-weight: 800;
+  border: 1px solid var(--line-strong);
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+.mf-month:hover { background: var(--ink); color: #fff; }
+.mf-result { text-align: center; margin-top: 14px; }
+.mf-result-label { font-size: 13px; color: var(--muted); font-weight: 700; margin: 0 0 6px; }
+.mf-maker { margin: 0 0 8px; }
+.mf-maker-name {
+  font-family: var(--font-mincho), serif;
+  font-size: clamp(24px, 5vw, 34px);
+  font-weight: 700;
+  color: var(--accent);
+}
+.mf-maker-catch { display: block; font-size: 14px; font-weight: 700; color: var(--ink); margin-top: 2px; }
+.mf-msg { font-size: 14.5px; line-height: 1.8; color: var(--text); max-width: 560px; margin: 8px auto 14px; }
+.mf-actions { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+.mf-cta-buy {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 800;
+  font-size: 15px;
+  padding: 12px 26px;
+  text-decoration: none;
+}
+.mf-cta-buy:hover { background: #cf3d14; }
+.mf-cta-dock { color: var(--ink); font-weight: 700; font-size: 13.5px; text-decoration: underline; text-underline-offset: 3px; }
+.mf-again { margin-top: 12px; background: none; border: none; color: var(--muted); font-size: 13px; font-weight: 700; cursor: pointer; }
+.mf-again:hover { color: var(--ink); }
+.mf-disc { font-size: 11px; color: var(--muted); margin-top: 10px; }
+@media (max-width: 420px) {
+  .mf-months { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* NEW バッジ（新着記事の目印） */
+.ix-new, .guide-new {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #fff;
+  background: var(--accent);
+  padding: 1px 7px;
+  vertical-align: middle;
+  border-radius: 0;
+}
+
 /* ボタン・リンク：シャープに */
 .hero-cta .primary, .lk-next, .share-btn, .stats-clear, .start-band-btn {
   border-radius: 0 !important;

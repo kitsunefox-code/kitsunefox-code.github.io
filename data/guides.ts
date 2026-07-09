@@ -7,6 +7,8 @@ export type Guide = {
   title: string;
   description: string;
   category: GuideCategory;
+  /** 新着記事フラグ（トップ・一覧でNEWバッジ＆先頭表示に使う） */
+  isNew?: boolean;
 };
 
 // カテゴリの表示順とラベル（ガイド一覧ページで使用）
@@ -116,6 +118,14 @@ export const GUIDES: Guide[] = [
     category: "gear",
   },
   {
+    href: "/guide/bat-latest/",
+    emoji: "✨",
+    title: "軟式バット 最新おすすめ【2026年版】",
+    description: "飛距離のビヨンド系・軽いカーボン・扱いやすい金属をタイプ別に",
+    category: "gear",
+    isNew: true,
+  },
+  {
     href: "/guide/spikes-guide/",
     emoji: "👟",
     title: "野球スパイクの選び方",
@@ -128,6 +138,7 @@ export const GUIDES: Guide[] = [
     title: "木製バットの選び方と“相棒”ガイド",
     description: "樹種・重心の選び方、折れにくい使い方、手袋・グリップの相棒選び",
     category: "gear",
+    isNew: true,
   },
   {
     href: "/guide/grip-tape/",
@@ -135,6 +146,7 @@ export const GUIDES: Guide[] = [
     title: "バットのグリップテープの種類と巻き方",
     description: "厚さ・素材の違い、下から上へ均等に巻くコツと替えどき",
     category: "care",
+    isNew: true,
   },
   {
     href: "/guide/scorebook/",
@@ -142,6 +154,23 @@ export const GUIDES: Guide[] = [
     title: "スコアブックの書き方【記号一覧・つけ方の基本】",
     description: "ポジション番号・打撃記号・進塁の書き方をゼロから",
     category: "skill",
+    isNew: true,
+  },
+  {
+    href: "/guide/breaking-balls/",
+    emoji: "🌀",
+    title: "草野球で使える変化球の握り方",
+    description: "スライダー・カーブ・フォーク・チェンジアップの握りとコツ",
+    category: "skill",
+    isNew: true,
+  },
+  {
+    href: "/guide/cant-hit/",
+    emoji: "🎯",
+    title: "草野球で打てない原因と直し方",
+    description: "ボテボテ・空振り・当たらないを4つの原因から解消",
+    category: "skill",
+    isNew: true,
   },
 
   // === お手入れ・体のケア ===
