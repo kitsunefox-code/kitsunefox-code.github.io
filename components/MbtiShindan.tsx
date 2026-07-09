@@ -1,10 +1,11 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import {
   MBTI_STATEMENTS,
   AXIS_META,
   computeResult,
+  matchMbtiPlayer,
   mbtiByCode,
   resolvePlayers,
   getCompat,
@@ -12,6 +13,7 @@ import {
   type MbtiResult,
   type MbtiType,
 } from "@/data/baseballMbti";
+import { type Player } from "@/data/players";
 import { SITE_URL, rktSearch } from "@/data/site";
 import { saveMbtiCode, getSavedTypeSlug } from "@/data/comboLink";
 import TypeIcon from "@/components/TypeIcon";
@@ -94,6 +96,11 @@ export default function MbtiShindan() {
   const type: MbtiType | null = result
     ? mbtiByCode(result.code) || FALLBACK
     : null;
+  // あなたに最も近い選手を1人だけ（結果確定時に一度だけ算出＝再レンダーで変わらない）
+  const topPlayer: Player | null = useMemo(
+    () => (result ? matchMbtiPlayer(result) : null),
+    [result]
+  );
   const players = type ? resolvePlayers(type.players) : [];
   const compat = type ? getCompat(type.code) : { best: null, tough: null };
   const savedTypeSlug = type ? getSavedTypeSlug() : null;
@@ -102,8 +109,8 @@ export default function MbtiShindan() {
     ? `${SITE_URL}/baseball-mbti/type/${type.code.toLowerCase()}/`
     : `${SITE_URL}/baseball-mbti/`;
   const shareText =
-    result && type
-      ? `私の野球選手MBTIは【${result.code}｜${type.nickname}】${type.emoji}\n${type.catch}\nあなたのタイプは？⚾`
+    result && type && topPlayer
+      ? `私の野球選手MBTIは【${result.code}｜${type.nickname}】${type.emoji}\n似ているのは${topPlayer.name}（${topPlayer.league}）！\nあなたのタイプは？⚾`
       : "";
   const xUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
     shareText
@@ -189,11 +196,26 @@ export default function MbtiShindan() {
 
       {result && type && (
         <section id="mbti-result" ref={resultRef} style={{ paddingTop: 8 }}>
-          <div className="type-hero">
-            <TypeIcon icon={type.icon} className="type-emoji" title={type.nickname} />
-            <span className="type-kicker">あなたの野球選手MBTIは</span>
-            <span className="mbti-code">{result.code}</span>
-            <span className="type-name">{type.nickname}</span>
+          {/* MBTI × 選手を「どんと」1画面に */}
+          <div className="type-hero mbti-big">
+            <span className="type-kicker">診断結果</span>
+            <div className="mbig-grid">
+              <div className="mbig-mbti">
+                <TypeIcon icon={type.icon} className="mbig-icon" title={type.nickname} />
+                <span className="mbig-code">{result.code}</span>
+                <span className="mbig-nick">{type.nickname}</span>
+              </div>
+              <span className="mbig-x">×</span>
+              {topPlayer && (
+                <div className="mbig-player">
+                  <span className={`mbig-league ${topPlayer.league === "MLB" ? "mlb" : "npb"}`}>
+                    {topPlayer.league}
+                  </span>
+                  <span className="mbig-pname">{topPlayer.name}</span>
+                  <span className="mbig-ppos">{topPlayer.position}</span>
+                </div>
+              )}
+            </div>
             <span className="type-desc">{type.catch}</span>
             <a
               className="type-more"
@@ -202,6 +224,48 @@ export default function MbtiShindan() {
               「{type.code}｜{type.nickname}」ってどんなタイプ？→ 解説を見る
             </a>
           </div>
+
+          {/* 似ている選手のギア（大きく） */}
+          {topPlayer && (
+            <div className="mbig-detail">
+              <p className="mbig-detail-head">
+                あなたに最も近い選手は <strong>{topPlayer.name}</strong>
+              </p>
+              <p className="mbig-detail-note">{topPlayer.note}</p>
+              <div className="type-players" style={{ marginTop: 10 }}>
+                <div className="type-player">
+                  <span className="type-player-name">使用ギア</span>
+                  <span className="type-player-gear" style={{ flexBasis: "100%" }}>
+                    グローブ：
+                    <a
+                      className="maker-link"
+                      href={makerLink(topPlayer.glove, "グローブ")}
+                      target="_blank"
+                      rel="nofollow sponsored noopener"
+                    >
+                      {topPlayer.glove}
+                    </a>
+                    {topPlayer.bat && (
+                      <>
+                        ／バット：
+                        <a
+                          className="maker-link"
+                          href={makerLink(topPlayer.bat, "バット")}
+                          target="_blank"
+                          rel="nofollow sponsored noopener"
+                        >
+                          {topPlayer.bat}
+                        </a>
+                      </>
+                    )}
+                  </span>
+                </div>
+              </div>
+              <a className="cta-inline" href="/player-shindan/">
+                → 似ている選手をもっと詳しく（選手タイプ診断）
+              </a>
+            </div>
+          )}
 
           {/* 4軸の内訳（%） */}
           <div className="mbti-axes">

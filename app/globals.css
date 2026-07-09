@@ -4296,3 +4296,102 @@ h1 .hl {
   margin: 4px auto 16px;
   border: 1px solid var(--line-strong);
 }
+
+/* ── MBTI診断結果：MBTI × 選手を「どんと」 ───────────────── */
+.type-hero.mbti-big {
+  padding: 34px 22px 30px;
+}
+.mbig-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  margin: 10px 0 6px;
+}
+.mbig-mbti,
+.mbig-player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+.mbig-icon {
+  width: 40px;
+  height: 40px;
+  color: var(--accent-2);
+  margin-bottom: 2px;
+}
+.mbig-code {
+  font-family: var(--font-display), serif;
+  font-size: clamp(34px, 9vw, 58px);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  color: #fff;
+}
+.mbig-nick {
+  font-family: var(--jp-mincho);
+  font-size: clamp(13px, 3.4vw, 17px);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: rgba(250, 249, 246, 0.86);
+  text-align: center;
+}
+.mbig-x {
+  font-family: var(--font-display), serif;
+  font-size: clamp(22px, 5vw, 34px);
+  color: var(--accent-2);
+  line-height: 1;
+}
+.mbig-league {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 2px 10px;
+  color: #fff;
+}
+.mbig-league.npb { background: #b3472e; }
+.mbig-league.mlb { background: #2b6c8f; }
+.mbig-pname {
+  font-family: var(--jp-mincho);
+  font-size: clamp(22px, 6.2vw, 40px);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  line-height: 1.18;
+  color: #fff;
+  text-align: center;
+}
+.mbig-ppos {
+  font-size: 12px;
+  color: rgba(250, 249, 246, 0.72);
+}
+@media (max-width: 520px) {
+  .mbig-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .mbig-x { transform: rotate(90deg); }
+}
+
+.mbig-detail {
+  background: #fff;
+  border: 1px solid var(--line-strong);
+  border-top: none;
+  padding: 20px 22px;
+}
+.mbig-detail-head {
+  font-family: var(--jp-mincho);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 6px;
+}
+.mbig-detail-head strong { color: var(--accent); }
+.mbig-detail-note {
+  font-size: 13.5px;
+  line-height: 1.95;
+  color: var(--ink-2);
+  margin: 0;
+}

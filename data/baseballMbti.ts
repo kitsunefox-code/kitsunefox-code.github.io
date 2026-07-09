@@ -344,3 +344,39 @@ export function computeResult(ans: Record<string, number>): MbtiResult {
   });
   return { code: axes.map((a) => a.letter).join(""), axes };
 }
+
+// ── MBTIの結果から「あなたに最も近い実在選手」を1人だけ選ぶ ──────────
+// 4軸の傾き（強さ%）＋タイプ固有traitsを資質ベクトルに変換し、
+// 収録選手のtraitsとの内積でスコアリング。同点はランダムで割り、毎回の意外性も担保。
+const AXIS_TRAITS: Record<Axis, { L: Trait[]; R: Trait[] }> = {
+  EI: { L: ["leader", "flashy", "star"], R: ["stoic", "technician"] },
+  SN: { L: ["defense", "contact"], R: ["power", "flashy"] },
+  TF: { L: ["technician", "pitcher"], R: ["catcher", "leader", "contact"] },
+  JP: { L: ["defense", "stoic"], R: ["speed", "clutch"] },
+};
+
+export function matchMbtiPlayer(result: MbtiResult): Player {
+  const w: Partial<Record<Trait, number>> = {};
+  const add = (t: Trait, n: number) => {
+    w[t] = (w[t] || 0) + n;
+  };
+  // タイプ固有traits（強めの基礎点）
+  const type = mbtiByCode(result.code);
+  for (const t of type?.traits || []) add(t, 3);
+  // 4軸の傾き（%が偏るほど重み大）
+  for (const a of result.axes) {
+    const m = AXIS_META[a.axis];
+    const isLeft = a.letter === m.left;
+    const strength = Math.abs(a.leftPct - 50) / 50; // 0〜1
+    const weight = 1 + strength * 2; // 1〜3
+    for (const t of isLeft ? AXIS_TRAITS[a.axis].L : AXIS_TRAITS[a.axis].R) {
+      add(t, weight);
+    }
+  }
+  const ranked = PLAYERS.map((p) => ({
+    p,
+    s: p.traits.reduce((sum, t) => sum + (w[t] || 0), 0),
+    r: Math.random(),
+  })).sort((x, y) => y.s - x.s || y.r - x.r);
+  return ranked[0].p;
+}

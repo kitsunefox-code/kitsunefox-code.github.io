@@ -126,46 +126,48 @@ export default function Home() {
         </section>
       </div>
 
-      {/* ── 特集：2大診断（墨バンド） ── */}
+      {/* ── 特集：看板は野球選手MBTI診断（墨バンド） ── */}
       <section className="ink-band">
         <div className="container">
-          <p className="ink-band-head">Featured</p>
-          <a className="ink-item ink-lead" href="/baseball-dock/">
-            <span className="ink-en">Full Checkup</span>
+          <p className="ink-band-head">The Main Diagnosis</p>
+          <a className="ink-item ink-lead" href="/baseball-mbti/">
+            <span className="ink-en">Baseball MBTI</span>
             <span className="ink-ttl">
-              まとめて診てもらうなら、野球人間ドック。
+              性格も、似ている選手も、これ一本。
             </span>
             <span className="ink-desc">
-              こころ・プレースタイル・バット・グローブの4検査を全30問で。
-              結果は「検査結果報告書」を一枚にしてお渡しします。
+              本格36問・7段階に答えるだけで、あなたの<strong>MBTIタイプ</strong>と、
+              最も似ている<strong>プロ選手を1人</strong>（NPB・MLB {PLAYER_COUNT}名から）どんと判定。
+              軸ごとの％・相性・使用メーカーまで、これ一本でまるごとわかります。
             </span>
-            <span className="ink-link">受診する（約4分・無料）</span>
+            <span className="ink-link">野球選手MBTI診断へ（約3分・無料）</span>
           </a>
           <div className="ink-band-grid">
-            <a className="ink-item" href="/player-shindan/">
-              <span className="ink-en">Player Match</span>
+            <a className="ink-item" href="/baseball-dock/">
+              <span className="ink-en">Full Checkup</span>
               <span className="ink-ttl">
-                あなたに似た選手が、
+                もっと詳しく、
                 <br />
-                きっといる。
+                野球人間ドック。
               </span>
               <span className="ink-desc">
-                はい／いいえに答えるだけで、NPB・MLB {PLAYER_COUNT}
-                名からあなたに似た選手をズバリ。その選手が使うグローブ・バットのメーカーと実物まで。
+                こころ・プレースタイル・バット・グローブの4検査を全30問で。
+                結果は「検査結果報告書」を一枚の画像にしてお渡しします。
               </span>
-              <span className="ink-link">選手タイプ診断へ</span>
+              <span className="ink-link">受診する（約4分・無料）</span>
             </a>
-            <a className="ink-item" href="/baseball-mbti/">
-              <span className="ink-en">Baseball MBTI</span>
+            <a className="ink-item" href="/baseball-mbti/type/">
+              <span className="ink-en">16 Types</span>
               <span className="ink-ttl">
-                野球には、
+                全16タイプ、
                 <br />
-                性格が出る。
+                読みもの。
               </span>
               <span className="ink-desc">
-                全36問・7段階の本格派。あなたの“野球選手MBTI”を軸ごとの％つきで判定し、相性の良いタイプまでわかります。
+                知将エース・チームの太陽…16タイプそれぞれの特徴・相性・
+                似ているプロ選手を、じっくり解説しています。
               </span>
-              <span className="ink-link">野球選手MBTI診断へ</span>
+              <span className="ink-link">タイプ一覧を見る</span>
             </a>
           </div>
         </div>

@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import MbtiShindan from "@/components/MbtiShindan";
 import AdSlot from "@/components/AdSlot";
 import { MBTI_TYPES } from "@/data/baseballMbti";
+import { PLAYER_COUNT } from "@/data/players";
 import { SITE_URL } from "@/data/site";
 
 export const metadata: Metadata = {
-  title: "野球選手MBTI診断｜本格36問・あなたは16タイプのどれ？似ているNPB・MLB選手もわかる",
+  title: "野球選手MBTI診断｜本格36問であなたのタイプ＆似ているプロ選手を1人ズバリ",
   description:
-    "MBTIの4指標（E/I・S/N・T/F・J/P）を野球にあてはめた本格16タイプ診断。全36問に7段階で答えると、あなたの“野球選手MBTI”を軸ごとのパーセンテージ付きで判定。近いプレースタイルのNPB・MLB選手と使用メーカーもわかります。登録不要・無料。",
+    "MBTIの4指標（E/I・S/N・T/F・J/P）を野球にあてはめた本格16タイプ診断。全36問に7段階で答えるだけで、あなたのMBTIタイプと、最も似ているプロ選手（NPB・MLB600名超から1人）をまとめて判定。軸ごとの％・相性・使用メーカーまで一度に。登録不要・無料。",
   alternates: { canonical: `${SITE_URL}/baseball-mbti/` },
   openGraph: {
     title: "野球選手MBTI診断｜本格36問・あなたは16タイプのどれ？",
@@ -53,9 +54,10 @@ export default function BaseballMbtiPage() {
           <p>
             MBTIの4指標（<strong>E/I・S/N・T/F・J/P</strong>）を野球の性格に置き換えた
             <strong>本格16タイプ診断</strong>。全<strong>36問</strong>に
-            <strong>7段階</strong>（そう思う〜そう思わない）で答えると、あなたの“野球選手MBTI”を
-            軸ごとの<strong>パーセンテージ付き</strong>で判定。似たプレースタイルの
-            <strong>NPB・MLB選手</strong>と使用メーカーもわかります（約3分）。
+            <strong>7段階</strong>（そう思う〜そう思わない）で答えるだけで、
+            あなたの<strong>MBTIタイプ</strong>と、
+            <strong>最も似ているプロ選手（NPB・MLB {PLAYER_COUNT}名から1人）</strong>を
+            まとめてズバリ判定。軸ごとの％、相性、使用メーカーまで一度にわかります（約3分・無料）。
           </p>
         </div>
       </div>
@@ -71,9 +73,10 @@ export default function BaseballMbtiPage() {
           <p className="section-sub" style={{ marginTop: 8 }}>
             外向／内向、堅実／ひらめき、論理／情熱、計画／自由——4つの軸それぞれに9問ずつ、
             計36問を7段階で回答すると、軸ごとの傾向をパーセンテージで算出し、あなたの野球での
-            “性格タイプ”を全<strong>{MBTI_TYPES.length}種</strong>から判定します。近い選手の分類は
-            プレースタイルをもとにした遊びのもので、公式のMBTIとは無関係です。
-            気軽な話のタネに、道具選びのヒントにどうぞ。
+            “性格タイプ”を全<strong>{MBTI_TYPES.length}種</strong>から判定。さらに、その回答から
+            <strong>収録{PLAYER_COUNT}名のプロ選手の中で最も近い1人</strong>もマッチングします。
+            性格も、似ている選手も、これ一本で。分類はプレースタイルをもとにした遊びのもので、
+            公式のMBTIとは無関係です。気軽な話のタネに、道具選びのヒントにどうぞ。
           </p>
           <a className="cta-inline" href="/baseball-mbti/type/" style={{ marginTop: 14 }}>
             → 野球選手MBTI全16タイプの解説を見る（あなたはどのタイプ？）
