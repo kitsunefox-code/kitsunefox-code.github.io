@@ -15,11 +15,13 @@ export const metadata: Metadata = {
       "好きな野球メーカーを選ぶだけ。総合運・打撃運・守備運・ラッキー背番号まで、今日の運勢を詳しく。",
     type: "website",
     url: `${SITE_URL}/uranai/`,
+    images: [{ url: "/og-uranai.png", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: "野球ギアメーカー占い｜今日の運勢",
     description: "好きな野球メーカーを選ぶだけ。今日の運勢を詳しく占います。無料・毎日更新。",
+    images: ["/og-uranai.png"],
   },
 };
 

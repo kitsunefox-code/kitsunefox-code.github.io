@@ -884,6 +884,12 @@ export default function DockShindan() {
             <a className="cta-inline" href="/baseball-dock/type/">
               → 全16タイプの解説を読む
             </a>
+            <a className="cta-inline" href="/uranai/">
+              → 「ギアメーカー占い」で今日の運勢もチェック
+            </a>
+            <a className="cta-inline" href="/players/">
+              → プロ選手の使用ギア一覧（657名）を見る
+            </a>
             <a className="cta-inline" href="/hikaku/">
               → 道具・ユニフォーム比較を見る
             </a>
