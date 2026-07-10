@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import RelatedGuides from "@/components/RelatedGuides";
 import AdSlot from "@/components/AdSlot";
 import AffiliateBox from "@/components/AffiliateBox";
 import GoodsLinks from "@/components/GoodsLinks";
@@ -143,6 +144,8 @@ export default function NightGamePage() {
           <a className="cta-inline" href="/guide/manners/">→ 「草野球のマナー・グラウンドの使い方」も読む</a>
           <a className="cta-inline" href="/guide/">→ ガイドをすべて見る</a>
         </div>
+
+        <RelatedGuides currentHref="/guide/night-game/" />
       </article>
       <GoodsLinks />
       <div style={{ height: 30 }} />

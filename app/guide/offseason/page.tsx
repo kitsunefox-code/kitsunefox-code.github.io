@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import RelatedGuides from "@/components/RelatedGuides";
 import AdSlot from "@/components/AdSlot";
 import AffiliateBox from "@/components/AffiliateBox";
 import GoodsLinks from "@/components/GoodsLinks";
@@ -162,6 +163,8 @@ export default function OffseasonPage() {
           <a className="cta-inline" href="/guide/cant-hit/">→ 打撃を見直す「打てない原因と直し方」</a>
           <a className="cta-inline" href="/baseball-dock/">→ 来季の道具を「野球人間ドック」で処方</a>
         </div>
+
+        <RelatedGuides currentHref="/guide/offseason/" />
       </article>
       <GoodsLinks />
       <div style={{ height: 30 }} />

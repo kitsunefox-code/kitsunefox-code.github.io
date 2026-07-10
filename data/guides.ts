@@ -150,6 +150,14 @@ export const GUIDES: Guide[] = [
     isNew: true,
   },
   {
+    href: "/guide/bat-distance/",
+    emoji: "🚀",
+    title: "軟式バット徹底比較【飛距離重視】",
+    description: "人気モデルを反発・重心・価格で。YouTube飛距離検証の見方も",
+    category: "gear",
+    isNew: true,
+  },
+  {
     href: "/guide/spikes-guide/",
     emoji: "👟",
     title: "野球スパイクの選び方",
@@ -275,6 +283,14 @@ export const GUIDES: Guide[] = [
     description: "翌日に残さない・ケガを防ぐ。肩・肘・腰・脚のケア",
     category: "care",
   },
+  {
+    href: "/guide/elbow-care/",
+    emoji: "💪",
+    title: "野球肘のケアと予防",
+    description: "原因・チューブトレ・ストレッチ・サポーター・痛い時の対処",
+    category: "care",
+    isNew: true,
+  },
 
   // === 技術・上達 ===
   {
@@ -283,6 +299,22 @@ export const GUIDES: Guide[] = [
     title: "【硬式出身者必見】軟式と硬式の違い",
     description: "ボール・打撃・守備はこう変わる。戸惑いポイントと対処法",
     category: "skill",
+  },
+  {
+    href: "/guide/m-ball/",
+    emoji: "⚾",
+    title: "軟式M号球とは？",
+    description: "M号・J号の違い、硬式との違い、試合球の選び方",
+    category: "skill",
+    isNew: true,
+  },
+  {
+    href: "/guide/position/",
+    emoji: "🧭",
+    title: "草野球のポジション適性",
+    description: "肩・足・反応・性格から、向いている守備位置を見つける",
+    category: "skill",
+    isNew: true,
   },
   {
     href: "/guide/soft-batting/",

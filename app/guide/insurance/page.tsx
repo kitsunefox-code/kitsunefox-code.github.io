@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import RelatedGuides from "@/components/RelatedGuides";
 import AdSlot from "@/components/AdSlot";
 import GoodsLinks from "@/components/GoodsLinks";
 import { LAST_UPDATED } from "@/data/makers";
@@ -156,6 +157,8 @@ export default function InsurancePage() {
           <a className="cta-inline" href="/guide/annual-cost/">→ 「草野球の年間費用」に保険も組み込む</a>
           <a className="cta-inline" href="/guide/">→ ガイドをすべて見る</a>
         </div>
+
+        <RelatedGuides currentHref="/guide/insurance/" />
       </article>
       <GoodsLinks />
       <div style={{ height: 30 }} />

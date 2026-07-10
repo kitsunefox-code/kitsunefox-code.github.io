@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import RelatedGuides from "@/components/RelatedGuides";
 import AdSlot from "@/components/AdSlot";
 import GoodsLinks from "@/components/GoodsLinks";
 import { LAST_UPDATED } from "@/data/makers";
@@ -295,6 +296,8 @@ export default function HelperRecruitPage() {
         <a className="cta-inline" href="/guide/build-a-team/">
           → チームをこれから作る人は「立ち上げ完全マニュアル」へ
         </a>
+
+        <RelatedGuides currentHref="/guide/helper-recruit/" />
       </article>
       <GoodsLinks />
       <div style={{ height: 30 }} />

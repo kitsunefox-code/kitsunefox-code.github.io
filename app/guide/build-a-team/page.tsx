@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import RelatedGuides from "@/components/RelatedGuides";
 import AdSlot from "@/components/AdSlot";
 import GoodsLinks from "@/components/GoodsLinks";
 import { LAST_UPDATED } from "@/data/makers";
@@ -331,6 +332,8 @@ export default function BuildATeamPage() {
         <a className="cta-inline" href="/guide/how-to-start/">
           → まだ迷っている人は「草野球の始め方 完全ガイド」から
         </a>
+
+        <RelatedGuides currentHref="/guide/build-a-team/" />
       </article>
       <GoodsLinks />
       <div style={{ height: 30 }} />

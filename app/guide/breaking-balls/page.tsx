@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import RelatedGuides from "@/components/RelatedGuides";
 import AdSlot from "@/components/AdSlot";
 import AffiliateBox from "@/components/AffiliateBox";
 import GoodsLinks from "@/components/GoodsLinks";
@@ -162,6 +163,8 @@ export default function BreakingBallsPage() {
           <a className="cta-inline" href="/glove/">→ 握りを隠せる投手用グローブは「グローブ比較」へ</a>
           <a className="cta-inline" href="/baseball-dock/">→ あなたに近いプロ投手を「野球人間ドック」で診断</a>
         </div>
+
+        <RelatedGuides currentHref="/guide/breaking-balls/" />
       </article>
       <GoodsLinks />
       <div style={{ height: 30 }} />

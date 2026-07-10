@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import RelatedGuides from "@/components/RelatedGuides";
 import AdSlot from "@/components/AdSlot";
 import AffiliateBox from "@/components/AffiliateBox";
 import GoodsLinks from "@/components/GoodsLinks";
@@ -235,6 +236,8 @@ export default function ScorebookPage() {
             → あなたのタイプと似た選手を「野球人間ドック」で診断
           </a>
         </div>
+
+        <RelatedGuides currentHref="/guide/scorebook/" />
       </article>
       <GoodsLinks />
       <div style={{ height: 30 }} />

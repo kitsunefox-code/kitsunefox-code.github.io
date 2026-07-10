@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import RelatedGuides from "@/components/RelatedGuides";
 import AdSlot from "@/components/AdSlot";
 import AffiliateBox from "@/components/AffiliateBox";
 import GoodsLinks from "@/components/GoodsLinks";
@@ -160,6 +161,8 @@ export default function UmpirePage() {
           <a className="cta-inline" href="/guide/scorebook/">→ 記録係なら「スコアブックの書き方」</a>
           <a className="cta-inline" href="/guide/">→ ガイドをすべて見る</a>
         </div>
+
+        <RelatedGuides currentHref="/guide/umpire/" />
       </article>
       <GoodsLinks />
       <div style={{ height: 30 }} />

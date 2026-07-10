@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import RelatedGuides from "@/components/RelatedGuides";
 import AdSlot from "@/components/AdSlot";
 import { LAST_UPDATED } from "@/data/makers";
 import { SITE_URL } from "@/data/site";
@@ -158,6 +159,8 @@ export default function SoftBattingPage() {
         <a className="cta-inline" href="/uniform/">
           → ユニフォームを作るなら：メーカー比較ランキング
         </a>
+
+        <RelatedGuides currentHref="/guide/soft-batting/" />
       </article>
       <div style={{ height: 30 }} />
     </main>

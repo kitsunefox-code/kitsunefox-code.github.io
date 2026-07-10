@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import RelatedGuides from "@/components/RelatedGuides";
 import AdSlot from "@/components/AdSlot";
 import ProductCards from "@/components/ProductCards";
 import EditorsPicks from "@/components/EditorsPicks";
@@ -176,6 +177,8 @@ export default function BatLatestPage() {
           <a className="cta-inline" href="/guide/bat-guide/">→ 長さ・重さの決め方は「軟式バットの選び方」</a>
           <a className="cta-inline" href="/baseball-dock/">→ 自分に合う一本を「野球人間ドック」で処方してもらう</a>
         </div>
+
+        <RelatedGuides currentHref="/guide/bat-latest/" />
       </article>
       <GoodsLinks />
       <div style={{ height: 30 }} />

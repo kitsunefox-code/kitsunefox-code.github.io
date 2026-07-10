@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import RelatedGuides from "@/components/RelatedGuides";
 import AdSlot from "@/components/AdSlot";
 import AffiliateBox from "@/components/AffiliateBox";
 import GoodsLinks from "@/components/GoodsLinks";
@@ -157,6 +158,8 @@ export default function CantHitPage() {
           <a className="cta-inline" href="/guide/bat-latest/">→ タイプ別の「軟式バット最新おすすめ」を見る</a>
           <a className="cta-inline" href="/baseball-dock/">→ あなたに合う道具を「野球人間ドック」で処方</a>
         </div>
+
+        <RelatedGuides currentHref="/guide/cant-hit/" />
       </article>
       <GoodsLinks />
       <div style={{ height: 30 }} />

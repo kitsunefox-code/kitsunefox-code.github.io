@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import RelatedGuides from "@/components/RelatedGuides";
 import AdSlot from "@/components/AdSlot";
 import GoodsLinks from "@/components/GoodsLinks";
 import { LAST_UPDATED } from "@/data/makers";
@@ -203,6 +204,8 @@ export default function TeamAppsPage() {
         <a className="cta-inline" href="/uniform/">
           → オーダーユニフォーム13社の比較ランキングを見る
         </a>
+
+        <RelatedGuides currentHref="/guide/team-apps/" />
       </article>
       <GoodsLinks />
       <div style={{ height: 30 }} />

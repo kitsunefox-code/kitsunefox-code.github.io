@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import RelatedGuides from "@/components/RelatedGuides";
 import AdSlot from "@/components/AdSlot";
 import { LAST_UPDATED } from "@/data/makers";
 import { SITE_URL } from "@/data/site";
@@ -196,6 +197,8 @@ export default function SoftVsHardPage() {
         <a className="cta-inline" href="/uniform/">
           → チームのユニフォームを作るなら：メーカー比較ランキング
         </a>
+
+        <RelatedGuides currentHref="/guide/soft-vs-hard/" />
       </article>
       <div style={{ height: 30 }} />
     </main>

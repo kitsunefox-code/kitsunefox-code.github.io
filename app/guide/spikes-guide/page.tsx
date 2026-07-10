@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import RelatedGuides from "@/components/RelatedGuides";
 import AdSlot from "@/components/AdSlot";
 import AffiliateBox from "@/components/AffiliateBox";
 import ProductCards from "@/components/ProductCards";
@@ -203,6 +204,8 @@ export default function SpikesGuidePage() {
         <a className="cta-inline" href="/guide/gear-checklist/">
           → 「道具・装備 一式チェックリスト」で必要なものを総確認
         </a>
+
+        <RelatedGuides currentHref="/guide/spikes-guide/" />
       </article>
       <GoodsLinks />
       <div style={{ height: 30 }} />

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import RelatedGuides from "@/components/RelatedGuides";
 import AdSlot from "@/components/AdSlot";
 import GoodsLinks from "@/components/GoodsLinks";
 import { LAST_UPDATED } from "@/data/makers";
@@ -195,6 +196,8 @@ export default function BattingOrderPage() {
             → 「試合の進め方・基本ルール完全ガイド」も読む
           </a>
         </div>
+
+        <RelatedGuides currentHref="/guide/batting-order/" />
       </article>
       <GoodsLinks />
       <div style={{ height: 30 }} />

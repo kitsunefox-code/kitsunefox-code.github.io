@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import RelatedGuides from "@/components/RelatedGuides";
 import AdSlot from "@/components/AdSlot";
 import GoodsLinks from "@/components/GoodsLinks";
 import { LAST_UPDATED } from "@/data/makers";
@@ -309,6 +310,8 @@ export default function UniformHowToPage() {
         <a className="cta-inline" href="/shindan/">
           → イメージ写真からぴったりのメーカーを診断する（無料・30秒）
         </a>
+
+        <RelatedGuides currentHref="/guide/uniform-how-to/" />
       </article>
       <GoodsLinks />
       <div style={{ height: 30 }} />

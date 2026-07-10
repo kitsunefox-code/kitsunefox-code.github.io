@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import RelatedGuides from "@/components/RelatedGuides";
 import AdSlot from "@/components/AdSlot";
 import GoodsLinks from "@/components/GoodsLinks";
 import ProductCards from "@/components/ProductCards";
@@ -200,6 +201,8 @@ export default function GearChecklistPage() {
         <a className="cta-inline" href="/uniform/">
           → オーダーユニフォームメーカー13社の比較ランキングを見る
         </a>
+
+        <RelatedGuides currentHref="/guide/gear-checklist/" />
       </article>
       <GoodsLinks />
       <div style={{ height: 30 }} />

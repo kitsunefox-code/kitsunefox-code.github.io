@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import RelatedGuides from "@/components/RelatedGuides";
 import AdSlot from "@/components/AdSlot";
 import AffiliateBox from "@/components/AffiliateBox";
 import ProductCards from "@/components/ProductCards";
@@ -235,6 +236,8 @@ export default function GloveGuidePage() {
         <a className="cta-inline" href="/guide/gear-checklist/">
           → 他に何が必要？「道具・装備 一式チェックリスト」で確認
         </a>
+
+        <RelatedGuides currentHref="/guide/glove-guide/" />
       </article>
       <GoodsLinks />
       <div style={{ height: 30 }} />

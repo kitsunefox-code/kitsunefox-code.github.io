@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import RelatedGuides from "@/components/RelatedGuides";
 import AdSlot from "@/components/AdSlot";
 import AffiliateBox from "@/components/AffiliateBox";
 import GoodsLinks from "@/components/GoodsLinks";
@@ -179,6 +180,8 @@ export default function BodyCarePage() {
         <a className="cta-inline" href="/guide/how-to-start/">
           → はじめての方は「草野球の始め方 完全ガイド」へ
         </a>
+
+        <RelatedGuides currentHref="/guide/body-care/" />
       </article>
       <GoodsLinks />
       <div style={{ height: 30 }} />

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import RelatedGuides from "@/components/RelatedGuides";
 import AdSlot from "@/components/AdSlot";
 import GoodsLinks from "@/components/GoodsLinks";
 import { LAST_UPDATED } from "@/data/makers";
@@ -265,6 +266,8 @@ export default function UniformCostPage() {
         <a className="cta-inline" href="/uniform/">
           → 13社の価格を比較ランキングでチェックする
         </a>
+
+        <RelatedGuides currentHref="/guide/uniform-cost/" />
       </article>
       <GoodsLinks />
       <div style={{ height: 30 }} />

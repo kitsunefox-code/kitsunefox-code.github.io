@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import RelatedGuides from "@/components/RelatedGuides";
 import AdSlot from "@/components/AdSlot";
 import AffiliateBox from "@/components/AffiliateBox";
 import ProductCards from "@/components/ProductCards";
@@ -210,6 +211,8 @@ export default function WoodBatPage() {
             → 相棒バット・道具をまとめて「野球人間ドック」で診断
           </a>
         </div>
+
+        <RelatedGuides currentHref="/guide/wood-bat/" />
       </article>
       <GoodsLinks />
       <div style={{ height: 30 }} />

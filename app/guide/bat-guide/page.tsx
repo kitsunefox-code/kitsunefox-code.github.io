@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import RelatedGuides from "@/components/RelatedGuides";
 import AdSlot from "@/components/AdSlot";
 import AffiliateBox from "@/components/AffiliateBox";
 import ProductCards from "@/components/ProductCards";
@@ -222,6 +223,8 @@ export default function BatGuidePage() {
         <a className="cta-inline" href="/guide/soft-batting/">
           → バットを活かす「軟式の打ち方のコツ【動画つき】」も読む
         </a>
+
+        <RelatedGuides currentHref="/guide/bat-guide/" />
       </article>
       <GoodsLinks />
       <div style={{ height: 30 }} />
