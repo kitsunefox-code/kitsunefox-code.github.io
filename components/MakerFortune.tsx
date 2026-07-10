@@ -6,6 +6,8 @@
 // 結果はメーカーの楽天アフィリンク＋本格版=野球人間ドックへの導線つき。
 import { useState } from "react";
 import { rktSearch, SITE_URL } from "@/data/site";
+import { renderFortuneCard } from "@/lib/fortuneCard";
+import { canvasToBlob } from "@/lib/dockCard";
 
 type Maker = {
   name: string;
@@ -154,6 +156,8 @@ function stars(n: number): string {
 export default function MakerFortune() {
   const [idx, setIdx] = useState<number | null>(null);
   const [copied, setCopied] = useState(false);
+  const [cardState, setCardState] = useState<"idle" | "busy" | "done">("idle");
+  const [cardUrl, setCardUrl] = useState<string | null>(null);
 
   const m = idx !== null ? MAKERS[idx] : null;
 
@@ -175,6 +179,49 @@ export default function MakerFortune() {
         })()
       : null;
 
+  // 結果を1枚のカード画像にして保存／シェア
+  const saveCard = async () => {
+    if (!m || !fortune || cardState === "busy") return;
+    setCardState("busy");
+    try {
+      const canvas = await renderFortuneCard({
+        maker: m.name,
+        tagline: m.tagline,
+        dateLabel: fortune.dateLabel,
+        catch: fortune.p.catch,
+        rank: fortune.rank,
+        sougou: fortune.p.sougou,
+        batting: fortune.p.batting,
+        fielding: fortune.p.fielding,
+        luckyPos: fortune.luckyPos,
+        luckyNo: fortune.luckyNo,
+      });
+      setCardUrl(canvas.toDataURL("image/png"));
+      const blob = await canvasToBlob(canvas);
+      if (!blob) throw new Error("blob failed");
+      const fileName = `ギア占い_${m.name}_${fortune.dateLabel}.png`;
+      const file = new File([blob], fileName, { type: "image/png" });
+      const nav = navigator as Navigator & { canShare?: (d: { files: File[] }) => boolean };
+      const shareText = `⚾今日のギアメーカー占い⚾ 私は【${m.name}】タイプ！`;
+      if (nav.canShare && nav.canShare({ files: [file] }) && navigator.share) {
+        await navigator.share({ files: [file], text: shareText });
+      } else {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 4000);
+      }
+      setCardState("done");
+      setTimeout(() => setCardState("idle"), 2500);
+    } catch {
+      setCardState("idle");
+    }
+  };
+
   return (
     <div className="mf-band">
       <div className="mf-head">
@@ -191,7 +238,15 @@ export default function MakerFortune() {
       {!m && (
         <div className="mf-makers" role="group" aria-label="メーカーを選ぶ">
           {MAKERS.map((mk, i) => (
-            <button key={mk.name} className="mf-maker-btn" onClick={() => setIdx(i)}>
+            <button
+              key={mk.name}
+              className="mf-maker-btn"
+              onClick={() => {
+                setIdx(i);
+                setCardUrl(null);
+                setCardState("idle");
+              }}
+            >
               {mk.name}
             </button>
           ))}
@@ -264,6 +319,17 @@ export default function MakerFortune() {
             return (
               <div className="mf-share">
                 <span className="mf-share-label">結果をシェアする</span>
+                <button className="dock-save-btn" onClick={saveCard} disabled={cardState === "busy"}>
+                  {cardState === "busy"
+                    ? "画像を作成中…"
+                    : cardState === "done"
+                      ? "画像を保存しました！"
+                      : "🖼 結果を画像で保存／シェアする"}
+                </button>
+                {cardUrl && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img className="dock-card-preview" src={cardUrl} alt="今日のギアメーカー占い" />
+                )}
                 <div className="mf-share-btns">
                   <a className="share-btn share-x" href={xUrl} target="_blank" rel="noopener noreferrer">
                     𝕏 でシェア
@@ -292,7 +358,14 @@ export default function MakerFortune() {
               本格派は「野球人間ドック」（全45問）で似ているプロ選手まで診断 →
             </a>
           </div>
-          <button className="mf-again" onClick={() => setIdx(null)}>
+          <button
+            className="mf-again"
+            onClick={() => {
+              setIdx(null);
+              setCardUrl(null);
+              setCardState("idle");
+            }}
+          >
             ← 別のメーカーで占う
           </button>
           <p className="mf-disc">

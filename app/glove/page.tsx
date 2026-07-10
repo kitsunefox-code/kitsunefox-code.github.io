@@ -179,6 +179,7 @@ export default function GloveComparePage() {
           <h2>迷ったら：診断とガイド</h2>
           <div className="bat-links">
             <a className="cta-inline" href="/baseball-dock/">→ あなたに合うグローブを「野球人間ドック」で処方してもらう</a>
+            <a className="cta-inline" href="/players/">→ プロ選手の使用グローブ・メーカー一覧（657名）を見る</a>
             <a className="cta-inline" href="/guide/glove-guide/">
               → じっくり読む「初めてのグローブの選び方」
             </a>

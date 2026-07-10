@@ -165,6 +165,7 @@ export default function BatComparePage() {
           </p>
           <div className="bat-links">
             <a className="cta-inline" href="/baseball-dock/">→ あなたに合うバットを「野球人間ドック」で処方してもらう</a>
+            <a className="cta-inline" href="/players/">→ プロ選手の使用バット・メーカー一覧（657名）を見る</a>
             <a className="cta-inline" href="/guide/bat-guide/">
               → じっくり読む「軟式バットの選び方」
             </a>
