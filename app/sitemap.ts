@@ -2,6 +2,8 @@ import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/data/site";
 import { MBTI_TYPES } from "@/data/baseballMbti";
 
+const GEAR_MAKER_SLUGS = ["mizuno", "zett", "ssk", "rawlings", "kubota", "asics", "wilson"];
+
 // output: export（静的書き出し）で生成するために必要
 export const dynamic = "force-static";
 
@@ -88,6 +90,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.85,
     },
+    {
+      url: `${SITE_URL}/players/maker/`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    ...GEAR_MAKER_SLUGS.map((s) => ({
+      url: `${SITE_URL}/players/maker/${s}/`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.75,
+    })),
     {
       url: `${SITE_URL}/uranai/`,
       lastModified: new Date(),
@@ -321,6 +335,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
+    },
+    {
+      url: `${SITE_URL}/guide/heat/`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.85,
+    },
+    {
+      url: `${SITE_URL}/guide/summer-undershirt/`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.85,
+    },
+    {
+      url: `${SITE_URL}/guide/cooling-goods/`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.85,
     },
     {
       url: `${SITE_URL}/guide/soft-vs-hard/`,

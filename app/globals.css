@@ -3659,6 +3659,7 @@ h1 .hl {
   background: var(--good); padding: 1px 6px; vertical-align: middle;
 }
 .pl-empty { padding: 30px 0; text-align: center; color: var(--muted); font-size: 14px; }
+.pl-group { margin-top: 24px; }
 
 /* 軽量メーカー占い（トップ入口） */
 .mf-band {

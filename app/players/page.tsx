@@ -68,6 +68,8 @@ export default function PlayersPage() {
             「本人モデル」がある選手は、モデル名も表示しています。
           </p>
           <p className="section-sub" style={{ marginTop: 10 }}>
+            <a href="/players/maker/">メーカー別の使用選手一覧</a>（ミズノ・ゼット・SSK・ローリングス…）から、
+            気になるブランドの愛用選手をまとめて見ることもできます。
             自分に近いプレースタイルの選手から選びたい人は
             <a href="/baseball-dock/">野球人間ドック</a>で「最も近いプロ選手」を診断できます。
             道具そのものの選び方は<a href="/glove/">グローブ比較</a>・

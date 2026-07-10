@@ -266,6 +266,7 @@ export const ADSENSE_SLOTS: Record<string, string> = {
   "dock-top": "",
   "dock-result": "",
   "players-top": "",
+  "maker-top": "",
   "uranai-top": "",
   "mbti-top": "",
   "mbti-result": "",
