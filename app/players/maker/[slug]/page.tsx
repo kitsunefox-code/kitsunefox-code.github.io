@@ -42,6 +42,8 @@ export async function generateMetadata({
     title: `${m.name}を使うプロ野球選手一覧【NPB・MLB ${count}名｜グローブ】`,
     description: `${m.name}のグローブを使うプロ野球選手（NPB・MLB）を一覧でまとめました。全${count}名の選手名・ポジション・バットのメーカーも掲載。「あの選手と同じ${m.name}で揃えたい」草野球プレーヤーのための早見表です。`,
     alternates: { canonical: `${SITE_URL}/players/maker/${m.slug}/` },
+    // 選手名リストが主体で本文が薄いため検索インデックスから除外(noindex, follow)。
+    robots: { index: false, follow: true },
     openGraph: {
       title: `${m.name}を使うプロ野球選手一覧【${count}名】`,
       description: `${m.name}のグローブを使うNPB・MLB選手を一覧で。ポジション・バットも掲載。`,

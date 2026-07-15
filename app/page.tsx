@@ -125,11 +125,11 @@ export default function Home() {
                 週末のグラウンドに立つすべての人へ、「知りたい」にていねいに答える編集ナビです。
               </p>
               <div className="ed-hero-actions">
-                <a className="btn-ink" href="/baseball-dock/">
-                  野球人間ドックを受診する
-                </a>
-                <a className="link-arrow" href="/uniform/">
+                <a className="btn-ink" href="/uniform/">
                   ユニフォーム比較を見る
+                </a>
+                <a className="link-arrow" href="/baseball-dock/">
+                  野球人間ドックを受診する
                 </a>
               </div>
               <div className="ed-hero-meta">
@@ -138,16 +138,16 @@ export default function Home() {
                   <span className="ed-meta-label">メーカー比較</span>
                 </div>
                 <div>
-                  <span className="ed-meta-num">{TOOLS.length}</span>
-                  <span className="ed-meta-label">無料診断ツール</span>
+                  <span className="ed-meta-num">{GUIDES.length}</span>
+                  <span className="ed-meta-label">お役立ちガイド</span>
                 </div>
                 <div>
                   <span className="ed-meta-num">{PLAYER_COUNT}</span>
                   <span className="ed-meta-label">収録プロ選手</span>
                 </div>
                 <div>
-                  <span className="ed-meta-num">{GUIDES.length}</span>
-                  <span className="ed-meta-label">お役立ちガイド</span>
+                  <span className="ed-meta-num">{TOOLS.length}</span>
+                  <span className="ed-meta-label">無料診断ツール</span>
                 </div>
               </div>
             </div>
@@ -160,89 +160,10 @@ export default function Home() {
       <div className="container">
         <AdSlot id="top-under-hero" />
 
-        {/* ── 入口：軽量メーカー占い（低ハードルの参加導線） ── */}
-        <MakerFortune />
-
-        {/* ── 01 たしかめる（診断ツールの目次） ── */}
-        <section className="ed-sec" id="tools">
-          <div className="ed-sec-head">
-            <span className="ed-no">01</span>
-            <h2 className="ed-ttl">たしかめる</h2>
-            <span className="ed-en">Diagnose</span>
-          </div>
-          <p className="ed-sec-lead">
-            数問答えるだけ。あなたに合う道具も、あなたに似たプロ選手も、その場でわかります。すべて無料・登録不要。
-          </p>
-          <div className="index-list">
-            {TOOLS.map((t, i) => (
-              <a key={t.href} className="index-row" href={t.href}>
-                <span className="ix-no">{String(i + 1).padStart(2, "0")}</span>
-                <span>
-                  <span className="ix-ttl">
-                    {t.title}
-                    <span className="ix-badge">{t.badge}</span>
-                  </span>
-                  <span className="ix-desc">{t.desc}</span>
-                </span>
-                <span className="ix-arrow">→</span>
-              </a>
-            ))}
-          </div>
-        </section>
-      </div>
-
-      {/* ── 特集：看板は野球選手MBTI診断（墨バンド） ── */}
-      <section className="ink-band">
-        <div className="container">
-          <p className="ink-band-head">The Diagnosis</p>
-          <a className="ink-item ink-lead" href="/baseball-dock/">
-            <span className="ink-en">Baseball Dock</span>
-            <span className="ink-ttl">
-              性格も、似ている選手も、道具も。野球人間ドック。
-            </span>
-            <span className="ink-desc">
-              全45問・MBTI式の7段階に答えるだけで、あなたの<strong>MBTIタイプ</strong>と
-              最も近い<strong>プロ選手1人</strong>（NPB・MLB {PLAYER_COUNT}名から・AIイラスト付き）、
-              さらにバット・グローブ・スパイク・打撃手袋・サポーターまで道具の処方を「検査結果報告書」一枚に。画像で保存してSNSにも。
-            </span>
-            <span className="ink-link">受診する（約5分・無料）</span>
-          </a>
-          <div className="ink-band-grid">
-            <a className="ink-item" href="/baseball-dock/type/">
-              <span className="ink-en">16 Types</span>
-              <span className="ink-ttl">
-                全16タイプ、
-                <br />
-                読みもの。
-              </span>
-              <span className="ink-desc">
-                知将エース・チームの太陽…16タイプそれぞれの特徴・相性・
-                似ているプロ選手を、じっくり解説しています。
-              </span>
-              <span className="ink-link">タイプ一覧を見る</span>
-            </a>
-            <a className="ink-item" href="/shindan/">
-              <span className="ink-en">Uniform Match</span>
-              <span className="ink-ttl">
-                似合う一着も、
-                <br />
-                写真で診断。
-              </span>
-              <span className="ink-desc">
-                作りたいイメージ写真をアップすると、配色を解析して
-                相性のいいオーダーユニフォームメーカーを提案します。
-              </span>
-              <span className="ink-link">ユニフォーム診断へ</span>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <div className="container">
-        {/* ── 編集部の一押し（実商品・アフィリエイト） ── */}
+        {/* ── 01 編集部の一押し（実商品・アフィリエイト） ── */}
         <section className="ed-sec">
           <div className="ed-sec-head">
-            <span className="ed-no">◎</span>
+            <span className="ed-no">01</span>
             <h2 className="ed-ttl">編集部の一押し</h2>
             <span className="ed-en">Picks</span>
           </div>
@@ -359,7 +280,84 @@ export default function Home() {
             ))}
           </div>
         </section>
+
+        {/* ── 05 たしかめる（診断ツールの目次・比較/ガイドの後に） ── */}
+        <section className="ed-sec" id="tools">
+          <div className="ed-sec-head">
+            <span className="ed-no">05</span>
+            <h2 className="ed-ttl">たしかめる</h2>
+            <span className="ed-en">Diagnose</span>
+          </div>
+          <p className="ed-sec-lead">
+            数問答えるだけ。あなたに合う道具も、あなたに似たプロ選手も、その場でわかります。すべて無料・登録不要。
+          </p>
+          <div className="index-list">
+            {TOOLS.map((t, i) => (
+              <a key={t.href} className="index-row" href={t.href}>
+                <span className="ix-no">{String(i + 1).padStart(2, "0")}</span>
+                <span>
+                  <span className="ix-ttl">
+                    {t.title}
+                    <span className="ix-badge">{t.badge}</span>
+                  </span>
+                  <span className="ix-desc">{t.desc}</span>
+                </span>
+                <span className="ix-arrow">→</span>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        {/* ── おまけ：軽量メーカー占い ── */}
+        <MakerFortune />
       </div>
+
+      {/* ── 野球選手MBTI診断の特集（墨バンド・コンテンツの後に配置） ── */}
+      <section className="ink-band">
+        <div className="container">
+          <p className="ink-band-head">The Diagnosis</p>
+          <a className="ink-item ink-lead" href="/baseball-dock/">
+            <span className="ink-en">Baseball Dock</span>
+            <span className="ink-ttl">
+              性格も、似ている選手も、道具も。野球人間ドック。
+            </span>
+            <span className="ink-desc">
+              全45問・MBTI式の7段階に答えるだけで、あなたの<strong>MBTIタイプ</strong>と
+              最も近い<strong>プロ選手1人</strong>（NPB・MLB {PLAYER_COUNT}名から・AIイラスト付き）、
+              さらにバット・グローブ・スパイク・打撃手袋・サポーターまで道具の処方を「検査結果報告書」一枚に。画像で保存してSNSにも。
+            </span>
+            <span className="ink-link">受診する（約5分・無料）</span>
+          </a>
+          <div className="ink-band-grid">
+            <a className="ink-item" href="/baseball-dock/type/">
+              <span className="ink-en">16 Types</span>
+              <span className="ink-ttl">
+                全16タイプ、
+                <br />
+                読みもの。
+              </span>
+              <span className="ink-desc">
+                知将エース・チームの太陽…16タイプそれぞれの特徴・相性・
+                似ているプロ選手を、じっくり解説しています。
+              </span>
+              <span className="ink-link">タイプ一覧を見る</span>
+            </a>
+            <a className="ink-item" href="/shindan/">
+              <span className="ink-en">Uniform Match</span>
+              <span className="ink-ttl">
+                似合う一着も、
+                <br />
+                写真で診断。
+              </span>
+              <span className="ink-desc">
+                作りたいイメージ写真をアップすると、配色を解析して
+                相性のいいオーダーユニフォームメーカーを提案します。
+              </span>
+              <span className="ink-link">ユニフォーム診断へ</span>
+            </a>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

@@ -34,6 +34,9 @@ export async function generateMetadata({
     title,
     description: desc,
     alternates: { canonical: url },
+    // タイプ別解説16ページはテンプレ生成で本文が薄いため検索インデックスから除外。
+    // 診断結果からのリンク・サイト内回遊は維持（noindex, follow）。
+    robots: { index: false, follow: true },
     openGraph: {
       title: `【${t.code}｜${t.nickname}】${t.emoji}｜野球選手MBTI診断`,
       description: t.catch,

@@ -1,29 +1,24 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/data/site";
-import { MBTI_TYPES } from "@/data/baseballMbti";
-
-const GEAR_MAKER_SLUGS = ["mizuno", "zett", "ssk", "rawlings", "kubota", "asics", "wilson"];
 
 // output: export（静的書き出し）で生成するために必要
 export const dynamic = "force-static";
 
+// AdSense是正(2026-07-15): 以下はnoindex設定済みのためsitemapからも除外し、
+// 「インデックスして」(sitemap)と「しないで」(noindex)の矛盾したシグナルを解消する。
+// - baseball-dock/type/{code}/ 16ページ(テンプレ生成・本文薄)。ハブ /baseball-dock/type/ 自体は
+//   16タイプへの内部リンク集として有用なため残す。
+// - players/maker/ および players/maker/{slug}/ (選手名リストの一覧で本文が薄い)
+// - guide/kansai-league/, guide/kanto-league/ (guide/regional-league/ と近い内容の重複ページ)
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const typePages: MetadataRoute.Sitemap = [
+  return [
     {
       url: `${SITE_URL}/baseball-dock/type/`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.7,
     },
-    ...MBTI_TYPES.map((t) => ({
-      url: `${SITE_URL}/baseball-dock/type/${t.code.toLowerCase()}/`,
-      lastModified: new Date(),
-      changeFrequency: "monthly" as const,
-      priority: 0.6,
-    })),
-  ];
-  return [
-    ...typePages,
     {
       url: SITE_URL,
       lastModified: new Date(),
@@ -90,18 +85,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.85,
     },
-    {
-      url: `${SITE_URL}/players/maker/`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    ...GEAR_MAKER_SLUGS.map((s) => ({
-      url: `${SITE_URL}/players/maker/${s}/`,
-      lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: 0.75,
-    })),
     {
       url: `${SITE_URL}/uranai/`,
       lastModified: new Date(),
@@ -361,12 +344,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85,
     },
     {
-      url: `${SITE_URL}/guide/kanto-league/`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.85,
-    },
-    {
       url: `${SITE_URL}/guide/tournament/`,
       lastModified: new Date(),
       changeFrequency: "monthly",
@@ -383,12 +360,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
-    },
-    {
-      url: `${SITE_URL}/guide/kansai-league/`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.85,
     },
     {
       url: `${SITE_URL}/guide/regional-league/`,

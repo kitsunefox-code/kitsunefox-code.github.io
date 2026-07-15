@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   description:
     "関西（大阪・京都・兵庫・奈良・滋賀・和歌山）で参加できる草野球リーグの探し方と選び方を解説。私設リーグと連盟大会の違い、初心者・初級者歓迎のリーグの見分け方、レベル・費用・日程で選ぶポイント、対戦相手の見つけ方まで。「関西で試合相手・リーグを探している」チームのための入門ガイドです。",
   alternates: { canonical: `${SITE_URL}/guide/kansai-league/` },
+  // /guide/regional-league/ と構造・内容が近い地域別ページのため、
+  // 重複コンテンツを避けてregional-leagueを正規ハブとしインデックス対象から除外。
+  robots: { index: false, follow: true },
   openGraph: {
     title: "関西の草野球リーグの探し方（大阪・京都・兵庫）",
     description: "私設リーグと公式大会の違い、初心者歓迎の見分け方、対戦相手の探し方まで。",

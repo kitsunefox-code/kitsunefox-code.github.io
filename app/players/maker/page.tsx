@@ -19,6 +19,8 @@ export const metadata: Metadata = {
   description:
     "プロ野球選手（NPB・MLB）が使っているグローブのメーカー別に、使用選手を一覧でまとめました。ミズノ・ゼット・SSK・ローリングス・久保田スラッガー・アシックス・ウィルソン。「あの選手と同じメーカーで揃えたい」草野球プレーヤーのための早見表です。",
   alternates: { canonical: `${SITE_URL}/players/maker/` },
+  // ハブページも配下(メーカー別ページ)を除外するのに合わせnoindex(follow=リンクは辿らせる)。
+  robots: { index: false, follow: true },
   openGraph: {
     title: "メーカー別・使用プロ野球選手一覧",
     description: "ミズノ・ゼット・SSK・ローリングス…メーカーごとに使用プロ選手を一覧で。",

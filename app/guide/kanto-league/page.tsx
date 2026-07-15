@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   description:
     "関東（東京・神奈川・埼玉・千葉）で参加できる草野球の私設リーグの探し方と選び方を解説。初級者・初心者歓迎のリーグの見分け方、レベル・費用・日程で選ぶポイント、連盟の公式大会との違いまで。「練習だけでなく本気の試合がしたい」「対戦相手・リーグを探している」チームのための入門ガイドです。",
   alternates: { canonical: `${SITE_URL}/guide/kanto-league/` },
+  // /guide/regional-league/ と構造・内容が近い地域別ページのため、
+  // 重複コンテンツを避けてregional-leagueを正規ハブとしインデックス対象から除外。
+  robots: { index: false, follow: true },
   openGraph: {
     title: "関東の草野球リーグまとめ・初心者OKはどこ？",
     description: "私設リーグの探し方・選び方、初心者歓迎の見分け方、公式大会との違いまで。",
