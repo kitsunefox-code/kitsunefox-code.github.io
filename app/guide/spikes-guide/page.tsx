@@ -3,7 +3,6 @@ import RelatedGuides from "@/components/RelatedGuides";
 import AdSlot from "@/components/AdSlot";
 import AffiliateBox from "@/components/AffiliateBox";
 import ProductCards from "@/components/ProductCards";
-import GoodsLinks from "@/components/GoodsLinks";
 import { LAST_UPDATED } from "@/data/makers";
 import { SITE_URL } from "@/data/site";
 
@@ -207,7 +206,6 @@ export default function SpikesGuidePage() {
 
         <RelatedGuides currentHref="/guide/spikes-guide/" />
       </article>
-      <GoodsLinks />
       <div style={{ height: 30 }} />
     </main>
   );

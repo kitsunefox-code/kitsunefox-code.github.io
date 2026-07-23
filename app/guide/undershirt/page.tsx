@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import AdSlot from "@/components/AdSlot";
 import ProductCards from "@/components/ProductCards";
-import GoodsLinks from "@/components/GoodsLinks";
 import RelatedGuides from "@/components/RelatedGuides";
 import { LAST_UPDATED } from "@/data/makers";
 import { SITE_URL } from "@/data/site";
@@ -130,7 +129,6 @@ export default function UndershirtPage() {
           <a className="cta-inline" href="/guide/gear-checklist/">→ 「道具・装備チェックリスト」で全体を確認</a>
         </div>
       </article>
-      <GoodsLinks />
       <div style={{ height: 30 }} />
     </main>
   );

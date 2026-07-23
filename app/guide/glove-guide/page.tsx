@@ -3,7 +3,6 @@ import RelatedGuides from "@/components/RelatedGuides";
 import AdSlot from "@/components/AdSlot";
 import AffiliateBox from "@/components/AffiliateBox";
 import ProductCards from "@/components/ProductCards";
-import GoodsLinks from "@/components/GoodsLinks";
 import { LAST_UPDATED } from "@/data/makers";
 import { SITE_URL } from "@/data/site";
 
@@ -239,7 +238,6 @@ export default function GloveGuidePage() {
 
         <RelatedGuides currentHref="/guide/glove-guide/" />
       </article>
-      <GoodsLinks />
       <div style={{ height: 30 }} />
     </main>
   );

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import RelatedGuides from "@/components/RelatedGuides";
 import AdSlot from "@/components/AdSlot";
-import GoodsLinks from "@/components/GoodsLinks";
 import ProductCards from "@/components/ProductCards";
 import { LAST_UPDATED } from "@/data/makers";
 import { SITE_URL } from "@/data/site";
@@ -204,7 +203,6 @@ export default function GearChecklistPage() {
 
         <RelatedGuides currentHref="/guide/gear-checklist/" />
       </article>
-      <GoodsLinks />
       <div style={{ height: 30 }} />
     </main>
   );

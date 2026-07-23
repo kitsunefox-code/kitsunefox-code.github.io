@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import RelatedGuides from "@/components/RelatedGuides";
 import AdSlot from "@/components/AdSlot";
-import GoodsLinks from "@/components/GoodsLinks";
 import { LAST_UPDATED } from "@/data/makers";
 import { SITE_URL } from "@/data/site";
 
@@ -142,7 +141,6 @@ export default function NotFunPage() {
 
         <RelatedGuides currentHref="/guide/not-fun/" />
       </article>
-      <GoodsLinks />
       <div style={{ height: 30 }} />
     </main>
   );

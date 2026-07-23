@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import RelatedGuides from "@/components/RelatedGuides";
 import AdSlot from "@/components/AdSlot";
 import AffiliateBox from "@/components/AffiliateBox";
-import GoodsLinks from "@/components/GoodsLinks";
 import { LAST_UPDATED } from "@/data/makers";
 import { SITE_URL } from "@/data/site";
 
@@ -166,7 +165,6 @@ export default function BreakingBallsPage() {
 
         <RelatedGuides currentHref="/guide/breaking-balls/" />
       </article>
-      <GoodsLinks />
       <div style={{ height: 30 }} />
     </main>
   );

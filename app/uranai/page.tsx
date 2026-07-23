@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import AdSlot from "@/components/AdSlot";
-import GoodsLinks from "@/components/GoodsLinks";
 import MakerFortune from "@/components/MakerFortune";
 import { SITE_URL } from "@/data/site";
 
@@ -79,7 +78,6 @@ export default function UranaiPage() {
           </p>
         </section>
       </div>
-      <GoodsLinks />
       <div style={{ height: 24 }} />
     </main>
   );

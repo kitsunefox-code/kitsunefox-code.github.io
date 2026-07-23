@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import AdSlot from "@/components/AdSlot";
 import ProductCards from "@/components/ProductCards";
-import GoodsLinks from "@/components/GoodsLinks";
 import RelatedGuides from "@/components/RelatedGuides";
 import { LAST_UPDATED } from "@/data/makers";
 import { SITE_URL } from "@/data/site";
@@ -126,7 +125,6 @@ export default function SupporterPage() {
           <a className="cta-inline" href="/baseball-dock/">→ まわりの装備まで「野球人間ドック」で処方</a>
         </div>
       </article>
-      <GoodsLinks />
       <div style={{ height: 30 }} />
     </main>
   );
