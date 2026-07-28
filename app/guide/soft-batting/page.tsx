@@ -5,12 +5,12 @@ import { LAST_UPDATED } from "@/data/makers";
 import { SITE_URL } from "@/data/site";
 
 export const metadata: Metadata = {
-  title: "軟式の打ち方のコツ【硬式出身者・初心者向け】ゴロを減らして飛ばす打撃",
+  title: "軟式の打ち方3つのコツ｜ゴロばかり・飛ばないを直す打撃フォーム【草野球】",
   description:
-    "軟式でボテボテのゴロや詰まった当たりばかり——その原因は「軟式ボールが潰れる」こと。上から叩かず芯で押し込む、ミートポイントを近くにするなど、ゴロを減らして飛距離を出す打ち方のコツを、参考動画つきで解説します。",
+    "軟式でボテボテのゴロや詰まった当たりばかり——原因は「軟式ボールが潰れる」ことにあります。上から叩かない・芯で押し込む・ミートポイントを近くする、の3つのコツでゴロを減らして飛距離を出す打ち方を、参考動画つきで解説。硬式出身者がハマる落とし穴も。",
   alternates: { canonical: `${SITE_URL}/guide/soft-batting/` },
   openGraph: {
-    title: "軟式の打ち方のコツ【硬式出身者・初心者向け】",
+    title: "軟式の打ち方3つのコツ｜ゴロばかり・飛ばないを直す",
     description:
       "ボテボテのゴロを減らして飛ばす。軟式ならではの打撃のコツを参考動画つきで解説。",
     type: "article",
@@ -22,7 +22,7 @@ function StructuredData() {
     "@context": "https://schema.org",
     "@type": "Article",
     headline:
-      "軟式の打ち方のコツ【硬式出身者・初心者向け】ゴロを減らして飛ばす打撃",
+      "軟式の打ち方3つのコツ｜ゴロばかり・飛ばないを直す打撃フォーム",
     inLanguage: "ja",
     dateModified: "2026-07-04",
     author: { "@type": "Organization", name: "草野球ナビ" },
@@ -41,7 +41,7 @@ export default function SoftBattingPage() {
       <StructuredData />
       <article className="article">
         <h1>
-          軟式の打ち方のコツ【硬式出身者・初心者向け】ゴロを減らして飛ばす打撃
+          軟式の打ち方3つのコツ｜ゴロばかり・飛ばないを直す打撃フォーム
         </h1>
         <p className="meta">最終更新：{LAST_UPDATED} ｜ 読了目安：約7分</p>
 

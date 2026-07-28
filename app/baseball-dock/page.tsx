@@ -5,12 +5,12 @@ import { PLAYER_COUNT } from "@/data/players";
 import { SITE_URL } from "@/data/site";
 
 export const metadata: Metadata = {
-  title: "野球人間ドック｜MBTI式・全45問であなたのタイプ＆最も近いプロ選手を1人ズバリ",
+  title: "野球MBTI診断【無料・全45問】16タイプ×最も近いプロ野球選手がわかる｜野球人間ドック",
   description:
-    "全45問すべてMBTI式の7段階で答えるだけ。あなたのMBTIタイプと、最も近いプロ選手（NPB・MLB650名超から1人・AIイラスト付き）、バット・グローブ・スパイク・バッティンググローブ・サポーターなど周辺装備の処方までを「検査結果報告書」一枚にまとめてお渡し。画像で保存してSNSにも。登録不要・無料・約5分。",
+    "坂本勇人・山本由伸・大谷翔平らNPB・MLB650名超から「あなたに最も近いプロ野球選手」を1人ズバリ判定。MBTI式の16タイプ野球診断（7段階×45問）で、性格タイプとおすすめ装備まで検査結果報告書一枚に。登録不要・無料・約5分。",
   alternates: { canonical: `${SITE_URL}/baseball-dock/` },
   openGraph: {
-    title: "野球人間ドック｜MBTI式・全45問のフル診断",
+    title: "野球MBTI診断｜16タイプ×最も近いプロ野球選手がわかる",
     description:
       "MBTIタイプ×最も近いプロ選手を1人ズバリ。バット・グローブ・スパイク・打撃手袋・サポーターの処方まで報告書一枚に。",
     type: "website",
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "野球人間ドック｜MBTI式・全45問のフル診断",
+    title: "野球MBTI診断｜16タイプ×最も近いプロ野球選手がわかる",
     description: "MBTIタイプ×最も近いプロ選手を1人ズバリ。バット・グローブ・スパイク・打撃手袋・サポーターまで報告書一枚に。",
     images: ["/og-dock.png"],
   },
