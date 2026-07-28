@@ -166,6 +166,13 @@ export const PHITEN: { label: string; desc: string; href: string; pixel?: string
     pixel: "https://www17.a8.net/0.gif?a8mat=4B7SGX+912P2Q+2SIW+HXSGI",
     emoji: "🧴",
   },
+  {
+    label: "【コラントッテ公式】磁気ネックレス・サポーター",
+    desc: "肩・腰のこりに。プロ野球選手の着用例も多い磁気健康ギア",
+    href: "https://px.a8.net/svt/ejp?a8mat=4B7SGX+8QYBSI+4CD6+5YRHE",
+    pixel: "https://www19.a8.net/0.gif?a8mat=4B7SGX+8QYBSI+4CD6+5YRHE",
+    emoji: "🧲",
+  },
 ];
 
 /** 総合スポーツ通販（A8直リンク・インプレッション計測ピクセル付き） */
@@ -183,6 +190,13 @@ export const RETAILERS: { label: string; desc: string; href: string; pixel?: str
     href: "https://px.a8.net/svt/ejp?a8mat=4B7T8Y+87WGFM+3OSK+5YJRM",
     pixel: "https://www11.a8.net/0.gif?a8mat=4B7T8Y+87WGFM+3OSK+5YJRM",
     emoji: "🏬",
+  },
+  {
+    label: "【公式】ヒマラヤ オンラインストア",
+    desc: "野球用品・シューズ・アンダーウェアまで。実店舗受取にも対応",
+    href: "https://px.a8.net/svt/ejp?a8mat=4B7SGX+8OKLDE+575I+60H7M",
+    pixel: "https://www15.a8.net/0.gif?a8mat=4B7SGX+8OKLDE+575I+60H7M",
+    emoji: "🛒",
   },
 ];
 
@@ -206,6 +220,20 @@ export const GOODS_LINKS: GoodsLink[] = [
     url: "https://px.a8.net/svt/ejp?a8mat=4B7T8Y+87WGFM+3OSK+5YJRM",
     pixel: "https://www11.a8.net/0.gif?a8mat=4B7T8Y+87WGFM+3OSK+5YJRM",
     emoji: "🏬",
+  },
+  {
+    label: "【公式】ヒマラヤ オンラインストア",
+    description: "野球用品・シューズ・アンダーウェアまで。実店舗受取にも対応",
+    url: "https://px.a8.net/svt/ejp?a8mat=4B7SGX+8OKLDE+575I+60H7M",
+    pixel: "https://www15.a8.net/0.gif?a8mat=4B7SGX+8OKLDE+575I+60H7M",
+    emoji: "🛒",
+  },
+  {
+    label: "【コラントッテ公式】磁気ネックレス・サポーター",
+    description: "肩・腰のこりに。プロ野球選手の着用例も多い磁気健康ギア",
+    url: "https://px.a8.net/svt/ejp?a8mat=4B7SGX+8QYBSI+4CD6+5YRHE",
+    pixel: "https://www19.a8.net/0.gif?a8mat=4B7SGX+8QYBSI+4CD6+5YRHE",
+    emoji: "🧲",
   },
   {
     label: "楽天で野球スパイクを探す",
