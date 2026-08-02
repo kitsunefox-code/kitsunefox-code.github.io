@@ -2,7 +2,7 @@ import AdSlot from "@/components/AdSlot";
 import EditorsPicks from "@/components/EditorsPicks";
 import MakerFortune from "@/components/MakerFortune";
 import { makers, LAST_UPDATED } from "@/data/makers";
-import { GUIDES } from "@/data/guides";
+import { VISIBLE_GUIDES } from "@/data/guides";
 import { TOOLS } from "@/data/tools";
 import { PLAYER_COUNT } from "@/data/players";
 
@@ -138,7 +138,7 @@ export default function Home() {
                   <span className="ed-meta-label">メーカー比較</span>
                 </div>
                 <div>
-                  <span className="ed-meta-num">{GUIDES.length}</span>
+                  <span className="ed-meta-num">{VISIBLE_GUIDES.length}</span>
                   <span className="ed-meta-label">お役立ちガイド</span>
                 </div>
                 <div>
@@ -232,11 +232,11 @@ export default function Home() {
             <span className="ed-en">Guide</span>
           </div>
           <p className="ed-sec-lead">
-            始め方、チーム運営、道具の手入れ、技術のコツ。現場目線の{GUIDES.length}
+            始め方、チーム運営、道具の手入れ、技術のコツ。現場目線の{VISIBLE_GUIDES.length}
             記事。<strong>新着</strong>から順にどうぞ。
           </p>
           <div className="guide-cols">
-            {[...GUIDES]
+            {[...VISIBLE_GUIDES]
               .sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0))
               .slice(0, 10)
               .map((g, i) => (
@@ -254,7 +254,7 @@ export default function Home() {
               ))}
           </div>
           <a className="link-arrow ed-more" href="/guide/">
-            ガイドをすべて見る（全{GUIDES.length}記事）
+            ガイドをすべて見る（全{VISIBLE_GUIDES.length}記事）
           </a>
         </section>
 

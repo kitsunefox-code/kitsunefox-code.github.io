@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   description:
     "真夏の草野球を安全に楽しむための熱中症対策を、最新の「プレクーリング（体を先に冷やす）」まで含めて解説。試合前・中・後の水分と塩分の摂り方、冷感ギア・冷却グッズの使い方、日陰と休憩、危険なサインと応急対応まで。暑い日でも無理なくプレーするための実践ガイドです。",
   alternates: { canonical: `${SITE_URL}/guide/heat/` },
+  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
+  robots: { index: false, follow: true },
   openGraph: {
     title: "野球の熱中症対策とプレクーリング完全ガイド",
     description:

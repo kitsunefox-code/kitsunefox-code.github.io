@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   description:
     "草野球のケガ予防に役立つサポーターの選び方を部位別に解説。肘（投球・スライディング）、膝、手首、ふくらはぎ・ふともも、足首まで。固定重視か動きやすさ重視か、マクダビッド（McDavid）など定番ブランドの特徴、サイズの合わせ方まで。無理なく長く野球を続けるための備えをまとめました。",
   alternates: { canonical: `${SITE_URL}/guide/supporter/` },
+  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
+  robots: { index: false, follow: true },
   openGraph: {
     title: "野球サポーターの選び方",
     description: "肘・膝・手首・ふくらはぎ。部位別のケガ予防と、マクダビッド等の定番ブランド。",

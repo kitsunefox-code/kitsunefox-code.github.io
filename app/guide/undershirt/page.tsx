@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   description:
     "草野球のアンダーシャツの選び方を、夏用（冷感・吸汗速乾）と冬用（保温・裏起毛）、袖丈（半袖/七分/長袖）、ネック形状（ローネック/ハイネック/クルー）、フィット（コンプレッション/ゆったり）で解説。色を揃えてチーム感を出すコツや、季節ごとの使い分け、価格帯の目安まで。快適さとチームの統一感を両立しましょう。",
   alternates: { canonical: `${SITE_URL}/guide/undershirt/` },
+  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
+  robots: { index: false, follow: true },
   openGraph: {
     title: "野球アンダーシャツの選び方",
     description: "夏の冷感・冬の保温、袖丈・ネック・フィット。色を揃えてチーム感も。",

@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   description:
     "全国どの地域でも使える、草野球リーグ・対戦相手の探し方をまとめました。関東・関西はもちろん、東海（名古屋）・九州（福岡）・北海道・東北・中国・四国など、地域名での検索、マッチングアプリ・掲示板・SNSの活用、連盟支部の使い分けまで。自分の街で試合ができる場所を見つけるための手順ガイドです。",
   alternates: { canonical: `${SITE_URL}/guide/regional-league/` },
+  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
+  robots: { index: false, follow: true },
   openGraph: {
     title: "地域別・草野球リーグの探し方",
     description: "全国どこでも使える、リーグ・対戦相手の見つけ方の手順。地域別の検索のコツ。",

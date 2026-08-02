@@ -11,6 +11,8 @@ export const metadata: Metadata = {
   description:
     "2026年の軟式バット最新おすすめを、飛距離重視のウレタン複合（ビヨンドマックス等）・軽くて振れるカーボン・扱いやすい金属のタイプ別に整理。ビヨンドマックス レガシー／ギガキング、SSK MM、カタリスト、ハイパーマッハ、ブラックキャノンなど人気シリーズの選び方と、草野球での相性をまとめました。",
   alternates: { canonical: `${SITE_URL}/guide/bat-latest/` },
+  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
+  robots: { index: false, follow: true },
   openGraph: {
     title: "軟式バット 最新おすすめ【2026年版】",
     description:

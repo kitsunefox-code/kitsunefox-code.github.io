@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   description:
     "草野球で打てない…その原因は「タイミング」「ボールの見方」「スイング軌道」「力み」のどれかに集約されます。ボテボテのゴロ・空振り・そもそも当たらない、症状別に原因と直し方を解説。硬式出身者が軟式で打てない理由や、家でできる練習、道具の見直しまで。今日から一つずつ潰していきましょう。",
   alternates: { canonical: `${SITE_URL}/guide/cant-hit/` },
+  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
+  robots: { index: false, follow: true },
   openGraph: {
     title: "草野球で打てない原因と直し方",
     description:

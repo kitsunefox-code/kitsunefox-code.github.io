@@ -11,6 +11,8 @@ export const metadata: Metadata = {
   description:
     "飛距離で選ぶ軟式バットを徹底比較。ウレタン複合（ビヨンドマックス レガシー/ギガキング、SSK MM）を中心に、反発・重心・価格を横断で整理。さらにYouTubeで人気の「飛距離検証動画」を鵜呑みにせず正しく参考にするための見方（条件・サンプル数・スイングの違い）も解説。自分に合う一本の選び方がわかります。",
   alternates: { canonical: `${SITE_URL}/guide/bat-distance/` },
+  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
+  robots: { index: false, follow: true },
   openGraph: {
     title: "軟式バット徹底比較【飛距離重視】＆YouTube検証の見方",
     description: "ビヨンド系を中心に反発・重心・価格で比較。YouTube飛距離検証の正しい参考の仕方も。",

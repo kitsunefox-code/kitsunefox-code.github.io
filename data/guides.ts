@@ -9,6 +9,8 @@ export type Guide = {
   category: GuideCategory;
   /** 新着記事フラグ（トップ・一覧でNEWバッジ＆先頭表示に使う） */
   isNew?: boolean;
+  /** AdSense審査対策で一時非表示(トップ/一覧/関連/サイトマップから除外)。承認後に戻す */
+  hidden?: boolean;
 };
 
 // カテゴリの表示順とラベル（ガイド一覧ページで使用）
@@ -50,6 +52,7 @@ export const GUIDES: Guide[] = [
     description: "アプリ・掲示板・SNS・リーグの使い分けと募集文テンプレ",
     category: "team",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/kanto-league/",
@@ -58,6 +61,7 @@ export const GUIDES: Guide[] = [
     description: "私設リーグの探し方・選び方、初心者歓迎の見分け方",
     category: "team",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/tournament/",
@@ -66,6 +70,7 @@ export const GUIDES: Guide[] = [
     description: "天皇賜杯・高松宮賜杯｜連盟登録→予選→全国の道筋",
     category: "team",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/team-registration/",
@@ -74,6 +79,7 @@ export const GUIDES: Guide[] = [
     description: "支部を通じた登録の流れ・必要情報・費用や時期の考え方",
     category: "team",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/ground-reservation/",
@@ -82,6 +88,7 @@ export const GUIDES: Guide[] = [
     description: "区の施設予約システム・団体登録の要件・抽選の流れ",
     category: "team",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/kansai-league/",
@@ -90,6 +97,7 @@ export const GUIDES: Guide[] = [
     description: "大阪・京都・兵庫。私設リーグ・初心者OKの見つけ方",
     category: "team",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/regional-league/",
@@ -98,6 +106,7 @@ export const GUIDES: Guide[] = [
     description: "全国どこでも使える見つけ方の手順。東海・九州・北海道も",
     category: "team",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/rain-cancel/",
@@ -106,6 +115,7 @@ export const GUIDES: Guide[] = [
     description: "いつ・誰が・どう決める？レーダーの見方と連絡の流れ",
     category: "team",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/over40/",
@@ -114,6 +124,7 @@ export const GUIDES: Guide[] = [
     description: "大人の初心者がケガなく楽しむ準備・道具・チーム探し",
     category: "team",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/not-fun/",
@@ -122,6 +133,7 @@ export const GUIDES: Guide[] = [
     description: "原因別の対処と、続ける工夫・離れる/別チームの選択肢",
     category: "team",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/game-flow/",
@@ -137,6 +149,7 @@ export const GUIDES: Guide[] = [
     description: "球審・塁審の立ち位置とコール、もめないコツ",
     category: "team",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/insurance/",
@@ -145,6 +158,7 @@ export const GUIDES: Guide[] = [
     description: "スポーツ安全保険・チーム加入・賠償・費用の目安",
     category: "team",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/manners/",
@@ -153,6 +167,7 @@ export const GUIDES: Guide[] = [
     description: "整備・時間・リスペクト・近隣配慮。また呼ばれるチームに",
     category: "team",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/annual-cost/",
@@ -228,6 +243,7 @@ export const GUIDES: Guide[] = [
     description: "飛距離のビヨンド系・軽いカーボン・扱いやすい金属をタイプ別に",
     category: "gear",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/bat-distance/",
@@ -236,6 +252,7 @@ export const GUIDES: Guide[] = [
     description: "人気モデルを反発・重心・価格で。YouTube飛距離検証の見方も",
     category: "gear",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/spikes-guide/",
@@ -251,6 +268,7 @@ export const GUIDES: Guide[] = [
     description: "偏光・調光・度付き・フィット。フライを見失わない基準",
     category: "gear",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/supporter/",
@@ -259,6 +277,7 @@ export const GUIDES: Guide[] = [
     description: "肘・膝・手首・ふくらはぎ。部位別のケガ予防とマクダビッド等",
     category: "gear",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/bag/",
@@ -267,6 +286,7 @@ export const GUIDES: Guide[] = [
     description: "エナメル・バックパック・遠征用。容量とタイプ別に",
     category: "gear",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/undershirt/",
@@ -275,6 +295,7 @@ export const GUIDES: Guide[] = [
     description: "夏の冷感・冬の保温、袖丈・ネック・色でチーム感",
     category: "gear",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/wood-bat/",
@@ -283,6 +304,7 @@ export const GUIDES: Guide[] = [
     description: "樹種・重心の選び方、折れにくい使い方、手袋・グリップの相棒選び",
     category: "gear",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/grip-tape/",
@@ -291,6 +313,7 @@ export const GUIDES: Guide[] = [
     description: "厚さ・素材の違い、下から上へ均等に巻くコツと替えどき",
     category: "care",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/scorebook/",
@@ -299,6 +322,7 @@ export const GUIDES: Guide[] = [
     description: "ポジション番号・打撃記号・進塁の書き方をゼロから",
     category: "skill",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/breaking-balls/",
@@ -307,6 +331,7 @@ export const GUIDES: Guide[] = [
     description: "スライダー・カーブ・フォーク・チェンジアップの握りとコツ",
     category: "skill",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/cant-hit/",
@@ -315,6 +340,7 @@ export const GUIDES: Guide[] = [
     description: "ボテボテ・空振り・当たらないを4つの原因から解消",
     category: "skill",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/offseason/",
@@ -323,6 +349,7 @@ export const GUIDES: Guide[] = [
     description: "冬にやると差がつく自主トレ。素振り・体幹・道具メンテ",
     category: "skill",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/team-practice/",
@@ -331,6 +358,7 @@ export const GUIDES: Guide[] = [
     description: "2時間の時間配分つき。少人数でもできる効率練習",
     category: "skill",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/night-game/",
@@ -339,6 +367,7 @@ export const GUIDES: Guide[] = [
     description: "見えにくさ対策・持ち物・服装・注意点。夜の試合のコツ",
     category: "skill",
     isNew: true,
+    hidden: true,
   },
 
   // === お手入れ・体のケア ===
@@ -370,6 +399,7 @@ export const GUIDES: Guide[] = [
     description: "先に冷やすプレクーリング・水分/塩分・危険サインと応急対応",
     category: "care",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/summer-undershirt/",
@@ -378,6 +408,7 @@ export const GUIDES: Guide[] = [
     description: "接触冷感(Q-MAX)・吸汗速乾・UVカットで選ぶ暑さ対策の一枚",
     category: "gear",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/cooling-goods/",
@@ -386,6 +417,7 @@ export const GUIDES: Guide[] = [
     description: "ネッククーラー・冷却タオル・保冷剤・手のひら冷却・テント",
     category: "gear",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/elbow-care/",
@@ -394,6 +426,7 @@ export const GUIDES: Guide[] = [
     description: "原因・チューブトレ・ストレッチ・サポーター・痛い時の対処",
     category: "care",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/summer-food/",
@@ -402,6 +435,7 @@ export const GUIDES: Guide[] = [
     description: "前日〜試合後の水分・塩分・エネルギー補給。バテない食べ方",
     category: "care",
     isNew: true,
+    hidden: true,
   },
 
   // === 技術・上達 ===
@@ -419,6 +453,7 @@ export const GUIDES: Guide[] = [
     description: "M号・J号の違い、硬式との違い、試合球の選び方",
     category: "skill",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/position/",
@@ -427,6 +462,7 @@ export const GUIDES: Guide[] = [
     description: "肩・足・反応・性格から、向いている守備位置を見つける",
     category: "skill",
     isNew: true,
+    hidden: true,
   },
   {
     href: "/guide/soft-batting/",
@@ -443,3 +479,6 @@ export const GUIDES: Guide[] = [
     category: "skill",
   },
 ];
+
+// 表示対象のガイド（審査対策のhiddenを除外）。トップ・一覧・関連記事はこちらを使う
+export const VISIBLE_GUIDES = GUIDES.filter((gd) => !gd.hidden);

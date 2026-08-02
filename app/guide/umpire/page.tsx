@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   description:
     "草野球でよくある「相互審判（両チームで審判を出し合う）」のやり方を、球審・塁審の立ち位置、ストライク/ボールやアウト/セーフのコール、ジェスチャー、もめないためのコツまで解説。審判が初めての人でも、これだけ押さえれば当日困りません。",
   alternates: { canonical: `${SITE_URL}/guide/umpire/` },
+  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
+  robots: { index: false, follow: true },
   openGraph: {
     title: "草野球の相互審判のやり方",
     description:

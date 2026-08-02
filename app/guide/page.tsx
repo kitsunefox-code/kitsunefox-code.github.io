@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { SITE_URL } from "@/data/site";
-import { GUIDES, GUIDE_CATEGORIES } from "@/data/guides";
+import { VISIBLE_GUIDES, GUIDE_CATEGORIES } from "@/data/guides";
 
 export const metadata: Metadata = {
   title: "草野球お役立ちガイド一覧｜始め方・道具えらび・お手入れ・技術まで",
@@ -20,7 +20,7 @@ export default function GuideIndexPage() {
         </p>
 
         {GUIDE_CATEGORIES.map((cat) => {
-          const items = GUIDES.filter((g) => g.category === cat.key);
+          const items = VISIBLE_GUIDES.filter((g) => g.category === cat.key);
           if (items.length === 0) return null;
           return (
             <div key={cat.key} className="guide-cat">

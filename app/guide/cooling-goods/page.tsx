@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   description:
     "真夏の野球で使える冷却グッズを用途別にまとめました。首を冷やすネッククーラー、濡らして使う冷却タオル、ベンチに置く保冷剤・クーラーボックス、手のひら冷却、ハンディファン、日陰を作るテントまで。プレクーリングと組み合わせて、暑い日の草野球を安全・快適に乗り切るための買い物ガイドです。",
   alternates: { canonical: `${SITE_URL}/guide/cooling-goods/` },
+  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
+  robots: { index: false, follow: true },
   openGraph: {
     title: "夏の草野球を乗り切る冷却グッズまとめ",
     description:

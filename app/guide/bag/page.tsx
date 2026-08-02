@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   description:
     "草野球の道具運びに使う野球バッグの選び方を、タイプ別（エナメルショルダー・バックパック・大容量遠征バッグ・キャスター付き）に解説。バット・グローブ・スパイク・防具が入る容量の目安、電車移動やチャリ通いでの使い分け、防水・自立・仕切りといった選ぶポイントまで。用途に合う一つを見つけましょう。",
   alternates: { canonical: `${SITE_URL}/guide/bag/` },
+  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
+  robots: { index: false, follow: true },
   openGraph: {
     title: "野球バッグの選び方",
     description: "エナメル・バックパック・遠征用。容量とタイプ別に、用途で選ぶポイントを解説。",

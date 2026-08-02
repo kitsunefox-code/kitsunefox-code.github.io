@@ -11,6 +11,8 @@ export const metadata: Metadata = {
   description:
     "草野球で木製バットを使いたい人へ。メイプル・アオダモ・バーチなど樹種の違い、重心（トップ/ミドルバランス）の選び方、折れにくい芯で打つ使い方を解説。さらに木製の“相棒”＝バッティンググローブ（木製派に効く輸入系・グリップ最強のアメフトグローブ流用の裏技）とグリップテープの選び方まで、まるごとまとめました。",
   alternates: { canonical: `${SITE_URL}/guide/wood-bat/` },
+  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
+  robots: { index: false, follow: true },
   openGraph: {
     title: "木製バットの選び方と“相棒”ガイド",
     description:
