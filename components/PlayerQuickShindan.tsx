@@ -1,8 +1,12 @@
 "use client";
 
-// 「あなたに似ているプロ野球選手」5問診断（軽量版）。
-// 45問の野球人間ドックは重いので、その入口として最短で結果に到達できるようにする。
-// 判定は既存の資質(Trait)ベース：各選択肢が資質に加点し、収録657名との内積で最も近い1人を選ぶ。
+// 「近いタイプのプロ野球選手」10問診断（簡易版）。
+//
+// ⚠️ 設計方針（誇張しないこと）
+//   5問版は各資質への加点が1〜2回しかなく同点が多発 → 実質ランダムだった。
+//   10問にして各資質を3回前後カバーし、スコアで差がつくようにしている。
+//   それでも「性格を当てる」ものではないので、文言は「近いタイプ」に統一し、
+//   結果でも候補を3人出して“1人に断言しない”形にする。
 import { useState } from "react";
 import PlayerArt from "@/components/PlayerArt";
 import ProductCards from "@/components/ProductCards";
@@ -63,9 +67,60 @@ const QUESTIONS: Question[] = [
       { label: "職人肌の巧打者", w: { contact: 3, technician: 1 } },
     ],
   },
+  {
+    id: "q6",
+    q: "できるなら、どこを守りたい？",
+    choices: [
+      { label: "マウンド（投手）", w: { pitcher: 4, stoic: 1 } },
+      { label: "扇の要（捕手）", w: { catcher: 4, leader: 1 } },
+      { label: "内野（遊撃・二塁など）", w: { defense: 3, technician: 2 } },
+      { label: "外野（広く走り回る）", w: { speed: 3, power: 1 } },
+    ],
+  },
+  {
+    id: "q7",
+    q: "打席で狙っているのは？",
+    choices: [
+      { label: "とにかく長打・一発", w: { power: 4 } },
+      { label: "確実にミートして出塁", w: { contact: 4 } },
+      { label: "ランナーを還す一打", w: { clutch: 3, leader: 1 } },
+      { label: "内野安打でも塁に出る", w: { speed: 3, contact: 1 } },
+    ],
+  },
+  {
+    id: "q8",
+    q: "注目されるのは好き？",
+    choices: [
+      { label: "大好き。目立ってこそ", w: { star: 3, flashy: 2 } },
+      { label: "派手なプレーで沸かせたい", w: { flashy: 3, speed: 1 } },
+      { label: "陰で支える方が性に合う", w: { stoic: 3, defense: 2 } },
+      { label: "結果さえ出れば気にしない", w: { technician: 2, contact: 2 } },
+    ],
+  },
+  {
+    id: "q9",
+    q: "自分の強みに近いのは？",
+    choices: [
+      { label: "パワー・体格", w: { power: 3, star: 1 } },
+      { label: "スピード・俊敏さ", w: { speed: 3, defense: 1 } },
+      { label: "器用さ・技術", w: { technician: 3, contact: 1 } },
+      { label: "粘り強さ・スタミナ", w: { stoic: 3, pitcher: 1 } },
+    ],
+  },
+  {
+    id: "q10",
+    q: "野球のどこがいちばん楽しい？",
+    choices: [
+      { label: "仲間と勝ちを分かち合うこと", w: { leader: 3, catcher: 1 } },
+      { label: "自分の成長を感じること", w: { stoic: 2, technician: 2 } },
+      { label: "しびれる場面での駆け引き", w: { clutch: 3, pitcher: 1 } },
+      { label: "できることが増えていくこと", w: { twoway: 3, contact: 1 } },
+    ],
+  },
 ];
 
-function matchPlayer(answers: Record<string, number>): Player {
+// スコア上位の候補を返す（1位＋別候補2人）
+function rankPlayers(answers: Record<string, number>): { top: Player; others: Player[] } {
   const w: Partial<Record<Trait, number>> = {};
   for (const q of QUESTIONS) {
     const idx = answers[q.id];
@@ -77,14 +132,14 @@ function matchPlayer(answers: Record<string, number>): Player {
   const ranked = PLAYERS.map((p) => ({
     p,
     s: p.traits.reduce((sum, t) => sum + (w[t] || 0), 0),
-    r: Math.random(), // 同点は毎回変えて意外性を出す
+    r: Math.random(), // 同点内での並びだけをランダムにする
   })).sort((a, b) => b.s - a.s || b.r - a.r);
-  return ranked[0].p;
+  return { top: ranked[0].p, others: ranked.slice(1, 4).map((x) => x.p) };
 }
 
 export default function PlayerQuickShindan() {
   const [answers, setAnswers] = useState<Record<string, number>>({});
-  const [result, setResult] = useState<Player | null>(null);
+  const [result, setResult] = useState<{ top: Player; others: Player[] } | null>(null);
   const [copied, setCopied] = useState(false);
 
   const done = QUESTIONS.every((q) => q.id in answers);
@@ -94,7 +149,7 @@ export default function PlayerQuickShindan() {
     const next = { ...answers, [qid]: idx };
     setAnswers(next);
     if (QUESTIONS.every((q) => q.id in next)) {
-      setResult(matchPlayer(next));
+      setResult(rankPlayers(next));
       setTimeout(() => document.getElementById("pq-result")?.scrollIntoView({ behavior: "smooth" }), 80);
     }
   };
@@ -107,9 +162,9 @@ export default function PlayerQuickShindan() {
 
   const shareUrl = `${SITE_URL}/similar-player/`;
   const shareText = result
-    ? `⚾似ているプロ野球選手診断⚾\n私は【${result.name}】タイプでした！（${result.league}・${result.position}）\nたった5問であなたに一番近い選手がわかります↓`
+    ? `⚾野球選手タイプ診断⚾\n私に近いのは【${result.top.name}】タイプでした！（${result.top.league}・${result.top.position}）\n10問であなたに近いタイプの選手がわかります↓`
     : "";
-  const xUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}&hashtags=${encodeURIComponent("似ているプロ野球選手診断,草野球ナビ")}`;
+  const xUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}&hashtags=${encodeURIComponent("野球選手タイプ診断,草野球ナビ")}`;
   const lineUrl = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
 
   return (
@@ -148,7 +203,7 @@ export default function PlayerQuickShindan() {
 
           {!done && (
             <p className="yn-hint" style={{ textAlign: "center" }}>
-              5問すべて選ぶと、その場で結果が出ます。
+              10問すべて選ぶと、その場で結果が出ます。
             </p>
           )}
         </>
@@ -156,42 +211,53 @@ export default function PlayerQuickShindan() {
 
       {result && (
         <div className="pq-result" id="pq-result">
-          <p className="pq-result-label">あなたに似ているプロ野球選手は…</p>
+          <p className="pq-result-label">あなたに近いタイプの選手は…</p>
           <div className="pq-hero">
-            <PlayerArt player={result} className="dv-art" />
-            <span className={`mbig-league ${result.league === "MLB" ? "mlb" : "npb"}`}>
-              {result.league}
+            <PlayerArt player={result.top} className="dv-art" />
+            <span className={`mbig-league ${result.top.league === "MLB" ? "mlb" : "npb"}`}>
+              {result.top.league}
             </span>
-            <span className="pq-name">{result.name}</span>
-            <span className="pq-pos">{result.position}</span>
+            <span className="pq-name">{result.top.name}</span>
+            <span className="pq-pos">{result.top.position}</span>
           </div>
-          <p className="pq-note">{result.note}</p>
+          <p className="pq-note">{result.top.note}</p>
+
+          {result.others.length > 0 && (
+            <div className="pq-others">
+              <p className="pq-others-head">同じくらい近い候補</p>
+              <p className="pq-others-body">
+                {result.others.map((p) => `${p.name}（${p.position}）`).join("・")}
+              </p>
+            </div>
+          )}
+
           <p className="player-disc" style={{ textAlign: "center" }}>
-            ※ イラストはイメージです（ご本人の肖像ではありません）。
+            ※ プレースタイルの傾向が近い選手を選ぶ簡易診断です（性格や実力を判定するものではありません）。
+            イラストはイメージで、ご本人の肖像ではありません。
           </p>
 
           <div className="pq-gear">
-            <p className="pq-gear-head">{result.name}の使用ギア</p>
+            <p className="pq-gear-head">{result.top.name}の使用ギア</p>
             <p className="pq-gear-body">
               グローブ＝
               <a
                 className="maker-link"
-                href={rktSearch(result.glove === "各社" ? "" : result.glove, "グローブ")}
+                href={rktSearch(result.top.glove === "各社" ? "" : result.top.glove, "グローブ")}
                 target="_blank"
                 rel="nofollow sponsored noopener"
               >
-                {result.gloveModel || result.glove}
+                {result.top.gloveModel || result.top.glove}
               </a>
-              {result.bat && (
+              {result.top.bat && (
                 <>
                   ／バット＝
                   <a
                     className="maker-link"
-                    href={rktSearch(result.bat === "各社" ? "" : result.bat, "バット")}
+                    href={rktSearch(result.top.bat === "各社" ? "" : result.top.bat, "バット")}
                     target="_blank"
                     rel="nofollow sponsored noopener"
                   >
-                    {result.batModel || result.bat}
+                    {result.top.batModel || result.top.bat}
                   </a>
                 </>
               )}
@@ -225,8 +291,8 @@ export default function PlayerQuickShindan() {
           </div>
 
           <ProductCards
-            keyword={result.productKeyword}
-            heading={`🛒 ${result.name}が使う「${result.glove}」のグローブを見る`}
+            keyword={result.top.productKeyword}
+            heading={`🛒 ${result.top.name}が使う「${result.top.glove}」のグローブを見る`}
           />
 
           <button className="stats-clear" onClick={reset}>
@@ -235,7 +301,7 @@ export default function PlayerQuickShindan() {
 
           <div className="bat-links">
             <a className="cta-inline" href="/baseball-dock/">
-              → もっと本格的に：全45問の「野球MBTI診断」で性格タイプ＋道具の処方まで
+              → 本格的に診断するなら：全45問の「野球MBTI診断」（性格タイプ＋道具の処方まで）
             </a>
             <a className="cta-inline" href="/players/">
               → 収録{PLAYERS.length}名の使用ギア一覧を見る
