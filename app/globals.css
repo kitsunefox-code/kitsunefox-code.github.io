@@ -3761,6 +3761,40 @@ h1 .hl {
   .mf-fortune-list > div { grid-template-columns: 72px 1fr; }
 }
 
+/* 似ているプロ野球選手診断（/similar-player/） */
+.pq-item { padding: 20px 0; border-bottom: 1px solid var(--line); }
+.pq-num {
+  font-family: var(--font-display), serif; letter-spacing: 0.2em;
+  font-size: 12px; color: var(--accent); margin: 0 0 4px; font-weight: 700;
+}
+.pq-q {
+  font-family: var(--font-mincho), serif;
+  font-size: clamp(16px, 2.8vw, 20px); font-weight: 700; color: var(--ink);
+  margin: 0 0 12px; line-height: 1.6;
+}
+.pq-choices { display: grid; grid-template-columns: 1fr; gap: 8px; }
+.pq-choice {
+  text-align: left; padding: 13px 16px; font-size: 14.5px; font-weight: 700;
+  border: 1px solid var(--line-strong); background: #fff; color: var(--ink);
+  cursor: pointer; border-radius: 0; transition: background 0.12s, color 0.12s;
+}
+.pq-choice:hover { background: var(--chip); }
+.pq-choice.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+@media (min-width: 640px) { .pq-choices { grid-template-columns: 1fr 1fr; } }
+
+.pq-result { text-align: center; padding-top: 10px; }
+.pq-result-label { font-size: 13px; font-weight: 700; color: var(--muted); margin: 0 0 10px; }
+.pq-hero { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.pq-name {
+  font-family: var(--font-mincho), serif; font-weight: 700;
+  font-size: clamp(28px, 6vw, 42px); color: var(--ink); line-height: 1.2;
+}
+.pq-pos { font-size: 13.5px; color: var(--muted); font-weight: 700; }
+.pq-note { font-size: 14.5px; line-height: 1.85; color: var(--text); max-width: 620px; margin: 12px auto 4px; }
+.pq-gear { border: 1px solid var(--line); padding: 14px; margin: 16px auto; max-width: 620px; }
+.pq-gear-head { font-size: 12px; font-weight: 800; color: var(--muted); margin: 0 0 6px; }
+.pq-gear-body { font-size: 14px; line-height: 1.8; margin: 0; }
+
 /* 野球MBTI 相性一覧（/baseball-dock/compatibility/） */
 .compat-table { border-top: 1px solid var(--line); }
 .compat-row {

@@ -881,6 +881,9 @@ export default function DockShindan() {
           </button>
 
           <div className="bat-links">
+            <a className="cta-inline" href="/similar-player/">
+              → 5問だけの「似ているプロ野球選手診断」も試す
+            </a>
             <a className="cta-inline" href="/baseball-dock/compatibility/">
               → チームで噛み合う相手・衝突しやすい相手を見る（相性一覧）
             </a>

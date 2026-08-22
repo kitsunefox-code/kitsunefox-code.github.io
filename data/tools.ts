@@ -10,6 +10,14 @@ export type Tool = {
 
 export const TOOLS: Tool[] = [
   {
+    href: "/similar-player/",
+    emoji: "⚾",
+    title: "似ているプロ野球選手診断",
+    desc: "たった5問、約30秒。あなたのプレースタイルに最も近いプロ野球選手をNPB・MLB657名から1人ズバリ判定。その選手の使用グローブ・バットもわかります。",
+    badge: "5問・30秒",
+    cta: "診断する（無料）",
+  },
+  {
     href: "/baseball-dock/",
     emoji: "🏥",
     title: "野球人間ドック",

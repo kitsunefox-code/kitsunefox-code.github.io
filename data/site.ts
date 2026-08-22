@@ -58,6 +58,7 @@ export const ALT_AD_PRIMARY_SLOTS = new Set([
   "top-under-hero", // トップ・比較ページ
   "dock-top", // 野球人間ドック
   "uranai-top", // ギアメーカー占い
+  "similar-top", // 似ているプロ野球選手診断
   "players-top", // 選手ギア一覧
   "maker-top", // メーカー別一覧
   "mbtihub-top", // タイプ一覧ハブ
@@ -349,6 +350,7 @@ export const ADSENSE_SLOTS: Record<string, string> = {
   "players-top": "",
   "maker-top": "",
   "uranai-top": "",
+  "similar-top": "",
   "mbti-top": "",
   "mbti-result": "",
 };
