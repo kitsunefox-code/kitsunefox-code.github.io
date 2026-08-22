@@ -10,8 +10,6 @@ export const metadata: Metadata = {
   description:
     "真夏の草野球でバテないための、試合前・中・後の食事と水分補給を解説。前日からの水分の蓄え方、当日朝と直前に食べたいもの、試合中の給水と塩分・エネルギー補給、終わった後のリカバリー食まで。水だけでなく塩分（ナトリウム）も摂るコツ、経口補水液・スポーツドリンクの使い分けも。暑い夏を元気に乗り切るための実践ガイドです。",
   alternates: { canonical: `${SITE_URL}/guide/summer-food/` },
-  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
-  robots: { index: false, follow: true },
   openGraph: {
     title: "真夏の草野球・試合前後の食事と水分補給",
     description: "前日〜試合後までの水分・塩分・エネルギー補給。バテない・熱中症を防ぐ食べ方。",

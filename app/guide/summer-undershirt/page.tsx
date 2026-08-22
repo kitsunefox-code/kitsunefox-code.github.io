@@ -10,8 +10,6 @@ export const metadata: Metadata = {
   description:
     "真夏の野球向けに、冷感アンダーシャツの選び方とおすすめを比較。接触冷感（ひんやり感の指標Q-MAX）、吸汗速乾、UVカット、消臭抗菌、ローネックなど、暑さ対策に効くポイントを整理。ミズノ・SSK・ゼット・デサント・アンダーアーマーなど主要ブランドの傾向と、価格帯別の選び方まで。夏を涼しく乗り切る一枚を。",
   alternates: { canonical: `${SITE_URL}/guide/summer-undershirt/` },
-  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
-  robots: { index: false, follow: true },
   openGraph: {
     title: "夏用冷感アンダーシャツ比較【2026】野球の暑さ対策",
     description:

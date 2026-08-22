@@ -10,8 +10,6 @@ export const metadata: Metadata = {
   description:
     "野球のスコアブックの書き方を、記号一覧つきでゼロから解説。守備位置の番号（1〜9）、ヒット・四球・三振・エラーの記号、進塁の書き方、ダイヤモンドの塗り方まで。草野球のマネージャー・初心者が今日からつけられるように、基本のルールと具体例をまとめました。",
   alternates: { canonical: `${SITE_URL}/guide/scorebook/` },
-  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
-  robots: { index: false, follow: true },
   openGraph: {
     title: "スコアブックの書き方【記号一覧・つけ方の基本】",
     description:

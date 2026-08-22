@@ -9,8 +9,6 @@ export const metadata: Metadata = {
   description:
     "草野球の雨天中止をいつ・誰が・どう判断すればいいかを解説。前日夜と当日朝の判断タイミング、雨雲レーダーや天気予報の見方、球場の使用可否（ぬかるみ・水はけ）の確認、両チーム・メンバーへの連絡の流れとマナー、中止時のキャンセル料の考え方まで。幹事・代表者が困らないための実践ガイドです。",
   alternates: { canonical: `${SITE_URL}/guide/rain-cancel/` },
-  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
-  robots: { index: false, follow: true },
   openGraph: {
     title: "草野球の雨天中止の判断基準と連絡マナー",
     description: "前日夜・当日朝の判断、レーダーの見方、球場確認、連絡の流れとマナー。",

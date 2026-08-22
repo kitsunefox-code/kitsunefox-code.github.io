@@ -9,8 +9,6 @@ export const metadata: Metadata = {
   description:
     "草野球が楽しくない、行くのが億劫、辞めたい…そう感じたときの原因別の対処法をまとめました。うまくいかない・人間関係・拘束や負担・温度差など、よくある原因ごとの考え方と、続けるための工夫、そして無理せず離れる・別のチームを探すという選択肢まで。ひとりで抱え込まず、自分に合う関わり方を見つけるためのヒントです。",
   alternates: { canonical: `${SITE_URL}/guide/not-fun/` },
-  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
-  robots: { index: false, follow: true },
   openGraph: {
     title: "草野球が楽しくない・辞めたいと思ったら",
     description: "原因別の対処と、続ける工夫・離れる/別チームという選択肢。抱え込まないために。",

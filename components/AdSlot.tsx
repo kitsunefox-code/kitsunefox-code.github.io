@@ -1,7 +1,12 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { ADSENSE_CLIENT_ID, ADSENSE_SLOTS, ADSENSE_DEFAULT_SLOT } from "@/data/site";
+import {
+  ADSENSE_CLIENT_ID,
+  ADSENSE_SLOTS,
+  ADSENSE_DEFAULT_SLOT,
+  ADSENSE_ENABLED,
+} from "@/data/site";
 
 declare global {
   interface Window {
@@ -29,7 +34,8 @@ export default function AdSlot({
   id: string;
   label?: string;
 }) {
-  const enabled = ADSENSE_CLIENT_ID.length > 0;
+  // ADSENSE_ENABLED が false の間は完全に無効（スクリプトも読み込まれない）
+  const enabled = ADSENSE_ENABLED && ADSENSE_CLIENT_ID.length > 0;
   // 個別スロット未設定なら共通のデフォルトスロットにフォールバック（1個作れば全枠点灯）
   const slot = ADSENSE_SLOTS[id] || ADSENSE_DEFAULT_SLOT;
   const pushed = useRef(false);
@@ -44,14 +50,10 @@ export default function AdSlot({
     }
   }, [enabled, slot]);
 
-  // 開発時（AdSense未設定）：場所が分かるプレースホルダー
-  if (!enabled) {
-    return (
-      <div className="ad-slot" aria-hidden="true">
-        広告スペース（data/site.ts に AdSense ID を設定すると表示されます）
-      </div>
-    );
-  }
+  // AdSense停止中（ADSENSE_ENABLED=false）：何も描画しない。
+  // ここでプレースホルダーを出すと本番に「広告スペース」の空箱が並んでしまうため、
+  // 必ず null を返すこと。
+  if (!enabled) return null;
 
   // AdSense有効だがスロット未設定：手動ユニットは出さず、自動広告に委ねる
   if (!slot) return null;

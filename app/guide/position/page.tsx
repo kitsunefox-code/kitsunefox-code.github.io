@@ -9,8 +9,6 @@ export const metadata: Metadata = {
   description:
     "草野球で自分に向いているポジションの見つけ方を、肩の強さ・足の速さ・反応・性格から解説。投手・捕手・内野（一二三遊）・外野それぞれに求められる資質と、初心者が始めやすい位置、チーム事情での決め方まで。自分の強みを活かせる守備位置を見つけて、もっと野球を楽しみましょう。",
   alternates: { canonical: `${SITE_URL}/guide/position/` },
-  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
-  robots: { index: false, follow: true },
   openGraph: {
     title: "草野球のポジション適性・向いている守備位置の見つけ方",
     description: "肩・足・反応・性格から、あなたに合う守備位置を。各ポジションの適性を解説。",

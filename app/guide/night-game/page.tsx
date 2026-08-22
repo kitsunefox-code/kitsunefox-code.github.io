@@ -10,8 +10,6 @@ export const metadata: Metadata = {
   description:
     "仕事帰りに楽しめる草野球のナイター。照明でボールが見えにくい・気温差・虫など、昼とは違う注意点と対策を解説。準備しておきたい持ち物、打球や送球が見えづらい時のコツ、寒暖差への服装、安全面まで。夜の試合を気持ちよくプレーするための完全ガイドです。",
   alternates: { canonical: `${SITE_URL}/guide/night-game/` },
-  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
-  robots: { index: false, follow: true },
   openGraph: {
     title: "草野球ナイター完全ガイド",
     description:

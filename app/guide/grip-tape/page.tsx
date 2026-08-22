@@ -11,8 +11,6 @@ export const metadata: Metadata = {
   description:
     "バットのグリップテープの種類（厚さ・素材）の違いと、失敗しない巻き方をイラスト感覚で解説。ウェット/ドライ、厚め/薄めの選び方、下（エンド）から上へ均等に巻くコツ、重ねしろ、替えどきの見極めまで。木製・金属どちらのバットにも効く、打感とケガ予防に直結する基本ガイド。",
   alternates: { canonical: `${SITE_URL}/guide/grip-tape/` },
-  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
-  robots: { index: false, follow: true },
   openGraph: {
     title: "バットのグリップテープの種類と巻き方",
     description:

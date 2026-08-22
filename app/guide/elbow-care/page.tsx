@@ -10,8 +10,6 @@ export const metadata: Metadata = {
   description:
     "草野球でありがちな「野球肘（肘の痛み）」の原因と、予防・ケアの方法を解説。投げすぎ・フォームの負担といった原因、アップとチューブトレでの予防、投球前後のストレッチ、アイシング、サポーターの活用まで。痛みが続く時は自己判断せず受診を。長く投げ続けるための肘の守り方をまとめました。",
   alternates: { canonical: `${SITE_URL}/guide/elbow-care/` },
-  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
-  robots: { index: false, follow: true },
   openGraph: {
     title: "野球肘のケアと予防",
     description: "原因・予防のチューブトレ・ストレッチ・アイシング・サポーター、痛い時の対処まで。",

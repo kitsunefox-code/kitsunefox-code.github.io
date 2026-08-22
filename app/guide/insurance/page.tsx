@@ -9,8 +9,6 @@ export const metadata: Metadata = {
   description:
     "草野球の練習や試合中のケガ・打球事故に備える保険を解説。年間数百円から入れるスポーツ安全保険（スポーツ安全協会）を軸に、個人で入る方法・チームでまとめて加入する方法、賠償責任（打球で人や物を傷つけた時）への備え、費用の目安と加入の流れまで。万が一に備えて、安心して野球を楽しみましょう。",
   alternates: { canonical: `${SITE_URL}/guide/insurance/` },
-  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
-  robots: { index: false, follow: true },
   openGraph: {
     title: "草野球の保険はどうする？",
     description:

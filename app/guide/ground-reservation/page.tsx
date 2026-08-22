@@ -9,8 +9,6 @@ export const metadata: Metadata = {
   description:
     "東京23区などで草野球のグラウンド（野球場）を予約する方法を、初めての人向けに解説。多くの区が採用するインターネット施設予約システム（けやきネット等）の仕組み、団体登録の要件（構成員数・在住/在勤/在学の条件）、抽選申込の流れ、人気球場の取りにくさと対策まで。自分たちの活動拠点を確保するための実践ガイドです。",
   alternates: { canonical: `${SITE_URL}/guide/ground-reservation/` },
-  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
-  robots: { index: false, follow: true },
   openGraph: {
     title: "東京の草野球グラウンド予約ガイド",
     description: "区の施設予約システム・団体登録の要件・抽選の流れ・人気球場の対策まで。",

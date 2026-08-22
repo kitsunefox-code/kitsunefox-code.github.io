@@ -5,6 +5,7 @@ import {
   SITE_URL,
   SITE_NAME,
   ADSENSE_CLIENT_ID,
+  ADSENSE_ENABLED,
   GA4_MEASUREMENT_ID,
 } from "@/data/site";
 import "./globals.css";
@@ -90,8 +91,10 @@ export default function RootLayout({
           }}
         />
 
-        {/* AdSense（data/site.ts にクライアントIDを設定すると有効化） */}
-        {ADSENSE_CLIENT_ID && (
+        {/* AdSense スクリプト（2026-08: 4回却下のため一旦停止。
+            収益はアフィリエイト（楽天・A8）に集中する方針。
+            承認を再挑戦する際は ADSENSE_ENABLED を true に戻すだけでよい。 */}
+        {ADSENSE_ENABLED && ADSENSE_CLIENT_ID && (
           <Script
             id="adsense"
             async

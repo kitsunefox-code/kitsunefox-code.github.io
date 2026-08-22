@@ -9,8 +9,6 @@ export const metadata: Metadata = {
   description:
     "40代・50代や、野球未経験・ブランクありの大人が草野球を始めるためのガイド。ケガをしないための準備運動と体づくり、最低限そろえる道具、初心者を歓迎するチーム・リーグの見つけ方、はじめの守備位置、楽しく続けるコツまで。「今さら…」と迷っている大人の一歩を後押しします。",
   alternates: { canonical: `${SITE_URL}/guide/over40/` },
-  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
-  robots: { index: false, follow: true },
   openGraph: {
     title: "40代・未経験から始める草野球",
     description: "大人の初心者がケガなく楽しむための準備・道具・チームの見つけ方・続けるコツ。",

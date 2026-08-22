@@ -1,4 +1,4 @@
-import { VISIBLE_GUIDES } from "@/data/guides";
+import { GUIDES } from "@/data/guides";
 
 // 記事末に「関連記事」を出す内部リンク部品。
 // 同カテゴリのガイドを自動表示（現在ページは除外）。静的HTMLに出るのでSEO・回遊に効く。
@@ -11,8 +11,8 @@ export default function RelatedGuides({
   heading?: string;
   max?: number;
 }) {
-  const cur = VISIBLE_GUIDES.find((g) => g.href === currentHref);
-  const pool = VISIBLE_GUIDES.filter((g) => g.href !== currentHref);
+  const cur = GUIDES.find((g) => g.href === currentHref);
+  const pool = GUIDES.filter((g) => g.href !== currentHref);
   // 同カテゴリを優先し、足りなければ他カテゴリで補完
   const sameCat = cur ? pool.filter((g) => g.category === cur.category) : [];
   const others = pool.filter((g) => !sameCat.includes(g));

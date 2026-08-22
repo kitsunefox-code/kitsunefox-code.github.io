@@ -13,6 +13,15 @@ export const SITE_NAME = "草野球ナビ";
 export const ADSENSE_CLIENT_ID = "ca-pub-6423402285554400";
 
 /**
+ * AdSense を使うかどうか。
+ * 2026-08: 「有用性の低いコンテンツ」で4回却下されたため一旦オフにし、
+ * 収益はアフィリエイト（楽天・A8）に集中する方針に切り替えた。
+ * オフの間は広告スクリプトを読み込まず（表示が速くなる）、広告枠も描画しない。
+ * 再挑戦する場合は true に戻すだけでよい（ID・ads.txt はそのまま残してある）。
+ */
+export const ADSENSE_ENABLED = false;
+
+/**
  * Google Analytics 4 の測定ID（例: "G-XXXXXXXXXX"）
  * 設定するとアクセス解析タグが全ページに入ります。
  * アクセス数の把握は ASP・メーカー直提携の交渉材料になるので早めの設置推奨。

@@ -10,8 +10,6 @@ export const metadata: Metadata = {
   description:
     "草野球で使う野球用サングラスの選び方を解説。まぶしさ・フライの見やすさに効く偏光レンズ、明るさで濃さが変わる調光レンズ、ずれにくいフィット、度付き対応まで。守備でフライを見失わない・ナイターや曇天での使い分け・価格帯の目安と、失敗しない選び方の基準をまとめました。",
   alternates: { canonical: `${SITE_URL}/guide/sunglasses/` },
-  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
-  robots: { index: false, follow: true },
   openGraph: {
     title: "野球サングラスの選び方",
     description: "偏光・調光・フィット・度付き。フライを見失わない、草野球で使える基準。",

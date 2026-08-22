@@ -10,8 +10,6 @@ export const metadata: Metadata = {
   description:
     "試合の少ない冬・オフシーズンにこそ差がつく、草野球プレーヤーの自主トレを解説。家でできる素振り・体幹・下半身トレ、肩肘を守る準備、打撃・守備・走力を伸ばすメニューと、シーズンに向けたケガ予防・道具のメンテまで。オフの過ごし方で来季が変わります。",
   alternates: { canonical: `${SITE_URL}/guide/offseason/` },
-  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
-  robots: { index: false, follow: true },
   openGraph: {
     title: "草野球オフシーズンの練習メニュー",
     description:

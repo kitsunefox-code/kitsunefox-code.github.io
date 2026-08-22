@@ -10,8 +10,6 @@ export const metadata: Metadata = {
   description:
     "軟式野球のボール「M号球」とは何かを、初心者にもわかりやすく解説。一般・中学向けのM号と少年向けのJ号の違い、硬式球との違い（重さ・素材・打感）、試合球と練習球の使い分け、ナガセケンコーなどの主要メーカー、選び方の目安まで。草野球で使うボールの基礎知識をまとめました。",
   alternates: { canonical: `${SITE_URL}/guide/m-ball/` },
-  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
-  robots: { index: false, follow: true },
   openGraph: {
     title: "軟式M号球とは？",
     description: "M号・J号の違い、硬式との違い、試合球の選び方まで。草野球のボールの基礎知識。",

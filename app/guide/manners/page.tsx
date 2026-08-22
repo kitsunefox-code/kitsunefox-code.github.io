@@ -9,8 +9,6 @@ export const metadata: Metadata = {
   description:
     "草野球で長く続けるために欠かせないマナーとグラウンドの使い方を解説。グラウンド整備（トンボ・ライン）、時間厳守、相手・審判へのリスペクト、近隣への配慮、ゴミの持ち帰り、相互審判での振る舞いまで。当たり前を丁寧にやるチームは、また声がかかります。初心者・新チームの必読マナー集。",
   alternates: { canonical: `${SITE_URL}/guide/manners/` },
-  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
-  robots: { index: false, follow: true },
   openGraph: {
     title: "草野球のマナー・グラウンドの使い方",
     description:

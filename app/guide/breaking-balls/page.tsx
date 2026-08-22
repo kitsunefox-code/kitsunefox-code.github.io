@@ -10,8 +10,6 @@ export const metadata: Metadata = {
   description:
     "草野球のピッチャー向けに、実戦で使える変化球の握り方と投げ方のコツを図解イメージで解説。まず覚えたいスライダー・カーブ・チェンジアップ・フォーク（SFF）・シュートの握りと注意点、軟式ボールでの曲がり方の違い、肩ひじを守る投げ方まで。1球種ずつ確実に増やすのが上達の近道です。",
   alternates: { canonical: `${SITE_URL}/guide/breaking-balls/` },
-  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
-  robots: { index: false, follow: true },
   openGraph: {
     title: "草野球で使える変化球の握り方",
     description:

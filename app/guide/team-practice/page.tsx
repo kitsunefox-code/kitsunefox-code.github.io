@@ -10,8 +10,6 @@ export const metadata: Metadata = {
   description:
     "限られた時間・人数でやる草野球のチーム練習メニューを、2時間の時間配分つきで具体的に紹介。アップ→キャッチボール→ノック→バッティング→連係→締めの流れ、少人数でもできる工夫、上達につながる優先順位まで。楽しく、でも中身のある練習でチームを強くしましょう。",
   alternates: { canonical: `${SITE_URL}/guide/team-practice/` },
-  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
-  robots: { index: false, follow: true },
   openGraph: {
     title: "草野球のチーム練習メニュー",
     description:

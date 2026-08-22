@@ -9,8 +9,6 @@ export const metadata: Metadata = {
   description:
     "草野球で対戦相手（練習試合の相手）を探す方法を、マッチングアプリ・掲示板・SNS・リーグ加入の4ルートで解説。それぞれの特徴と使い分け、そのまま使える募集文テンプレート、初めての練習試合で揉めないための事前確認（球場・ルール・人数・雨天対応）まで。試合数を増やしたいチームのための実践ガイドです。",
   alternates: { canonical: `${SITE_URL}/guide/find-opponent/` },
-  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
-  robots: { index: false, follow: true },
   openGraph: {
     title: "草野球の対戦相手の探し方",
     description: "アプリ・掲示板・SNS・リーグの使い分け、募集文テンプレ、事前確認のコツ。",

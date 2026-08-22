@@ -9,8 +9,6 @@ export const metadata: Metadata = {
   description:
     "草野球チームが目標にできる軟式野球の全国大会（天皇賜杯全日本軟式野球大会・高松宮賜杯など）の仕組みと、出場までの道筋を解説。連盟へのチーム登録から、支部予選→都道府県→ブロック→全国という階層構造、クラス（A・B）による大会の違いまで。「本気で上を目指したい」チームのための入門ガイドです。",
   alternates: { canonical: `${SITE_URL}/guide/tournament/` },
-  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
-  robots: { index: false, follow: true },
   openGraph: {
     title: "草野球の全国大会に出るには（天皇賜杯・高松宮賜杯）",
     description: "軟式野球の大会体系と、連盟登録→予選→全国までの道筋を解説。",

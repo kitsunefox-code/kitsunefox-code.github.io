@@ -9,8 +9,6 @@ export const metadata: Metadata = {
   description:
     "草野球チームを軟式野球連盟（JSBB）に登録する手順を、初めての人向けにわかりやすく解説。なぜ登録が必要か、支部を通じた登録の流れ、必要な情報（チーム名・代表者・選手名簿など）、費用・受付時期の考え方、登録後にできること（公式大会への出場）まで。天皇賜杯などを目指す第一歩をまとめました。",
   alternates: { canonical: `${SITE_URL}/guide/team-registration/` },
-  // AdSense審査対策で一時的に検索対象外(承認後に戻す)
-  robots: { index: false, follow: true },
   openGraph: {
     title: "軟式野球連盟のチーム登録の手順",
     description: "支部を通じた登録の流れ・必要情報・費用や時期の考え方・登録後にできること。",
