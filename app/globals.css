@@ -3761,6 +3761,56 @@ h1 .hl {
   .mf-fortune-list > div { grid-template-columns: 72px 1fr; }
 }
 
+/* 野球MBTI 相性一覧（/baseball-dock/compatibility/） */
+.compat-table { border-top: 1px solid var(--line); }
+.compat-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+.compat-me {
+  display: flex; align-items: center; gap: 8px;
+  text-decoration: none; color: var(--ink);
+}
+.compat-me-code { font-family: var(--font-mincho), serif; font-weight: 700; font-size: 20px; }
+.compat-me-nick { font-size: 13px; color: var(--muted); font-weight: 700; }
+.compat-pair { display: grid; grid-template-columns: 1fr; gap: 8px; }
+.compat-chip {
+  display: block; padding: 10px 12px; text-decoration: none;
+  border: 1px solid var(--line); border-left: 3px solid;
+  color: var(--ink); background: #fff;
+}
+.compat-chip.good { border-left-color: var(--good); }
+.compat-chip.tough { border-left-color: #8a6a97; }
+.compat-chip:hover { background: var(--chip); }
+.compat-chip-label { display: block; font-size: 11px; font-weight: 800; color: var(--muted); }
+.compat-chip-code { display: block; font-weight: 800; font-size: 15px; margin-top: 2px; }
+.compat-chip-nick { font-size: 12px; color: var(--muted); font-weight: 700; margin-left: 6px; }
+.compat-chip-note { display: block; font-size: 12.5px; color: var(--text); line-height: 1.6; margin-top: 4px; }
+@media (min-width: 720px) {
+  .compat-row { grid-template-columns: 190px 1fr; align-items: start; gap: 16px; }
+  .compat-pair { grid-template-columns: 1fr 1fr; gap: 12px; }
+}
+
+/* MBTI × ポジション（/baseball-dock/position/） */
+.mp-list { border-top: 1px solid var(--line); }
+.mp-row { padding: 16px 0; border-bottom: 1px solid var(--line); }
+.mp-head { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--ink); }
+.mp-code { font-family: var(--font-mincho), serif; font-weight: 700; font-size: 20px; }
+.mp-nick { font-size: 13px; color: var(--muted); font-weight: 700; }
+.mp-catch { font-size: 13.5px; color: var(--muted); margin: 6px 0 8px; line-height: 1.7; }
+.mp-pos { display: grid; grid-template-columns: 1fr; gap: 8px; }
+.mp-pos-item {
+  display: block; padding: 8px 12px; background: var(--chip);
+  border-left: 3px solid var(--accent); font-size: 14px;
+}
+.mp-why { display: block; font-size: 12.5px; color: var(--muted); line-height: 1.6; margin-top: 2px; }
+@media (min-width: 720px) {
+  .mp-pos { grid-template-columns: 1fr 1fr; }
+}
+
 /* 代替広告（忍者AdMax等）の枠。中央寄せ＋前後に余白を取り、本文と混ざらないようにする */
 .alt-ad {
   display: block;

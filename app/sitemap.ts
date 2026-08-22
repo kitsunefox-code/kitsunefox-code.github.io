@@ -18,6 +18,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.7,
     },
+    // 診断クラスタの深掘りページ（相性・ポジション）
+    {
+      url: `${SITE_URL}/baseball-dock/compatibility/`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.85,
+    },
+    {
+      url: `${SITE_URL}/baseball-dock/position/`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.85,
+    },
     // 16タイプ別ページ（MBTI診断系クエリの受け皿。流入の主力）
     ...MBTI_TYPES.map((t) => ({
       url: `${SITE_URL}/baseball-dock/type/${t.code.toLowerCase()}/`,

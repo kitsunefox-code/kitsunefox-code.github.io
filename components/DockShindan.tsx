@@ -881,6 +881,12 @@ export default function DockShindan() {
           </button>
 
           <div className="bat-links">
+            <a className="cta-inline" href="/baseball-dock/compatibility/">
+              → チームで噛み合う相手・衝突しやすい相手を見る（相性一覧）
+            </a>
+            <a className="cta-inline" href="/baseball-dock/position/">
+              → あなたのタイプに向いているポジションを見る
+            </a>
             <a className="cta-inline" href="/baseball-dock/type/">
               → 全16タイプの解説を読む
             </a>
