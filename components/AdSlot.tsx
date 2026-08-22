@@ -6,7 +6,10 @@ import {
   ADSENSE_SLOTS,
   ADSENSE_DEFAULT_SLOT,
   ADSENSE_ENABLED,
+  ALT_AD_SLOTS,
+  ALT_AD_DEFAULT,
 } from "@/data/site";
+import AltAd from "@/components/AltAd";
 
 declare global {
   interface Window {
@@ -50,10 +53,12 @@ export default function AdSlot({
     }
   }, [enabled, slot]);
 
-  // AdSense停止中（ADSENSE_ENABLED=false）：何も描画しない。
-  // ここでプレースホルダーを出すと本番に「広告スペース」の空箱が並んでしまうため、
-  // 必ず null を返すこと。
-  if (!enabled) return null;
+  // AdSense停止中：代替広告（忍者AdMax等）のタグがあればそれを出す。
+  // タグ未設定なら何も描画しない（プレースホルダーを出すと本番に空箱が並ぶため）。
+  if (!enabled) {
+    const altSnippet = ALT_AD_SLOTS[id] || ALT_AD_DEFAULT;
+    return altSnippet ? <AltAd snippet={altSnippet} label={label} /> : null;
+  }
 
   // AdSense有効だがスロット未設定：手動ユニットは出さず、自動広告に委ねる
   if (!slot) return null;

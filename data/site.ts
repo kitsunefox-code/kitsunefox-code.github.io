@@ -22,6 +22,29 @@ export const ADSENSE_CLIENT_ID = "ca-pub-6423402285554400";
 export const ADSENSE_ENABLED = false;
 
 /**
+ * ★ 代替広告（忍者AdMax・i-mobile など）★
+ *
+ * AdSense停止中の広告枠をこちらで埋める。ネットワークを問わず使える汎用の仕組みで、
+ * 各社の管理画面で発行された**タグ（HTML）をそのまま貼るだけ**でよい。
+ *
+ * ● 使い方
+ *   1. 広告会社に登録し、広告枠を作ってタグ（<div>や<script>を含むHTML）を取得
+ *   2. そのタグを丸ごと ALT_AD_DEFAULT に貼る（全枠が一斉に点灯）
+ *   3. 場所ごとに別サイズを出したい時だけ ALT_AD_SLOTS に個別指定
+ *
+ * ● 注意
+ *   - バッククォート(`)を含むタグの場合はエスケープするか、シングルクォートで囲むこと
+ *   - タグ内の<script>も実行される（createContextualFragment を使用）
+ *   - 空文字なら何も描画されない（＝今の状態）
+ */
+export const ALT_AD_DEFAULT = "";
+
+/** 場所ごとに別のタグを使いたい場合のみ設定（未設定は ALT_AD_DEFAULT にフォールバック） */
+export const ALT_AD_SLOTS: Record<string, string> = {
+  // 例: "article-top": '<div class="xxx" data-id="12345"></div><script>...</script>',
+};
+
+/**
  * Google Analytics 4 の測定ID（例: "G-XXXXXXXXXX"）
  * 設定するとアクセス解析タグが全ページに入ります。
  * アクセス数の把握は ASP・メーカー直提携の交渉材料になるので早めの設置推奨。
