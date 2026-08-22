@@ -1,20 +1,51 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/data/site";
+import { MBTI_TYPES } from "@/data/baseballMbti";
 
 // output: export（静的書き出し）で生成するために必要
 export const dynamic = "force-static";
 
-// AdSense是正(2026-07-15): 以下はnoindex設定済みのためsitemapからも除外し、
-// 「インデックスして」(sitemap)と「しないで」(noindex)の矛盾したシグナルを解消する。
-// - baseball-dock/type/{code}/ 16ページ(テンプレ生成・本文薄)。ハブ /baseball-dock/type/ 自体は
-//   16タイプへの内部リンク集として有用なため残す。
-// - players/maker/ および players/maker/{slug}/ (選手名リストの一覧で本文が薄い)
-// - guide/kansai-league/, guide/kanto-league/ (guide/regional-league/ と近い内容の重複ページ)
+// 2026-08: AdSense断念に伴い、審査対策で除外していたページをすべて復帰。
+// Search Consoleの実データで「野球mbti診断」系がクリックの大半を占めており、
+// その受け皿となる16タイプ別ページを外していたのは機会損失だったため。
+const GEAR_MAKER_SLUGS = ["mizuno", "zett", "ssk", "rawlings", "kubota", "asics", "wilson"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
       url: `${SITE_URL}/baseball-dock/type/`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    // 16タイプ別ページ（MBTI診断系クエリの受け皿。流入の主力）
+    ...MBTI_TYPES.map((t) => ({
+      url: `${SITE_URL}/baseball-dock/type/${t.code.toLowerCase()}/`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
+    })),
+    // メーカー別の使用選手一覧（「○○選手 グローブ」系の受け皿）
+    {
+      url: `${SITE_URL}/players/maker/`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    ...GEAR_MAKER_SLUGS.map((s) => ({
+      url: `${SITE_URL}/players/maker/${s}/`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.75,
+    })),
+    {
+      url: `${SITE_URL}/guide/kanto-league/`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_URL}/guide/kansai-league/`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.7,
