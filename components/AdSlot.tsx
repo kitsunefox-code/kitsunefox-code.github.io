@@ -8,6 +8,7 @@ import {
   ADSENSE_ENABLED,
   ALT_AD_SLOTS,
   ALT_AD_DEFAULT,
+  ALT_AD_PRIMARY_SLOTS,
 } from "@/data/site";
 import AltAd from "@/components/AltAd";
 
@@ -56,7 +57,10 @@ export default function AdSlot({
   // AdSense停止中：代替広告（忍者AdMax等）のタグがあればそれを出す。
   // タグ未設定なら何も描画しない（プレースホルダーを出すと本番に空箱が並ぶため）。
   if (!enabled) {
-    const altSnippet = ALT_AD_SLOTS[id] || ALT_AD_DEFAULT;
+    // 枠ID専用のタグがあればそれを使う。無ければ共通タグだが、
+    // 共通タグは1ページ1回しか描画できないため「主枠」に限定する。
+    const ownTag = ALT_AD_SLOTS[id];
+    const altSnippet = ownTag || (ALT_AD_PRIMARY_SLOTS.has(id) ? ALT_AD_DEFAULT : "");
     return altSnippet ? <AltAd snippet={altSnippet} label={label} /> : null;
   }
 

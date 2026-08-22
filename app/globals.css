@@ -3761,6 +3761,18 @@ h1 .hl {
   .mf-fortune-list > div { grid-template-columns: 72px 1fr; }
 }
 
+/* 代替広告（忍者AdMax等）の枠。中央寄せ＋前後に余白を取り、本文と混ざらないようにする */
+.alt-ad {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin: 26px 0;
+  line-height: 0; /* iframe下の余分な隙間を消す */
+}
+.alt-ad iframe {
+  max-width: 100%;
+}
+
 /* 記事末の「関連記事」内部リンク */
 .related-guides { margin: 34px 0 6px; }
 .rg-heading {

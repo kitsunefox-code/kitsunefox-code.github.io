@@ -37,12 +37,33 @@ export const ADSENSE_ENABLED = false;
  *   - タグ内の<script>も実行される（createContextualFragment を使用）
  *   - 空文字なら何も描画されない（＝今の状態）
  */
-export const ALT_AD_DEFAULT = "";
+export const ALT_AD_DEFAULT =
+  '<script src="https://adm.shinobi.jp/s/d8594049f60286a7af58482910d98ac6"></script>';
 
 /** 場所ごとに別のタグを使いたい場合のみ設定（未設定は ALT_AD_DEFAULT にフォールバック） */
 export const ALT_AD_SLOTS: Record<string, string> = {
   // 例: "article-top": '<div class="xxx" data-id="12345"></div><script>...</script>',
 };
+
+/**
+ * ⚠️ 同一の広告タグは1ページに1回しか描画できない。
+ * （忍者AdMaxのタグは document.write 方式で、複数同時に読み込むと書き込み先が競合し
+ *   片方が空になる。実測で確認済み）
+ * そのため「各ページで最初に来る枠」だけを広告に使う。
+ * 2枠目以降も収益化したい場合は、広告会社の管理画面で**別の広告枠を追加作成**して
+ * 別タグを発行し、ALT_AD_SLOTS に枠ID別で登録すること。
+ */
+export const ALT_AD_PRIMARY_SLOTS = new Set([
+  "article-top", // 記事ページ（54ページ）
+  "top-under-hero", // トップ・比較ページ
+  "dock-top", // 野球人間ドック
+  "uranai-top", // ギアメーカー占い
+  "players-top", // 選手ギア一覧
+  "maker-top", // メーカー別一覧
+  "mbtihub-top", // タイプ一覧ハブ
+  "mbtitype-top", // タイプ個別
+  "under-compare", // 比較ページ
+]);
 
 /**
  * Google Analytics 4 の測定ID（例: "G-XXXXXXXXXX"）
