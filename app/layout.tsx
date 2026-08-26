@@ -177,6 +177,7 @@ gtag('config', '${GA4_MEASUREMENT_ID}');`}
                   <p className="ft-head">サイト情報</p>
                   <a href="/about/">運営者情報・評価基準</a>
                   <a href="/privacy/">プライバシーポリシー</a>
+                  <a href="/contact/">お問い合わせ</a>
                 </div>
               </div>
             </div>
