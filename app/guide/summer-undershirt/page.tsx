@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import RelatedGuides from "@/components/RelatedGuides";
 import AdSlot from "@/components/AdSlot";
+import AffiliateBox from "@/components/AffiliateBox";
 import ProductCards from "@/components/ProductCards";
 import { LAST_UPDATED } from "@/data/makers";
 import { SITE_URL } from "@/data/site";
@@ -92,6 +93,12 @@ export default function SummerUndershirtPage() {
         </div>
 
         <ProductCards keyword="野球 アンダーシャツ 冷感 ローネック" heading="🎽 冷感アンダーシャツ（ローネック）を見る" />
+
+        <AffiliateBox
+          heading="👕 アンダーシャツを探す"
+          rakuten={["under"]}
+          retailers
+        />
 
         <AdSlot id="article-mid" />
 

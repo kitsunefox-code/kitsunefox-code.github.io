@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import RelatedGuides from "@/components/RelatedGuides";
 import AdSlot from "@/components/AdSlot";
+import AffiliateBox from "@/components/AffiliateBox";
 import ProductCards from "@/components/ProductCards";
 import { LAST_UPDATED } from "@/data/makers";
 import { SITE_URL } from "@/data/site";
@@ -159,6 +160,12 @@ export default function GearChecklistPage() {
           初めての練習は、<strong>グローブと動ける服装だけ</strong>で参加してOK。
           周りの道具を見てから、自分に合うものを買うのが失敗しないコツです。
         </div>
+
+        <AffiliateBox
+          heading="🛒 道具一式を探す"
+          rakuten={["glove", "bat", "spike", "under", "cap"]}
+          retailers
+        />
 
         <AdSlot id="article-bottom" />
 

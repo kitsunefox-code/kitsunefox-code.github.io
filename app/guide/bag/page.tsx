@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import AdSlot from "@/components/AdSlot";
+import AffiliateBox from "@/components/AffiliateBox";
 import ProductCards from "@/components/ProductCards";
 import RelatedGuides from "@/components/RelatedGuides";
 import { LAST_UPDATED } from "@/data/makers";
@@ -93,6 +94,11 @@ export default function BagPage() {
         </ul>
 
         <ProductCards keyword="野球 バッグ バックパック" heading="🎒 楽天で人気の野球バックパック" />
+
+        <AffiliateBox
+          heading="🧳 バッグを探す"
+          retailers
+        />
 
         <AdSlot id="article-mid" />
 

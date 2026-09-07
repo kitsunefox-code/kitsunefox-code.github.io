@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import ComparisonTable from "@/components/ComparisonTable";
 import CompareAllTable from "@/components/CompareAllTable";
 import AdSlot from "@/components/AdSlot";
+import AffiliateBox from "@/components/AffiliateBox";
 import GoodsLinks from "@/components/GoodsLinks";
 import { makers, LAST_UPDATED } from "@/data/makers";
 import { SITE_URL } from "@/data/site";
@@ -138,6 +139,12 @@ export default function UniformPage() {
         </section>
 
         <GoodsLinks />
+
+        <AffiliateBox
+          heading="👚 ユニフォーム・キャップを探す"
+          rakuten={["uniform", "cap", "socks"]}
+          retailers
+        />
 
         <AdSlot id="under-compare" />
 

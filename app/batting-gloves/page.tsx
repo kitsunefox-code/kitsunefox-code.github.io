@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import AdSlot from "@/components/AdSlot";
+import AffiliateBox from "@/components/AffiliateBox";
 import ProductCards from "@/components/ProductCards";
 import EditorsPicks from "@/components/EditorsPicks";
 import { LAST_UPDATED } from "@/data/makers";
@@ -175,6 +176,12 @@ export default function BattingGlovesPage() {
           <ProductCards
             keyword="野球 バッティンググローブ"
             heading="🧤 楽天で人気のバッティンググローブ"
+          />
+
+          <AffiliateBox
+            heading="🧤 バッティンググローブを探す"
+            rakuten={["glove"]}
+            retailers
           />
 
           <AdSlot id="article-mid" />

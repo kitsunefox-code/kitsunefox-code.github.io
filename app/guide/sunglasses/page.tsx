@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import AdSlot from "@/components/AdSlot";
+import AffiliateBox from "@/components/AffiliateBox";
 import ProductCards from "@/components/ProductCards";
 import RelatedGuides from "@/components/RelatedGuides";
 import { LAST_UPDATED } from "@/data/makers";
@@ -96,6 +97,11 @@ export default function SunglassesPage() {
         </div>
 
         <ProductCards keyword="野球 サングラス 偏光" heading="🕶 楽天で人気の野球サングラス（偏光）" />
+
+        <AffiliateBox
+          heading="🕶 サングラスを探す"
+          retailers
+        />
 
         <AdSlot id="article-mid" />
 

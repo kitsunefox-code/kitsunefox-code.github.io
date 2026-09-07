@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import AdSlot from "@/components/AdSlot";
+import AffiliateBox from "@/components/AffiliateBox";
 import ProductCards from "@/components/ProductCards";
 import EditorsPicks from "@/components/EditorsPicks";
 import { LAST_UPDATED } from "@/data/makers";
@@ -172,6 +173,12 @@ export default function GloveComparePage() {
           <ProductCards
             keyword="軟式 グローブ 一般"
             heading="🧤 楽天で人気の軟式グローブ"
+          />
+
+          <AffiliateBox
+            heading="🧤 グローブを探す"
+            rakuten={["glove"]}
+            retailers
           />
 
           <AdSlot id="article-mid" />

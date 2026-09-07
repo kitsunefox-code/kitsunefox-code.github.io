@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import DockShindan from "@/components/DockShindan";
 import AdSlot from "@/components/AdSlot";
+import AffiliateBox from "@/components/AffiliateBox";
 import { PLAYER_COUNT } from "@/data/players";
 import { MBTI_TYPES } from "@/data/baseballMbti";
 import { SITE_URL } from "@/data/site";
@@ -159,6 +160,12 @@ export default function BaseballDockPage() {
               ))}
             </tbody>
           </table>
+
+          <AffiliateBox
+            heading="🧤 タイプに合う道具を探す"
+            rakuten={["glove", "bat", "spike"]}
+            retailers
+          />
 
           <h2>結果の受け取り方</h2>
           <p>

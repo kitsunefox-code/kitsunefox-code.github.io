@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import AdSlot from "@/components/AdSlot";
+import AffiliateBox from "@/components/AffiliateBox";
 import ProductCards from "@/components/ProductCards";
 import EditorsPicks from "@/components/EditorsPicks";
 import { LAST_UPDATED } from "@/data/makers";
@@ -155,6 +156,12 @@ export default function BatComparePage() {
           <ProductCards
             keyword="軟式 バット 一般"
             heading="🏏 楽天で人気の軟式バット"
+          />
+
+          <AffiliateBox
+            heading="🏏 バットを探す"
+            rakuten={["bat"]}
+            retailers
           />
 
           <AdSlot id="article-mid" />

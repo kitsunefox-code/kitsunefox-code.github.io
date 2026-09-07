@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import RelatedGuides from "@/components/RelatedGuides";
 import AdSlot from "@/components/AdSlot";
+import AffiliateBox from "@/components/AffiliateBox";
 import ProductCards from "@/components/ProductCards";
 import { LAST_UPDATED } from "@/data/makers";
 import { SITE_URL } from "@/data/site";
@@ -97,6 +98,12 @@ export default function CoolingGoodsPage() {
         </p>
 
         <ProductCards keyword="ネッククーラー 冷感 保冷剤" heading="❄️ ネッククーラー・保冷グッズを見る" />
+
+        <AffiliateBox
+          heading="🧊 暑さ対策グッズを探す"
+          retailers
+          phiten
+        />
 
         <AdSlot id="article-mid" />
 
