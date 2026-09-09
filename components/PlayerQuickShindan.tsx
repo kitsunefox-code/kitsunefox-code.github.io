@@ -7,7 +7,7 @@
 //   10問にして各資質を3回前後カバーし、スコアで差がつくようにしている。
 //   それでも「性格を当てる」ものではないので、文言は「近いタイプ」に統一し、
 //   結果でも候補を3人出して“1人に断言しない”形にする。
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PlayerArt from "@/components/PlayerArt";
 import ProductCards from "@/components/ProductCards";
 import { PLAYERS, type Player, type Trait } from "@/data/players";
@@ -145,14 +145,17 @@ export default function PlayerQuickShindan() {
   const done = QUESTIONS.every((q) => q.id in answers);
   const answered = Object.keys(answers).length;
 
-  const pick = (qid: string, idx: number) => {
-    const next = { ...answers, [qid]: idx };
-    setAnswers(next);
-    if (QUESTIONS.every((q) => q.id in next)) {
-      setResult(rankPlayers(next));
-      setTimeout(() => document.getElementById("pq-result")?.scrollIntoView({ behavior: "smooth" }), 80);
-    }
-  };
+  // 回答は関数形で更新し、連続クリックでも取りこぼさない。
+  const pick = (qid: string, idx: number) => setAnswers((prev) => ({ ...prev, [qid]: idx }));
+
+  // 全問そろったら判定する。setState は同期反映されないので、pick 内ではなく
+  // answers の変化を見て実行する（ここが正しいタイミング）。
+  useEffect(() => {
+    if (result) return;
+    if (!QUESTIONS.every((q) => q.id in answers)) return;
+    setResult(rankPlayers(answers));
+    setTimeout(() => document.getElementById("pq-result")?.scrollIntoView({ behavior: "smooth" }), 80);
+  }, [answers, result]);
 
   const reset = () => {
     setAnswers({});

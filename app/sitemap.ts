@@ -24,6 +24,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.9,
     },
+    {
+      url: `${SITE_URL}/glove-shindan/`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
     // 診断クラスタの深掘りページ（相性・ポジション）
     {
       url: `${SITE_URL}/baseball-dock/compatibility/`,

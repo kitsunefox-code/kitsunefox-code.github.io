@@ -10,6 +10,14 @@ export type Tool = {
 
 export const TOOLS: Tool[] = [
   {
+    href: "/glove-shindan/",
+    emoji: "🧤",
+    title: "グローブ診断",
+    desc: "4問・約30秒。あなたのプレースタイルに合う軟式グローブのウェブ（網）の型がわかります。特徴とトレードオフつき。",
+    badge: "4問・30秒",
+    cta: "診断する（無料）",
+  },
+  {
     href: "/similar-player/",
     emoji: "⚾",
     title: "野球選手タイプ診断",
