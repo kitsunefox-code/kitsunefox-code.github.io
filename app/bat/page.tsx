@@ -252,6 +252,7 @@ export default function BatComparePage() {
             「結局どれ？」となったら、6問で素材・長さ・重さまで提案する診断が便利です。
           </p>
           <div className="bat-links">
+            <a className="cta-inline" href="/bat-shindan/">→ 6問の「軟式バット診断」で素材・長さ・重さを提案してもらう</a>
             <a className="cta-inline" href="/baseball-dock/">→ あなたに合うバットを「野球人間ドック」で処方してもらう</a>
             <a className="cta-inline" href="/players/">→ プロ選手の使用バット・メーカー一覧（657名）を見る</a>
             <a className="cta-inline" href="/guide/bat-guide/">

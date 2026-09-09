@@ -118,6 +118,7 @@ export default function GloveShindanPage() {
           <a className="cta-inline" href="/glove/">→ 軟式グローブをメーカー・価格帯で比較する</a>
           <a className="cta-inline" href="/guide/glove-guide/">→ じっくり読む「軟式グローブの選び方」</a>
           <a className="cta-inline" href="/guide/glove-care/">→ 長く使う「グローブの型付け・お手入れ」</a>
+          <a className="cta-inline" href="/bat-shindan/">→ バットも選ぶなら「軟式バット診断」</a>
           <a className="cta-inline" href="/baseball-dock/">→ 全45問の「野球MBTI診断」で道具一式を処方してもらう</a>
         </div>
       </div>

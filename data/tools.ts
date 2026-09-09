@@ -10,6 +10,14 @@ export type Tool = {
 
 export const TOOLS: Tool[] = [
   {
+    href: "/bat-shindan/",
+    emoji: "🏏",
+    title: "軟式バット診断",
+    desc: "6問・約1分。素材（金属・カーボン・ビヨンド系）に加えて、身長と打撃スタイルから長さ・重さ・バランスまで提案します。価格の目安つき。",
+    badge: "6問・1分",
+    cta: "診断する（無料）",
+  },
+  {
     href: "/glove-shindan/",
     emoji: "🧤",
     title: "グローブ診断",
