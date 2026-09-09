@@ -67,6 +67,45 @@ export default function BaseballDockPage() {
         <DockShindan />
       </div>
 
+      {/* クローラーにも見える形で、各ギア比較ページへの文脈リンクを置く。
+          診断結果内の導線はクライアント描画のためクローラーから見えず、
+          また診断を最後までやらない人の受け皿にもならないため。 */}
+      <div className="container" style={{ paddingBottom: 8 }}>
+        <div className="dock-gear-nav">
+          <h2 className="section-title">道具を先に見たい人へ</h2>
+          <p className="section-sub" style={{ marginTop: 8, marginBottom: 14 }}>
+            45問はちょっと長い——という方は、カテゴリ別の比較ページからどうぞ。
+            価格帯・素材・メーカーの違いを、表で見比べられます。
+          </p>
+          <div className="dock-compare-links">
+            <a href="/bat/">
+              <strong>軟式バットの比較</strong>
+              <span>金属・カーボン・ビヨンド系の違いと、長さ・重さの選び方</span>
+            </a>
+            <a href="/glove/">
+              <strong>グローブの比較</strong>
+              <span>ウェブの型・ポジション別・型付け済みモデル</span>
+            </a>
+            <a href="/spikes/">
+              <strong>スパイクの比較</strong>
+              <span>ポイント（樹脂）と金歯、ローカットの選び方</span>
+            </a>
+            <a href="/batting-gloves/">
+              <strong>バッティンググローブの比較</strong>
+              <span>グリップ重視・フィット重視・コスパ重視</span>
+            </a>
+            <a href="/uniform/">
+              <strong>ユニフォームの比較</strong>
+              <span>全13社の価格・最小ロット・納期を一覧で</span>
+            </a>
+            <a href="/hikaku/">
+              <strong>道具を揃える順番と予算</strong>
+              <span>何から買うべきか、いくら見ておけばいいか</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
       <div className="container" style={{ paddingBottom: 40 }}>
         <div className="score-howto">
           <h2 className="section-title">この検査について</h2>

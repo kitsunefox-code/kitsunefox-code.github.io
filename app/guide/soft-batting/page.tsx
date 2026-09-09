@@ -5,7 +5,7 @@ import { LAST_UPDATED } from "@/data/makers";
 import { SITE_URL } from "@/data/site";
 
 export const metadata: Metadata = {
-  title: "軟式の打ち方3つのコツ｜ゴロばかり・飛ばないを直す打撃フォーム【草野球】",
+  title: "軟式でゴロばかり・飛ばない人へ。原因は「上から叩く」と3つの直し方",
   description:
     "軟式でボテボテのゴロや詰まった当たりばかり——原因は「軟式ボールが潰れる」ことにあります。上から叩かない・芯で押し込む・ミートポイントを近くする、の3つのコツでゴロを減らして飛距離を出す打ち方を、参考動画つきで解説。硬式出身者がハマる落とし穴も。",
   alternates: { canonical: `${SITE_URL}/guide/soft-batting/` },

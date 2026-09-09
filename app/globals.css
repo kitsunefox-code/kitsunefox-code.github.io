@@ -4830,3 +4830,61 @@ h1 .hl {
   padding-top: 4px;
 }
 .dv-art { width: 128px; }
+
+/* 診断結果→サイト内の比較ページへの導線（いきなり楽天に飛ばさない） */
+.dock-compare {
+  border: 1px solid var(--line-strong);
+  padding: 18px;
+  margin: 26px 0;
+  background: #fff;
+}
+.dock-compare-head {
+  font-family: var(--font-mincho), serif;
+  font-weight: 700;
+  font-size: 17px;
+  margin: 0 0 4px;
+  color: var(--ink);
+}
+.dock-compare-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0 0 14px;
+  line-height: 1.7;
+}
+.dock-compare-links {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+.dock-compare-links a {
+  display: block;
+  padding: 11px 14px;
+  background: var(--chip);
+  border-left: 3px solid var(--accent);
+  text-decoration: none;
+  color: var(--ink);
+  transition: background 0.12s;
+}
+.dock-compare-links a:hover { background: #f0ede6; }
+.dock-compare-links strong {
+  display: block;
+  font-size: 14.5px;
+  font-weight: 700;
+}
+.dock-compare-links span {
+  display: block;
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-top: 2px;
+}
+@media (min-width: 700px) {
+  .dock-compare-links { grid-template-columns: 1fr 1fr; }
+}
+
+/* 診断ページのサーバー描画ギア導線（クローラーにも見える内部リンク） */
+.dock-gear-nav {
+  border: 1px solid var(--line);
+  padding: 20px 18px;
+  background: #fff;
+}

@@ -803,6 +803,41 @@ export default function DockShindan() {
             メーカー名のリンクは楽天市場のおすすめ一覧（広告）が開きます。
           </p>
 
+          {/* 診断→検討の導線。いきなり楽天に飛ばさず、まずサイト内の比較ページで検討できるようにする。
+              最大の集客ページから各比較ページへの内部リンクにもなる。 */}
+          <div className="dock-compare">
+            <p className="dock-compare-head">🔍 買う前に、サイト内でじっくり比べる</p>
+            <p className="dock-compare-sub">
+              処方された道具を、価格帯・特徴・メーカーごとに見比べられます。
+            </p>
+            <div className="dock-compare-links">
+              <a href="/bat/">
+                <strong>軟式バットを比較</strong>
+                <span>あなたの処方：{BAT_MATERIAL_INFO[result.bat.material].label}（{BAT_MATERIAL_INFO[result.bat.material].price}）</span>
+              </a>
+              <a href="/glove/">
+                <strong>グローブを比較</strong>
+                <span>あなたの処方：{result.glove.web.name}（{result.glove.charLabel}）</span>
+              </a>
+              <a href="/spikes/">
+                <strong>スパイクを比較</strong>
+                <span>あなたの処方：{result.spike.name}</span>
+              </a>
+              <a href="/batting-gloves/">
+                <strong>バッティンググローブを比較</strong>
+                <span>あなたの処方：{result.bglove.makerHint}</span>
+              </a>
+              <a href="/uniform/">
+                <strong>ユニフォームを比較</strong>
+                <span>チームで揃えるなら。全13社の価格・納期を一覧で</span>
+              </a>
+              <a href="/hikaku/">
+                <strong>道具を揃える順番と予算</strong>
+                <span>何から買うべきか迷ったらこちら</span>
+              </a>
+            </div>
+          </div>
+
           {/* 実物（楽天・広告）：選手のギア＋処方どおりの道具 */}
           <ProductCards
             keyword={result.play.top.productKeyword}
