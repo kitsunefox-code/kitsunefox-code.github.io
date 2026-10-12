@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import DockShindan from "@/components/DockShindan";
 import AdSlot from "@/components/AdSlot";
 import AffiliateBox from "@/components/AffiliateBox";
+import ProductCards from "@/components/ProductCards";
 import { PLAYER_COUNT } from "@/data/players";
 import { MBTI_TYPES } from "@/data/baseballMbti";
 import { SITE_URL } from "@/data/site";
@@ -102,6 +103,23 @@ export default function BaseballDockPage() {
               <strong>道具を揃える順番と予算</strong>
               <span>何から買うべきか、いくら見ておけばいいか</span>
             </a>
+          </div>
+
+          {/* 最大の集客ページだが、45問を最後までやらないと商品に辿り着けなかった
+              （最初のアフィリンクがページの64%下＝53,000px地点）。
+              「道具を先に見たい人へ」はまさに購買意図のある人の受け皿なので、
+              ここに実商品カードを置く。 */}
+          <div style={{ marginTop: 20 }}>
+            <ProductCards
+              keyword="軟式 グローブ 一般"
+              heading="🧤 いま楽天で人気の軟式グローブ"
+              hits={4}
+            />
+            <ProductCards
+              keyword="軟式 バット 一般"
+              heading="🏏 いま楽天で人気の軟式バット"
+              hits={4}
+            />
           </div>
         </div>
       </div>

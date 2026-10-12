@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import AdSlot from "@/components/AdSlot";
+import ProductCards from "@/components/ProductCards";
 import BatShindan from "@/components/BatShindan";
 import { BAT_MATERIAL_INFO } from "@/data/batData";
 import { SITE_URL } from "@/data/site";
@@ -118,6 +119,13 @@ export default function BatShindanPage() {
             最終的には所属先の公式情報でご確認ください。
           </p>
         </section>
+
+        {/* 6問をやらない人にも商品が見えるように。ページ文脈どおりバットを出す */}
+        <ProductCards
+          keyword="軟式 バット 一般"
+          heading="🏏 いま楽天で人気の軟式バット"
+          hits={4}
+        />
 
         <div className="bat-links">
           <a className="cta-inline" href="/bat/">→ 軟式バットを素材・価格帯・メーカーで比較する</a>

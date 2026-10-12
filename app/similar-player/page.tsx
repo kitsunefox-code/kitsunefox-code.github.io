@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import AdSlot from "@/components/AdSlot";
+import ProductCards from "@/components/ProductCards";
 import PlayerQuickShindan from "@/components/PlayerQuickShindan";
 import { PLAYER_COUNT, NPB_COUNT, MLB_COUNT } from "@/data/players";
 import { SITE_URL } from "@/data/site";
@@ -110,6 +111,13 @@ export default function SimilarPlayerPage() {
             処方まで「検査結果報告書」一枚で受け取れます。
           </p>
         </section>
+
+        {/* 10問をやらない人にも商品が見えるように */}
+        <ProductCards
+          keyword="軟式 グローブ 一般"
+          heading="🧤 いま楽天で人気の軟式グローブ"
+          hits={4}
+        />
 
         <div className="bat-links">
           <a className="cta-inline" href="/baseball-dock/">→ 本格版「野球MBTI診断」（全45問・無料）を受ける</a>

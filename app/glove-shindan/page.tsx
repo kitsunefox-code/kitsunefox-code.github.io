@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import AdSlot from "@/components/AdSlot";
+import ProductCards from "@/components/ProductCards";
 import GloveShindan from "@/components/GloveShindan";
 import { WEB_TYPES } from "@/data/gloveData";
 import { SITE_URL } from "@/data/site";
@@ -113,6 +114,13 @@ export default function GloveShindanPage() {
             ))}
           </div>
         </section>
+
+        {/* 4問をやらない人にも商品が見えるように。ページ文脈どおりグローブを出す */}
+        <ProductCards
+          keyword="軟式 グローブ 一般"
+          heading="🧤 いま楽天で人気の軟式グローブ"
+          hits={4}
+        />
 
         <div className="bat-links">
           <a className="cta-inline" href="/glove/">→ 軟式グローブをメーカー・価格帯で比較する</a>
