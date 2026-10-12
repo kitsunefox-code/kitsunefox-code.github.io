@@ -88,6 +88,14 @@ export default function SimilarPlayerPage() {
 
         <PlayerQuickShindan />
 
+        {/* 診断を完了しない人にも商品が見えるよう、ウィジェット直後に置く。
+            ページ下部だと全高の75%地点になり、ほぼ誰の目にも入らなかった。 */}
+        <ProductCards
+          keyword="軟式 グローブ 一般"
+          heading="🧤 いま楽天で人気の軟式グローブ"
+          hits={4}
+        />
+
         <section className="score-howto" style={{ marginTop: 30 }}>
           <h2 className="section-title">この診断について</h2>
           <p className="section-sub" style={{ marginTop: 8 }}>
@@ -112,12 +120,6 @@ export default function SimilarPlayerPage() {
           </p>
         </section>
 
-        {/* 10問をやらない人にも商品が見えるように */}
-        <ProductCards
-          keyword="軟式 グローブ 一般"
-          heading="🧤 いま楽天で人気の軟式グローブ"
-          hits={4}
-        />
 
         <div className="bat-links">
           <a className="cta-inline" href="/baseball-dock/">→ 本格版「野球MBTI診断」（全45問・無料）を受ける</a>

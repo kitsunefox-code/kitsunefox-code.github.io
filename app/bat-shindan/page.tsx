@@ -86,6 +86,14 @@ export default function BatShindanPage() {
 
         <BatShindan />
 
+        {/* 診断を完了しない人にも商品が見えるよう、ウィジェット直後に置く。
+            ページ下部だと全高の75%地点になり、ほぼ誰の目にも入らなかった。 */}
+        <ProductCards
+          keyword="軟式 バット 一般"
+          heading="🏏 いま楽天で人気の軟式バット"
+          hits={4}
+        />
+
         <section className="score-howto" style={{ marginTop: 30 }}>
           <h2 className="section-title">素材ごとの違い</h2>
           <p className="section-sub" style={{ marginTop: 8, marginBottom: 14 }}>
@@ -120,12 +128,6 @@ export default function BatShindanPage() {
           </p>
         </section>
 
-        {/* 6問をやらない人にも商品が見えるように。ページ文脈どおりバットを出す */}
-        <ProductCards
-          keyword="軟式 バット 一般"
-          heading="🏏 いま楽天で人気の軟式バット"
-          hits={4}
-        />
 
         <div className="bat-links">
           <a className="cta-inline" href="/bat/">→ 軟式バットを素材・価格帯・メーカーで比較する</a>

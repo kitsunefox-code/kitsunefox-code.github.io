@@ -89,6 +89,14 @@ export default function GloveShindanPage() {
 
         <GloveShindan />
 
+        {/* 診断を完了しない人にも商品が見えるよう、ウィジェット直後に置く。
+            ページ下部だと全高の75%地点になり、ほぼ誰の目にも入らなかった。 */}
+        <ProductCards
+          keyword="軟式 グローブ 一般"
+          heading="🧤 いま楽天で人気の軟式グローブ"
+          hits={4}
+        />
+
         <section className="score-howto" style={{ marginTop: 30 }}>
           <h2 className="section-title">ウェブの型の一覧</h2>
           <p className="section-sub" style={{ marginTop: 8, marginBottom: 14 }}>
@@ -115,12 +123,6 @@ export default function GloveShindanPage() {
           </div>
         </section>
 
-        {/* 4問をやらない人にも商品が見えるように。ページ文脈どおりグローブを出す */}
-        <ProductCards
-          keyword="軟式 グローブ 一般"
-          heading="🧤 いま楽天で人気の軟式グローブ"
-          hits={4}
-        />
 
         <div className="bat-links">
           <a className="cta-inline" href="/glove/">→ 軟式グローブをメーカー・価格帯で比較する</a>
