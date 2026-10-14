@@ -37,24 +37,22 @@ function isAffiliate(href: string): boolean {
   }
 }
 
-// クリックされた導線の種類を、祖先要素のクラス名から推定する
+// クリックされた導線の種類を、祖先要素のクラス名から推定する。
+// ⚠️ 推測で書かず、実DOMを調べた実際のクラス名に合わせること
+//   （prod-* = ProductCards / aff-* = AffiliateBox / goods-* = GoodsLinks）。
+//   最初は [class*="pc"] のような当て推量で書いたため placement が "other" に
+//   落ちていた。判定順は「狭い文脈 → 広い文脈」。
 function placementOf(el: Element): string {
-  const map: [string, string][] = [
-    [".pq-result", "diagnosis-result"], // 診断結果の中
-    [".dock-gear-nav", "dock-gear-nav"], // 診断ページ上部の導線
-    [".alt-ad", "ad"], // 広告枠（誤判定の切り分け用）
-    [".goods-card", "goods-links"],
-  ];
-  for (const [sel, name] of map) {
-    if (el.closest(sel)) return name;
-  }
-  // コンポーネント由来のクラス接頭辞から拾う
-  const holder = el.closest('[class*="pc"], [class*="aff"], [class*="product"]');
-  if (holder) {
-    const cls = (holder.className || "").toString();
-    if (/product|pc-/.test(cls)) return "product-cards";
-    if (/aff/.test(cls)) return "affiliate-box";
-  }
+  // まず「ページのどこか」（文脈）を優先して見る
+  if (el.closest(".pq-result")) return "diagnosis-result"; // 診断結果の中
+  if (el.closest(".dock-gear-nav")) return "dock-gear-nav"; // 診断ページ上部の導線
+  if (el.closest(".alt-ad")) return "ad"; // 広告枠（切り分け用）
+
+  // 次に「どの部品か」を見る
+  if (el.closest(".prod-box, .prod-card")) return "product-cards";
+  if (el.closest(".aff-box, .aff-card")) return "affiliate-box";
+  if (el.closest(".goods-grid, .goods-card")) return "goods-links";
+
   return "other";
 }
 
