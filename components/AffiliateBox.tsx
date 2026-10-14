@@ -7,7 +7,8 @@ type Item = ProductLink | RetailerItem;
  * 記事内に差し込むアフィリエイトCTA。
  * - rakuten: RAKUTEN のキー配列（例: ["glove","bat"]）を渡すと楽天検索リンクを表示
  * - retailers: true なら総合スポーツ通販（ゼビオ・アルペン）も表示
- * - phiten: true ならファイテン公式（体のケア・疲労回復）を表示
+ * - phiten: true なら体のケア系（コラントッテ→ファイテンの順）を表示
+ *   ※順序は data/site.ts の PHITEN 配列＝収益性順（コラントッテのEPCが5倍）
  * すべて rel="sponsored nofollow" 付き。
  */
 export default function AffiliateBox({

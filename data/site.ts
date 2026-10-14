@@ -199,8 +199,23 @@ export const RAKUTEN: Record<string, ProductLink> = {
   },
 };
 
-/** ファイテン（Phiten）公式通販。疲労回復・体のケア文脈で使用（A8・計測ピクセル付き） */
+/**
+ * 体のケア系（コラントッテ・ファイテン）。疲労回復・故障予防の文脈で使用。
+ * A8・計測ピクセル付き。
+ *
+ * ⚠️ 並び順は収益性で決めている（2026-10-15 A8実績で確認）:
+ *   コラントッテ EPC 23.51 / 購入10% ← 他の5倍以上なので先頭
+ *   ファイテン   EPC  4.87 / 購入5%
+ * 草野球は肩・腰・ひじの痛みが切実なので、文脈的にも磁気ギアと相性が良い。
+ */
 export const PHITEN: { label: string; desc: string; href: string; pixel?: string; emoji: string }[] = [
+  {
+    label: "【コラントッテ公式】磁気ネックレス・サポーター",
+    desc: "肩・腰のこりに。プロ野球選手の着用例も多い磁気健康ギア",
+    href: "https://px.a8.net/svt/ejp?a8mat=4B7SGX+8QYBSI+4CD6+5YRHE",
+    pixel: "https://www19.a8.net/0.gif?a8mat=4B7SGX+8QYBSI+4CD6+5YRHE",
+    emoji: "🧲",
+  },
   {
     label: "【ファイテン公式】アスリート愛用のボディケア",
     desc: "プロ野球選手から多数のトップアスリートが愛用する公式通販",
@@ -221,13 +236,6 @@ export const PHITEN: { label: string; desc: string; href: string; pixel?: string
     href: "https://px.a8.net/svt/ejp?a8mat=4B7SGX+912P2Q+2SIW+HXSGI",
     pixel: "https://www17.a8.net/0.gif?a8mat=4B7SGX+912P2Q+2SIW+HXSGI",
     emoji: "🧴",
-  },
-  {
-    label: "【コラントッテ公式】磁気ネックレス・サポーター",
-    desc: "肩・腰のこりに。プロ野球選手の着用例も多い磁気健康ギア",
-    href: "https://px.a8.net/svt/ejp?a8mat=4B7SGX+8QYBSI+4CD6+5YRHE",
-    pixel: "https://www19.a8.net/0.gif?a8mat=4B7SGX+8QYBSI+4CD6+5YRHE",
-    emoji: "🧲",
   },
 ];
 
