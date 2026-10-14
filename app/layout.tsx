@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import AffiliateTracker from "@/components/AffiliateTracker";
 import { Crimson_Pro, Shippori_Mincho_B1 } from "next/font/google";
 import {
   SITE_URL,
@@ -105,6 +106,9 @@ export default function RootLayout({
         )}
 
         {/* Google Analytics 4（data/site.ts に測定IDを設定すると有効化） */}
+        {/* アフィリンクのクリックをGA4に送る（全ページ共通・委譲キャッチ） */}
+        {GA4_MEASUREMENT_ID && <AffiliateTracker />}
+
         {GA4_MEASUREMENT_ID && (
           <>
             <Script
