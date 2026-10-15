@@ -16,11 +16,14 @@ export default function AffiliateBox({
   rakuten = [],
   retailers = false,
   phiten = false,
+  note,
 }: {
   heading?: string;
   rakuten?: string[];
   retailers?: boolean;
   phiten?: boolean;
+  /** 既定の注記を差し替える。健康・寝具など効果を断定できない商材で使う（薬機法・景表法対策） */
+  note?: string;
 }) {
   const items: Item[] = [
     ...rakuten.map((k) => RAKUTEN[k]).filter(Boolean),
@@ -58,7 +61,7 @@ export default function AffiliateBox({
         })}
       </div>
       <p className="aff-note">
-        ※ 上記は広告リンクです。価格・在庫は各ストアでご確認ください。
+        {note ?? "※ 上記は広告リンクです。価格・在庫は各ストアでご確認ください。"}
       </p>
     </div>
   );

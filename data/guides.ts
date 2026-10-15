@@ -357,6 +357,14 @@ export const GUIDES: Guide[] = [
     category: "care",
   },
   {
+    href: "/guide/sleep-recovery/",
+    emoji: "🛏️",
+    title: "翌日がつらい人へ｜疲れを残さない睡眠と寝具",
+    description: "回復の本体は睡眠。寝返りと腰の負担、高反発と低反発の違い",
+    category: "care",
+    isNew: true,
+  },
+  {
     href: "/guide/body-care/",
     emoji: "💠",
     title: "草野球の疲労回復・体のケア完全ガイド",
