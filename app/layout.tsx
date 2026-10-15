@@ -171,6 +171,7 @@ gtag('config', '${GA4_MEASUREMENT_ID}');`}
                   <a href="/players/">プロ選手の使用ギア一覧</a>
                   <a href="/shindan/">ユニフォーム診断</a>
                   <a href="/lineup/">打順表メーカー</a>
+                  <a href="/warikan/">参加費の割り勘計算</a>
                   <a href="/stats/">草野球の成績表</a>
                   <a href="/tools/">診断ツール一覧</a>
                 </div>

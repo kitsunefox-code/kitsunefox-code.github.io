@@ -199,6 +199,7 @@ export default function LineupPage() {
 
         <div className="bat-links">
           <a className="cta-inline" href="/stats/">→ 成績表で打率・出塁率を自動計算する</a>
+          <a className="cta-inline" href="/warikan/">→ 参加費の割り勘を計算して集金リストを作る</a>
           <a className="cta-inline" href="/guide/batting-order/">→ 読む「草野球の打順の決め方」</a>
           <a className="cta-inline" href="/guide/scorebook/">→ 読む「スコアブックの書き方」</a>
           <a className="cta-inline" href="/guide/position/">→ 読む「ポジションの決め方・向き不向き」</a>
