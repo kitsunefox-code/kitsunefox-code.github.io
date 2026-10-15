@@ -61,6 +61,7 @@ export const ALT_AD_PRIMARY_SLOTS = new Set([
   "spikeshindan-top", // スパイク診断
   "bgloveshindan-top", // バッティンググローブ診断
   "stats-mid", // 草野球の成績表
+  "lineup-top", // 打順表メーカー
   "batshindan-top", // バット診断
   "gloveshindan-top", // グローブ診断
   "similar-top", // 似ているプロ野球選手診断

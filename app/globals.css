@@ -4985,3 +4985,69 @@ h1 .hl {
   .sm-form-meta { grid-template-columns: 180px 1fr; }
   .sm-form-grid { grid-template-columns: repeat(3, 1fr); }
 }
+
+/* ===== 打順表メーカー（/lineup/） =====
+   試合前にスマホで入れる前提。1行＝打順1人を横1列に収め、
+   名前の入力欄だけが伸びるようにする（守備位置と並べ替えボタンは固定幅）。 */
+.lm { margin-top: 4px; }
+.lm .sm-f-input { text-align: left; }
+
+.lm-meta { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 14px; }
+.lm-import {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  padding: 12px 14px; background: var(--chip); margin-bottom: 16px;
+}
+.lm-check { display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 700; cursor: pointer; }
+.lm-check input { width: 18px; height: 18px; accent-color: var(--accent); }
+
+.lm-rows { display: grid; gap: 6px; }
+.lm-row {
+  display: grid;
+  grid-template-columns: 30px 64px minmax(0, 1fr) auto;
+  align-items: center; gap: 7px;
+}
+.lm-rows .lm-row:has(.lm-avg) { grid-template-columns: 30px 64px minmax(0, 1fr) 46px auto; }
+.lm-no {
+  font-family: var(--font-mincho), serif; font-size: 19px; font-weight: 700;
+  color: var(--accent); text-align: center;
+}
+.lm-pos, .lm-name {
+  min-height: 46px; padding: 8px 10px; font-size: 16px;
+  border: 1px solid var(--line-strong); background: #fff; color: var(--ink); border-radius: 0;
+}
+.lm-pos { padding: 8px 4px; text-align: center; font-size: 15px; }
+.lm-pos:focus, .lm-name:focus { outline: 2px solid var(--accent); outline-offset: -2px; }
+.lm-avg {
+  font-family: var(--font-display), Georgia, serif; font-size: 14px; font-weight: 700;
+  text-align: right; color: var(--muted);
+}
+.lm-ops { display: flex; gap: 3px; }
+.lm-mini {
+  width: 30px; min-height: 46px; padding: 0; font-size: 14px; font-weight: 700;
+  border: 1px solid var(--line); background: #fff; color: var(--muted);
+  cursor: pointer; border-radius: 0; transition: background .12s;
+}
+.lm-mini:hover { background: var(--chip); color: var(--ink); }
+.lm-mini-del:hover { background: #fdf0ec; color: var(--accent); }
+
+.lm-rowops { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.lm-extra { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 18px; }
+
+.lm-out { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 20px; }
+.lm-make { flex: 1 1 240px; }
+
+.lm-preview { margin-top: 20px; }
+.lm-preview-head { font-size: 12px; font-weight: 800; color: var(--muted); margin: 0 0 8px; }
+.lm-preview-img {
+  display: block; width: 100%; max-width: 480px; height: auto;
+  border: 1px solid var(--line-strong);
+}
+
+.lm-steps { margin: 12px 0 0; padding-left: 1.3em; display: grid; gap: 10px; }
+.lm-steps li { font-size: 14px; line-height: 1.8; }
+.lm-steps strong { display: block; }
+
+@media (min-width: 640px) {
+  .lm-meta { grid-template-columns: 1fr 1fr 170px; }
+  .lm-extra { grid-template-columns: 1fr 1fr; }
+}

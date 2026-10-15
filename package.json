@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "posts": "node scripts/gen-x-posts.mjs"
   },
   "dependencies": {
     "next": "^15.5.20",

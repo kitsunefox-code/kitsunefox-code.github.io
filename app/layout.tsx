@@ -139,6 +139,7 @@ gtag('config', '${GA4_MEASUREMENT_ID}');`}
             </a>
             <nav>
               <a href="/hikaku/">比較</a>
+              <a href="/lineup/">打順表</a>
               <a href="/stats/">成績表</a>
               <a href="/tools/">診断・ツール</a>
               <a href="/guide/">ガイド</a>
@@ -169,6 +170,8 @@ gtag('config', '${GA4_MEASUREMENT_ID}');`}
                   <a href="/uranai/">ギアメーカー占い</a>
                   <a href="/players/">プロ選手の使用ギア一覧</a>
                   <a href="/shindan/">ユニフォーム診断</a>
+                  <a href="/lineup/">打順表メーカー</a>
+                  <a href="/stats/">草野球の成績表</a>
                   <a href="/tools/">診断ツール一覧</a>
                 </div>
                 <div className="ft-col">

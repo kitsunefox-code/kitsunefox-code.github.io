@@ -148,6 +148,7 @@ export default function StatsPage() {
         </section>
 
         <div className="bat-links">
+          <a className="cta-inline" href="/lineup/">→ 打順表メーカーで「今日のオーダー」を画像にする</a>
           <a className="cta-inline" href="/guide/scorebook/">→ 読む「スコアブックの書き方」</a>
           <a className="cta-inline" href="/guide/batting-order/">→ 打順の組み方を知る</a>
           <a className="cta-inline" href="/baseball-dock/">→ 全45問の「野球MBTI診断」で自分のタイプを知る</a>
