@@ -10,6 +10,22 @@ export type Tool = {
 
 export const TOOLS: Tool[] = [
   {
+    href: "/batting-gloves-shindan/",
+    emoji: "🧤",
+    title: "バッティンググローブ診断",
+    desc: "4問・約30秒。グリップ重視・フィット重視・コスパ重視のどれが合うかを判定し、代表ブランドを提案。木製派向けの裏技も。",
+    badge: "4問・30秒",
+    cta: "診断する（無料）",
+  },
+  {
+    href: "/spikes-shindan/",
+    emoji: "👟",
+    title: "スパイク診断",
+    desc: "4問・約30秒。樹脂ポイントか金具か、ローカットかミドルカットか。あなたのプレースタイルに合う組み合わせを提案します。金具の規定確認ポイントつき。",
+    badge: "4問・30秒",
+    cta: "診断する（無料）",
+  },
+  {
     href: "/legend-draft/?utm_source=kusayakyu-navi&utm_medium=tools&utm_campaign=game",
     emoji: "🏆",
     title: "球史 〜レジェンドドラフト〜",

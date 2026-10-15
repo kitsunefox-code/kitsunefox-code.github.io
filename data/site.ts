@@ -58,6 +58,8 @@ export const ALT_AD_PRIMARY_SLOTS = new Set([
   "top-under-hero", // トップ・比較ページ
   "dock-top", // 野球人間ドック
   "uranai-top", // ギアメーカー占い
+  "spikeshindan-top", // スパイク診断
+  "bgloveshindan-top", // バッティンググローブ診断
   "stats-mid", // 草野球の成績表
   "batshindan-top", // バット診断
   "gloveshindan-top", // グローブ診断
