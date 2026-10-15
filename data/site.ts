@@ -203,6 +203,29 @@ export const RAKUTEN: Record<string, ProductLink> = {
 };
 
 /**
+ * 寝具（高反発マットレス）。/guide/sleep-recovery/ の文脈で使う。
+ * ⚠️ 薬機法・景表法に触れるため「腰痛が治る」等の効果断定は書かないこと。
+ * 2026-10-15 A8実績: モットン EPC64.68/新規購入10%/確定率98.4%（SEOボーナスあり）
+ *                     グースリー EPC18.83/購入11%/確定率75%
+ */
+export const BEDDING: { label: string; desc: string; href: string; pixel?: string; emoji: string }[] = [
+  {
+    label: "【モットン】高反発マットレス 公式サイト",
+    desc: "山本昌さんが愛用者として知られる高反発マットレス。返金保証の条件は公式で確認を",
+    href: "https://px.a8.net/svt/ejp?a8mat=4BEH56+EF60AA+3606+71ZIQ",
+    pixel: "https://www12.a8.net/0.gif?a8mat=4BEH56+EF60AA+3606+71ZIQ",
+    emoji: "🛏",
+  },
+  {
+    label: "【グースリー】高反発マットレス（創業36年の老舗メーカー）",
+    desc: "比較検討用のもう1つの選択肢。硬さ・価格帯の違いを見比べられる",
+    href: "https://px.a8.net/svt/ejp?a8mat=4BEH56+EJXH4I+5O1A+5YRHE",
+    pixel: "https://www13.a8.net/0.gif?a8mat=4BEH56+EJXH4I+5O1A+5YRHE",
+    emoji: "🛌",
+  },
+];
+
+/**
  * 体のケア系（コラントッテ・ファイテン）。疲労回復・故障予防の文脈で使用。
  * A8・計測ピクセル付き。
  *

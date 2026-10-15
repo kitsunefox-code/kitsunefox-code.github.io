@@ -1,4 +1,4 @@
-import { RAKUTEN, RETAILERS, PHITEN, type ProductLink } from "@/data/site";
+import { RAKUTEN, RETAILERS, PHITEN, BEDDING, type ProductLink } from "@/data/site";
 
 type RetailerItem = { label: string; desc: string; href: string; pixel?: string; emoji: string };
 type Item = ProductLink | RetailerItem;
@@ -16,17 +16,21 @@ export default function AffiliateBox({
   rakuten = [],
   retailers = false,
   phiten = false,
+  bedding = false,
   note,
 }: {
   heading?: string;
   rakuten?: string[];
   retailers?: boolean;
   phiten?: boolean;
+  /** 高反発マットレス（/guide/sleep-recovery/ 用） */
+  bedding?: boolean;
   /** 既定の注記を差し替える。健康・寝具など効果を断定できない商材で使う（薬機法・景表法対策） */
   note?: string;
 }) {
   const items: Item[] = [
     ...rakuten.map((k) => RAKUTEN[k]).filter(Boolean),
+    ...(bedding ? BEDDING : []),
     ...(phiten ? PHITEN : []),
     ...(retailers ? RETAILERS : []),
   ];
