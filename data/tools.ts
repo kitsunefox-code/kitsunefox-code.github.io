@@ -10,6 +10,14 @@ export type Tool = {
 
 export const TOOLS: Tool[] = [
   {
+    href: "/legend-draft/?utm_source=kusayakyu-navi&utm_medium=tools&utm_campaign=game",
+    emoji: "🏆",
+    title: "球史 〜レジェンドドラフト〜",
+    desc: "王・長嶋からイチロー・大谷まで、歴代の名選手2,800人をドラフトやガチャで集めて球団を作り、1年間のペナントを自動で戦う無料のパーティーゲーム。3〜6人でスマホ1台を回して遊べます。所要1時間。",
+    badge: "新作・みんなで遊ぶ",
+    cta: "遊ぶ（無料・登録不要）",
+  },
+  {
     href: "/stats/",
     emoji: "📊",
     title: "草野球の成績表",
