@@ -10,6 +10,14 @@ export type Tool = {
 
 export const TOOLS: Tool[] = [
   {
+    href: "/stats/",
+    emoji: "📊",
+    title: "草野球の成績表",
+    desc: "選手名と打順を登録し、試合ごとに打席・打数・安打・打点・盗塁を入力するだけ。打率・出塁率が自動計算され、チーム合計も出ます。登録不要・CSV書き出し対応。",
+    badge: "登録不要・自動計算",
+    cta: "成績をつける（無料）",
+  },
+  {
     href: "/bat-shindan/",
     emoji: "🏏",
     title: "軟式バット診断",

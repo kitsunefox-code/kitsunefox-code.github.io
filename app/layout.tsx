@@ -139,6 +139,7 @@ gtag('config', '${GA4_MEASUREMENT_ID}');`}
             </a>
             <nav>
               <a href="/hikaku/">比較</a>
+              <a href="/stats/">成績表</a>
               <a href="/tools/">診断・ツール</a>
               <a href="/guide/">ガイド</a>
               <a href="/uniform/">ユニフォーム</a>

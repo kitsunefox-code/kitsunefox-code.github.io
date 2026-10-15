@@ -4888,3 +4888,100 @@ h1 .hl {
   padding: 20px 18px;
   background: #fff;
 }
+
+/* ===== 草野球の成績表（/stats/） =====
+   スマホのベンチで入力する前提。数値入力は指で押せる大きさ（最低44px）を確保し、
+   横長の表は親要素だけを横スクロールさせて本文は縦スクロールのままにする。 */
+.sm { margin-top: 4px; }
+.sm-note {
+  background: var(--chip); border-left: 3px solid var(--good);
+  padding: 10px 14px; font-size: 13.5px; font-weight: 700; margin: 0 0 14px;
+}
+.sm-err {
+  background: #fdf0ec; border-left: 3px solid var(--accent);
+  padding: 9px 13px; font-size: 13px; font-weight: 700; color: var(--accent); margin: 10px 0 0;
+}
+.sm-empty { font-size: 14px; color: var(--muted); line-height: 1.8; margin: 16px 0; }
+
+/* 選手追加 */
+.sm-add { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+.sm-input {
+  flex: 1 1 220px; min-height: 46px; padding: 10px 14px; font-size: 16px;
+  border: 1px solid var(--line-strong); background: #fff; color: var(--ink); border-radius: 0;
+}
+.sm-input:focus { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+.sm-btn {
+  min-height: 46px; padding: 10px 16px; font-size: 14px; font-weight: 700;
+  border: 1px solid var(--line-strong); background: #fff; color: var(--ink);
+  cursor: pointer; border-radius: 0; transition: background .12s;
+}
+.sm-btn:hover { background: var(--chip); }
+.sm-btn-main { background: var(--ink); color: #fff; border-color: var(--ink); }
+.sm-btn-main:hover { background: #000; }
+.sm-btn-s { min-height: 36px; padding: 6px 11px; font-size: 12.5px; }
+.sm-btn-del { color: var(--accent); }
+.sm-btn-del:hover { background: #fdf0ec; }
+
+/* 成績表 */
+.sm-tablewrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--line); }
+.sm-table { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 760px; background: #fff; }
+.sm-table th, .sm-table td { padding: 10px 8px; text-align: center; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.sm-table thead th {
+  background: var(--chip); font-size: 12px; font-weight: 800; color: var(--muted);
+  position: sticky; top: 0; z-index: 1;
+}
+.sm-table .sm-name { text-align: left; font-weight: 700; font-size: 14px; }
+.sm-table .sm-hl { background: #fbf7f2; }
+.sm-table thead .sm-hl { background: #f4ebe1; color: var(--accent); }
+.sm-big { font-family: var(--font-mincho), serif; font-size: 17px; font-weight: 700; }
+.sm-total td { border-top: 2px solid var(--ink); border-bottom: none; font-weight: 700; background: var(--chip); }
+.sm-ops { display: flex; gap: 6px; justify-content: center; }
+.sm-order {
+  width: 52px; min-height: 40px; text-align: center; font-size: 15px;
+  border: 1px solid var(--line-strong); background: #fff; color: var(--ink);
+}
+
+/* 試合入力フォーム */
+.sm-form { border: 1px solid var(--line-strong); padding: 16px; margin-top: 16px; background: #fff; }
+.sm-form-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 14px; }
+.sm-form-head strong { font-family: var(--font-mincho), serif; font-size: 16px; }
+.sm-form-meta { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 14px; }
+.sm-form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 14px; }
+.sm-f { display: flex; flex-direction: column; gap: 4px; }
+.sm-f-label { font-size: 12px; font-weight: 800; color: var(--muted); }
+.sm-f-input {
+  min-height: 46px; padding: 8px 12px; font-size: 16px; text-align: center;
+  border: 1px solid var(--line-strong); background: #fff; color: var(--ink); border-radius: 0;
+}
+.sm-f-input:focus { outline: 2px solid var(--accent); outline-offset: -2px; }
+.sm-f-hint { font-size: 11px; color: var(--muted); line-height: 1.5; }
+
+/* 記録済みの一覧 */
+.sm-log { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 12px; }
+.sm-log-head { font-size: 12px; font-weight: 800; color: var(--muted); margin: 0 0 8px; }
+.sm-log-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.sm-log-list li {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding: 8px 10px; background: var(--chip); font-size: 13px;
+}
+.sm-log-date { font-weight: 700; }
+.sm-log-opp { color: var(--muted); }
+.sm-log-stat { margin-left: auto; }
+
+.sm-foot { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
+.sm-disc { font-size: 12.5px; color: var(--muted); line-height: 1.8; margin-top: 16px; }
+
+/* 使い方・用語 */
+.sm-steps { margin: 12px 0 0; padding-left: 1.3em; display: grid; gap: 10px; }
+.sm-steps li { font-size: 14px; line-height: 1.8; }
+.sm-steps strong { display: block; }
+.sm-steps span { font-size: 13px; color: var(--muted); }
+.sm-def { margin: 12px 0 0; padding-left: 1.2em; display: grid; gap: 8px; }
+.sm-def li { font-size: 14px; line-height: 1.85; }
+.sm-def em { font-style: normal; color: var(--accent); font-weight: 700; }
+
+@media (min-width: 640px) {
+  .sm-form-meta { grid-template-columns: 180px 1fr; }
+  .sm-form-grid { grid-template-columns: repeat(3, 1fr); }
+}
