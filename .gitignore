@@ -7,3 +7,8 @@ next-env.d.ts
 .vercel
 npm-debug.log*
 .next-dev/
+
+# Xの投稿鍵・運用状態（絶対にコミットしない）
+x-posts/.env
+x-posts/_posted.json
+x-posts/_hourly.log
