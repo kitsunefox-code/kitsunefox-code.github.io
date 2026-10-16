@@ -6,10 +6,17 @@
 //   **文面の生成だけを自動化し、投稿は人がコピペで出す**という分け方にしている。
 //   1日あたりの手間は10秒。凍結リスクはゼロ。
 //
+// ● 普段はニュース引用がメイン
+//   自前のネタ（あるある・豆知識）だけでは届く人数が頭打ちになる。
+//   野球ニュースに一言つけて出すほうが圧倒的に見られるので、
+//   **毎日=ニュース3〜5本＋自前ネタ1本**を既定にしている。
+//   ニュースの取得と選別は scripts/news.mjs。記事本文は写さず、リンクはカードに任せる。
+//
 // ● 実行
-//   node scripts/gen-x-posts.mjs            … 今日から7日分を作る
-//   node scripts/gen-x-posts.mjs --days 14  … 14日分
-//   出力: x-posts/週間投稿_YYYY-MM-DD.html（コピーボタン付き）と .md
+//   node scripts/gen-x-posts.mjs            … 今日のニュース候補＋今日の自前ネタ
+//   node scripts/gen-x-posts.mjs --days 7   … 自前ネタを7日分まとめて（ニュースは当日分のみ）
+//   node scripts/gen-x-posts.mjs --no-news  … ニュースを取りにいかない（オフライン時）
+//   出力: x-posts/投稿_YYYY-MM-DD.html（コピーボタン付き）と .md
 //
 // ● 伸びる形（X運用の定石に沿う）
 //   ・1行目で完結させる。続きを読ませない前提で書く
@@ -25,6 +32,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { collectNews, newsPost } from "./news.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -35,7 +43,9 @@ const SITE = "https://kusayakyu-navi.com";
 /* ── 引数 ───────────────────────────── */
 const argv = process.argv.slice(2);
 const argDays = Number(argv[argv.indexOf("--days") + 1]);
-const DAYS = Number.isFinite(argDays) && argDays > 0 ? Math.min(argDays, 60) : 7;
+const DAYS = Number.isFinite(argDays) && argDays > 0 ? Math.min(argDays, 60) : 1;
+const WITH_NEWS = !argv.includes("--no-news");
+const NEWS_COUNT = 5;
 
 /* ── data/*.ts から素材を読む（TSをそのまま実行できないので取り出す） ── */
 function readTs(file) {
@@ -261,32 +271,74 @@ function makeDay(date, used) {
 
 /* ── 出力 ───────────────────────────── */
 const esc = (s) =>
-  s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
-function buildHtml(days, madeOn) {
-  const cards = days
-    .map(
-      (d, i) => `
+const intent = (t) => `https://x.com/intent/post?text=${encodeURIComponent(t)}`;
+
+/** コピーできる投稿カード1枚 */
+function card(id, meta, text, extra = "") {
+  return `
   <article class="card">
-    <header>
-      <span class="day">${esc(d.label)}</span>
-      <span class="time">${esc(d.time)}</span>
-      <span class="kind">${esc(d.kind)}</span>
-      <span class="len">${weightedLength(d.text)} / ${X_LIMIT}</span>
-    </header>
-    <pre id="p${i}">${esc(d.text)}</pre>
+    <header>${meta}<span class="len">${weightedLength(text)} / ${X_LIMIT}</span></header>
+    ${extra}
+    <pre id="${id}">${esc(text)}</pre>
     <div class="ops">
-      <button data-i="${i}">コピー</button>
-      <a href="https://x.com/intent/post?text=${encodeURIComponent(d.text)}" target="_blank" rel="noopener">Xを開いて下書きに入れる</a>
+      <button data-i="${id}">コピー</button>
+      <a href="${esc(intent(text))}" target="_blank" rel="noopener">Xを開いて下書きに入れる</a>
     </div>
-  </article>`
+  </article>`;
+}
+
+function newsCards(news) {
+  if (news.picks.length === 0) {
+    return `<p class="empty">ニュースを取得できませんでした（ネットワークか、各社の配信が止まっている可能性）。自前のネタだけで出してください。</p>`;
+  }
+  return news.picks
+    .map((it, i) => {
+      const variants = it.angles.length > 0 ? it.angles : ["（ここに一言）"];
+      const meta =
+        `<span class="day">ニュース${i + 1}</span>` +
+        `<span class="kind">${esc(it.topic)}</span>` +
+        `<span class="src">${esc(it.source)}</span>`;
+      const head =
+        `<p class="headline"><a href="${esc(it.link)}" target="_blank" rel="noopener">${esc(it.title)}</a></p>` +
+        `<p class="hint">↑ 見出しを読んで、下の一言が合っているか確かめてから出す。合わなければ書き換える。</p>`;
+      // 一言の候補のぶんだけカードを出す（選べるように）
+      return variants
+        .map((a, j) => card(`n${i}_${j}`, meta, newsPost(it, j), j === 0 ? head : `<p class="alt">別の言い方</p>`))
+        .join("");
+    })
+    .join("");
+}
+
+function skippedList(news) {
+  if (news.skipped.length === 0) return "";
+  const rows = news.skipped
+    .slice(0, 8)
+    .map((it) => `<li><a href="${esc(it.link)}" target="_blank" rel="noopener">${esc(it.title)}</a></li>`)
+    .join("");
+  return `<section class="skip">
+  <h2>自動では一言を付けなかったもの</h2>
+  <p class="hint">けが・訃報・不祥事など、軽い一言を付けるとまずい話題です。触れるなら自分の言葉で書いてください。</p>
+  <ul>${rows}</ul>
+</section>`;
+}
+
+function buildHtml(days, news, madeOn) {
+  const own = days
+    .map((d, i) =>
+      card(
+        `o${i}`,
+        `<span class="day">${esc(d.label)}</span><span class="time">${esc(d.time)}</span><span class="kind">${esc(d.kind)}</span>`,
+        d.text
+      )
     )
     .join("");
 
   return `<!doctype html>
 <html lang="ja"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>草野球ナビ Xの投稿ストック ${esc(madeOn)}</title>
+<title>草野球ナビ Xの投稿 ${esc(madeOn)}</title>
 <style>
   :root{--ink:#1c1b18;--paper:#faf9f6;--accent:#b3472e;--muted:#55524b;--line:#ddd9d1}
   *{box-sizing:border-box}
@@ -294,35 +346,60 @@ function buildHtml(days, madeOn) {
        font-family:"Yu Gothic Medium","Hiragino Kaku Gothic ProN","Noto Sans JP",Meiryo,sans-serif;
        line-height:1.75;max-width:720px;margin-inline:auto}
   h1{font-size:20px;margin:0 0 4px}
-  .lead{font-size:13px;color:var(--muted);margin:0 0 22px}
-  .card{border:1px solid var(--line);background:#fff;margin-bottom:16px}
+  h2{font-size:15px;margin:30px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--ink)}
+  .lead{font-size:13px;color:var(--muted);margin:0 0 10px}
+  .card{border:1px solid var(--line);background:#fff;margin-bottom:14px}
   header{display:flex;gap:10px;align-items:center;flex-wrap:wrap;
-         padding:10px 14px;background:#f3efe8;border-bottom:1px solid var(--line);font-size:12px}
-  .day{font-weight:800;font-size:14px}
+         padding:9px 14px;background:#f3efe8;border-bottom:1px solid var(--line);font-size:12px}
+  .day{font-weight:800;font-size:13px}
   .time{color:var(--accent);font-weight:700}
-  .kind{color:var(--muted)}
+  .kind,.src{color:var(--muted)}
   .len{margin-left:auto;color:var(--muted)}
-  pre{margin:0;padding:16px 14px;white-space:pre-wrap;word-break:break-word;
+  .headline{margin:0;padding:13px 14px 4px;font-size:14px;font-weight:700;line-height:1.6}
+  .headline a{color:var(--ink)}
+  .hint{margin:0;padding:0 14px 6px;font-size:12px;color:var(--muted)}
+  .alt{margin:0;padding:12px 14px 0;font-size:12px;font-weight:700;color:var(--muted)}
+  pre{margin:0;padding:12px 14px;white-space:pre-wrap;word-break:break-word;
       font-family:inherit;font-size:15px}
   .ops{display:flex;gap:8px;padding:0 14px 14px;flex-wrap:wrap}
   button,.ops a{font:inherit;font-size:13px;font-weight:700;padding:9px 14px;
       border:1px solid var(--ink);background:var(--ink);color:#fff;cursor:pointer;text-decoration:none}
   .ops a{background:#fff;color:var(--ink)}
   button.done{background:#2f6b4f;border-color:#2f6b4f}
+  .empty{padding:16px;border:1px dashed var(--line);font-size:14px}
+  .skip{margin-top:26px;padding:14px;background:#f3efe8;border:1px solid var(--line)}
+  .skip h2{margin:0 0 6px;border:0;font-size:14px}
+  .skip ul{margin:8px 0 0;padding-left:1.2em;font-size:13px}
+  .skip li{margin-bottom:5px}
   .note{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px;margin-top:26px}
 </style></head><body>
-<h1>Xの投稿ストック（${esc(madeOn)} 作成）</h1>
-<p class="lead">1日1本。表示時刻のあたりに、コピーして自分で投稿してください。自動投稿はしません（凍結リスクを取らないため）。</p>
-${cards}
-<p class="note">投稿後に反応がよかった型は、次の生成で増やします。文面を直してから出すのも歓迎です。<br>
-再生成： <code>node scripts/gen-x-posts.mjs</code></p>
+<h1>Xの投稿（${esc(madeOn)}）</h1>
+<p class="lead">自動投稿はしません。コピーして自分で出してください。ニュースは<strong>見出しを確かめてから</strong>。</p>
+
+<h2>ニュースに一言（今日のメイン・2〜3本）</h2>
+<p class="lead">記事の本文は写しません。見出しとサムネはXがリンクカードで出します。</p>
+${newsCards(news)}
+${skippedList(news)}
+
+<h2>自前のネタ（1日1本）</h2>
+${own}
+
+<p class="note">
+一言は「型」です。見出しに合わないときは必ず書き換えてください。<br>
+記事本文のコピーと画像の転載はしません（リンクカードとして出るぶんは各社が想定している形）。<br>
+再生成： <code>npm run posts</code>
+</p>
 <script>
-document.querySelectorAll("button[data-i]").forEach(function(b){
-  b.addEventListener("click", function(){
-    var t = document.getElementById("p" + b.dataset.i).textContent;
-    navigator.clipboard.writeText(t).then(function(){
-      b.textContent = "コピーしました"; b.classList.add("done");
-      setTimeout(function(){ b.textContent = "コピー"; b.classList.remove("done"); }, 1800);
+document.querySelectorAll("button[data-i]").forEach(function (b) {
+  b.addEventListener("click", function () {
+    var t = document.getElementById(b.dataset.i).textContent;
+    navigator.clipboard.writeText(t).then(function () {
+      b.textContent = "コピーしました";
+      b.classList.add("done");
+      setTimeout(function () {
+        b.textContent = "コピー";
+        b.classList.remove("done");
+      }, 1800);
     });
   });
 });
@@ -330,17 +407,25 @@ document.querySelectorAll("button[data-i]").forEach(function(b){
 </body></html>`;
 }
 
-function buildMd(days, madeOn) {
-  const head = `# 草野球ナビ Xの投稿ストック（${madeOn} 作成）\n\n1日1本。自動投稿はしません。コピーして自分で投稿してください。\n`;
-  return (
-    head +
-    days
-      .map(
-        (d) =>
-          `\n---\n\n## ${d.label} ${d.time}　${d.kind}（${weightedLength(d.text)} / ${X_LIMIT}）\n\n\`\`\`\n${d.text}\n\`\`\`\n`
-      )
-      .join("")
-  );
+function buildMd(days, news, madeOn) {
+  let out = `# 草野球ナビ Xの投稿（${madeOn}）\n\n自動投稿はしません。コピーして自分で出してください。\n\n## ニュースに一言\n`;
+  if (news.picks.length === 0) out += "\n（ニュースを取得できませんでした）\n";
+  for (const it of news.picks) {
+    out += `\n---\n\n### ${it.title}\n\n${it.source}／${it.topic}　${it.link}\n`;
+    it.angles.forEach((_, j) => {
+      const t = newsPost(it, j);
+      out += `\n\`\`\`\n${t}\n\`\`\`\n（${weightedLength(t)} / ${X_LIMIT}）\n`;
+    });
+  }
+  if (news.skipped.length > 0) {
+    out += `\n## 一言を付けなかったもの（けが・訃報・不祥事など）\n\n`;
+    for (const it of news.skipped.slice(0, 8)) out += `- ${it.title}　${it.link}\n`;
+  }
+  out += `\n## 自前のネタ\n`;
+  for (const d of days) {
+    out += `\n---\n\n### ${d.label} ${d.time}　${d.kind}（${weightedLength(d.text)} / ${X_LIMIT}）\n\n\`\`\`\n${d.text}\n\`\`\`\n`;
+  }
+  return out;
 }
 
 /* ── 実行 ───────────────────────────── */
@@ -361,23 +446,27 @@ for (let i = 0; i < DAYS; i++) {
   days.push(makeDay(d, used));
 }
 
+const news = WITH_NEWS ? await collectNews(NEWS_COUNT) : { picks: [], skipped: [] };
+
 const p = (n) => String(n).padStart(2, "0");
 const stamp = `${start.getFullYear()}-${p(start.getMonth() + 1)}-${p(start.getDate())}`;
-const htmlPath = path.join(OUT_DIR, `週間投稿_${stamp}.html`);
-const mdPath = path.join(OUT_DIR, `週間投稿_${stamp}.md`);
+const htmlPath = path.join(OUT_DIR, `投稿_${stamp}.html`);
+const mdPath = path.join(OUT_DIR, `投稿_${stamp}.md`);
 
-fs.writeFileSync(htmlPath, buildHtml(days, stamp), "utf8");
-fs.writeFileSync(mdPath, buildMd(days, stamp), "utf8");
+fs.writeFileSync(htmlPath, buildHtml(days, news, stamp), "utf8");
+fs.writeFileSync(mdPath, buildMd(days, news, stamp), "utf8");
 fs.writeFileSync(HISTORY, JSON.stringify(used, null, 2), "utf8");
 
-// 長すぎる文面は警告する（Xの上限は重み付き280）
-const over = days.filter((d) => weightedLength(d.text) > X_LIMIT);
+const over = [
+  ...days.map((d) => ({ name: `${d.label} ${d.kind}`, t: d.text })),
+  ...news.picks.flatMap((it) => it.angles.map((_, j) => ({ name: it.topic, t: newsPost(it, j) }))),
+].filter((x) => weightedLength(x.t) > X_LIMIT);
 
-console.log(`素材: ガイド${GUIDES.length}本 / ツール${TOOLS.length}本`);
-console.log(`${DAYS}日分を作成しました。`);
+console.log(`ニュース候補 ${news.picks.length}本（一言を付けなかったもの ${news.skipped.length}本）`);
+console.log(`自前のネタ ${DAYS}日分（素材: ガイド${GUIDES.length}本 / ツール${TOOLS.length}本）`);
 console.log(`  ${htmlPath}`);
 console.log(`  ${mdPath}`);
 if (over.length > 0) {
-  console.log(`\n⚠ Xの上限（${X_LIMIT}）を超えた投稿が${over.length}件あります。短くしてください:`);
-  for (const d of over) console.log(`   ${d.label} ${d.kind} … ${weightedLength(d.text)}`);
+  console.log(`\n⚠ Xの上限（${X_LIMIT}）を超えた文面が${over.length}件あります。短くしてください:`);
+  for (const d of over) console.log(`   ${d.name} … ${weightedLength(d.t)}`);
 }
