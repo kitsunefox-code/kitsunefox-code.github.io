@@ -47,6 +47,8 @@ const DAYS = Number.isFinite(argDays) && argDays > 0 ? Math.min(argDays, 60) : 1
 const WITH_NEWS = !argv.includes("--no-news");
 const NEWS_COUNT = 5;
 
+const NL = "\n";
+
 /* ── data/*.ts から素材を読む（TSをそのまま実行できないので取り出す） ── */
 function readTs(file) {
   return fs.readFileSync(path.join(ROOT, "data", file), "utf8");
@@ -77,8 +79,54 @@ function loadTools() {
 }
 
 const GUIDES = loadGuides();
-// 土曜は必ず打順表を出すので、金曜のツール枠からは外す（2日続けて同じ物を宣伝しない）
-const TOOLS = loadTools().filter((t) => t.href !== "/lineup/");
+// 金曜のツール枠は「草野球をやる人向け」の道具だけにする。
+// 打順表は土曜に必ず出すので外す（2日続けて同じ物を宣伝しない）。
+const PLAYER_TOOLS = loadTools().filter(
+  (t) => !["/lineup/", "/baseball-dock/", "/similar-player/"].includes(t.href)
+);
+
+// ⚠️ ニュースで集まるのは「プロ野球ファン」で、草野球をやる人ではない。
+//    その層に打順表や割り勘を出しても刺さらないので、
+//    見るだけで遊べる＝ファンでも楽しめるものを別枠で持っておく。
+//    /players/ と /uranai/ は TOOLS に入っていないのでここで手書きする。
+const FAN_TOOLS = [
+  {
+    href: "/baseball-dock/",
+    text: [
+      "全45問のMBTI式で、自分にいちばん近いプロ野球選手が1人出てくるやつを作りました。620名超から判定します。",
+      "",
+      "結果は画像で保存できるので、そのまま貼れます。",
+    ].join(NL),
+  },
+  {
+    href: "/similar-player/",
+    text: [
+      "10問で、自分のプレースタイルに近いプロ野球選手が出ます。NPB・MLB657名から。",
+      "",
+      "その選手が使っているグローブとバットも一緒に出てきます。",
+    ].join(NL),
+  },
+  {
+    href: "/players/",
+    text: [
+      "NPB・MLB657名の「使っているグローブとバット」をメーカー別に一覧にしました。",
+      "",
+      "推しの選手と同じメーカーを探すのに使えます。",
+    ].join(NL),
+  },
+  {
+    href: "/uranai/",
+    text: [
+      "今日のギアメーカー占い。あなたに合うメーカーと、今日のラッキーポジション・背番号が出ます。",
+      "",
+      "1タップで終わります。",
+    ].join(NL),
+  },
+];
+
+function fanPost(t) {
+  return [t.text, "", SITE + t.href, "", "#プロ野球 #草野球"].join(NL);
+}
 
 /* ── ネタの型 ────────────────────────
    曜日ごとに役割を変える。毎日同じ型だとフォローを外されるため、
@@ -256,16 +304,16 @@ function makeDay(date, used) {
       return { label, time: "20:00", kind: "共感（あるある）", text: pick(AARU, used, "aaru") + "\n\n#草野球" };
     case 2: // 火：道具の豆知識
       return { label, time: "12:15", kind: "道具の豆知識", text: gearPost(pick(GEAR_TIPS, used, "gear")) };
-    case 3: // 水：問いかけ（リプを取る）
-      return { label, time: "21:00", kind: "問いかけ", text: pick(TOIKAKE, used, "toi") + "\n\n#草野球" };
+    case 3: // 水：ニュースで来たプロ野球ファン向け（平日はニュースの流量が多い）
+      return { label, time: "21:00", kind: "ファン向け診断", text: fanPost(pick(FAN_TOOLS, used, "fan")) };
     case 4: // 木：ガイド記事
       return { label, time: "12:15", kind: "ガイド記事", text: guidePost(pick(GUIDES, used, "guide")) };
     case 5: // 金：週末前。診断・ツールへ
-      return { label, time: "19:30", kind: "診断・ツール", text: toolPost(pick(TOOLS, used, "tool")) };
+      return { label, time: "19:30", kind: "診断・ツール", text: toolPost(pick(PLAYER_TOOLS, used, "tool")) };
     case 6: // 土：試合当日の朝。打順表
       return { label, time: "07:00", kind: "試合当日（打順表）", text: lineupPost() };
-    default: // 日：試合当日の朝。共感で軽く
-      return { label, time: "07:30", kind: "共感（あるある）", text: pick(AARU, used, "aaru") + "\n\n#草野球" };
+    default: // 日：試合当日の朝。問いかけでリプを取る
+      return { label, time: "07:30", kind: "問いかけ", text: pick(TOIKAKE, used, "toi") + "\n\n#草野球" };
   }
 }
 
@@ -463,7 +511,7 @@ const over = [
 ].filter((x) => weightedLength(x.t) > X_LIMIT);
 
 console.log(`ニュース候補 ${news.picks.length}本（一言を付けなかったもの ${news.skipped.length}本）`);
-console.log(`自前のネタ ${DAYS}日分（素材: ガイド${GUIDES.length}本 / ツール${TOOLS.length}本）`);
+console.log(`自前のネタ ${DAYS}日分（素材: ガイド${GUIDES.length}本 / ツール${PLAYER_TOOLS.length}本）`);
 console.log(`  ${htmlPath}`);
 console.log(`  ${mdPath}`);
 if (over.length > 0) {
