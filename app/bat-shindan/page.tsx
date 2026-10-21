@@ -90,6 +90,7 @@ export default function BatShindanPage() {
             ページ下部だと全高の75%地点になり、ほぼ誰の目にも入らなかった。 */}
         <ProductCards
           keyword="軟式 バット 一般"
+          minPrice={8000}
           heading="🏏 いま楽天で人気の軟式バット"
           hits={4}
         />

@@ -89,6 +89,7 @@ export default function SpikesShindanPage() {
 
         <ProductCards
           keyword="野球 スパイク 一般"
+          minPrice={5000}
           heading="👟 いま楽天で人気の野球スパイク"
           hits={4}
         />

@@ -131,7 +131,8 @@ export default function BatDistancePage() {
           <a href="/bat/">軟式バット比較</a>をどうぞ。
         </p>
 
-        <ProductCards keyword="軟式 バット ビヨンドマックス 一般" heading="🏏 ビヨンド系（飛距離重視）を楽天で見る" />
+        <ProductCards keyword="軟式 バット ビヨンドマックス 一般"
+          minPrice={20000} heading="🏏 ビヨンド系（飛距離重視）を楽天で見る" />
 
         <AdSlot id="article-mid" />
 

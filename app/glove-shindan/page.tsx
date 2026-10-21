@@ -93,6 +93,7 @@ export default function GloveShindanPage() {
             ページ下部だと全高の75%地点になり、ほぼ誰の目にも入らなかった。 */}
         <ProductCards
           keyword="軟式 グローブ 一般"
+          minPrice={8000}
           heading="🧤 いま楽天で人気の軟式グローブ"
           hits={4}
         />

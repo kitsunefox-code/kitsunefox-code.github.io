@@ -152,6 +152,7 @@ export default function BatGuidePage() {
 
         <ProductCards
           keyword="軟式 バット 一般"
+          minPrice={8000}
           heading="🏏 楽天で人気の軟式バット"
           fallbackRakuten={["bat"]}
         />

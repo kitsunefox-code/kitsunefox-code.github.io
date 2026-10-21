@@ -124,6 +124,7 @@ export default function WoodBatPage() {
 
         <ProductCards
           keyword="野球 木製バット 一般"
+          minPrice={6000}
           heading="🪵 楽天で木製バットを見る（メイプル・アオダモ等）"
         />
 

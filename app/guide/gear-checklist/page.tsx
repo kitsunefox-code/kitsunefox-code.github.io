@@ -185,8 +185,10 @@ export default function GearChecklistPage() {
           <li>余裕が出たら、バッティンググローブなどの快適グッズ</li>
         </ol>
 
-        <ProductCards keyword="軟式 グローブ 一般 オールラウンド" heading="🛒 まず1つ｜軟式グローブ（一般用）を見る" />
-        <ProductCards keyword="野球 スパイク 一般 樹脂" heading="🛒 次に｜草野球向けスパイクを見る" />
+        <ProductCards keyword="軟式 グローブ 一般 オールラウンド"
+          minPrice={8000} heading="🛒 まず1つ｜軟式グローブ（一般用）を見る" />
+        <ProductCards keyword="野球 スパイク 一般 樹脂"
+          minPrice={5000} heading="🛒 次に｜草野球向けスパイクを見る" />
 
         <h2>よくある質問</h2>
         <h3>Q. 道具はどこで買うのが安い？</h3>

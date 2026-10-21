@@ -50,11 +50,14 @@ export default function ProductCards({
   heading = "🛒 楽天で人気の商品",
   hits = 4,
   fallbackRakuten = [],
+  minPrice,
 }: {
   keyword: string;
   heading?: string;
   hits?: number;
   fallbackRakuten?: string[];
+  /** 下限価格。道具カテゴリで小物（グリップテープ等）が混ざるのを防ぐ */
+  minPrice?: number;
 }) {
   const [items, setItems] = useState<Item[] | null>(null);
 
@@ -66,11 +69,15 @@ export default function ProductCards({
       keyword,
       hits: String(hits),
       imageFlag: "1",
-      sort: "standard",
+      // ⚠️ "standard" は無名ブランドの安物（評価2件台）が上に来る。
+      //    レビュー件数順にすると、草野球で実際に使われているSSK・ディマリニ等が並び、
+      //    平均価格が約1.7倍（≒報酬も1.7倍）になることを本番APIで実測して決めた。
+      sort: "-reviewCount",
       formatVersion: "1",
       // 大人の草野球向けサイトなので、少年・ジュニア用モデルを除外
       NGKeyword: "少年 ジュニア キッズ 小学生",
     });
+    if (minPrice) params.set("minPrice", String(minPrice));
     if (RAKUTEN_AFFILIATE_ID) params.set("affiliateId", RAKUTEN_AFFILIATE_ID);
     let alive = true;
     // 新エンドポイントはCORS対応。ブラウザのリファラ(オリジン)で認可される。
@@ -87,7 +94,7 @@ export default function ProductCards({
     return () => {
       alive = false;
     };
-  }, [keyword, hits]);
+  }, [keyword, hits, minPrice]);
 
   // 取得できるまで（＆失敗時）は検索リンクにフォールバック
   if (!items) {

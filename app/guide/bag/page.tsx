@@ -93,7 +93,8 @@ export default function BagPage() {
           <li><strong>遠征・泊まり</strong>：着替え・雨具も入る大容量 or キャスター付き</li>
         </ul>
 
-        <ProductCards keyword="野球 バッグ バックパック" heading="🎒 楽天で人気の野球バックパック" />
+        <ProductCards keyword="野球 バッグ バックパック"
+          minPrice={4000} heading="🎒 楽天で人気の野球バックパック" />
 
         <AffiliateBox
           heading="🧳 バッグを探す"
@@ -111,7 +112,8 @@ export default function BagPage() {
           <li><strong>背負い心地</strong>：リュックは肩ベルト・背面のクッションを確認</li>
         </ul>
 
-        <ProductCards keyword="野球 エナメルバッグ" heading="👜 定番のエナメルバッグを見る" />
+        <ProductCards keyword="野球 エナメルバッグ"
+          minPrice={3000} heading="👜 定番のエナメルバッグを見る" />
 
         <RelatedGuides currentHref="/guide/bag/" />
 

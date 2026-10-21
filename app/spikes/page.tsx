@@ -201,6 +201,7 @@ export default function SpikesComparePage() {
 
           <ProductCards
             keyword="野球 スパイク ポイント"
+          minPrice={5000}
             heading="👟 楽天で人気の野球スパイク"
           />
 

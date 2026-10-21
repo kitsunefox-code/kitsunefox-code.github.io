@@ -96,7 +96,8 @@ export default function SunglassesPage() {
           屋外・晴れの守備がメインなら<strong>偏光</strong>、時間帯がバラバラ（曇り・ナイターもある）なら<strong>調光</strong>が使い分け不要で便利です。
         </div>
 
-        <ProductCards keyword="野球 サングラス 偏光" heading="🕶 楽天で人気の野球サングラス（偏光）" />
+        <ProductCards keyword="野球 サングラス 偏光"
+          minPrice={4000} heading="🕶 楽天で人気の野球サングラス（偏光）" />
 
         <AffiliateBox
           heading="🕶 サングラスを探す"
@@ -128,7 +129,8 @@ export default function SunglassesPage() {
           </tbody>
         </table>
 
-        <ProductCards keyword="野球 サングラス 調光" heading="🕶 曇天・ナイターにも：調光サングラス" />
+        <ProductCards keyword="野球 サングラス 調光"
+          minPrice={4000} heading="🕶 曇天・ナイターにも：調光サングラス" />
 
         <RelatedGuides currentHref="/guide/sunglasses/" />
 

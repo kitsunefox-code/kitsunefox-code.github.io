@@ -86,6 +86,7 @@ export default function BgloveShindanPage() {
 
         <ProductCards
           keyword="野球 バッティンググローブ 一般"
+          minPrice={2500}
           heading="🧤 いま楽天で人気のバッティンググローブ"
           hits={4}
         />

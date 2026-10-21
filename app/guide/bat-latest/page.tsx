@@ -128,7 +128,8 @@ export default function BatLatestPage() {
           <strong>注意：</strong>複合バットは低温で割れやすくなります。寒い日は使う前に室温で温める・氷点下の車内放置を避けるなど、
           <a href="/guide/bat-care/">お手入れ</a>に少しコツが要ります。高価な一本だからこそ正しく扱いましょう。
         </div>
-        <ProductCards keyword="軟式 バット ビヨンドマックス 一般" heading="🏏 ビヨンドマックス系を楽天で見る" />
+        <ProductCards keyword="軟式 バット ビヨンドマックス 一般"
+          minPrice={20000} heading="🏏 ビヨンドマックス系を楽天で見る" />
 
         <AdSlot id="article-mid" />
 
@@ -142,14 +143,16 @@ export default function BatLatestPage() {
           <li><strong>ローリングス ハイパーマッハ</strong>：軽量・高反発。スイングスピードを活かしたい人に</li>
           <li><strong>ゼット ブラックキャノン</strong>：カーボン系の人気シリーズ。コスパにも優れる</li>
         </ul>
-        <ProductCards keyword="軟式 バット カーボン 一般" heading="🏏 カーボン系バットを楽天で見る" />
+        <ProductCards keyword="軟式 バット カーボン 一般"
+          minPrice={15000} heading="🏏 カーボン系バットを楽天で見る" />
 
         <h2>最初の1本・練習用：金属</h2>
         <p>
           初めての1本、練習用、あるいは規定で複合が使えない場面には金属が安心。
           丈夫で価格も手頃です。凹みが出て反発が落ちたら替えどきのサインです。
         </p>
-        <ProductCards keyword="軟式 バット 金属 一般" heading="🏏 金属バットを楽天で見る" />
+        <ProductCards keyword="軟式 バット 金属 一般"
+          minPrice={8000} heading="🏏 金属バットを楽天で見る" />
 
         <h2>失敗しない選び方の3ステップ</h2>
         <ol>

@@ -11,6 +11,13 @@ const nextConfig = {
   },
   // 末尾スラッシュを付与（静的ホスティングでのパス解決を安定させる）
   trailingSlash: true,
+  // ⚠️ このPCはメモリが細く、112ページの静的生成をワーカー並列でやると
+  //    build worker が exit code 3221225773（コミット不足）で落ちる。
+  //    ワーカー数を絞ると通る。CIは潤沢なので BUILD_CPUS で上書きできるようにしておく。
+  experimental: {
+    cpus: Number(process.env.BUILD_CPUS) || 1,
+    workerThreads: false,
+  },
 };
 
 export default nextConfig;

@@ -112,11 +112,13 @@ export default function BaseballDockPage() {
           <div style={{ marginTop: 20 }}>
             <ProductCards
               keyword="軟式 グローブ 一般"
+          minPrice={8000}
               heading="🧤 いま楽天で人気の軟式グローブ"
               hits={4}
             />
             <ProductCards
               keyword="軟式 バット 一般"
+          minPrice={8000}
               heading="🏏 いま楽天で人気の軟式バット"
               hits={4}
             />

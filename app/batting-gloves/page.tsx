@@ -175,6 +175,7 @@ export default function BattingGlovesPage() {
 
           <ProductCards
             keyword="野球 バッティンググローブ"
+          minPrice={2500}
             heading="🧤 楽天で人気のバッティンググローブ"
           />
 
