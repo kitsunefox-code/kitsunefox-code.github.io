@@ -1,4 +1,5 @@
 import AdSlot from "@/components/AdSlot";
+import ProductCards from "@/components/ProductCards";
 import EditorsPicks from "@/components/EditorsPicks";
 import MakerFortune from "@/components/MakerFortune";
 import { makers, LAST_UPDATED } from "@/data/makers";
@@ -220,6 +221,14 @@ export default function Home() {
           <a className="link-arrow ed-more" href="/hikaku/">
             比較まとめをすべて見る
           </a>
+
+          {/* 比較を見ている＝買う気がある人の直後に1枠だけ。
+              トップに何枠も貼ると広告サイトに見えるので、ここ1か所に絞る */}
+          <ProductCards
+            keyword="軟式 グローブ 一般"
+            heading="🧤 いま売れている軟式グローブ"
+            hits={4}
+          />
         </section>
 
         <AdSlot id="top-mid" />

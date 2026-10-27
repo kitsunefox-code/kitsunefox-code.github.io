@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import AdSlot from "@/components/AdSlot";
+import ProductCards from "@/components/ProductCards";
 import { SITE_URL } from "@/data/site";
 import { COMPARES } from "@/data/compare";
 
@@ -82,6 +83,13 @@ export default function HikakuHubPage() {
             費用の全体像は<a href="/guide/annual-cost/">草野球の年間費用</a>にまとめています。
           </p>
 
+          {/* 予算の話をした直後＝いちばん買う気が高い場所。優先度1位のグローブを出す */}
+          <ProductCards
+            keyword="軟式 グローブ 一般"
+            heading="🧤 まず買うべきグローブ（楽天の売れ筋）"
+            hits={4}
+          />
+
           <h3>グローブは「ポジション」より先に「捕り方」で選ぶ</h3>
           <p>
             グローブ選びでよくある失敗が、ポジションだけで型を決めてしまうことです。
@@ -111,6 +119,13 @@ export default function HikakuHubPage() {
             <a href="/bat/">バット比較</a>と
             <a href="/guide/m-ball/">M号球について</a>をご覧ください。
           </p>
+
+          {/* バットの選び方を読み終えた直後に実物を出す */}
+          <ProductCards
+            keyword="軟式 バット 一般"
+            heading="🏏 いま売れている軟式バット"
+            hits={4}
+          />
 
           <h3>スパイクはグラウンドの種類で決まる</h3>
           <p>
