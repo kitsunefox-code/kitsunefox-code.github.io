@@ -16,6 +16,9 @@ type Item = {
   url: string;
   image: string;
   shop: string;
+  /** 報酬率(%)。楽天は実測で一律4%だが、将来変わりうるので商品ごとに持つ */
+  rate: number;
+  reviews: number;
 };
 
 function parse(data: unknown): Item[] {
@@ -34,11 +37,30 @@ function parse(data: unknown): Item[] {
       url: String(it.affiliateUrl || it.itemUrl || ""),
       image: raw.replace(/\?_ex=\d+x\d+$/, "?_ex=300x300"),
       shop: String(it.shopName || ""),
+      rate: Number(it.affiliateRate || 0),
+      reviews: Number(it.reviewCount || 0),
     };
   }).filter((i) => i.name && i.url && i.image);
 }
 
 const yen = (n: number) => "¥" + n.toLocaleString("ja-JP");
+
+/**
+ * どの商品をカードに出すかの採点。
+ *
+ * ⚠️ ここは本番APIで実測して決めた。軟式グローブで比べた結果：
+ *   - 既定の "standard"   … 無名ブランドの安物が上。1件あたりの報酬 約¥785
+ *   - レビュー件数順だけ  … Falcon・PROMARKが3枠を占めて同じく約¥785
+ *   - 下の式            … 久保田スラッガー・ローリングスが並び 約¥1,445（1.84倍）
+ *
+ * 高額一辺倒にすると評価0件の商品が出て売れない。レビュー件数の対数を掛けて、
+ * 「そこそこ信頼されていて、かつ単価が高いもの」を選ぶ。報酬率は楽天が一律4%なので
+ * 実質は価格で効くが、率が変わっても追従するよう式に残す。
+ */
+function revenueScore(i: Item): number {
+  const fee = (i.price * i.rate) / 100;
+  return fee * (1 + Math.log10(1 + i.reviews));
+}
 
 /**
  * 楽天商品検索APIの実商品カードを表示（クライアント側JSONP）。
@@ -67,15 +89,19 @@ export default function ProductCards({
       applicationId: RAKUTEN_APP_ID,
       accessKey: ACCESS_KEY,
       keyword,
-      hits: String(hits),
+      // 採点で絞るので、表示枚数より多めに取る（上限30件）
+      hits: String(Math.min(30, Math.max(hits * 6, 10))),
       imageFlag: "1",
       // ⚠️ "standard" は無名ブランドの安物（評価2件台）が上に来る。
       //    レビュー件数順にすると、草野球で実際に使われているSSK・ディマリニ等が並び、
       //    平均価格が約1.7倍（≒報酬も1.7倍）になることを本番APIで実測して決めた。
       sort: "-reviewCount",
       formatVersion: "1",
-      // 大人の草野球向けサイトなので、少年・ジュニア用モデルを除外
-      NGKeyword: "少年 ジュニア キッズ 小学生",
+      // 大人の草野球向けサイトなので、少年・ジュニア用モデルを除外。
+      // 「軟式」を探しているページでは硬式・ソフトボール用も弾く（実測で混ざった）
+      NGKeyword:
+        "少年 ジュニア キッズ 小学生" +
+        (keyword.includes("軟式") ? " 硬式 ソフトボール" : ""),
     });
     if (minPrice) params.set("minPrice", String(minPrice));
     if (RAKUTEN_AFFILIATE_ID) params.set("affiliateId", RAKUTEN_AFFILIATE_ID);
@@ -85,7 +111,9 @@ export default function ProductCards({
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
         if (!alive || !data) return;
-        const parsed = parse(data).slice(0, hits);
+        const parsed = parse(data)
+          .sort((a, b) => revenueScore(b) - revenueScore(a))
+          .slice(0, hits);
         if (parsed.length) setItems(parsed);
       })
       .catch(() => {
