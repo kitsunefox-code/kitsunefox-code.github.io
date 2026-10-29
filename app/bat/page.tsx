@@ -77,6 +77,7 @@ export default function BatComparePage() {
               },
               {
                 keyword: "一般 軟式 バット 金属 ミズノ",
+                maxPrice: 20000,
                 label: "最初の一本に",
                 comment: "扱いやすくコスパ良好。まず金属でスイングを固めたい人へ。",
               },

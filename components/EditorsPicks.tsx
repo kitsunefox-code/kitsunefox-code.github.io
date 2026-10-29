@@ -2,34 +2,62 @@
 
 import { useEffect, useState } from "react";
 import { RAKUTEN_APP_ID, RAKUTEN_AFFILIATE_ID } from "@/data/site";
+import { revenueScore, defaultMinPrice, ngKeywordFor } from "@/lib/rakutenPick";
 
 const ACCESS_KEY = process.env.NEXT_PUBLIC_RAKUTEN_ACCESS_KEY || "";
 const ENDPOINT =
   "https://openapi.rakuten.co.jp/ichibams/api/IchibaItem/Search/20260701";
 
-export type Pick = { keyword: string; label: string; comment: string };
+export type Pick = {
+  keyword: string;
+  label: string;
+  comment: string;
+  /** コメントが価格帯を示唆する枠（「最初の一本に」等）で、高級機が出ないよう上限を置く */
+  maxPrice?: number;
+  minPrice?: number;
+};
 type Item = { name: string; price: number; url: string; image: string; shop: string };
 
-async function fetchOne(keyword: string): Promise<Item | null> {
+async function fetchOne(pick: Pick): Promise<Item | null> {
+  const { keyword } = pick;
   if (!ACCESS_KEY || !RAKUTEN_APP_ID) return null;
+  // ⚠️ 以前は hits:1 × sort:"standard" で、いちばん見られるこの枠が
+  //    いちばん安い無名商品を出していた。実測で報酬が約1.7倍違ったので、
+  //    複数取ってから ProductCards と同じ式で選ぶ。
   const p = new URLSearchParams({
     applicationId: RAKUTEN_APP_ID,
     accessKey: ACCESS_KEY,
     keyword,
-    hits: "1",
+    hits: "12",
     imageFlag: "1",
-    sort: "standard",
+    sort: "-reviewCount",
     formatVersion: "1",
-    // 大人の草野球向けサイトなので、少年・ジュニア用モデルを除外
-    NGKeyword: "少年 ジュニア キッズ 小学生",
+    NGKeyword: ngKeywordFor(keyword),
   });
+  const floor = pick.minPrice ?? defaultMinPrice(keyword);
+  if (floor > 0) p.set("minPrice", String(floor));
+  if (pick.maxPrice) p.set("maxPrice", String(pick.maxPrice));
   if (RAKUTEN_AFFILIATE_ID) p.set("affiliateId", RAKUTEN_AFFILIATE_ID);
   try {
     const r = await fetch(`${ENDPOINT}?${p.toString()}`);
     if (!r.ok) return null;
     const d = (await r.json()) as { Items?: { Item?: Record<string, unknown> }[] };
-    const w = d.Items && d.Items[0];
-    const it = (w && (w.Item || w)) as Record<string, unknown> | undefined;
+    const all = (d.Items || []).map((w) => (w.Item || w) as Record<string, unknown>);
+    const it = all
+      .slice()
+      .sort(
+        (a, b) =>
+          revenueScore({
+            price: Number(b.itemPrice || 0),
+            rate: Number(b.affiliateRate || 0),
+            reviews: Number(b.reviewCount || 0),
+          }) -
+          revenueScore({
+            price: Number(a.itemPrice || 0),
+            rate: Number(a.affiliateRate || 0),
+            reviews: Number(a.reviewCount || 0),
+          })
+      )[0];
     if (!it) return null;
     const imgs = (it.mediumImageUrls || []) as { imageUrl: string }[] | string[];
     const first = imgs[0] as { imageUrl?: string } | string | undefined;
@@ -62,7 +90,7 @@ export default function EditorsPicks({
 
   useEffect(() => {
     let alive = true;
-    Promise.all(picks.map((p) => fetchOne(p.keyword))).then((res) => {
+    Promise.all(picks.map((p) => fetchOne(p))).then((res) => {
       if (alive) setItems(res);
     });
     return () => {

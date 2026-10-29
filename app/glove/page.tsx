@@ -67,6 +67,7 @@ export default function GloveComparePage() {
             picks={[
               {
                 keyword: "一般 軟式 グローブ ミズノ 内野",
+                maxPrice: 30000,
                 label: "王道・内野に",
                 comment: "安定の作りで、初めての内野用にも安心。迷ったらまずこの系統。",
               },

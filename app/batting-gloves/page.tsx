@@ -101,6 +101,7 @@ export default function BattingGlovesPage() {
               },
               {
                 keyword: "バッティンググローブ ミズノ",
+                maxPrice: 6000,
                 label: "国内定番",
                 comment: "フィットと品質のバランス。まず一双なら間違いない選択。",
               },

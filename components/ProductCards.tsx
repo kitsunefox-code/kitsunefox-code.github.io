@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import AffiliateBox from "@/components/AffiliateBox";
 import { RAKUTEN_APP_ID, RAKUTEN_AFFILIATE_ID } from "@/data/site";
+import { revenueScore, defaultMinPrice, ngKeywordFor } from "@/lib/rakutenPick";
 
 // アクセスキーはリファラ制限アプリ用。ドメインでロックされるためクライアント同梱でOK。
 // ビルド時に NEXT_PUBLIC_RAKUTEN_ACCESS_KEY(=GitHub Secret) が埋め込まれる。
@@ -46,48 +47,6 @@ function parse(data: unknown): Item[] {
 const yen = (n: number) => "¥" + n.toLocaleString("ja-JP");
 
 /**
- * どの商品をカードに出すかの採点。
- *
- * ⚠️ ここは本番APIで実測して決めた。軟式グローブで比べた結果：
- *   - 既定の "standard"   … 無名ブランドの安物が上。1件あたりの報酬 約¥785
- *   - レビュー件数順だけ  … Falcon・PROMARKが3枠を占めて同じく約¥785
- *   - 下の式            … 久保田スラッガー・ローリングスが並び 約¥1,445（1.84倍）
- *
- * 高額一辺倒にすると評価0件の商品が出て売れない。レビュー件数の対数を掛けて、
- * 「そこそこ信頼されていて、かつ単価が高いもの」を選ぶ。報酬率は楽天が一律4%なので
- * 実質は価格で効くが、率が変わっても追従するよう式に残す。
- */
-/**
- * キーワードから下限価格を推測する。
- *
- * ⚠️ 診断結果のカードは keyword を動的に組み立てているので、
- *    呼び出し側に minPrice を書く方式だと一番大事な場所（結果直後）に効かない。
- *    カテゴリは keyword から分かるので、ここで既定値を持たせる。
- *    明示的に minPrice が渡されたらそちらを優先する。
- */
-function defaultMinPrice(keyword: string): number {
-  const k = keyword;
-  // 消耗品・小物は安くて当たり前なので下限を設けない
-  if (/グリップテープ|補水|ドリンク|ゼリー|タブレット|タオル|ソックス|靴下|ボール|M号/.test(k)) return 0;
-  if (/バッティンググローブ|バッテ|手袋/.test(k)) return 2500;
-  if (/グローブ|グラブ|ミット/.test(k)) return 8000;
-  if (/ビヨンド/.test(k)) return 20000;
-  if (/カーボン/.test(k)) return 15000;
-  if (/バット/.test(k)) return 8000;
-  if (/スパイク|シューズ/.test(k)) return 5000;
-  if (/サングラス/.test(k)) return 4000;
-  if (/バッグ|バックパック|エナメル/.test(k)) return 3000;
-  if (/アンダーシャツ/.test(k)) return 2000;
-  if (/サポーター/.test(k)) return 1500;
-  return 0;
-}
-
-function revenueScore(i: Item): number {
-  const fee = (i.price * i.rate) / 100;
-  return fee * (1 + Math.log10(1 + i.reviews));
-}
-
-/**
  * 楽天商品検索APIの実商品カードを表示（クライアント側JSONP）。
  * 初期表示・取得失敗時は検索リンク(AffiliateBox)にフォールバックするので、
  * SEO用のアフィリンクは常にHTMLに存在する。
@@ -124,9 +83,7 @@ export default function ProductCards({
       formatVersion: "1",
       // 大人の草野球向けサイトなので、少年・ジュニア用モデルを除外。
       // 「軟式」を探しているページでは硬式・ソフトボール用も弾く（実測で混ざった）
-      NGKeyword:
-        "少年 ジュニア キッズ 小学生" +
-        (keyword.includes("軟式") ? " 硬式 ソフトボール" : ""),
+      NGKeyword: ngKeywordFor(keyword),
     });
     const floor = minPrice ?? defaultMinPrice(keyword);
     if (floor > 0) params.set("minPrice", String(floor));
