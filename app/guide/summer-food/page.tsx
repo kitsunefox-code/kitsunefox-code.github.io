@@ -92,7 +92,11 @@ export default function SummerFoodPage() {
           </tbody>
         </table>
 
-        <ProductCards keyword="ゼリー飲料 エネルギー 塩分タブレット" heading="🍙 ゼリー飲料・塩分タブレットを見る" />
+        {/* ⚠️ 以前は "ゼリー飲料 エネルギー 塩分タブレット" の1枠だったが、
+            3語すべてを含む商品は存在せず候補0件でカードが出ていなかった（実測）。
+            見出しが2種類を約束しているので、2枠に分ける。 */}
+        <ProductCards keyword="ゼリー飲料 エネルギー 補給" heading="🍙 ゼリー飲料を楽天で見る" />
+        <ProductCards keyword="塩分タブレット 熱中症" heading="🧂 塩分タブレットを楽天で見る" />
 
         <AdSlot id="article-mid" />
 

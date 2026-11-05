@@ -129,7 +129,10 @@ export default function SummerUndershirtPage() {
           </tbody>
         </table>
 
-        <ProductCards keyword="野球 冷感 アンダーシャツ ミズノ SSK" heading="🎽 主要ブランドの冷感アンダーシャツ" />
+        {/* ⚠️ 以前は "…ミズノ SSK" とブランドを2つ並べていたが、両方の名を含む商品は
+            存在せず候補0件でカードが出ていなかった（実測）。ブランド指定を外す。
+            見出しも「主要ブランド」を約束しない表現に直した。 */}
+        <ProductCards keyword="野球 冷感 アンダーシャツ" heading="🎽 冷感アンダーシャツを楽天で見る" />
 
         <h2>色の規定に注意（公式戦）</h2>
         <p>
