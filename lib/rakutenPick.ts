@@ -43,13 +43,30 @@ export function isBuyable(name: string): boolean {
  * 楽天の商品名は「【交換往復送料無料】【本日限定!P2倍&最大1500円OFF】野球 バット…」の
  * ように始まることが多く、カードの1〜2行では商品が何なのか分からなくなる。
  */
+const PROMO =
+  /ポイント\s*\d+\s*倍|P\s*\d+\s*倍|エントリー|送料無料|クーポン|タイムセール|SALE|OFF|還元|最大\d|買いまわり|スーパーDEAL|期間限定|即日発送|あす楽|翌日/i;
+
 export function cleanName(name: string): string {
   let s = name;
-  for (let i = 0; i < 6; i++) {
-    const next = s.replace(/^\s*[【[(（][^】\])）]{0,40}[】\])）]\s*/, "");
+  for (let i = 0; i < 8; i++) {
+    // ① 【…】[…]（…）で囲まれた前置き
+    let next = s.replace(/^\s*[【[(（][^】\])）]{0,40}[】\])）]\s*/, "");
+    // ② 囲みが無い宣伝文（「全品ポイント10倍は11/11まで ★商品名…」のような
+    //    ★や◆で区切るだけのもの）。宣伝語を含むときだけ削る。
+    if (next === s) {
+      // 「…まで ★商品名」と「◆エントリーで…◆商品名」の両方に対応する
+      const m =
+        s.match(/^[★◆]([^★◆]{1,60})[★◆]\s*/) ||
+        s.match(/^([^★◆]{1,60})[★◆]\s*/);
+      if (m && PROMO.test(m[1]) && s.slice(m[0].length).trim().length >= 10) {
+        next = s.slice(m[0].length);
+      }
+    }
     if (next === s) break;
     s = next;
   }
+  // 商品名の末尾に残る飾りの★も落とす
+  s = s.replace(/[★◆]+\s*$/, "");
   return s.replace(/\s+/g, " ").trim() || name;
 }
 
