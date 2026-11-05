@@ -155,7 +155,12 @@ export function capBrand<T extends { name: string }>(
  *    （バッティンググローブではレビュー533件・¥2,992のミズノが入る）。
  */
 export function pickSpread<T extends ScoredItem>(cands: T[], want: number): T[] {
-  const byFee = capBrand([...cands].sort((a, b) => expectedFee(b) - expectedFee(a)));
+  const sorted = [...cands].sort((a, b) => expectedFee(b) - expectedFee(a));
+  // ⚠️ ブランド上限は「ビヨンドマックス」のような1ブランド専用のキーワードでは
+  //    枠を削ってしまう（本番で4枠が3枚になっていた）。
+  //    上限をかけて枠が埋まらないなら、上限なしに戻す。
+  const capped = capBrand(sorted);
+  const byFee = capped.length >= want ? capped : sorted;
   if (want <= 1) return byFee.slice(0, want);
 
   const top = byFee.slice(0, want - 1);
