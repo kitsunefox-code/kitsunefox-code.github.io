@@ -94,6 +94,38 @@ export function qualified<T extends ScoredItem>(
     : { items, tier: "無条件", strict: false };
 }
 
+/**
+ * 上限価格。付けないと単価順の並べ替えが category を踏み越える。
+ *
+ * ⚠️ グリップテープの枠が「中学硬式金属バット ¥22,880」を3枚出していた（実測）。
+ *    keyword に「バット」が入っているので楽天がバット本体を拾い、
+ *    単価が高いので上位を独占する。小物の枠には上限を置く。
+ *    一方で軟式M号球は10ダース¥61,600が正しい（チームでまとめ買いする品目）ので、
+ *    消耗品だからと一律に上限を置くのは誤り。誤マッチが実測で出た品目だけに絞る。
+ */
+export function defaultMaxPrice(keyword: string): number | undefined {
+  if (/グリップテープ|エンドテープ|滑り止め/.test(keyword)) return 3000;
+  return undefined;
+}
+
+/**
+ * 同じ商品の容量違いがカードを埋めるのを防ぐ。
+ *
+ * ⚠️ ゼリー飲料の枠が、同一商品名の ¥17,950 / ¥12,450 / ¥12,250（容量違い）で
+ *    3枠を占めていた。読者にとって選択肢になっていない。
+ */
+export function dedupeSimilar<T extends { name: string }>(items: T[]): T[] {
+  const seen = new Set<string>();
+  const out: T[] = [];
+  for (const i of items) {
+    const key = cleanName(i.name).replace(/\s+/g, "").slice(0, 24);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(i);
+  }
+  return out;
+}
+
 /** 同じブランドがカードを占領しないよう上限を設ける（選択肢にならないため） */
 const BRANDS = [
   "久保田スラッガー",
@@ -155,7 +187,9 @@ export function capBrand<T extends { name: string }>(
  *    （バッティンググローブではレビュー533件・¥2,992のミズノが入る）。
  */
 export function pickSpread<T extends ScoredItem>(cands: T[], want: number): T[] {
-  const sorted = [...cands].sort((a, b) => expectedFee(b) - expectedFee(a));
+  const sorted = dedupeSimilar(
+    [...cands].sort((a, b) => expectedFee(b) - expectedFee(a))
+  );
   // ⚠️ ブランド上限は「ビヨンドマックス」のような1ブランド専用のキーワードでは
   //    枠を削ってしまう（本番で4枠が3枚になっていた）。
   //    上限をかけて枠が埋まらないなら、上限なしに戻す。
@@ -164,7 +198,8 @@ export function pickSpread<T extends ScoredItem>(cands: T[], want: number): T[] 
   if (want <= 1) return byFee.slice(0, want);
 
   const top = byFee.slice(0, want - 1);
-  const rest = cands.filter((c) => !top.includes(c));
+  // 安い枠も重複排除後から選ぶ（上位と同じ商品の小容量版を出さないため）
+  const rest = sorted.filter((c) => !top.includes(c));
   if (!rest.length) return byFee.slice(0, want);
 
   const cheap = [...rest].sort((a, b) => a.price - b.price);

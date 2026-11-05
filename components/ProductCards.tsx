@@ -8,6 +8,7 @@ import {
   pickSpread,
   cleanName,
   defaultMinPrice,
+  defaultMaxPrice,
   ngKeywordFor,
 } from "@/lib/rakutenPick";
 import { getJson } from "@/lib/rakutenFetch";
@@ -97,6 +98,9 @@ export default function ProductCards({
       });
       const floor = minPrice ?? defaultMinPrice(keyword);
       if (floor > 0) params.set("minPrice", String(floor));
+      // 小物の枠がバット本体を拾わないよう上限を置く（lib/rakutenPick.ts 参照）
+      const ceil = defaultMaxPrice(keyword);
+      if (ceil) params.set("maxPrice", String(ceil));
       if (RAKUTEN_AFFILIATE_ID) params.set("affiliateId", RAKUTEN_AFFILIATE_ID);
       return `${ENDPOINT}?${params.toString()}`;
     };

@@ -7,6 +7,7 @@ import {
   expectedFee,
   cleanName,
   defaultMinPrice,
+  defaultMaxPrice,
   ngKeywordFor,
 } from "@/lib/rakutenPick";
 import { getJson, sleep } from "@/lib/rakutenFetch";
@@ -79,7 +80,8 @@ async function fetchOne(pick: Pick): Promise<Item | null> {
     });
     const floor = pick.minPrice ?? defaultMinPrice(keyword);
     if (floor > 0) p.set("minPrice", String(floor));
-    if (pick.maxPrice) p.set("maxPrice", String(pick.maxPrice));
+    const ceil = pick.maxPrice ?? defaultMaxPrice(keyword);
+    if (ceil) p.set("maxPrice", String(ceil));
     if (RAKUTEN_AFFILIATE_ID) p.set("affiliateId", RAKUTEN_AFFILIATE_ID);
     return `${ENDPOINT}?${p.toString()}`;
   };
