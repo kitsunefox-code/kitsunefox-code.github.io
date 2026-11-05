@@ -2,7 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { RAKUTEN_APP_ID, RAKUTEN_AFFILIATE_ID } from "@/data/site";
-import { revenueScore, defaultMinPrice, ngKeywordFor } from "@/lib/rakutenPick";
+import {
+  qualified,
+  expectedFee,
+  cleanName,
+  defaultMinPrice,
+  ngKeywordFor,
+} from "@/lib/rakutenPick";
 
 const ACCESS_KEY = process.env.NEXT_PUBLIC_RAKUTEN_ACCESS_KEY || "";
 const ENDPOINT =
@@ -16,60 +22,86 @@ export type Pick = {
   maxPrice?: number;
   minPrice?: number;
 };
-type Item = { name: string; price: number; url: string; image: string; shop: string };
+type Item = {
+  name: string;
+  price: number;
+  url: string;
+  image: string;
+  shop: string;
+  rate: number;
+  reviews: number;
+  rating: number;
+};
+
+function parse(data: unknown): Item[] {
+  const d = data as { Items?: { Item?: Record<string, unknown> }[] };
+  if (!d || !Array.isArray(d.Items)) return [];
+  return d.Items.map((wrap) => {
+    const it = (wrap.Item || wrap) as Record<string, unknown>;
+    const imgs = (it.mediumImageUrls || []) as
+      | { imageUrl: string }[]
+      | string[];
+    const first = imgs[0] as { imageUrl?: string } | string | undefined;
+    const raw = typeof first === "string" ? first : first?.imageUrl || "";
+    return {
+      name: String(it.itemName || ""),
+      price: Number(it.itemPrice || 0),
+      url: String(it.affiliateUrl || it.itemUrl || ""),
+      image: raw.replace(/\?_ex=\d+x\d+$/, "?_ex=300x300"),
+      shop: String(it.shopName || ""),
+      rate: Number(it.affiliateRate || 0),
+      reviews: Number(it.reviewCount || 0),
+      rating: Number(it.reviewAverage || 0),
+    };
+  }).filter((i) => i.name && i.url && i.image);
+}
 
 async function fetchOne(pick: Pick): Promise<Item | null> {
   const { keyword } = pick;
   if (!ACCESS_KEY || !RAKUTEN_APP_ID) return null;
   // ⚠️ 以前は hits:1 × sort:"standard" で、いちばん見られるこの枠が
-  //    いちばん安い無名商品を出していた。実測で報酬が約1.7倍違ったので、
-  //    複数取ってから ProductCards と同じ式で選ぶ。
-  const p = new URLSearchParams({
-    applicationId: RAKUTEN_APP_ID,
-    accessKey: ACCESS_KEY,
-    keyword,
-    hits: "12",
-    imageFlag: "1",
-    sort: "-reviewCount",
-    formatVersion: "1",
-    NGKeyword: ngKeywordFor(keyword),
-  });
-  const floor = pick.minPrice ?? defaultMinPrice(keyword);
-  if (floor > 0) p.set("minPrice", String(floor));
-  if (pick.maxPrice) p.set("maxPrice", String(pick.maxPrice));
-  if (RAKUTEN_AFFILIATE_ID) p.set("affiliateId", RAKUTEN_AFFILIATE_ID);
+  //    いちばん安い無名商品を出していた。さらにその次は単価一本で選んだため
+  //    「レビュー0件の¥47,300」「2027年2月発送の予約商品」が一押しに出ていた。
+  //    いまは複数取ってから lib/rakutenPick.ts の足切りを通し、
+  //    買えてレビューのある商品の中から単価の高いものを選ぶ。
+  const url = (page: number) => {
+    const p = new URLSearchParams({
+      applicationId: RAKUTEN_APP_ID,
+      accessKey: ACCESS_KEY,
+      keyword,
+      hits: "30",
+      page: String(page),
+      imageFlag: "1",
+      sort: "-reviewCount",
+      formatVersion: "1",
+      NGKeyword: ngKeywordFor(keyword),
+    });
+    const floor = pick.minPrice ?? defaultMinPrice(keyword);
+    if (floor > 0) p.set("minPrice", String(floor));
+    if (pick.maxPrice) p.set("maxPrice", String(pick.maxPrice));
+    if (RAKUTEN_AFFILIATE_ID) p.set("affiliateId", RAKUTEN_AFFILIATE_ID);
+    return `${ENDPOINT}?${p.toString()}`;
+  };
+  const get = (page: number) =>
+    fetch(url(page))
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => (d ? parse(d) : []))
+      .catch(() => [] as Item[]);
   try {
-    const r = await fetch(`${ENDPOINT}?${p.toString()}`);
-    if (!r.ok) return null;
-    const d = (await r.json()) as { Items?: { Item?: Record<string, unknown> }[] };
-    const all = (d.Items || []).map((w) => (w.Item || w) as Record<string, unknown>);
-    const it = all
-      .slice()
-      .sort(
-        (a, b) =>
-          revenueScore({
-            price: Number(b.itemPrice || 0),
-            rate: Number(b.affiliateRate || 0),
-            reviews: Number(b.reviewCount || 0),
-          }) -
-          revenueScore({
-            price: Number(a.itemPrice || 0),
-            rate: Number(a.affiliateRate || 0),
-            reviews: Number(a.reviewCount || 0),
-          })
-      )[0];
-    if (!it) return null;
-    const imgs = (it.mediumImageUrls || []) as { imageUrl: string }[] | string[];
-    const first = imgs[0] as { imageUrl?: string } | string | undefined;
-    const raw = typeof first === "string" ? first : first?.imageUrl || "";
-    if (!it.itemName || !raw) return null;
-    return {
-      name: String(it.itemName),
-      price: Number(it.itemPrice || 0),
-      url: String(it.affiliateUrl || it.itemUrl || ""),
-      image: raw.replace(/\?_ex=\d+x\d+$/, "?_ex=300x300"),
-      shop: String(it.shopName || ""),
-    };
+    let pool = await get(1);
+    // ブランド指定の枠は候補が薄い（ミズノの内野用で¥30,000以下だと
+    // レビュー1件以上が57件中4件しかない）。足りないときだけ2ページ目を足す。
+    if (pool.length && !qualified(pool, 1).strict) {
+      const more = await get(2);
+      const seen = new Set(pool.map((i) => i.name));
+      pool = pool.concat(more.filter((i) => !seen.has(i.name)));
+    }
+    if (!pool.length) return null;
+    const cands = qualified(pool, 1).items;
+    if (!cands.length) return null;
+    return cands.reduce((best, i) =>
+      expectedFee(i) > expectedFee(best) ? i : best
+    );
   } catch {
     return null;
   }
@@ -122,14 +154,19 @@ export default function EditorsPicks({
             <span className="pick-rank">{i + 1}</span>
             <span className="pick-thumb">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={it.image} alt={it.name} loading="lazy" />
+              <img src={it.image} alt={cleanName(it.name)} loading="lazy" />
             </span>
             <span className="pick-body">
               <span className="pick-label">{p.label}</span>
-              <span className="pick-name">{it.name}</span>
+              <span className="pick-name">{cleanName(it.name)}</span>
               <span className="pick-comment">{p.comment}</span>
               <span className="pick-meta">
                 <span className="pick-price">{yen(it.price)}</span>
+                {it.reviews > 0 && (
+                  <span className="pick-rev">
+                    ★{it.rating.toFixed(1)}（{it.reviews.toLocaleString("ja-JP")}件）
+                  </span>
+                )}
                 <span className="pick-shop">{it.shop}</span>
               </span>
             </span>

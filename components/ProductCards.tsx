@@ -3,7 +3,13 @@
 import { useEffect, useState } from "react";
 import AffiliateBox from "@/components/AffiliateBox";
 import { RAKUTEN_APP_ID, RAKUTEN_AFFILIATE_ID } from "@/data/site";
-import { revenueScore, defaultMinPrice, ngKeywordFor } from "@/lib/rakutenPick";
+import {
+  qualified,
+  pickSpread,
+  cleanName,
+  defaultMinPrice,
+  ngKeywordFor,
+} from "@/lib/rakutenPick";
 
 // アクセスキーはリファラ制限アプリ用。ドメインでロックされるためクライアント同梱でOK。
 // ビルド時に NEXT_PUBLIC_RAKUTEN_ACCESS_KEY(=GitHub Secret) が埋め込まれる。
@@ -20,6 +26,7 @@ type Item = {
   /** 報酬率(%)。楽天は実測で一律4%だが、将来変わりうるので商品ごとに持つ */
   rate: number;
   reviews: number;
+  rating: number;
 };
 
 function parse(data: unknown): Item[] {
@@ -40,6 +47,7 @@ function parse(data: unknown): Item[] {
       shop: String(it.shopName || ""),
       rate: Number(it.affiliateRate || 0),
       reviews: Number(it.reviewCount || 0),
+      rating: Number(it.reviewAverage || 0),
     };
   }).filter((i) => i.name && i.url && i.image);
 }
@@ -69,39 +77,50 @@ export default function ProductCards({
 
   useEffect(() => {
     if (!ACCESS_KEY || !RAKUTEN_APP_ID) return;
-    const params = new URLSearchParams({
-      applicationId: RAKUTEN_APP_ID,
-      accessKey: ACCESS_KEY,
-      keyword,
-      // 採点で絞るので、表示枚数より多めに取る（上限30件）
-      hits: String(Math.min(30, Math.max(hits * 6, 10))),
-      imageFlag: "1",
-      // ⚠️ "standard" は無名ブランドの安物（評価2件台）が上に来る。
-      //    レビュー件数順にすると、草野球で実際に使われているSSK・ディマリニ等が並び、
-      //    平均価格が約1.7倍（≒報酬も1.7倍）になることを本番APIで実測して決めた。
-      sort: "-reviewCount",
-      formatVersion: "1",
-      // 大人の草野球向けサイトなので、少年・ジュニア用モデルを除外。
-      // 「軟式」を探しているページでは硬式・ソフトボール用も弾く（実測で混ざった）
-      NGKeyword: ngKeywordFor(keyword),
-    });
-    const floor = minPrice ?? defaultMinPrice(keyword);
-    if (floor > 0) params.set("minPrice", String(floor));
-    if (RAKUTEN_AFFILIATE_ID) params.set("affiliateId", RAKUTEN_AFFILIATE_ID);
+    const url = (page: number) => {
+      const params = new URLSearchParams({
+        applicationId: RAKUTEN_APP_ID,
+        accessKey: ACCESS_KEY,
+        keyword,
+        // 足切りで絞るので上限いっぱい取る
+        hits: "30",
+        page: String(page),
+        imageFlag: "1",
+        // ⚠️ "standard" は無名ブランドの安物（評価2件台）が上に来る。
+        //    レビュー件数順で取ってから lib/rakutenPick.ts の足切りで選ぶ。
+        sort: "-reviewCount",
+        formatVersion: "1",
+        // 大人の草野球向けサイトなので、少年・ジュニア用モデルを除外。
+        // 「軟式」を探しているページでは硬式・ソフトボール用も弾く（実測で混ざった）
+        NGKeyword: ngKeywordFor(keyword),
+      });
+      const floor = minPrice ?? defaultMinPrice(keyword);
+      if (floor > 0) params.set("minPrice", String(floor));
+      if (RAKUTEN_AFFILIATE_ID) params.set("affiliateId", RAKUTEN_AFFILIATE_ID);
+      return `${ENDPOINT}?${params.toString()}`;
+    };
+
+    const get = (page: number) =>
+      fetch(url(page))
+        .then((r) => (r.ok ? r.json() : null))
+        .then((d) => (d ? parse(d) : []))
+        .catch(() => [] as Item[]);
+
     let alive = true;
     // 新エンドポイントはCORS対応。ブラウザのリファラ(オリジン)で認可される。
-    fetch(`${ENDPOINT}?${params.toString()}`)
-      .then((r) => (r.ok ? r.json() : null))
-      .then((data) => {
-        if (!alive || !data) return;
-        const parsed = parse(data)
-          .sort((a, b) => revenueScore(b) - revenueScore(a))
-          .slice(0, hits);
-        if (parsed.length) setItems(parsed);
-      })
-      .catch(() => {
-        /* 失敗時はフォールバックのまま */
-      });
+    (async () => {
+      let pool = await get(1);
+      // 1ページ目でいちばん厳しい足切りを満たせないときだけ2ページ目を取る。
+      // （常に2回叩くと1ページに十数リクエスト飛ぶので、必要なときだけにする）
+      if (pool.length && !qualified(pool, hits).strict) {
+        const more = await get(2);
+        const seen = new Set(pool.map((i) => i.name));
+        pool = pool.concat(more.filter((i) => !seen.has(i.name)));
+      }
+      if (!alive || !pool.length) return;
+      const picked = pickSpread(qualified(pool, hits).items, hits);
+      if (picked.length) setItems(picked);
+    })();
     return () => {
       alive = false;
     };
@@ -128,9 +147,17 @@ export default function ProductCards({
           >
             <span className="prod-thumb">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={it.image} alt={it.name} loading="lazy" />
+              <img src={it.image} alt={cleanName(it.name)} loading="lazy" />
             </span>
-            <span className="prod-name">{it.name}</span>
+            <span className="prod-name">{cleanName(it.name)}</span>
+            {it.reviews > 0 && (
+              <span className="prod-rev">
+                <span className="prod-stars">★{it.rating.toFixed(1)}</span>
+                <span className="prod-revcount">
+                  レビュー{it.reviews.toLocaleString("ja-JP")}件
+                </span>
+              </span>
+            )}
             <span className="prod-meta">
               <span className="prod-price">{yen(it.price)}</span>
               <span className="prod-shop">{it.shop}</span>
