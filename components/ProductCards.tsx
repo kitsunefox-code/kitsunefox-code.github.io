@@ -10,6 +10,7 @@ import {
   defaultMinPrice,
   ngKeywordFor,
 } from "@/lib/rakutenPick";
+import { getJson } from "@/lib/rakutenFetch";
 
 // アクセスキーはリファラ制限アプリ用。ドメインでロックされるためクライアント同梱でOK。
 // ビルド時に NEXT_PUBLIC_RAKUTEN_ACCESS_KEY(=GitHub Secret) が埋め込まれる。
@@ -100,11 +101,12 @@ export default function ProductCards({
       return `${ENDPOINT}?${params.toString()}`;
     };
 
-    const get = (page: number) =>
-      fetch(url(page))
-        .then((r) => (r.ok ? r.json() : null))
-        .then((d) => (d ? parse(d) : []))
-        .catch(() => [] as Item[]);
+    // ⚠️ 同じページに複数のカード枠があると楽天が429で弾く。
+    //    黙ってフォールバックの検索リンクに落ちると報酬機会を失うので再試行する。
+    const get = async (page: number) => {
+      const d = await getJson(url(page));
+      return d ? parse(d) : [];
+    };
 
     let alive = true;
     // 新エンドポイントはCORS対応。ブラウザのリファラ(オリジン)で認可される。

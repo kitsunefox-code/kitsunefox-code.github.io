@@ -9,6 +9,7 @@ import {
   defaultMinPrice,
   ngKeywordFor,
 } from "@/lib/rakutenPick";
+import { getJson, sleep } from "@/lib/rakutenFetch";
 
 const ACCESS_KEY = process.env.NEXT_PUBLIC_RAKUTEN_ACCESS_KEY || "";
 const ENDPOINT =
@@ -82,11 +83,10 @@ async function fetchOne(pick: Pick): Promise<Item | null> {
     if (RAKUTEN_AFFILIATE_ID) p.set("affiliateId", RAKUTEN_AFFILIATE_ID);
     return `${ENDPOINT}?${p.toString()}`;
   };
-  const get = (page: number) =>
-    fetch(url(page))
-      .then((r) => (r.ok ? r.json() : null))
-      .then((d) => (d ? parse(d) : []))
-      .catch(() => [] as Item[]);
+  const get = async (page: number) => {
+    const d = await getJson(url(page));
+    return d ? parse(d) : [];
+  };
   try {
     let pool = await get(1);
     // ブランド指定の枠は候補が薄い（ミズノの内野用で¥30,000以下だと
@@ -122,9 +122,18 @@ export default function EditorsPicks({
 
   useEffect(() => {
     let alive = true;
-    Promise.all(picks.map((p) => fetchOne(p))).then((res) => {
-      if (alive) setItems(res);
-    });
+    // ⚠️ 以前は Promise.all で3枠を同時に叩き、同じページの一覧カードと合わせて
+    //    4本が同時に飛んでいた。楽天が429で弾き、外野の枠が毎回消えていた。
+    //    1枠ずつ間隔を空けて取る。表示は全部揃ってからなので体感差は小さい。
+    (async () => {
+      const out: (Item | null)[] = [];
+      for (const p of picks) {
+        if (!alive) return;
+        out.push(await fetchOne(p));
+        await sleep(350);
+      }
+      if (alive) setItems(out);
+    })();
     return () => {
       alive = false;
     };
